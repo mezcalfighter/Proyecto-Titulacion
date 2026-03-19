@@ -1,19 +1,910 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
+\documentclass[12pt, a4paper]{article}
 
-\title{Caso de Estudio \\ Desconocimiento de la Ley de Protección de Datos en la nutrición y propuesta de solución}
+% ═══════════════════════════════════════════════════════════════════════════
+%  PAQUETES
+% ═══════════════════════════════════════════════════════════════════════════
+
+% Idioma y codificación
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish, es-tabla]{babel}   % es-tabla: "Tabla" en lugar de "Cuadro"
+\usepackage{lmodern}                    % fuente moderna compatible con T1
+
+% Geometría e interlineado
+\usepackage{geometry}
+\usepackage{setspace}
+\geometry{top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm}
+\onehalfspacing
+
+% Encabezados de sección
+\usepackage{titlesec}
+% \paragraph redefinido como encabezado de bloque (evita páginas en blanco)
+\titleformat{\paragraph}[hang]{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}{0pt}{2ex plus 0.5ex minus 0.2ex}{0.5ex}
+
+% Imágenes y figuras
+\usepackage{graphicx}           % \includegraphics
+\usepackage{float}              % opción [H] para fijar figuras en su lugar
+\usepackage{caption}            % personalizar pies de figura/tabla
+\usepackage{subcaption}         % subfiguras lado a lado: \begin{subfigure}
+\graphicspath{{imagenes/}}      % carpeta donde guardar tus imágenes
+
+% Tablas
+\usepackage{booktabs}           % \toprule \midrule \bottomrule
+\usepackage{array}              % columnas con ancho fijo: p{4cm}
+\usepackage{tabularx}           % tablas que se ajustan al ancho de página
+\usepackage{multirow}           % celdas que abarcan varias filas
+\usepackage{longtable}          % tablas que se extienden a más de una página
+
+% Formato de texto
+\usepackage{soul}               % \hl{} para resaltar, \ul{} para subrayar
+\usepackage{xcolor}             % colores: \textcolor{red}{texto}
+\usepackage{enumitem}           % listas personalizadas
+\usepackage{parskip}            % espacio entre párrafos en lugar de sangría
+
+% Hipervínculos (siempre al final del preámbulo)
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = black,
+  urlcolor   = blue,
+  citecolor  = black,
+  pdftitle   = {Caso de Estudio: Desconocimiento de la LFPDPPP en nutrición},
+  pdfauthor  = {Cristian Emanuel Ortega Camarena}
+}
+
+% ═══════════════════════════════════════════════════════════════════════════
+%  COMANDOS DE REFERENCIA RÁPIDA
+%  Copia y pega estos bloques donde los necesites en el documento.
+% ═══════════════════════════════════════════════════════════════════════════
+
+%  ── IMAGEN SIMPLE ─────────────────────────────────────────────────────────
+%  \begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{nombre-archivo.png}
+%    \caption{Descripción de la figura.}
+%    \label{fig:etiqueta}
+%  \end{figure}
+%  Para referenciarla en el texto: véase la Figura~\ref{fig:etiqueta}
+
+%  ── DOS IMÁGENES LADO A LADO ──────────────────────────────────────────────
+%  \begin{figure}[H]
+%    \centering
+%    \begin{subfigure}[b]{0.48\textwidth}
+%      \includegraphics[width=\textwidth]{imagen-izq.png}
+%      \caption{Pie izquierda.}
+%      \label{fig:izq}
+%    \end{subfigure}
+%    \hfill
+%    \begin{subfigure}[b]{0.48\textwidth}
+%      \includegraphics[width=\textwidth]{imagen-der.png}
+%      \caption{Pie derecha.}
+%      \label{fig:der}
+%    \end{subfigure}
+%    \caption{Pie general de ambas figuras.}
+%    \label{fig:ambas}
+%  \end{figure}
+
+%  ── TABLA SIMPLE ──────────────────────────────────────────────────────────
+%  \begin{table}[H]
+%    \centering
+%    \caption{Título de la tabla.}
+%    \label{tab:etiqueta}
+%    \begin{tabular}{l c r}
+%      \toprule
+%      \textbf{Col 1} & \textbf{Col 2} & \textbf{Col 3} \\
+%      \midrule
+%      Dato A & Dato B & Dato C \\
+%      Dato D & Dato E & Dato F \\
+%      \bottomrule
+%    \end{tabular}
+%  \end{table}
+
+%  ── TABLA ANCHO COMPLETO ──────────────────────────────────────────────────
+%  \begin{table}[H]
+%    \centering
+%    \caption{Título.}
+%    \label{tab:etiqueta2}
+%    \begin{tabularx}{\textwidth}{l X X}
+%      \toprule
+%      \textbf{País} & \textbf{Ley} & \textbf{Característica} \\
+%      \midrule
+%      México & LFPDPPP & Texto libre que se ajusta automáticamente \\
+%      \bottomrule
+%    \end{tabularx}
+%  \end{table}
+
+%  ── FORMATO DE TEXTO FRECUENTE ────────────────────────────────────────────
+%  \textbf{negrita}     \textit{cursiva}     \underline{subrayado}
+%  \hl{resaltado}       \textcolor{red}{rojo}
+%  \footnote{Nota al pie de página.}
+
+%  ── LISTA CON VIÑETAS ─────────────────────────────────────────────────────
+%  \begin{itemize}
+%    \item Primer elemento.
+%    \item Segundo elemento.
+%  \end{itemize}
+
+%  ── LISTA NUMERADA ────────────────────────────────────────────────────────
+%  \begin{enumerate}
+%    \item Primer elemento.
+%    \item Segundo elemento.
+%  \end{enumerate}
+
+%  ── CITA LARGA (bloque sangrado) ──────────────────────────────────────────
+%  \begin{quote}
+%    ``Texto de la cita larga que va sangrado y en cursiva.''
+%    (Autor, año, art.~N).
+%  \end{quote}
+
+% ═══════════════════════════════════════════════════════════════════════════
+%  PORTADA
+% ═══════════════════════════════════════════════════════════════════════════
+\title{
+  \large Instituto Tecnológico y de Estudios Superiores de Occidente\\[1em]
+  \rule{\linewidth}{0.5pt}\\[0.8em]
+  \LARGE \textbf{Caso de Estudio}\\[0.4em]
+  \Large Desconocimiento de la Ley de Protección de Datos Personales\\
+  en el sector de nutrición y propuesta de solución\\[0.8em]
+  \rule{\linewidth}{0.5pt}
+}
 \author{Cristian Emanuel Ortega Camarena}
 \date{Enero 2026}
 
+% ═══════════════════════════════════════════════════════════════════════════
 \begin{document}
+% ═══════════════════════════════════════════════════════════════════════════
 
 \maketitle
+\thispagestyle{empty}
+\newpage
 
+\tableofcontents
+\newpage
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section*{Resumen Ejecutivo  - en construcción}
+\addcontentsline{toc}{section}{Resumen Ejecutivo}
+% ═══════════════════════════════════════════════════════════════════════════
+
+El sector de la nutrición en México presenta un desconocimiento
+generalizado de la Ley Federal de Protección de Datos Personales en
+Posesión de los Particulares (LFPDPPP). En términos generales, la
+LFPDPPP es el marco jurídico que regula cómo debe tratarse la
+información de clientes y pacientes. Su objetivo principal es garantizar
+que cada persona tenga el poder de decidir quién posee sus datos, para
+qué se utilizan y quién puede consultarlos.
+
+Dentro de la práctica clínica cotidiana se observa que una gran cantidad
+de nutriólogos gestionan la información de sus pacientes ---clasificada
+por la ley como datos personales sensibles--- a través de herramientas de
+ofimática como hojas de cálculo. Estas herramientas generalmente carecen
+de protocolos de seguridad, cifrado y trazabilidad, por lo que no
+permiten cumplir las obligaciones técnicas y administrativas dictadas
+por la normativa vigente, exponiendo tanto al profesional como a los
+pacientes a riesgos legales y de privacidad.
+
+La LFPDPPP solicita ``medidas de seguridad'' sin especificar cuáles,
+lo que permite que un nutriólogo agregue simplemente una contraseña al
+archivo donde lleva seguimiento de sus pacientes, cuando en contraste,
+en otros países esa misma acción sería considerada una negligencia grave.
+
+En cuanto a la autorregulación, en México se asume que el licenciado en
+nutrición conoce la ley, pero no existe ninguna certificación que lo
+acredite ni ningún requisito obligatorio para las herramientas que usa
+en su día a día. En contraste, en países como Estados Unidos, si un
+software no es \textit{HIPAA Compliant}, el profesional simplemente no
+puede utilizarlo sin arriesgar su licencia.
+
+Los derechos ARCO son la vía por la cual el paciente ejerce soberanía
+sobre su información. En México, el nutriólogo tiene la obligación de
+responder estas solicitudes en no más de 20 días hábiles; sin embargo,
+los requerimientos limitados y ambiguos de la ley dificultan la
+elaboración de reportes completos y generan inconsistencias cuando la
+solicitud implica la eliminación del historial clínico.
+
+% ═══════════════════════════════════════════════════════════════════════════
 \section{Introducción}
-\subsection{Resumen Ejecutivo}
-\subsection{Resumen 2}
-\subsection{Resumen 3}
-\subsection{Resumen 4}
-\subsection{Resumen 5}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Contexto del sector de nutrición en México}
+\mbox{}
+% NOTA: Escribir sobre el trabajo de los nutriólogos y sus estudios,
+% cómo los planes de estudios están desactualizados en México.
+% El brindar materias con conocimiento jurídico y tecnológico para
+% desempeñar sus actividades de mejor forma pasan a ser materias
+% opcionales.
+
+\subsection{Planteamiento del problema}
+\mbox{}
+% NOTA: Comenzar a hablar de cómo esta falta puede llevar a una mala
+% práctica y deficiencia en el cuidado y manejo de datos.
+
+\subsection{Objetivos general y específicos}
+\mbox{}
+% NOTA: Formalizar lo que se va a estar trabajando en la tesis de
+% forma general y específica.
+%
+% Sugerencia de formato:
+% \textbf{Objetivo general:} ...
+%
+% \textbf{Objetivos específicos:}
+% \begin{enumerate}
+%   \item ...
+% \end{enumerate}
+
+\subsection{Alcance (qué incluye y qué excluye)}
+\mbox{}
+% NOTA: Hablar de los entregables y con qué cierra el proyecto.
+
+\subsection{Preguntas guía}
+\mbox{}
+% NOTA: Preguntas que funcionen como hilo conductor del documento.
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Marco Normativo: Protección de Datos Personales}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{La Ley Federal de Protección de Datos Personales (LFPDPPP)}
+\mbox{}
+
+\subsubsection{Antecedentes y origen}
+% NOTA: Hablar de forma narrativa cómo se fue dando las leyes de
+% protección de datos hasta donde estamos actualmente.
+
+Para comprender la necesidad de una plataforma como NutriApp, es
+importante revisar cómo México fue construyendo su marco legal en
+materia de protección de datos personales. Este proceso no fue
+rápido ni lineal: tomó décadas, pasó por varios intentos fallidos y
+siempre estuvo un paso atrás de la realidad tecnológica del país.
+Los siguientes cinco hitos muestran esa evolución de forma cronológica.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{1917: El punto de partida, una Constitución pensada
+  para otro mundo.} La Constitución de 1917 nació en un contexto muy
+  diferente al que vivimos hoy. El artículo~16, en su versión
+  original, protegía al ciudadano de intromisiones físicas por parte
+  de la autoridad, estableciendo que \textit{``Nadie puede ser
+  molestado en su persona, familia, domicilio, papeles o posesiones,
+  sino en virtud de mandamiento escrito de la autoridad competente,
+  que funde y motive la causa legal del procedimiento''} (Constitución
+  Política de los Estados Unidos Mexicanos [CPEUM], 1917/2024,
+  art.~16). En ese momento, la única forma de vulnerar la información
+  privada de alguien era accediendo físicamente a sus documentos. La
+  posibilidad de que esos mismos datos pudieran ser robados o mal
+  utilizados a través de una computadora simplemente no estaba en
+  el horizonte de quienes redactaron esa ley, lo que dejó a la
+  privacidad de las personas desprotegida frente a los riesgos que
+  traería la era digital.
+
+  \item \textbf{2001--2009: Una década de intentos sin resultado.}
+  Con el paso de los años y la llegada de internet a la vida
+  cotidiana, quedó claro que la Constitución no era suficiente para
+  proteger la información personal que ya circulaba en bases de datos
+  privadas. Entre septiembre de 2001 y diciembre de 2009 se
+  presentaron diversas propuestas de ley para regular el manejo de
+  datos personales por parte de empresas y profesionistas, pero
+  ninguna llegó a aprobarse (Instituto Nacional de Transparencia,
+  Acceso a la Información y Protección de Datos Personales [INAI],
+  2021, p.~14). Esta situación no es un detalle menor: una década sin
+  avances legislativos explica por qué la ley que finalmente salió en
+  2010 llegó con huecos importantes. Las razones detrás de esa urgencia legislativa se analizan en la sección siguiente. Para sectores como el de la
+  nutrición, que nunca habían tenido reglas claras en esta materia,
+  esos huecos tendrían consecuencias concretas que se analizan más
+  adelante en este documento.
+
+  \item \textbf{2007: El primer reconocimiento en la Constitución,
+  pero solo para el gobierno.} Antes de que los datos personales
+  fueran reconocidos como un derecho de todas las personas, hubo un
+  antecedente que suele pasarse por alto: la reforma de 2007 al
+  artículo~6° constitucional. Con esta modificación, México reconoció
+  por primera vez en su Constitución la protección de datos personales
+  y el derecho de los ciudadanos a acceder y corregir su información,
+  pero únicamente cuando esta estuviera en manos del gobierno (CPEUM,
+  1917/2024, art.~6°). Médicos, consultorios, nutriólogos y cualquier
+  profesional independiente que manejara información de pacientes
+  quedaron fuera. Este límite dejó en evidencia que proteger los datos
+  frente al Estado no era suficiente; también hacía falta regular a
+  los particulares.
+
+  \item \textbf{2009: Los datos personales se convierten en un
+  derecho de todas las personas.} El cambio más importante llegó el
+  1 de junio de 2009, cuando se modificó el artículo~16
+  constitucional para reconocer que la información personal de cada
+  individuo le pertenece y debe estar protegida. El texto establece
+  que \textit{``Toda persona tiene derecho a la protección de sus
+  datos personales, al acceso, rectificación y cancelación de los
+  mismos, así como a manifestar su oposición, en los términos que
+  fije la ley''} (CPEUM, 1917/2024, art.~16). Con esto nacieron los
+  Derechos ARCO, que son la vía mediante la cual cualquier persona
+  puede decidir quién tiene su información, para qué se usa y cuándo
+  debe eliminarse. Sin embargo, este reconocimiento seguía siendo
+  una declaración de intenciones: la Constitución otorgaba el
+  derecho, pero todavía no existía la ley concreta que estableciera
+  las obligaciones para quienes manejan esa información ni las
+  consecuencias de no cumplirlas.
+
+  \item \textbf{2010--2011: La ley y su reglamento, cuando las
+  obligaciones se volvieron reales.} Para que ese derecho
+  constitucional tuviera efecto en la vida diaria, en 2010 se
+  publicó la Ley Federal de Protección de Datos Personales en
+  Posesión de los Particulares. A partir de ese momento, manejar
+  expedientes de pacientes dejó de ser una práctica sin reglas para
+  convertirse en una obligación legal que requería un Aviso de
+  Privacidad y medidas de seguridad verificables. La ley fue clara
+  al señalar que \textit{``Tratándose de datos personales sensibles,
+  el responsable deberá obtener el consentimiento expreso y por
+  escrito del titular para su tratamiento''} (Ley Federal de
+  Protección de Datos Personales en Posesión de los Particulares
+  [LFPDPPP], 2010, art.~9). Un año después, en 2011, se publicó su
+  Reglamento, que tradujo esas obligaciones en términos técnicos
+  concretos. El artículo~57 estableció que los responsables debían
+  usar \textit{``herramientas que permitan la trazabilidad de las
+  consultas, accesos y modificaciones realizados a los datos
+  personales [\ldots] y el control de acceso a los datos''}
+  (Reglamento de la Ley Federal de Protección de Datos Personales
+  en Posesión de los Particulares [RLFPDPPP], 2011, art.~57). Para
+  este caso de estudio, es particularmente relevante el artículo~52
+  del mismo Reglamento, que permite expresamente el uso de servicios
+  de cómputo en la nube siempre que el proveedor ofrezca niveles de
+  protección equivalentes a los que exige la ley mexicana (RLFPDPPP,
+  2011, art.~52). Este artículo es el fundamento legal que respalda
+  el uso de \textbf{Amazon Web Services (AWS)} como infraestructura
+  de NutriApp.
+
+  \item \textbf{2025: Una nueva ley y un cambio institucional de
+  fondo.} En marzo de 2025 entró en vigor una nueva versión de la
+  Ley Federal de Protección de Datos Personales en Posesión de los
+  Particulares, que reemplazó formalmente a la de 2010 (LFPDPPP,
+  2025, Transitorio Segundo). En términos generales, los principios
+  y los Derechos ARCO se mantienen, pero hay ajustes importantes
+  para el sector salud. El artículo~9 precisa ahora que no es
+  necesario el consentimiento del paciente cuando sus datos se
+  requieren para brindarle atención médica y este no está en
+  condiciones de otorgarlo (LFPDPPP, 2025, art.~9). Las sanciones
+  también cambiaron: ya no se expresan en montos fijos sino en
+  múltiplos de la Unidad de Medida y Actualización (UMA), y pueden
+  llegar hasta 320,000 veces ese valor, con posibilidad de duplicarse
+  cuando se trata de datos sensibles como los de salud (LFPDPPP,
+  2025, art.~59). El cambio más visible a nivel institucional es la
+  desaparición del Instituto Nacional de Transparencia, Acceso a la
+  Información y Protección de Datos Personales (INAI), cuyas
+  funciones en materia de datos personales pasaron a la
+  \textbf{Secretaría Anticorrupción y Buen Gobierno} (LFPDPPP, 2025,
+  Transitorio Cuarto). Esto es relevante para cualquier nutriólogo:
+  si recibe una solicitud de derechos ARCO o enfrenta una revisión
+  por incumplimiento, la autoridad ante la que debe responder ya no
+  es el INAI sino esta nueva dependencia, que aún está consolidando
+  sus procesos en esta materia.
+
+\end{enumerate}
+
+Lo que une a todos estos hitos es una ausencia constante: en ningún
+momento del proceso legislativo se desarrolló una estrategia de
+comunicación dirigida a los profesionales de salud independientes,
+como los nutriólogos de consulta privada. La ley se creó, se actualizó
+y finalmente se renovó, pero el gremio nunca recibió capacitación
+formal ni fue sujeto de ningún requisito obligatorio de cumplimiento.
+Esto convierte al desconocimiento no en una falla personal de cada
+profesional, sino en una omisión del sistema que este caso de estudio
+busca documentar y atender con una solución concreta.
+
+\subsubsection{México y la protección de datos: entre compromisos
+internacionales y necesidades internas}
+% NOTA: Hablar del contexto que estaba pasando México con la presión
+% de la OCDE y qué participación tiene el INAI hasta la última versión
+% de la ley y reglamento de protección de datos. Narrativa en dos
+% ejes: presión externa (OCDE, ingreso 1994) y demanda interna
+% (Grupo Oaxaca, IFAI 2002 → INAI 2014 → extinción 2025).
+
+Entender por qué México tiene hoy una ley de protección de datos
+requiere mirar más allá del texto legal. Detrás de cada reforma hubo
+fuerzas concretas que la impulsaron: compromisos económicos
+internacionales, demandas ciudadanas y decisiones políticas que
+fueron moldeando las instituciones que hoy regulan cómo se maneja la
+información de los mexicanos. Esta sección reconstruye ese proceso
+desde dos ángulos: la presión que llegó de afuera y la que se gestó
+desde adentro.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{1994: El ingreso a la OCDE y el costo de no proteger
+  los datos.} Cuando México ingresó a la Organización para la
+  Cooperación y el Desarrollo Económicos el 18 de mayo de 1994,
+  asumió algo más que compromisos de política económica (Organización
+  para la Cooperación y el Desarrollo Económicos [OCDE], 1994). Ser
+  parte de ese grupo de países significaba adoptar estándares que ya
+  llevaban años construyéndose en Europa y Estados Unidos, incluyendo
+  los relacionados con el manejo de información personal. Desde 1980,
+  la OCDE había publicado sus directrices sobre privacidad y flujos
+  transfronterizos de datos, un documento que establecía los
+  principios mínimos que cualquier país miembro debía respetar para
+  garantizar que la información de las personas pudiera circular de
+  forma segura entre economías (OCDE, 1980). El fondo del asunto era
+  comercial: si México no podía garantizar que los datos de sus
+  ciudadanos y socios comerciales estarían protegidos, quedaba en
+  desventaja frente a otros países en acuerdos de intercambio de
+  información y comercio digital (OCDE, 1980). No se trataba de una
+  exigencia moral sino de una condición práctica para participar en
+  la economía global. Esta realidad explica, en parte, por qué las
+  primeras iniciativas legislativas en México en materia de datos
+  personales aparecieron justo en los años posteriores al ingreso a
+  la OCDE, y también por qué la ley que finalmente se aprobó en 2010
+  fue diseñada con más urgencia que profundidad, como se señaló en
+  la sección anterior.
+
+  \item \textbf{2002: La sociedad civil toma la iniciativa y nace el
+  IFAI.} Mientras la presión internacional empujaba desde afuera,
+  dentro del país ocurría algo diferente. A principios de los años
+  2000, un grupo de periodistas y académicos conocido como el Grupo
+  Oaxaca comenzó a exigir que el gobierno mexicano fuera más
+  transparente sobre el uso de los recursos públicos y la toma de
+  decisiones (Marván Laborde, 2023). Su trabajo impulsó la aprobación
+  de la Ley Federal de Transparencia y Acceso a la Información
+  Pública Gubernamental, publicada el 11 de junio de 2002 (Ley
+  Federal de Transparencia y Acceso a la Información Pública
+  Gubernamental [LFTAIPG], 2002). Esta ley trajo consigo la creación
+  del primer antecedente directo del organismo regulador en materia
+  de datos: el Instituto Federal de Acceso a la Información Pública
+  (IFAI), constituido formalmente mediante decreto presidencial el
+  24 de diciembre de 2002 (LFTAIPG, 2002). En su diseño original,
+  el IFAI era un organismo descentralizado de la administración
+  pública federal, lo que significaba que operaba con cierta autonomía
+  pero dentro de la estructura del Ejecutivo. Su misión inicial era
+  vigilar que el gobierno respondiera las solicitudes de información
+  de los ciudadanos, no regular a empresas ni profesionistas
+  independientes. Fue hasta 2010, cuando se aprobó la LFPDPPP, que
+  el IFAI amplió su alcance al sector privado y ajustó su nombre
+  para reflejar esa nueva responsabilidad (INAI, 2021).
+
+  \item \textbf{2014--2015: Del IFAI al INAI, cuando la autonomía se
+  volvió real.} Durante sus primeros años, el IFAI funcionó como
+  parte de la administración pública. En la práctica, su independencia
+  tenía límites claros: su presupuesto dependía del Ejecutivo y sus
+  comisionados eran designados por el presidente. Con el tiempo quedó
+  evidente que un organismo que debía vigilar al propio gobierno no
+  podía depender de él para operar. Esa tensión fue el origen de una
+  reforma que cambiaría su naturaleza por completo. El 7 de febrero
+  de 2014 se publicó la reforma constitucional que le otorgó autonomía
+  plena, es decir, dejó de depender del Ejecutivo y pasó a ser un
+  organismo del Estado con independencia real para tomar decisiones
+  sin estar sujeto a presiones políticas (Marván Laborde, 2023). Con
+  ese cambio llegó también un nuevo nombre: el Instituto Nacional de
+  Transparencia, Acceso a la Información y Protección de Datos
+  Personales, mejor conocido como INAI. Este no fue un simple cambio
+  de nombre sino un rediseño institucional de fondo: la Ley General
+  de Transparencia que lo respaldó, publicada el 4 de mayo de 2015,
+  pasó de 64 a 214 artículos, amplió los sujetos obligados e
+  incrementó las obligaciones de transparencia de forma considerable
+  (Marván Laborde, 2023). Para el sector salud, esto significó que
+  el INAI contaba ahora con herramientas reales para investigar,
+  sancionar y resolver conflictos relacionados con el manejo de datos
+  de pacientes.
+
+  \item \textbf{2025: La extinción del INAI y el cierre de un ciclo
+  institucional.} La historia del organismo regulador terminó de
+  forma abrupta. El 20 de diciembre de 2024 se publicó una reforma
+  constitucional de simplificación orgánica que ordenó la extinción
+  del INAI, y el 20 de marzo de 2025 esa decisión se concretó con
+  la entrada en vigor de la nueva LFPDPPP (LFPDPPP, 2025, Transitorio
+  Cuarto). Las funciones en materia de datos personales pasaron a la
+  Secretaría Anticorrupción y Buen Gobierno, un organismo que depende
+  directamente del Ejecutivo, lo que representa un retroceso en
+  términos de independencia institucional respecto al modelo que se
+  había construido desde 2014 (Marván Laborde, 2023). Para los
+  nutriólogos y cualquier profesional de salud independiente, este
+  cambio tiene una consecuencia práctica concreta: la autoridad ante
+  la que deben responder si un paciente ejerce sus derechos ARCO o
+  si enfrentan una revisión por incumplimiento ya no es el INAI sino
+  esta nueva dependencia, que al momento de redactar este documento
+  aún está consolidando sus procesos y criterios en la materia.
+
+\end{enumerate}
+
+Lo que muestra este recorrido es que tanto la presión internacional
+como la demanda ciudadana fueron fuerzas necesarias para que México
+avanzara en la protección de datos. Sin embargo, en ninguno de esos
+momentos el gremio de la nutrición estuvo presente en la conversación,
+ni como sector que exigiera herramientas adecuadas ni como uno al
+que se le explicaran sus obligaciones. Esa ausencia es parte del
+origen del problema que este caso de estudio busca documentar.
+
+\subsubsection{Estructura de la ley, sujetos obligados y principios rectores}
+\mbox{}
+% NOTA: Hablar sobre el core de la ley de protección de datos, quiénes
+% están obligados a seguirla y si hay aplicaciones dependiendo el sector.
+
+\subsubsection{Sanciones del INAI: casos reales en el sector salud}
+\mbox{}
+% NOTA: Sanciones, penas y multas.
+%
+% Sugerencia: tabla de casos de sanción
+% \begin{table}[H]
+%   \centering
+%   \caption{Casos de sanción del INAI en el sector salud.}
+%   \label{tab:sanciones}
+%   \begin{tabularx}{\textwidth}{l l X c}
+%     \toprule
+%     \textbf{Año} & \textbf{Entidad} & \textbf{Infracción} & \textbf{Multa (MXN)} \\
+%     \midrule
+%     ...          & ...              & ...                 & ...                  \\
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Análisis comparativo en América Latina}
+\mbox{}
+% NOTA PENDIENTE: FALTA AGREGAR LOS PAÍSES DEL ANÁLISIS.
+
+\subsubsection{Brasil: LGPD}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Argentina: Ley 25.326}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Cuadro comparativo regional}
+\mbox{}
+% Sugerencia: tabla comparativa de leyes
+% \begin{table}[H]
+%   \centering
+%   \caption{Comparativo regional de leyes de protección de datos.}
+%   \label{tab:comparativo}
+%   \begin{tabularx}{\textwidth}{l X X X}
+%     \toprule
+%     \textbf{Criterio} & \textbf{México (LFPDPPP)} & \textbf{Brasil (LGPD)} & \textbf{Argentina (Ley 25.326)} \\
+%     \midrule
+%     Año               & 2010                      & 2018                   & 2000                            \\
+%     Autoridad         & INAI                      & ANPD                   & AAIP                            \\
+%     ...               & ...                       & ...                    & ...                             \\
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Análisis crítico de la ley mexicana}
+\mbox{}
+
+\subsubsection{Fortalezas}
+\mbox{}
+% NOTA: Hablar de lo fuerte y respaldada que es tanto por la ley
+% como el reglamento.
+
+\subsubsection{Debilidades: la ambigüedad técnica}
+\mbox{}
+% NOTA: Debilidades técnicas y de sustento, así como la comparativa
+% directa con los países del punto 2.2.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Traducción de la ley a requerimientos de software (Privacy by Design)}
+\mbox{}
+% NOTA: ¿Qué requerimientos técnicos son un must?
+% Así como las propias debilidades de estos.
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Diagnóstico: Situación Actual del Sector}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Hábitos digitales del nutriólogo en México}
+\mbox{}
+
+\subsubsection{Diseño de encuesta a nutriólogos}
+\mbox{}
+% NOTA: Tres instrumentos de medición en momentos distintos:
+% Encuesta de desconocimiento de la ley | Encuesta para MVP |
+% Encuesta resultados post MVP.
+
+\paragraph{Encuesta 1: Diagnóstico de desconocimiento de la LFPDPPP}
+\mbox{}
+% Texto aquí
+
+\paragraph{Encuesta 2: Levantamiento de requerimientos para el MVP}
+\mbox{}
+% Texto aquí
+
+\paragraph{Encuesta 3: Validación de propuesta mediante wireframes/demo}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Resultados y métricas base del problema}
+\mbox{}
+% NOTA: Análisis de resultados de las 3 encuestas.
+
+\paragraph{Resultados 1: Diagnóstico de desconocimiento de la LFPDPPP}
+\mbox{}
+% Texto aquí
+% Sugerencia: imagen de gráfica exportada
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.75\textwidth]{grafica-encuesta1.png}
+%   \caption{Resultados de la Encuesta 1: Diagnóstico de desconocimiento.}
+%   \label{fig:enc1}
+% \end{figure}
+
+\paragraph{Resultados 2: Levantamiento de requerimientos para el MVP}
+\mbox{}
+% Texto aquí
+
+\paragraph{Resultados 3: Validación de propuesta mediante wireframes/demo}
+\mbox{}
+% Texto aquí
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Estudio de mercado y competencia}
+\mbox{}
+
+\subsubsection{Softwares actuales de nutrición en México}
+\mbox{}
+% NOTA: Presentar las diferentes empresas que tienen software dedicado
+% que son las alternativas a las hojas de cálculo.
+
+\subsubsection{Benchmarking de seguridad: carencias de la competencia}
+\mbox{}
+% NOTA: Benchmarking con las aplicaciones, no con las empresas.
+
+\subsubsection{Diferenciador de NutriApp}
+\mbox{}
+% NOTA: Diferenciadores de NutriApp.
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Marco de Referencia Técnico}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Arquitectura en la nube: conceptos y estándares}
+\mbox{}
+% NOTA: Conceptualizar lo que se requiere para que el público entienda
+% el diagrama, así como aterrizar los estándares que van a ser utilizados.
+%
+% Sugerencia: diagrama de arquitectura
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{diagrama-nube.png}
+%   \caption{Arquitectura general en la nube.}
+%   \label{fig:nube}
+% \end{figure}
+
+\subsection{Seguridad de datos: cifrado, MFA y trazabilidad}
+\mbox{}
+% NOTA: Requerimientos de cifrado que requiere un expediente clínico,
+% MFA y qué reglamento exige estos.
+
+\subsection{Privacy by Design: principios y aplicación práctica}
+\mbox{}
+% NOTA: Hablar sobre el concepto de Privacy by Design donde la
+% privacidad está agregada desde el diseño y no después como feature.
+
+\subsection{Estándares internacionales aplicables (ISO/IEC 27001, HIPAA como referencia)}
+\mbox{}
+% NOTA: Hablar de los estándares de otros países y cuáles se van a
+% usar. Revisar si hay alguna NOM aplicable.
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Metodología}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Tipo de estudio y enfoque metodológico}
+\mbox{}
+% Texto aquí
+
+\subsection{Investigación documental: análisis normativo y benchmarking}
+\mbox{}
+
+\subsubsection{Criterios de selección y revisión del marco legal}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Criterios de benchmarking de software de nutrición}
+\mbox{}
+% Texto aquí
+
+\subsection{Investigación de campo: encuestas a nutriólogos}
+\mbox{}
+
+\subsubsection{Población objetivo y criterios de inclusión}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Diseño y validación de instrumentos}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Procedimiento de aplicación y recolección de datos}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Estrategia de análisis y triangulación}
+\mbox{}
+% Texto aquí
+
+\subsection{Diseño arquitectónico basado en evidencia}
+\mbox{}
+
+\subsubsection{Trazabilidad: de requisito legal a decisión técnica}
+\mbox{}
+% Texto aquí
+
+\subsubsection{Alcance y limitaciones del diseño propuesto}
+\mbox{}
+% Texto aquí
+
+\subsection{Consideraciones éticas y confidencialidad}
+\mbox{}
+% Texto aquí
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Diseño de la Solución}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Infraestructura AWS: KMS, Cognito, Lambda, RDS}
+\mbox{}
+% Texto aquí
+
+\subsection{Diagramas de ingeniería}
+\mbox{}
+
+\subsubsection{Diagrama de arquitectura de servicios}
+\mbox{}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{diagrama-aws.png}
+%   \caption{Arquitectura de servicios AWS para NutriApp.}
+%   \label{fig:aws}
+% \end{figure}
+
+\subsubsection{Diagramas UML: casos de uso y secuencia}
+\mbox{}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.9\textwidth]{uml-casos-uso.png}
+%   \caption{Diagrama de casos de uso.}
+%   \label{fig:uml-cu}
+% \end{figure}
+%
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=0.9\textwidth]{uml-secuencia.png}
+%   \caption{Diagrama de secuencia.}
+%   \label{fig:uml-seq}
+% \end{figure}
+
+\subsubsection{Diagrama entidad-relación}
+\mbox{}
+% \begin{figure}[H]
+%   \centering
+%   \includegraphics[width=\textwidth]{diagrama-er.png}
+%   \caption{Diagrama entidad-relación de NutriApp.}
+%   \label{fig:er}
+% \end{figure}
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Propuesta del Producto Mínimo Viable (MVP)}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Requerimientos mínimos del sistema}
+\mbox{}
+% Texto aquí
+
+\subsection{Módulo de consentimiento digital y derechos ARCO}
+\mbox{}
+% Texto aquí
+
+\subsection{Justificación del alcance del MVP}
+\mbox{}
+% Texto aquí
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Resultados y Análisis}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Resultados de encuestas: evidencia del desconocimiento}
+\mbox{}
+% Texto aquí
+
+\subsection{Validación normativa del diseño propuesto}
+\mbox{}
+% Texto aquí
+
+\subsection{Análisis costo-beneficio: prevención de multas vs.\ costo operativo}
+\mbox{}
+% Texto aquí
+% Sugerencia: tabla de costo-beneficio
+% \begin{table}[H]
+%   \centering
+%   \caption{Análisis costo-beneficio de implementar NutriApp.}
+%   \label{tab:costo-beneficio}
+%   \begin{tabularx}{\textwidth}{X r r}
+%     \toprule
+%     \textbf{Concepto} & \textbf{Costo (MXN)} & \textbf{Beneficio estimado (MXN)} \\
+%     \midrule
+%     ...               & ...                  & ...                               \\
+%     \bottomrule
+%   \end{tabularx}
+% \end{table}
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Conclusiones}
+% ═══════════════════════════════════════════════════════════════════════════
+
+\subsection{Comprobación de hipótesis}
+\mbox{}
+% Texto aquí
+
+\subsection{Lecciones aprendidas y recomendaciones para el gremio}
+\mbox{}
+% Texto aquí
+
+\subsection{Limitaciones del estudio y trabajo futuro}
+\mbox{}
+% Texto aquí
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section*{Referencias}
+\addcontentsline{toc}{section}{Referencias}
+% ═══════════════════════════════════════════════════════════════════════════
+\begin{itemize}[leftmargin=*, itemsep=4pt]
+
+  % ── Constitución ──────────────────────────────────────────────────
+  \item Constitución Política de los Estados Unidos Mexicanos.
+    (1917, 5 de febrero; reformada 2024). \textit{Diario Oficial de
+    la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf}
+
+  % ── INAI ──────────────────────────────────────────────────────────
+  \item Instituto Nacional de Transparencia, Acceso a la Información y
+    Protección de Datos Personales. (2021). \textit{Informe de
+    labores 2021}. INAI.
+    \url{https://home.inai.org.mx}
+
+  % ── LFPDPPP 2010 (abrogada, referencia histórica) ─────────────────
+  \item Ley Federal de Protección de Datos Personales en Posesión de
+    los Particulares. (2010, 5 de julio). \textit{Diario Oficial de
+    la Federación}. [Abrogada el 21 de marzo de 2025].
+
+  % ── LFPDPPP 2025 (vigente) ────────────────────────────────────────
+  \item Ley Federal de Protección de Datos Personales en Posesión de
+    los Particulares. (2025, 20 de marzo; última reforma 14 de
+    noviembre de 2025). \textit{Diario Oficial de la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
+
+  % ── LFTAIPG 2002 ──────────────────────────────────────────────────
+  \item Ley Federal de Transparencia y Acceso a la Información Pública
+    Gubernamental. (2002, 11 de junio). \textit{Diario Oficial de la
+    Federación}. [Abrogada el 9 de mayo de 2016].
+    \url{https://www.diputados.gob.mx/LeyesBiblio/abro/lftaipg.htm}
+
+  % ── Marván Laborde 2023 ───────────────────────────────────────────
+  \item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
+    la lucha por el derecho a saber. \textit{El Sol de México}.
+    \url{https://oem.com.mx/elsoldemexico/mexico/del-ifai-al-inai-la-lucha-por-el-derecho-a-saber-15857467}
+
+  % ── OCDE 1980 ─────────────────────────────────────────────────────
+  \item Organización para la Cooperación y el Desarrollo Económicos.
+    (1980). \textit{Directrices sobre la protección de la privacidad
+    y los flujos transfronterizos de datos personales}. OCDE.
+    \url{https://www.oecd.org/sti/ieconomy/oecdguidelinesontheprotectionofprivacyandtransfersonalpersonaldataflows.htm}
+
+  % ── OCDE 1994 ─────────────────────────────────────────────────────
+  \item Organización para la Cooperación y el Desarrollo Económicos.
+    (1994). \textit{México en la OCDE}. OCDE.
+    \url{https://www.oecd.org/mexico/}
+
+  % ── Reglamento 2011 ───────────────────────────────────────────────
+  \item Reglamento de la Ley Federal de Protección de Datos Personales
+    en Posesión de los Particulares. (2011, 21 de diciembre).
+    \textit{Diario Oficial de la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LFPDPPP.pdf}
+
+  % Agrega más referencias aquí con el mismo formato
+
+\end{itemize}
+% ═══════════════════════════════════════════════════════════════════════════
+\section*{Anexos}
+\addcontentsline{toc}{section}{Anexos}
+% ═══════════════════════════════════════════════════════════════════════════
+
+% Texto, imágenes o tablas de anexos aquí
 
 \end{document}
