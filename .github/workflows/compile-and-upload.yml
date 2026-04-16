@@ -1,4 +1,4 @@
-name: Compile LaTeX and Upload to Drive
+name: Compile LaTeX and Upload to Drive 2.0
 
 on:
   push:
