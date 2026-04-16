@@ -242,11 +242,33 @@ solicitud implica la eliminación del historial clínico.
 % NOTA: Preguntas que funcionen como hilo conductor del documento.
 
 % ═══════════════════════════════════════════════════════════════════════════
+
 \section{Marco Normativo: Protección de Datos Personales}
+% PÁRRAFO INTRODUCTORIO DE SECCIÓN
+Antes de proponer cualquier solución tecnológica, es necesario
+entender el terreno legal sobre el que opera. Esta sección presenta
+el marco normativo mexicano en materia de protección de datos
+personales, desde sus antecedentes constitucionales hasta la ley
+vigente en 2025, con un enfoque particular en lo que ese marco
+implica para el sector de la nutrición. Se analiza también el
+contexto que llevó a México a construir esta normativa, su
+comparación con otros países de la región y las implicaciones
+prácticas para cualquier profesional que maneje información clínica
+de pacientes.
 % ═══════════════════════════════════════════════════════════════════════════
 
 \subsection{La Ley Federal de Protección de Datos Personales (LFPDPPP)}
-\mbox{}
+% PÁRRAFO INTRODUCTORIO DE SUBSECCIÓN
+La Ley Federal de Protección de Datos Personales en Posesión de
+los Particulares es el instrumento jurídico central de este caso
+de estudio. Entender qué es, cómo llegó a existir y qué obliga a
+hacer no es un ejercicio teórico: es el punto de partida para
+comprender por qué un nutriólogo que lleva sus expedientes en una
+hoja de cálculo está, sin saberlo, incumpliendo obligaciones
+legales concretas con consecuencias reales. Las siguientes
+subsecciones recorren su origen, su contexto político, su
+estructura y su sistema de sanciones.
+% ═══════════════════════════════════════════════════════════════════════════
 
 \subsubsection{Antecedentes y origen}
 % NOTA: Hablar de forma narrativa cómo se fue dando las leyes de
@@ -510,79 +532,2108 @@ ni como sector que exigiera herramientas adecuadas ni como uno al
 que se le explicaran sus obligaciones. Esa ausencia es parte del
 origen del problema que este caso de estudio busca documentar.
 
-\subsubsection{Estructura de la ley, sujetos obligados y principios rectores}
-\mbox{}
-% NOTA: Hablar sobre el core de la ley de protección de datos, quiénes
-% están obligados a seguirla y si hay aplicaciones dependiendo el sector.
+\subsubsection{Estructura de la ley, sujetos obligados y principios
+rectores}
+% NOTA: Core de la ley — sujetos obligados (con aclaración LFPDPPP
+% vs LGPDPPSO), dato personal vs sensible, 8 principios, obligaciones
+% de consentimiento reforzadas con LGS, Reglamento técnico, y NOMs
+% como estándar obligatorio que Excel no cumple.
 
-\subsubsection{Sanciones del INAI: casos reales en el sector salud}
-\mbox{}
-% NOTA: Sanciones, penas y multas.
-%
-% Sugerencia: tabla de casos de sanción
-% \begin{table}[H]
-%   \centering
-%   \caption{Casos de sanción del INAI en el sector salud.}
-%   \label{tab:sanciones}
-%   \begin{tabularx}{\textwidth}{l l X c}
-%     \toprule
-%     \textbf{Año} & \textbf{Entidad} & \textbf{Infracción} & \textbf{Multa (MXN)} \\
-%     \midrule
-%     ...          & ...              & ...                 & ...                  \\
-%     \bottomrule
-%   \end{tabularx}
-% \end{table}
+Conocer que existe una ley de protección de datos es solo el primer
+paso. Lo que realmente importa para este caso de estudio es entender
+qué dice esa ley, a quién le aplica y qué significa cumplirla en
+la práctica de un consultorio de nutrición. La LFPDPPP no es un
+documento pensado para abogados: es una obligación activa para
+cualquier persona que, en el ejercicio de su trabajo, reciba y
+guarde información de otras personas. Esta sección desglosa su
+núcleo en cinco puntos y lo cruza con el marco técnico y sanitario
+que lo complementa.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{La ley aplica a todos los particulares que manejan
+  datos, sin importar el tamaño del negocio.}
+  El artículo~1 de la ley establece que su objeto es
+  \textit{``la protección de los datos personales en posesión
+  de los particulares, con la finalidad de regular su tratamiento
+  legítimo, controlado e informado, a efecto de garantizar la
+  privacidad y el derecho a la autodeterminación informativa de
+  las personas''} (LFPDPPP, 2025, art.~1). El artículo~2
+  define como sujetos regulados a las \textit{``personas físicas
+  o morales de carácter privado que llevan a cabo el tratamiento
+  de datos personales''} (LFPDPPP, 2025, art.~2, fracc.~XVI).
+  Esto abarca desde una empresa transnacional hasta un nutriólogo
+  que atiende pacientes de forma independiente. Las únicas dos
+  excepciones son las sociedades de información crediticia y
+  quienes recopilan datos para \textit{``uso exclusivamente
+  personal, y sin fines de divulgación o utilización comercial''}
+  (LFPDPPP, 2025, art.~1). Guardar el historial clínico de un
+  paciente para darle seguimiento no encaja en ninguna de esas
+  dos excepciones, así que el nutriólogo de consulta privada
+  está obligado desde el momento en que anota el primer dato de
+  quien lo visita. Vale la pena aclarar que en México existe un
+  segundo ordenamiento en la materia ---la Ley General de
+  Protección de Datos Personales en Posesión de Sujetos Obligados
+  (LGPDPPSO)---, pero este aplica exclusivamente al sector
+  gubernamental. Los organismos estatales de transparencia, como
+  el ITEI en Jalisco, vigilan el acceso a información pública
+  gubernamental, no el manejo de datos por profesionistas
+  privados. El nutriólogo de consulta privada responde únicamente
+  ante la LFPDPPP federal.
+
+  \item \textbf{No todos los datos tienen el mismo nivel de
+  protección, y los de salud están en la categoría más alta.}
+  La ley distingue entre datos personales ordinarios y datos
+  personales sensibles. Los primeros son \textit{``cualquier
+  información concerniente a una persona identificada o
+  identificable''} (LFPDPPP, 2025, art.~2, fracc.~V). Los
+  segundos son aquellos que \textit{``afecten a la esfera más
+  íntima de la persona titular, o cuya utilización indebida
+  pueda dar origen a discriminación o conlleve un riesgo grave
+  para esta''}, e incluyen expresamente \textit{``el estado
+  de salud presente o futuro''} y la \textit{``información
+  genética''} (LFPDPPP, 2025, art.~2, fracc.~VI). El expediente
+  de un paciente de nutrición ---con su peso, diagnósticos,
+  medicamentos, resultados de laboratorio y hábitos de vida---
+  cae en esta segunda categoría sin discusión posible. Ser datos
+  sensibles activa un régimen de obligaciones más estricto, con
+  consecuencias legales proporcionales al riesgo que representa
+  su mal manejo.
+
+  \item \textbf{Ocho principios que definen si se cumple o no
+  con la ley.}
+  El artículo~5 establece que \textit{``el responsable deberá
+  observar los principios de licitud, finalidad, lealtad,
+  consentimiento, calidad, proporcionalidad, información y
+  responsabilidad en el tratamiento de datos personales''}
+  (LFPDPPP, 2025, art.~5). Estos no son aspiraciones: son el
+  criterio con el que la autoridad determina si hubo o no
+  incumplimiento cuando se presenta una queja. En la práctica
+  del consultorio significan que el nutriólogo solo puede pedir
+  la información que realmente necesita para atender al paciente,
+  debe decirle para qué la usará, tiene que mantenerla actualizada
+  y correcta, y es responsable de protegerla mientras esté bajo
+  su resguardo. El artículo~13 lo refuerza señalando que
+  \textit{``el responsable velará por el cumplimiento de los
+  principios de protección de datos personales establecidos por
+  esta Ley, debiendo adoptar las medidas necesarias y suficientes
+  para su aplicación''} (LFPDPPP, 2025, art.~13). Desconocer
+  estos principios no exime de cumplirlos.
+
+  \item \textbf{Para datos de salud, el consentimiento escrito
+  es obligatorio bajo dos leyes independientes.}
+  La LFPDPPP establece en su artículo~8 que el responsable
+  \textit{``deberá obtener el consentimiento expreso y por
+  escrito de la persona titular para su tratamiento, a través
+  de su firma autógrafa, firma electrónica, o cualquier mecanismo
+  de autenticación que al efecto se establezca''} (LFPDPPP, 2025,
+  art.~8). Esta misma obligación aparece, de forma independiente,
+  en la Ley General de Salud, cuyo artículo~51~Bis~2° establece
+  que el prestador de servicios de salud debe dejar constancia
+  en el expediente clínico del consentimiento informado del
+  paciente respecto a los procedimientos diagnósticos y
+  terapéuticos ofrecidos (Ley General de Salud [LGS], 1984/2024,
+  art.~51~Bis~2°). La concurrencia de estas dos fuentes no es
+  redundante: significa que el nutriólogo que no cuenta con ese
+  consentimiento firmado está en incumplimiento simultáneo de la
+  LFPDPPP y de la Ley General de Salud, dos ordenamientos que
+  tienen autoridades y vías de sanción distintas. La LGS agrega
+  además en su artículo~77~Bis~37 que el paciente tiene derecho
+  a que su información se maneje bajo el principio de
+  confidencialidad (LGS, 1984/2024, art.~77~Bis~37), mientras
+  que el artículo~103~Bis~3 establece la obligación de
+  salvaguardar la confidencialidad de los datos genéticos de
+  cualquier paciente (LGS, 1984/2024, art.~103~Bis~3), lo que
+  abarca perfiles nutricionales vinculados a condiciones
+  hereditarias como la diabetes o la hipertensión.
+
+  \item \textbf{El Reglamento y las Normas Oficiales Mexicanas:
+  el estándar técnico que la ley no especifica pero que sí es
+  obligatorio.}
+  Uno de los límites más señalados de la LFPDPPP es que exige
+  medidas de seguridad sin definir cuáles son suficientes para
+  cada sector. El Reglamento de la ley cubre parte de ese hueco
+  al establecer que las medidas deben aplicarse \textit{``con
+  independencia del sistema de tratamiento''} (Reglamento de la
+  Ley Federal de Protección de Datos Personales en Posesión de
+  los Particulares [RLFPDPPP], 2011, art.~57), lo que significa
+  que el criterio aplica igual a un software especializado que
+  a una hoja de cálculo. El artículo~61 del mismo Reglamento
+  obliga al responsable a elaborar un inventario de datos y
+  sistemas, realizar un análisis de riesgos y ejecutar un análisis
+  de brecha para identificar las medidas de seguridad faltantes
+  (RLFPDPPP, 2011, art.~61). En el sector salud, la parte que
+  cierra esa ambigüedad son las Normas Oficiales Mexicanas. La
+  \textbf{NOM-004-SSA3-2012} establece los criterios técnicos y
+  administrativos obligatorios para el expediente clínico en
+  cualquier establecimiento de atención médica ---público, social
+  o privado--- e incluye explícitamente las notas de nutrición
+  como parte de los documentos que deben integrarlo, con
+  obligación de conservarlo con confidencialidad durante un mínimo
+  de cinco años (Norma Oficial Mexicana NOM-004-SSA3-2012, 2012).
+  La \textbf{NOM-024-SSA3-2012} va más lejos: cuando el sistema
+  de registro es electrónico, exige cifrado de la información,
+  autenticación de usuarios mediante credenciales verificables,
+  y trazabilidad de todos los accesos y modificaciones al
+  expediente (Norma Oficial Mexicana NOM-024-SSA3-2012, 2012).
+  Una hoja de cálculo convencional, con o sin contraseña, no
+  cumple ninguno de esos tres requerimientos técnicos. Finalmente,
+  la \textbf{NOM-008-SSA3-2017}, aplicable al tratamiento de
+  sobrepeso y obesidad, obliga a llevar el expediente clínico
+  conforme a la NOM-004 (Norma Oficial Mexicana
+  NOM-008-SSA3-2017, 2017), extendiendo esas obligaciones
+  técnicas a una parte central de la práctica nutriológica.
+
+\end{enumerate}
+
+Lo que define a este marco legal no es su complejidad sino su
+profundidad: la LFPDPPP establece los principios, el Reglamento
+define los procedimientos de seguridad, la Ley General de Salud
+refuerza el consentimiento y la confidencialidad, y las Normas
+Oficiales Mexicanas concretan los estándares técnicos para el
+expediente clínico. Los cuatro instrumentos son de observancia
+obligatoria e independiente, y todos apuntan al mismo resultado:
+el nutriólogo que hoy lleva sus expedientes en una hoja de cálculo
+tiene un incumplimiento activo, no hipotético.
+\subsubsection{Sanciones y mecanismos de denuncia: de la teoría a la
+realidad institucional}
+% NOTA: Sanciones, penas y multas. Casos reales en el sector salud.
+% Evolución del mecanismo de denuncia: IFAI → INAI → Secretaría
+% Anticorrupción. Incertidumbre institucional actual.
+
+Conocer la ley y sus principios es solo una parte del panorama. La
+otra es entender qué pasa cuando no se cumple: quién lo detecta,
+cómo se denuncia, cuánto cuesta el error y qué tan probable es que
+alguien efectivamente pague las consecuencias. En el caso del sector
+salud en México, la respuesta a esas preguntas ha cambiado con el
+tiempo, y hoy se encuentra en un punto de transición que genera más
+preguntas que certezas.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{Lo que la ley dice que puede pasar.}
+  La LFPDPPP vigente establece un esquema de sanciones escalonado
+  según la gravedad de la infracción. Para las faltas más comunes,
+  como no atender una solicitud ARCO sin justificación o actuar con
+  negligencia en su trámite, la ley contempla multas de entre 100 y
+  160,000 veces la Unidad de Medida y Actualización (LFPDPPP, 2025,
+  art.~59, fracc.~II). Para infracciones más graves, como manejar
+  datos sin consentimiento, vulnerar la seguridad de una base de
+  datos o incumplir el deber de confidencialidad, el rango sube a
+  entre 200 y 320,000 veces la UMA (LFPDPPP, 2025, art.~59,
+  fracc.~III). Con el valor de la UMA en 2025 fijado en \$113.14
+  pesos diarios, eso significa que una sanción grave puede alcanzar
+  los \$36,204,800 pesos en su techo máximo. Y aquí viene el detalle
+  que más importa para el sector nutrición: cuando las infracciones
+  involucran datos sensibles como el estado de salud de un paciente,
+  la ley establece que \textit{``las sanciones podrán incrementarse
+  hasta por dos veces los montos establecidos''} (LFPDPPP, 2025,
+  art.~59, fracc.~IV). En el peor escenario, eso representa más de
+  72 millones de pesos para un profesional que, en muchos casos,
+  opera con los ingresos de un consultorio independiente. La ley
+  también contempla sanciones penales: de tres meses a tres años de
+  prisión para quien, estando autorizado para manejar datos, provoque
+  una vulneración con ánimo de lucro, y de seis meses a cinco años
+  cuando el engaño sea el medio para obtenerlos (LFPDPPP, 2025,
+  arts.~62 y~63). Para datos sensibles, esas penas se duplican
+  (LFPDPPP, 2025, art.~64).
+
+  \item \textbf{Lo que realmente pasó mientras el INAI existió.}
+  Los números de la época del INAI muestran que el sistema sí
+  funcionaba, aunque de forma selectiva. En 2022, el Instituto
+  impuso multas por un total de \$60,078,958 pesos a personas físicas
+  y morales que incumplieron la LFPDPPP, con 119 Procedimientos de
+  Imposición de Sanciones iniciados, de los cuales 78 llegaron a
+  conclusión con multa (Instituto Nacional de Transparencia, Acceso
+  a la Información y Protección de Datos Personales [INAI], 2023a,
+  p.~1). En el mismo año se iniciaron 249 Procedimientos de
+  Protección de Derechos en el sector privado, y se presentaron
+  1,068 denuncias por uso indebido de datos, de las cuales 901 fueron
+  atendidas y concluidas, es decir, el 84.4\% tuvo una resolución
+  (INAI, 2023a, p.~2). En el primer semestre de 2023, las multas
+  sumaron \$11,020,991 pesos adicionales, con 52 nuevos procedimientos
+  de sanción iniciados en ese solo periodo (INAI, 2023b, p.~1). Lo
+  que estos números revelan no es que el INAI fuera perfecto, sino
+  que cuando el sistema funcionaba, el sector salud pagaba una parte
+  desproporcionada de la factura: en el primer semestre de 2023, el
+  sector de servicios de salud y asistencia social concentró el
+  35.28\% del total de multas impuestas, posicionándose como el
+  segundo sector más sancionado del país, solo detrás de servicios
+  financieros (INAI, 2023b, p.~1).
+
+  \item \textbf{Los casos que le pusieron cara al problema.}
+  Detrás de esas estadísticas hay situaciones concretas que ilustran
+  exactamente los riesgos que corre un profesional de la salud
+  independiente. En 2017, el INAI inició un procedimiento
+  sancionador contra un médico que entregó a un tercero el expediente
+  del estado de salud mental de su paciente sin autorización. El
+  instituto determinó que el profesional no solo violó el deber de
+  confidencialidad, sino que tampoco había informado a la paciente
+  sobre el aviso de privacidad ni cumplía con los elementos que la
+  ley exige en ese documento (Saludiario, 2017, párr.~3). Un año
+  después, en 2018, el INAI sancionó a un hospital con dos multas
+  que sumaron \$4,600,000 pesos por negarse a entregar el expediente
+  clínico a una paciente que lo solicitó tras el nacimiento de su
+  hijo. La institución nunca respondió la solicitud, lo que el INAI
+  calificó como negligencia grave en el trámite de derechos ARCO
+  (Saludiario, 2018, párr.~3). Ambos casos comparten una
+  característica que los hace relevantes para este estudio: las
+  conductas sancionadas no fueron actos maliciosos ni sofisticados,
+  fueron exactamente las mismas omisiones cotidianas que comete
+  cualquier profesional de la salud que opera sin conocer sus
+  obligaciones legales: no tener aviso de privacidad, no pedir
+  consentimiento por escrito, no responder solicitudes de acceso a
+  datos. En palabras del propio INAI, el expediente clínico
+  \textit{``constituye un dato personal sensible, por lo que su
+  resguardo y correcto uso es responsabilidad de los sujetos
+  obligados, sin olvidar que el paciente es el dueño y titular''}
+  de esa información (INAI, 2021, párr.~4).
+
+\item \textbf{La responsabilidad penal que ninguna capacitación
+  en el gremio ha explicado.}
+  El sistema de consecuencias no se limita a las multas
+  administrativas. El Código Penal Federal establece en su
+  artículo~210 que comete un delito quien \textit{``sin justa
+  causa, con perjuicio de alguien y sin consentimiento del que
+  pueda resultar perjudicado, revele algún secreto o comunicación
+  reservada que conoce o ha recibido con motivo de su empleo,
+  cargo o puesto''}, sancionado con treinta a doscientas jornadas
+  de trabajo a favor de la comunidad (Código Penal Federal [CPF],
+  1931/2024, art.~210). Pero el artículo~211 del mismo código es
+  el que aplica con mayor especificidad al profesional de la
+  salud: establece que la sanción aumenta a uno a cinco años de
+  prisión, multa y suspensión de la profesión de dos meses a un
+  año \textit{``cuando la revelación punible sea hecha por
+  persona que presta servicios profesionales o técnicos''}
+  (CPF, 1931/2024, art.~211). Esto significa que el nutriólogo
+  certificado que, por negligencia o descuido, permite que los
+  datos de salud de un paciente sean accedidos por terceros no
+  autorizados ---ya sea por compartir un archivo sin cifrado,
+  por usar una cuenta de correo no segura o por no proteger su
+  equipo--- puede enfrentar responsabilidad penal en su condición
+  de profesionista, no solo una multa administrativa. Esta
+  exposición se refuerza por la Ley Reglamentaria del
+  artículo~5° constitucional, que en su artículo~36 establece
+  que todo profesionista está obligado a guardar secreto en los
+  asuntos que le confíen sus clientes (Ley Reglamentaria del
+  Artículo~5° Constitucional, Relativo al Ejercicio de las
+  Profesiones en el Distrito Federal [Ley de Profesiones],
+  1945/2010, art.~36), obligación que incluye a los nutriólogos
+  con cédula profesional y que existe de forma independiente a
+  la LFPDPPP. La LFPDPPP agrega por su parte sanciones penales
+  propias: de tres meses a tres años de prisión para quien,
+  estando autorizado para manejar datos, provoque una vulneración
+  con ánimo de lucro, y de seis meses a cinco años cuando el
+  engaño sea el medio para obtenerlos (LFPDPPP, 2025, arts.~62
+  y~63). Para datos sensibles, esas penas se duplican (LFPDPPP,
+  2025, art.~64).
+
+  \item \textbf{Marzo 2025: cuando la institución que sancionaba
+  dejó de existir.}
+  El 20 de marzo de 2025 el INAI fue extinto y sus funciones en
+  materia de datos personales de particulares pasaron a la
+  Secretaría Anticorrupción y Buen Gobierno, que opera bajo la
+  estructura directa del Ejecutivo Federal (LFPDPPP, 2025,
+  Transitorio Cuarto). La Secretaría señaló al momento de asumir
+  las funciones que \textit{``las relacionadas con la protección de
+  datos personales quedarán bajo la responsabilidad directa de la
+  propia Secretaría''} y que la operación se basaría en
+  \textit{``los principios de imparcialidad, eficiencia, legalidad
+  y profesionalismo''} (Secretaría Anticorrupción y Buen Gobierno
+  [SABG], 2025, párr.~3). En papel, la estructura existe: la
+  Secretaría cuenta con una Dirección General de Datos Personales
+  en el Sector Privado, auxiliada por tres direcciones especializadas
+  en protección de derechos, atención a denuncias y procedimientos
+  de sanciones (SABG, 2025, art.~30\mbox{-}F). En la práctica, al
+  momento de redactar este documento no existe ningún registro
+  público de procedimientos sancionadores concluidos ni de multas
+  impuestas por esta nueva dependencia en materia de datos de
+  particulares. El propio sitio del INAI publicó un aviso señalando
+  que \textit{``este sitio ya no está vigente''} y que los contenidos
+  relevantes \textit{``se migrarán paulatinamente''} a las nuevas
+  plataformas (INAI, 2025, párr.~1). Para el nutriólogo de Jalisco
+  o de cualquier otro estado del país, esto significa que hoy opera
+  en un entorno donde las obligaciones legales siguen vigentes e
+  intactas, las sanciones potenciales no disminuyeron, pero la
+  capacidad efectiva de la autoridad para investigar, resolver y
+  cobrar multas es, por primera vez en más de una década,
+  completamente desconocida.
+
+\end{enumerate}
+
+Lo que muestra este recorrido no es que el riesgo haya desaparecido
+con la extinción del INAI: las obligaciones de la ley permanecen y
+cualquier paciente puede iniciar un procedimiento de protección de
+derechos en cualquier momento. Lo que sí cambió es la certeza sobre
+con qué velocidad y efectividad responderá la nueva autoridad. Para
+un gremio que nunca estuvo en el centro del debate sobre protección
+de datos, este momento de transición institucional representa tanto
+un riesgo como una oportunidad: el riesgo de seguir operando sin
+herramientas adecuadas mientras la autoridad se consolida, y la
+oportunidad de adoptar buenas prácticas antes de que el nuevo
+esquema sancionador encuentre su ritmo operativo.
 
 % ────────────────────────────────────────────────────────────────────────────
-\subsection{Análisis comparativo en América Latina}
-\mbox{}
-% NOTA PENDIENTE: FALTA AGREGAR LOS PAÍSES DEL ANÁLISIS.
+\subsection{Análisis comparativo internacional: Brasil, Uruguay,
+Estados Unidos y Alemania}
+% PÁRRAFO INTRODUCTORIO DE SUBSECCIÓN
+El análisis que sigue no busca catalogar leyes extranjeras ni
+construir un inventario de regulaciones comparadas. Su propósito
+es más específico: identificar, en cada caso, qué hace un país
+diferente o mejor que México en materia de protección de datos
+de salud, usando siempre la LFPDPPP como eje de referencia.
+La pregunta guía no es qué dice cada ley, sino qué puede
+aprender México de ella. Para mantener ese enfoque, se
+seleccionaron cuatro marcos normativos con perfiles
+complementarios: Brasil, el más robusto de América Latina y
+referencia directa de lo que México podría ser; Uruguay, el más
+alineado a los estándares europeos en la región y prueba de que
+un marco sólido no requiere ser un país grande; Estados Unidos,
+cuyo modelo sectorial establece la responsabilidad del software
+de salud de una forma que México todavía no contempla; y
+Alemania, que representa el techo normativo mundial y cuya
+regulación de servicios en la nube tiene implicaciones directas
+para el diseño de NutriApp. La sección cierra con un cuadro
+comparativo de nueve criterios que sintetiza las diferencias
+más relevantes para este caso de estudio.
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{Brasil: LGPD (Lei 13.709/2018)}
+% NOTA: Eje — Brasil como espejo de lo que México podría ser.
+% Énfasis en ANPD independiente vs. SABG dependiente del Ejecutivo,
+% portabilidad, brechas estructuradas, sanciones por facturación,
+% y resoluciones CFM como marco técnico disperso vs. NOMs mexicanas.
 
-\subsubsection{Brasil: LGPD}
-\mbox{}
-% Texto aquí
+Brasil es el punto de comparación más cercano y más exigente para
+México dentro de la región. No porque sus realidades sean idénticas,
+sino porque los dos países llegaron a la protección de datos por
+caminos parecidos ---presión internacional, demanda ciudadana, urgencia
+legislativa--- y terminaron con resultados muy distintos. Entender qué
+hizo Brasil diferente es entender qué le falta a México.
 
-\subsubsection{Argentina: Ley 25.326}
-\mbox{}
-% Texto aquí
+\begin{enumerate}[label=\Roman*.]
 
+  \item \textbf{Una ley construida desde el principio con el GDPR
+  europeo como modelo, no como referencia lejana.}
+  La Lei Geral de Proteção de Dados Pessoais, publicada el 14 de
+  agosto de 2018 y vigente desde septiembre de 2020, fue diseñada
+  explícitamente a partir del Reglamento General de Protección de
+  Datos de la Unión Europea (Lei Geral de Proteção de Dados Pessoais
+  [LGPD], Lei 13.709/2018, art.~1°). Esto no es un detalle menor:
+  mientras la LFPDPPP mexicana de 2010 se construyó con urgencia y
+  dejó huecos importantes que su Reglamento intentó cubrir un año
+  después, la LGPD brasileña incorporó desde su diseño original los
+  diez principios del GDPR, la figura del Encarregado de Proteção de
+  Dados (equivalente al Data Protection Officer europeo), la
+  evaluación de impacto a la privacidad y los mecanismos de
+  responsabilidad proactiva y demostrada. En 2022, la Emenda
+  Constitucional n°~115 elevó la protección de datos personales al
+  rango de derecho fundamental en la Constitución Federal brasileña
+  (Emenda Constitucional n°~115, 2022, art.~5°, LXXIX), equiparando
+  a Brasil con el modelo europeo en el nivel más alto del ordenamiento
+  jurídico. México realizó ese mismo reconocimiento constitucional en
+  2009 mediante la reforma al artículo~16 de la CPEUM, pero sin la
+  profundidad técnica que Brasil construyó en los años siguientes.
+
+  \item \textbf{La ANPD: lo que México tuvo con el INAI y perdió con
+  la SABG.}
+  La Autoridade Nacional de Proteção de Dados (ANPD) fue creada por
+  la propia LGPD como el organismo encargado de supervisar, fiscalizar
+  y sancionar el cumplimiento de la ley (LGPD, 2018, arts.~55-A al
+  55-L). Su diseño institucional contempla independencia técnica y
+  autonomía decisoria: sus directores tienen mandatos fijos de cuatro
+  años, no pueden ser removidos por razones políticas y sus
+  resoluciones no están sujetas a revisión del Ejecutivo. Este modelo
+  es funcionalmente equivalente al que México construyó entre 2014 y
+  2025 con el INAI como organismo constitucional autónomo. La
+  diferencia crítica es que Brasil mantiene ese modelo intacto,
+  mientras que México lo desmanteló en marzo de 2025 al transferir
+  las funciones del INAI a la Secretaría Anticorrupción y Buen
+  Gobierno, un organismo que depende directamente del Ejecutivo
+  Federal (LFPDPPP, 2025, Transitorio Cuarto). Para el nutriólogo que
+  recibe una solicitud de derechos ARCO o que enfrenta una queja de
+  un paciente, la diferencia es concreta: en Brasil la autoridad que
+  resuelve es independiente del gobierno en turno; en México ya no lo
+  es. Esta asimetría institucional es uno de los argumentos más
+  sólidos para adoptar buenas prácticas de cumplimiento de forma
+  proactiva, sin esperar a que la nueva autoridad mexicana consolide
+  sus criterios y su ritmo sancionador.
+
+  \item \textbf{Portabilidad de datos: un derecho que México no
+  contempla explícitamente.}
+  El artículo~18, fracción~V de la LGPD establece el derecho del
+  titular a la portabilidad de sus datos personales a otro proveedor
+  de servicio o producto, mediante solicitud expresa y observando los
+  secretos comerciales e industriales (LGPD, 2018, art.~18, inc.~V).
+  Este derecho no existe de forma explícita en la LFPDPPP mexicana
+  vigente. Para el sector de la nutrición, la portabilidad tiene
+  implicaciones prácticas directas: un paciente que cambia de
+  nutriólogo debería poder solicitar que su expediente completo ---con
+  todo el historial de consultas, planes alimenticios y evolución
+  clínica--- sea transferido al nuevo profesional en un formato
+  utilizable. En México, el derecho de cancelación y supresión existe,
+  pero el derecho a que esos datos se transfieran activamente a un
+  tercero no está regulado. NutriApp puede resolver esta brecha por
+  diseño, incorporando la exportación estructurada del expediente como
+  funcionalidad nativa, aun sin que la ley mexicana lo exija todavía.
+
+  \item \textbf{Notificación de brechas: estructura donde México
+  tiene ambigüedad.}
+  El artículo~48 de la LGPD establece que el controlador debe
+  comunicar a la ANPD y a los titulares afectados la ocurrencia de
+  un incidente de seguridad que pueda generar riesgo o daño relevante
+  a los titulares, en un plazo razonable definido por la ANPD en
+  regulación complementaria (LGPD, 2018, art.~48). La ANPD ha
+  establecido en la práctica un plazo de referencia de setenta y dos
+  horas para la notificación inicial a la autoridad. La LFPDPPP 2025
+  mexicana contempla la notificación de vulneraciones en su
+  artículo~20, pero sin especificar un plazo concreto ni los
+  elementos mínimos del reporte, lo que deja margen de ambigüedad
+  que Brasil eliminó desde el diseño reglamentario de la ANPD.
+
+  \item \textbf{El marco técnico en salud: más disperso que México,
+  pero con una lógica diferente.}
+  Una de las fortalezas singulares de México en este análisis es
+  precisamente que las NOMs ---en particular la NOM-004-SSA3-2012 y
+  la NOM-024-SSA3-2012--- constituyen el único marco técnico
+  obligatorio y específico para el expediente clínico electrónico en
+  toda la región. Brasil no tiene un equivalente único. El marco
+  técnico en salud digital brasileño se construye a través de
+  resoluciones del Conselho Federal de Medicina (CFM): la Resolución
+  CFM~2.299/2021 regula los documentos médicos electrónicos y exige
+  firma digital con certificados ICP-Brasil; la Resolución
+  CFM~2.314/2022 regula la telemedicina y establece que los datos
+  clínicos del teleatendimiento deben seguir los lineamientos de la
+  LGPD (Resolução CFM n°~2.314/2022, 2022, art.~6°). Esta
+  arquitectura por resoluciones gremiales es más flexible que las
+  NOMs mexicanas, pero también más fragmentada: no existe una norma
+  única equivalente a la NOM-024 que establezca los requerimientos
+  técnicos de cifrado, autenticación y trazabilidad para cualquier
+  sistema de expediente clínico electrónico. En este punto concreto,
+  México supera a Brasil en especificidad técnica obligatoria.
+
+  \item \textbf{Sanciones: proporcionadas a la capacidad económica
+  del infractor.}
+  El modelo sancionador de la LGPD es cualitativamente diferente al
+  de la LFPDPPP mexicana. Mientras México expresa sus multas en
+  múltiplos de la Unidad de Medida y Actualización ---un valor fijo
+  que no considera el tamaño ni los ingresos del infractor--- Brasil
+  establece sanciones de hasta el dos por ciento del faturamento
+  (facturación) de la persona jurídica, del grupo o del conglomerado
+  en Brasil en su último ejercicio fiscal, con un tope máximo de
+  cincuenta millones de reales por infracción (LGPD, 2018,
+  art.~52, inc.~II). Este modelo es proporcional: una empresa grande
+  que viola los datos de salud de sus clientes enfrenta una sanción
+  significativa en relación con sus ingresos, mientras que un
+  profesional independiente con consulta privada enfrenta una sanción
+  proporcional a su escala. La LFPDPPP mexicana aplica el mismo techo
+  absoluto de UMAs independientemente del tamaño del infractor, lo
+  que puede resultar desproporcionadamente severo para un nutriólogo
+  independiente y relativamente leve para una empresa de salud digital
+  con millones de usuarios.
+
+\end{enumerate}
+
+Lo que muestra el caso brasileño no es que su ley sea perfecta,
+sino que tomó decisiones de diseño más coherentes: una autoridad
+independiente, un modelo sancionador proporcional, derechos de
+portabilidad desde el inicio y una base constitucional sólida.
+México tiene instrumentos técnicos únicos en la región ---las NOMs---
+que Brasil no tiene, pero carece de la arquitectura institucional y
+de los derechos explícitos que Brasil construyó. Para NutriApp, el
+caso brasileño ofrece el mapa más claro de qué funcionalidades y
+garantías debería incorporar por diseño, aun antes de que la ley
+mexicana las exija formalmente.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{Uruguay: Ley 18.331/2008}
+% NOTA: Eje — Uruguay como el más pequeño y el más europeo.
+% Énfasis en Convenio 108, URCDP independiente, HCE obligatoria
+% (lo que México tiene en NOM pero no hace mandatorio), 72h brechas,
+% portabilidad y DPO. Argumento: un marco robusto no requiere ser
+% un país grande.
+
+Uruguay es el caso más silencioso y más instructivo del análisis.
+No tiene el tamaño de Brasil ni la visibilidad internacional de
+Alemania, pero desde 2008 opera con un marco de protección de datos
+que supera a México en aspectos concretos y medibles. Lo que hace
+relevante a Uruguay para este caso de estudio no es su ley en
+abstracto, sino una decisión específica que México todavía no ha
+tomado: hacer obligatoria la historia clínica electrónica para todos
+los prestadores de salud, públicos y privados, sin excepción.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{La ley más alineada al estándar europeo en toda
+  América Latina.}
+  La Ley~18.331, promulgada el 11 de agosto de 2008 y reglamentada
+  por el Decreto~414/009, fue construida sobre los principios del
+  Convenio~108 del Consejo de Europa para la protección de las
+  personas respecto al tratamiento automatizado de datos de carácter
+  personal (Ley~18.331, 2008, Exposición de Motivos). Uruguay es el
+  único país de América Latina que ratificó ese Convenio, en 2013,
+  convirtiéndose en el primer Estado no europeo en adherirse al
+  instrumento de referencia del que derivó posteriormente el GDPR
+  europeo. Esto no es un reconocimiento simbólico: la ratificación
+  del Convenio~108 implica que Uruguay acepta revisiones periódicas
+  de su marco normativo por parte del Consejo de Europa y debe
+  mantener sus estándares alineados con la evolución del derecho
+  europeo de protección de datos. México no tiene ningún compromiso
+  equivalente con ningún organismo internacional en esta materia.
+
+  \item \textbf{La URCDP: autoridad independiente con poderes reales,
+  incluida la clausura judicial de bases de datos.}
+  La Unidad Reguladora y de Control de Datos Personales (URCDP) fue
+  creada por la propia Ley~18.331 como el organismo de control
+  independiente en materia de protección de datos personales
+  (Ley~18.331, 2008, arts.~20 y~21). Su independencia no es solo
+  formal: la URCDP tiene potestad para aplicar sanciones que van
+  desde la advertencia y la multa económica hasta la suspensión del
+  tratamiento de datos, e inclusive puede solicitar al Poder Judicial
+  la clausura de una base de datos en los casos más graves
+  (Decreto~414/009, 2009, art.~31). Este último instrumento no
+  tiene equivalente en la LFPDPPP mexicana, que contempla sanciones
+  administrativas y penales pero no la clausura judicial de sistemas
+  de información. La existencia de ese mecanismo extremo no implica
+  que se use frecuentemente, pero su sola disponibilidad establece
+  un estándar de consecuencias que la autoridad mexicana actual no
+  puede replicar. Adicionalmente, la URCDP promueve la figura del
+  Delegado de Protección de Datos dentro de las organizaciones ---un
+  rol interno de supervisión y cumplimiento que en México no tiene
+  equivalente normativo ni recomendación formal de la autoridad.
+
+  \item \textbf{Notificación de brechas en 72 horas: más estricto
+  que México y equiparable a Europa.}
+  La Ley~18.331, complementada por su Decreto Reglamentario~414/009,
+  establece que ante una violación de seguridad que afecte datos
+  personales, el responsable del tratamiento debe notificar tanto a
+  la URCDP como a los titulares afectados en un plazo de setenta y
+  dos horas desde que tuvo conocimiento del incidente (Decreto~414/009,
+  2009, art.~31). Este plazo es idéntico al que establece el GDPR
+  europeo y al que la ANPD brasileña aplica como referencia. La
+  LFPDPPP mexicana de 2025 obliga a notificar vulneraciones en su
+  artículo~20, pero sin fijar un plazo específico ni definir los
+  umbrales de riesgo que activan esa obligación, lo que genera
+  ambigüedad en el cumplimiento y dificulta la comparación con
+  estándares internacionales.
+
+  \item \textbf{Portabilidad de datos: incluida desde el diseño
+  original de la ley.}
+  El artículo~14 de la Ley~18.331 reconoce entre los derechos del
+  titular el de obtener sus datos en un formato estructurado y
+  transferible (Ley~18.331, 2008, art.~14). Al igual que Brasil,
+  Uruguay incorporó la portabilidad como derecho explícito desde
+  la redacción original de su ley, a diferencia de México, cuya
+  LFPDPPP contempla los derechos de Acceso, Rectificación,
+  Cancelación y Oposición (ARCO) pero no la portabilidad como
+  derecho autónomo. Para un paciente de nutrición, la portabilidad
+  significa poder exigir que su expediente completo le sea entregado
+  en un formato que otro profesional o sistema pueda leer y usar
+  directamente, sin depender de la buena voluntad del nutriólogo
+  anterior ni de la compatibilidad entre herramientas.
+
+  \item \textbf{Historia clínica electrónica obligatoria: la decisión
+  que México no ha tomado.}
+  Este es el punto más relevante para este caso de estudio. En 2017,
+  Uruguay estableció mediante el Decreto~242/017 que todos los
+  prestadores de salud ---públicos y privados, sin importar su tamaño
+  ni especialidad--- están obligados a llevar una historia clínica
+  electrónica de cada paciente, siendo responsables de su completitud
+  y seguridad conforme a las normas legales vigentes (Decreto~242/017,
+  2017, art.~1°). Este mandato se complementa con la Ordenanza
+  N°~1085/2017 del Ministerio de Salud Pública, que establece los
+  estándares técnicos de interoperabilidad y seguridad del Sistema
+  de Historia Clínica Electrónica Nacional (HCEN), incluyendo
+  principios de finalidad, veracidad, completitud, reserva,
+  información y accesibilidad (Ordenanza MSP N°~1085/2017, 2017,
+  art.~3°). México tiene en la NOM-024-SSA3-2012 una norma técnica
+  equivalente en rigor y detalle para los sistemas de expediente
+  clínico electrónico, pero con una diferencia fundamental: la
+  NOM-024 solo aplica si el profesional o establecimiento decide
+  adoptar un sistema electrónico. Nadie está obligado a hacerlo.
+  Un nutriólogo puede seguir llevando sus expedientes en papel o en
+  una hoja de cálculo sin violar ninguna norma que lo obligue a usar
+  un sistema digital. Uruguay cerró esa brecha en 2017. México, al
+  momento de redactar este documento, no lo ha hecho. Este vacío es
+  precisamente el espacio que NutriApp busca ocupar: no para esperar
+  a que la ley lo exija, sino para ofrecer desde hoy el estándar
+  que la evidencia comparada indica que tarde o temprano será
+  necesario.
+
+\end{enumerate}
+
+El caso uruguayo demuestra que la solidez normativa no es función
+del tamaño del país ni de su presupuesto regulatorio. Con una
+economía significativamente menor que la mexicana y un sistema de
+salud más pequeño, Uruguay tomó decisiones de política pública que
+México aún no ha adoptado: historia clínica electrónica obligatoria,
+notificación de brechas con plazo definido, portabilidad de datos
+explícita y una autoridad con herramientas reales de sanción.
+Para NutriApp, Uruguay no es solo un referente normativo; es la
+prueba de que las decisiones que este caso de estudio propone son
+técnicamente viables y políticamente posibles.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{Estados Unidos: HIPAA, HITECH y el modelo de
+responsabilidad compartida}
+% NOTA: Eje — en EE.UU. el software de salud también es responsable,
+% no solo el profesional. HIPAA como piso federal obligatorio en
+% los 50 estados. HITECH extiende responsabilidad a business associates.
+% BAA obligatorio. Estados pueden ir más lejos pero nunca menos.
+% Capas estatales destacadas: California, Washington.
+% HIPAA Security Rule NPRM 2024: encriptación y MFA pasarán a ser
+% obligatorios sin excepción.
+
+Estados Unidos es el único país de este análisis que no tiene
+una ley federal unificada de protección de datos personales. En
+su lugar opera un modelo sectorial: cada industria tiene su propio
+marco regulatorio, y el sector salud es el que cuenta con la
+arquitectura más desarrollada y de mayor impacto internacional.
+Lo que hace relevante el caso estadounidense para este estudio no
+es su complejidad técnica sino una decisión de política pública
+que México todavía no ha tomado: en Estados Unidos, el proveedor
+de software que procesa datos de salud es tan responsable del
+cumplimiento legal como el profesional que lo usa. Esa lógica
+no existe en la LFPDPPP mexicana.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{HIPAA: el piso federal obligatorio en los 50 estados,
+  sin excepción geográfica.}
+  La Health Insurance Portability and Accountability Act de 1996
+  (HIPAA) establece el estándar federal mínimo de privacidad y
+  seguridad para la información de salud identificable de las
+  personas ---denominada Protected Health Information (PHI)--- en
+  todo el territorio de Estados Unidos (Health Insurance Portability
+  and Accountability Act [HIPAA], 1996, 45 CFR Parts 160 y 164).
+  Toda entidad cubierta (\textit{covered entity}) ---hospitales,
+  clínicas, laboratorios, profesionales de salud que facturan a
+  aseguradoras, y cualquier organización que transmita PHI en
+  formato electrónico--- está obligada a cumplir la HIPAA Privacy
+  Rule y la HIPAA Security Rule con independencia del estado en que
+  opere. No existe ningún estado que pueda eximir a sus
+  establecimientos de salud de cumplir HIPAA: la ley federal
+  prevalece sobre cualquier norma estatal que ofrezca menor
+  protección (Departamento de Salud y Servicios Humanos de EE.UU.
+  [HHS], 2013, 45 CFR \S~160.203). Lo que los estados sí pueden
+  hacer ---y muchos han hecho--- es ir más lejos que HIPAA, añadiendo
+  obligaciones adicionales por encima del piso federal. Cuando hay
+  conflicto entre una norma estatal y HIPAA, siempre prevalece la
+  que ofrece mayor protección al titular de los datos (HHS, 2013,
+  45 CFR \S~160.203). Esto significa que el mapa regulatorio
+  en salud en Estados Unidos no es un caos de cincuenta marcos
+  distintos: es un piso federal único con capas adicionales que
+  varían por estado.
+
+  \item \textbf{El HITECH Act: cuando el proveedor de software
+  también responde ante la ley.}
+  La transformación más relevante para este caso de estudio llegó
+  en 2009, no con una nueva ley de privacidad sino con la Health
+  Information Technology for Economic and Clinical Health Act
+  (HITECH Act). Antes de su promulgación, los proveedores de
+  software y servicios tecnológicos que procesaban PHI en nombre
+  de una covered entity tenían obligaciones contractuales pero no
+  responsabilidad legal directa ante el gobierno federal. El HITECH
+  Act cambió eso de manera radical: extendió las obligaciones de
+  la HIPAA Security Rule directamente a los \textit{business
+  associates} ---cualquier proveedor que toque PHI en nombre de una
+  covered entity, incluyendo desarrolladores de software de expediente
+  clínico, proveedores de nube, empresas de análisis de datos y
+  servicios de facturación médica--- convirtiéndolos en sujetos
+  directamente responsables ante el Departamento de Salud y
+  Servicios Humanos (Health Information Technology for Economic and
+  Clinical Health Act [HITECH Act], 2009, \S~13401). En México,
+  la LFPDPPP establece que el responsable del tratamiento de datos
+  es el nutriólogo o la clínica, no el proveedor del software que
+  usa. Un desarrollador de aplicaciones de nutrición que opera en
+  México no tiene ninguna obligación legal directa de cumplir con
+  los estándares técnicos de la LFPDPPP: su responsabilidad termina
+  en el contrato con el cliente. En Estados Unidos, esa misma
+  empresa sería un business associate con responsabilidad directa
+  ante el HHS, sujeta a auditorías, sanciones y la obligación de
+  firmar un Business Associate Agreement con cada covered entity
+  a la que le venda su producto.
+
+  \item \textbf{El Business Associate Agreement: el contrato que
+  hace al ecosistema tecnológico corresponsable.}
+  El Business Associate Agreement (BAA) es el instrumento legal
+  que materializa la responsabilidad compartida entre la covered
+  entity y su proveedor tecnológico. Su firma es obligatoria en
+  todos los casos en que un proveedor externo tenga acceso a PHI,
+  y su ausencia constituye por sí misma una violación de HIPAA
+  (HHS, 2013, 45 CFR \S~164.308(b)). El BAA establece, entre
+  otros elementos, qué usos puede hacer el proveedor de los datos
+  de salud que procesa, qué medidas de seguridad debe implementar,
+  qué debe hacer ante una brecha de seguridad y cómo debe destruir
+  o devolver los datos al terminar el contrato. Para NutriApp,
+  este mecanismo es un referente de diseño: aunque la ley mexicana
+  no exige un documento equivalente, el Reglamento de la LFPDPPP
+  establece en su artículo~51 que cuando el responsable comparte
+  datos con un encargado, debe existir un contrato que establezca
+  las obligaciones de este último (RLFPDPPP, 2011, art.~51). El
+  BAA estadounidense es la versión madura y detallada de ese
+  principio que México tiene en la ley pero no ha traducido en
+  un instrumento estandarizado.
+
+  \item \textbf{La capa estatal: estados que van más lejos que
+  HIPAA en salud digital.}
+  Varios estados han identificado vacíos en la cobertura de HIPAA
+  ---particularmente para datos de salud generados por aplicaciones
+  móviles, dispositivos wearables y plataformas de bienestar que
+  no califican como covered entities--- y han legislado para
+  cerrarlos. California cuenta con la California Consumer Privacy
+  Act (CCPA) y la Confidentiality of Medical Information Act (CMIA),
+  que juntas cubren datos de salud que no califican como PHI bajo
+  HIPAA, incluyendo información recopilada por aplicaciones de
+  nutrición y bienestar (California Consumer Privacy Act [CCPA],
+  Cal. Civ. Code \S~1798.100 et seq., 2018). Washington promulgó
+  en 2023 el My Health My Data Act, vigente desde 2024, que aplica
+  a \textit{cualquier} empresa que procese datos de salud de
+  consumidores con independencia de si es o no una covered entity
+  bajo HIPAA, y exige consentimiento opt-in explícito para la
+  mayoría de los usos de datos de salud (Washington My Health My
+  Data Act [MHMDA], 2023, RCW 70.372). Maryland, Nevada, Connecticut
+  y Colorado han promulgado legislación similar con distintos
+  alcances. Al momento de redactar este documento, más de veintiséis
+  estados tienen iniciativas de privacidad de datos de salud en
+  distintas etapas legislativas (Inside Privacy, 2024).
+
+  \item \textbf{La HIPAA Security Rule en actualización: cifrado
+  y MFA pasarán a ser obligatorios sin excepción.}
+  La HIPAA Security Rule original, promulgada en 2003, distinguía
+  entre salvaguardas \textit{required} ---obligatorias sin
+  excepción--- y \textit{addressable} ---aplicables salvo que el
+  responsable documentara una alternativa equivalente. El cifrado
+  de datos electrónicos de salud era una salvaguarda addressable,
+  lo que en la práctica permitía a algunas organizaciones argumentar
+  que su alternativa era suficiente. En enero de 2025, el
+  Departamento de Salud y Servicios Humanos publicó una propuesta
+  de actualización de la Security Rule (NPRM 2025) que elimina
+  esa distinción y convierte el cifrado de ePHI y la autenticación
+  multifactor (MFA) en obligaciones absolutas sin posibilidad de
+  justificación alternativa (HHS, 2025, HIPAA Security Rule NPRM).
+  La regla final se espera en 2026, con un período de cumplimiento
+  de 240 días. Este movimiento regulatorio es relevante para
+  NutriApp porque confirma la dirección que el estándar
+  internacional de mayor adopción en salud digital está tomando:
+  cifrado y MFA dejan de ser opcionales. El diseño técnico de
+  NutriApp sobre AWS incorpora ambos elementos desde el inicio,
+  lo que significa que la plataforma no solo cumplirá con la
+  normativa mexicana vigente sino que estará alineada con la
+  evolución del estándar de referencia internacional.
+
+\end{enumerate}
+
+El modelo estadounidense ilustra con claridad lo que México no
+tiene todavía: un mecanismo que haga al ecosistema tecnológico
+de la salud corresponsable del cumplimiento legal. En México,
+el nutriólogo responde por cómo maneja los datos de sus pacientes,
+pero el software que usa para hacerlo no tiene ninguna obligación
+legal directa. En Estados Unidos, esa separación desapareció en
+2009. Mientras eso no cambie en México, la única forma de cerrar
+esa brecha es que el software de salud adopte voluntariamente los
+estándares que la ley todavía no exige. Ese es uno de los
+principios de diseño centrales de NutriApp.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{Alemania: GDPR, BDSG, PDSG y el estándar de nube
+en salud más exigente del mundo}
+% NOTA: Eje — Alemania como techo normativo mundial y argumento
+% directo de diseño para NutriApp en AWS. Capas: GDPR (base europea),
+% BDSG (cláusulas nacionales + sanciones penales), PDSG (datos de
+% pacientes), SGB V §393 (cloud en salud, C5 BSI obligatorio).
+% Lo que varía por estado alemán: autoridades supervisoras +
+% leyes de salud mental y hospitalarias estatales — para la tesis
+% es relevante el nivel federal. AWS Frankfurt tiene C5 BSI.
+
+Si Brasil es el espejo de lo que México podría ser en América
+Latina, Alemania es el techo de lo que un sistema de protección
+de datos de salud puede llegar a ser cuando se construye con
+décadas de consistencia, múltiples capas normativas y una cultura
+institucional que trata la privacidad como un derecho fundamental
+irrenunciable. El caso alemán no se propone aquí como un modelo
+directamente replicable para México ---las diferencias de contexto
+son demasiado grandes--- sino como la referencia que permite
+calibrar con precisión qué tan lejos está México del estándar
+más exigente disponible, y qué implica ese estándar para el
+diseño técnico de NutriApp.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{El GDPR: el marco base que Alemania aplica con
+  más rigor que cualquier otro país de la Unión Europea.}
+  El Reglamento General de Protección de Datos de la Unión Europea
+  (GDPR, Reglamento UE 2016/679) entró en vigor el 25 de mayo de
+  2018 y es directamente aplicable en Alemania sin necesidad de
+  transposición legislativa (Reglamento UE 2016/679 [GDPR], 2016,
+  art.~99). Sus disposiciones para datos de salud son las más
+  estrictas del instrumento: el artículo~9 clasifica los datos
+  relativos a la salud como una categoría especial de datos
+  personales cuyo tratamiento está prohibido por defecto, salvo
+  que concurra alguna de las bases de legitimación expresamente
+  enumeradas ---entre ellas el consentimiento explícito del
+  interesado, la necesidad para fines de atención sanitaria o la
+  existencia de un interés público en el ámbito de la salud pública
+  (GDPR, 2016, art.~9, párr.~2). Las sanciones por infracción de
+  esta categoría pueden alcanzar los veinte millones de euros o
+  el cuatro por ciento de la facturación global anual de la empresa
+  infractora, la cifra que resulte más elevada (GDPR, 2016,
+  art.~83, párr.~5). Alemania no solo aplica el GDPR: es el país
+  de la Unión Europea con el mayor número de autoridades de
+  supervisión ---una por cada uno de sus dieciséis estados federados
+  (\textit{Länder}), más el Comisionado Federal para la Protección
+  de Datos e Información (BfDI) para los organismos federales---
+  coordinadas a través de la Conferencia de Protección de Datos
+  (DSK), que publica orientaciones y coordina la aplicación uniforme
+  del reglamento en todo el territorio nacional.
+
+  \item \textbf{El BDSG: la capa nacional que refuerza el GDPR
+  con sanciones penales propias.}
+  Alemania ejerció las cláusulas de apertura del GDPR para promulgar
+  su propia ley federal de protección de datos, la Bundesdatenschutzgesetz
+  (BDSG), que entró en vigor simultáneamente con el GDPR el 25 de
+  mayo de 2018 (Bundesdatenschutzgesetz [BDSG], 2018). El BDSG
+  complementa el reglamento europeo en áreas donde el GDPR delega
+  a los estados miembros la capacidad de legislar con mayor
+  especificidad: protección de datos en el contexto laboral,
+  facultades de las autoridades supervisoras y, de manera
+  particularmente relevante para el sector salud, sanciones penales
+  para violaciones comerciales de datos personales. La sección~42
+  del BDSG tipifica como delito penal la divulgación no autorizada
+  de datos personales con ánimo de enriquecimiento propio o de
+  terceros, con penas de prisión de hasta tres años o multa (BDSG,
+  2018, \S~42). Esto significa que en Alemania, un profesional de
+  la salud o un proveedor de software que commercialice datos de
+  pacientes sin autorización no solo enfrenta sanciones
+  administrativas del GDPR sino también responsabilidad penal
+  específica del BDSG. La LFPDPPP mexicana contempla sanciones
+  penales en sus artículos~62 al~64, pero limitadas a conductas
+  que involucren engaño o ánimo de lucro directo; el CPF amplía
+  esa responsabilidad a través de sus artículos~210 y~211 para
+  profesionistas, como se analizó en la sección~2.1.4 de este
+  documento. El BDSG alemán es más específico y más integrado con
+  el marco de protección de datos en su conjunto.
+
+  \item \textbf{El PDSG: la ley que digitalizó el sistema de salud
+  alemán y protegió los datos en ese proceso.}
+  En 2020, Alemania promulgó la Patientendatenschutzgesetz (PDSG),
+  la Ley de Protección de Datos de Pacientes, que regula
+  específicamente el procesamiento digital de información de salud
+  a través del expediente electrónico del paciente
+  (\textit{elektronische Patientenakte}, ePA), las recetas
+  electrónicas y las derivaciones digitales (Patientendatenschutzgesetz
+  [PDSG], 2020). El PDSG aplica a todas las organizaciones de salud
+  que utilizan la infraestructura telemática alemana ---hospitales,
+  consultorios médicos, farmacias, aseguradoras de salud--- con
+  independencia de su tamaño. A partir de 2021, las aseguradoras
+  de salud públicas quedaron obligadas a ofrecer a sus asegurados
+  un expediente electrónico de paciente, y desde 2024 ese expediente
+  se activa de forma predeterminada para todos los asegurados salvo
+  que estos opten explícitamente por no tenerlo (PDSG, 2020, en
+  relación con SGB~V \S~341). El PDSG no reemplaza al GDPR ni al
+  BDSG: los tres instrumentos coexisten y se aplican de forma
+  acumulativa. Para un software de salud que opere en Alemania,
+  cumplir el PDSG es una condición necesaria pero no suficiente:
+  también debe cumplir el GDPR y el BDSG de manera simultánea.
+  México no tiene ningún equivalente al PDSG: la NOM-024-SSA3-2012
+  es el instrumento técnico más cercano en especificidad, pero no
+  tiene el rango de ley ni la integración con el sistema nacional
+  de salud que el PDSG alemán establece.
+
+  \item \textbf{SGB V §393: la regulación de nube en salud más
+  exigente del mundo y su relevancia directa para NutriApp.}
+  En julio de 2024, Alemania promulgó la Digitalgesetz (Ley
+  Digital), que incorporó el artículo~393 al Quinto Libro del
+  Código de Seguridad Social (SGB~V), estableciendo requisitos
+  específicos y obligatorios para el uso de servicios de cómputo
+  en la nube en el sistema de salud alemán (SGB~V \S~393,
+  Digitalgesetz, 2024). Sus disposiciones son las más restrictivas
+  del mundo para este sector y tienen implicaciones directas para
+  cualquier arquitectura de software de salud:
+
+  \begin{itemize}
+    \item Los datos de salud y los datos sociales solo pueden
+    procesarse en servicios de nube ubicados dentro de Alemania,
+    dentro de otro Estado miembro de la Unión Europea o del Espacio
+    Económico Europeo, o en un tercer país que cuente con una
+    decisión de adecuación de la Comisión Europea (SGB~V \S~393,
+    párr.~1). Esto excluye, por ejemplo, el uso de servidores
+    ubicados en Estados Unidos salvo que el proveedor cuente con
+    esa decisión de adecuación, que actualmente no existe de forma
+    general para EE.UU.
+
+    \item La ley no reconoce las Cláusulas Contractuales Tipo
+    (Standard Contractual Clauses) como garantía suficiente para
+    la transferencia de datos de salud a terceros países sin
+    decisión de adecuación. Esta es una postura más restrictiva
+    que el propio GDPR, que sí acepta las SCCs como mecanismo
+    de transferencia internacional (SGB~V \S~393, párr.~1).
+
+    \item Todo proveedor de servicios de nube o software como
+    servicio (SaaS) que procese datos de salud en el sistema
+    alemán debe contar con una certificación vigente bajo el
+    catálogo C5 (Cloud Computing Compliance Criteria Catalogue)
+    del Bundesamt für Sicherheit in der Informationstechnik (BSI),
+    la Oficina Federal de Seguridad en Tecnología de la Información
+    de Alemania. A partir de julio de 2025, se requiere el
+    certificado C5 Tipo~2, que implica una auditoría independiente
+    y periódica de los controles de seguridad (SGB~V \S~393,
+    párr.~3).
+  \end{itemize}
+
+  La relevancia de esta regulación para NutriApp no es que la
+  plataforma opere en Alemania, sino que Amazon Web Services ---la
+  infraestructura seleccionada para NutriApp--- cuenta con
+  certificación C5 BSI en su región de Frankfurt (EU-West) y opera
+  centros de datos dentro de la Unión Europea que cumplen con los
+  requisitos de localización del SGB~V \S~393. Esto significa que
+  la arquitectura de NutriApp sobre AWS no es una decisión
+  arbitraria: es una elección de infraestructura que cumple con
+  el estándar de nube en salud más exigente del mundo sin
+  requerir modificaciones de diseño adicionales. El Reglamento
+  de la LFPDPPP mexicana, en su artículo~52, permite expresamente
+  el uso de servicios de cómputo en la nube siempre que el
+  proveedor ofrezca niveles de protección equivalentes a los que
+  exige la ley mexicana (RLFPDPPP, 2011, art.~52). AWS con
+  certificación C5 BSI supera con amplitud ese umbral.
+
+  \item \textbf{Lo que varía por estado alemán: autoridades
+  supervisoras y leyes sectoriales de salud.}
+  A diferencia de lo que ocurre con el GDPR, el BDSG y el PDSG
+  ---que son federales y aplican de forma uniforme en los dieciséis
+  estados--- Alemania tiene también una capa de regulación estatal
+  que es relevante para el sector salud. Cada Länder tiene su propia
+  autoridad supervisora de protección de datos con competencia sobre
+  los organismos públicos y las empresas privadas de ese territorio,
+  y puede publicar orientaciones o recomendaciones adicionales que
+  complementan las del BfDI federal. Adicionalmente, cada estado
+  tiene sus propias leyes hospitalarias, leyes de salud mental
+  (como la PsychKG de Berlín o la BayMRVG de Baviera) y, en el caso
+  de hospitales de patrocinio religioso, normativa eclesiástica
+  propia que puede establecer restricciones adicionales al
+  tratamiento de datos. Para los efectos de este caso de estudio,
+  estas capas estatales son matices que no alteran el argumento
+  central: la regulación federal alemana establece el estándar
+  más alto disponible, y ese es el nivel de referencia relevante
+  para evaluar el diseño de NutriApp.
+
+\end{enumerate}
+
+El caso alemán no es un modelo que México pueda ni deba replicar
+íntegramente: sus condiciones institucionales, su integración
+europea y su historia regulatoria en protección de datos son
+singulares. Lo que sí es replicable ---y lo que este caso de
+estudio propone como referencia de diseño--- es la lógica subyacente
+del SGB~V \S~393: cuando los datos de salud se procesan en la nube,
+el proveedor de esa nube debe poder demostrar, mediante certificación
+independiente, que cumple con estándares técnicos verificables.
+AWS lo hace. NutriApp lo aprovecha. México no lo exige todavía,
+pero elegir una infraestructura que ya cumple el estándar más
+estricto del mundo es una decisión de diseño que tiene consecuencias
+directas sobre la confianza que el sistema puede generar en los
+pacientes y en los propios profesionales que lo usen.
+
+% ────────────────────────────────────────────────────────────────────────────
 \subsubsection{Cuadro comparativo regional}
-\mbox{}
-% Sugerencia: tabla comparativa de leyes
-% \begin{table}[H]
-%   \centering
-%   \caption{Comparativo regional de leyes de protección de datos.}
-%   \label{tab:comparativo}
-%   \begin{tabularx}{\textwidth}{l X X X}
-%     \toprule
-%     \textbf{Criterio} & \textbf{México (LFPDPPP)} & \textbf{Brasil (LGPD)} & \textbf{Argentina (Ley 25.326)} \\
-%     \midrule
-%     Año               & 2010                      & 2018                   & 2000                            \\
-%     Autoridad         & INAI                      & ANPD                   & AAIP                            \\
-%     ...               & ...                       & ...                    & ...                             \\
-%     \bottomrule
-%   \end{tabularx}
-% \end{table}
+% NOTA: Tabla dividida en dos partes para mantener legibilidad
+% en formato A4 portrait. Tabla 1: criterios legales e institucionales
+% (filas 1-5). Tabla 2: criterios técnicos y sancionadores (filas 6-9).
+% Ambas usan tabularx con columna de criterios en p{2.8cm}.
 
+El cuadro siguiente sintetiza los nueve criterios más relevantes
+para este caso de estudio en los cinco marcos normativos analizados.
+Su función no es repetir el análisis narrativo de las subsecciones
+anteriores sino ofrecer una referencia visual de consulta rápida
+que permita identificar de un solo vistazo en qué dimensiones
+México se encuentra por debajo, a la par o por encima de cada
+uno de los sistemas comparados. Los criterios se seleccionaron
+por su relevancia directa para el diseño de NutriApp y para
+la práctica del nutriólogo de consulta privada. Por razones de
+legibilidad, el cuadro se presenta en dos partes: la primera
+concentra los criterios legales e institucionales; la segunda,
+los criterios técnicos y sancionadores.
+
+% ── TABLA 1: Criterios legales e institucionales ──────────────────
+\begin{table}[H]
+  \centering
+  \caption{Comparativo de marcos normativos en protección de datos
+  de salud --- Parte~1: criterios legales e institucionales.}
+  \label{tab:comparativo-legal}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{1.8cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Criterio}
+      & \textbf{México}
+      & \textbf{Brasil}
+      & \textbf{Uruguay}
+      & \textbf{EE.UU.}
+      & \textbf{Alemania} \\
+    \midrule
+
+    \textbf{1. Ley principal vigente}
+      & LFPDPPP (2025). Reemplaza a la ley de 2010. Principios y
+        derechos ARCO se mantienen con ajustes en sanciones y
+        autoridad.
+      & Lei Geral de Proteção de Dados Pessoais --- LGPD
+        (Lei 13.709/2018). Vigente desde septiembre de 2020.
+        Diseñada con el GDPR europeo como modelo explícito.
+      & Ley 18.331/2008 y Decreto Reglamentario 414/009.
+        La ley más antigua de la región aún vigente sin
+        sustitución. Alineada al Convenio~108 del Consejo de
+        Europa desde su origen.
+      & No existe ley federal unificada de protección de datos.
+        El sector salud se rige por HIPAA (1996) complementada
+        por el HITECH Act (2009). Cada estado puede añadir
+        capas adicionales.
+      & GDPR (Reglamento UE 2016/679) como base directamente
+        aplicable, complementado por el BDSG (2018) y el PDSG
+        (2020) para el sector salud específicamente. \\
+    \addlinespace
+
+    \textbf{2. Autoridad reguladora}
+      & Secretaría Anticorrupción y Buen Gobierno (SABG).
+        Dependiente del Ejecutivo Federal desde marzo 2025.
+        Reemplazó al INAI, que era autónomo constitucionalmente
+        desde 2014.
+      & Autoridade Nacional de Proteção de Dados (ANPD).
+        Independiente del Ejecutivo. Directores con mandatos
+        fijos de cuatro años no removibles por razones políticas.
+      & Unidad Reguladora y de Control de Datos Personales
+        (URCDP). Independiente. Con potestad de suspender
+        tratamientos y solicitar clausura judicial de bases
+        de datos en casos graves.
+      & Departamento de Salud y Servicios Humanos (HHS) a
+        nivel federal, a través de su Oficina de Derechos
+        Civiles (OCR). Cada estado tiene además su propia
+        autoridad de protección de datos para leyes estatales.
+      & Comisionado Federal para la Protección de Datos e
+        Información (BfDI) para organismos federales. Cada
+        uno de los 16 Länder tiene su propia autoridad
+        supervisora estatal. Coordinadas por la Conferencia
+        de Protección de Datos (DSK). \\
+    \addlinespace
+
+    \textbf{3. Datos de salud como sensibles}
+      & Sí. Definidos como datos personales sensibles en el
+        art.~2, fracc.~VI de la LFPDPPP 2025. Incluyen estado
+        de salud presente o futuro e información genética.
+        Activan régimen de obligaciones reforzado.
+      & Sí. Clasificados como datos personales sensibles en
+        el art.~5°, inc.~II de la LGPD. Incluyen datos
+        referentes a la salud o a la vida sexual. Tratamiento
+        sujeto a bases legítimas específicas.
+      & Sí. Definidos como datos sensibles en el art.~18 de
+        la Ley 18.331. Incluyen salud, origen racial, opiniones
+        políticas, convicciones religiosas y vida sexual.
+        Protección reforzada por defecto.
+      & Sí. Clasificados como Protected Health Information
+        (PHI) bajo HIPAA cuando son generados, usados o
+        divulgados por covered entities. Las leyes estatales
+        (CCPA, CMIA en California) amplían la cobertura
+        a datos de salud no cubiertos por HIPAA.
+      & Sí. Categoría especial de datos personales bajo el
+        art.~9 del GDPR. Tratamiento prohibido por defecto
+        salvo que concurra alguna de las bases de legitimación
+        expresamente enumeradas en el párrafo~2 del mismo
+        artículo. \\
+    \addlinespace
+
+    \textbf{4. Consentimiento expreso por escrito}
+      & Sí. Doble obligación: art.~8 LFPDPPP 2025 (firma
+        autógrafa o electrónica) y art.~51~Bis~2° de la Ley
+        General de Salud (constancia en expediente clínico).
+        Dos autoridades distintas pueden sancionar el
+        incumplimiento de forma independiente.
+      & Sí. Art.~8° LGPD. El consentimiento debe ser libre,
+        informado, inequívoco y otorgado para una finalidad
+        determinada. Puede ser revocado en cualquier momento
+        sin perjuicio para el titular.
+      & Sí. Art.~9 Ley 18.331. Consentimiento informado y
+        previo del titular. La revocación es posible en
+        cualquier momento. Para datos sensibles el consentimiento
+        debe ser expreso y documentado.
+      & Sí. HIPAA Privacy Rule (45 CFR \S~164.508) exige
+        autorización escrita del paciente para usos y
+        divulgaciones no cubiertos por las excepciones de
+        tratamiento, pago y operaciones de salud. Para usos
+        no rutinarios la autorización debe especificar
+        finalidad, destinatario y fecha de vencimiento.
+      & Sí. Art.~9, párr.~2, inc.~a del GDPR. Para datos
+        de salud el consentimiento debe ser explícito ---no
+        basta el consentimiento general--- y el responsable
+        debe poder demostrar que fue otorgado. \\
+    \addlinespace
+
+    \textbf{5. Notificación de brechas de seguridad}
+      & Sí. Art.~20 LFPDPPP 2025. Obligación de notificar
+        al titular y a la SABG cuando ocurre una vulneración
+        que afecte significativamente sus derechos. Sin plazo
+        específico definido en la ley; la ambigüedad dificulta
+        la comparación con estándares internacionales.
+      & Sí. Art.~48 LGPD. El controlador debe comunicar
+        a la ANPD y a los titulares afectados los incidentes
+        que puedan generar riesgo o daño relevante. La ANPD
+        ha establecido 72~horas como plazo de referencia para
+        la notificación inicial a la autoridad.
+      & Sí. Art.~31 Decreto 414/009. Plazo de 72~horas para
+        notificar tanto a la URCDP como a los titulares
+        afectados. Equiparable al estándar europeo en
+        especificidad y oportunidad.
+      & Sí. HIPAA Breach Notification Rule (45 CFR
+        \S~164.400--414). Plazo de 60~días para notificar
+        al HHS y a los individuos afectados. Para brechas
+        que involucren más de 500 personas en un estado,
+        también se requiere notificación a medios de
+        comunicación prominentes del estado.
+      & Sí. Art.~33 GDPR. Plazo de 72~horas para notificar
+        a la autoridad supervisora competente desde que el
+        responsable tiene conocimiento de la brecha. Art.~34
+        GDPR obliga adicionalmente a notificar a los titulares
+        cuando la brecha entraña un alto riesgo para sus
+        derechos y libertades. \\
+
+    \bottomrule
+  \end{tabularx}
+
+  \smallskip
+  \small\textit{Nota.} ARCO = Acceso, Rectificación, Cancelación
+  y Oposición. PHI = Protected Health Information. GDPR = General
+  Data Protection Regulation. Elaboración propia con base en las
+  fuentes citadas en este capítulo.
+\end{table}
+
+% ── TABLA 2: Criterios técnicos y sancionadores ───────────────────
+\begin{table}[H]
+  \centering
+  \caption{Comparativo de marcos normativos en protección de datos
+  de salud --- Parte~2: criterios técnicos y sancionadores.}
+  \label{tab:comparativo-tecnico}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{1.8cm}
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X
+    >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Criterio}
+      & \textbf{México}
+      & \textbf{Brasil}
+      & \textbf{Uruguay}
+      & \textbf{EE.UU.}
+      & \textbf{Alemania} \\
+    \midrule
+
+    \textbf{6. Portabilidad de datos}
+      & No contemplada explícitamente en la LFPDPPP vigente.
+        Los derechos ARCO incluyen acceso y cancelación, pero
+        no el derecho a transferir datos a otro responsable
+        en formato utilizable.
+      & Sí. Art.~18, inc.~V LGPD. El titular puede solicitar
+        la portabilidad de sus datos a otro proveedor de
+        servicio o producto mediante solicitud expresa,
+        observando secretos comerciales e industriales.
+      & Sí. Art.~14 Ley 18.331. El titular tiene derecho a
+        obtener sus datos en formato estructurado y transferible.
+        Incluido desde la redacción original de la ley en 2008.
+      & Parcial. HIPAA garantiza el derecho de acceso y copia
+        del expediente en formato electrónico (45 CFR
+        \S~164.524). La portabilidad amplia ---transferencia
+        directa a otro proveedor--- está contemplada en la
+        CCPA de California pero no en HIPAA federal.
+      & Sí. Art.~20 GDPR. El titular tiene derecho a recibir
+        sus datos en formato estructurado, de uso común y
+        lectura mecánica, y a transmitirlos a otro responsable
+        sin que el primero lo impida. \\
+    \addlinespace
+
+    \textbf{7. Sanciones máximas}
+      & Hasta 320,000 veces la UMA (\textasciitilde\$36.2~mdp)
+        por infracción grave; duplicables cuando involucran
+        datos sensibles de salud (\textasciitilde\$72.4~mdp).
+        Sanciones penales adicionales bajo CPF arts.~210--211:
+        hasta 5~años de prisión para profesionistas que revelen
+        datos de pacientes.
+      & Hasta el 2\% del faturamento (facturación) del grupo
+        en Brasil en el último ejercicio fiscal, con tope de
+        50~millones de reales por infracción
+        (\textasciitilde\$180~mdp MXN aprox.). Modelo
+        proporcional al tamaño del infractor, a diferencia
+        del modelo de monto fijo mexicano.
+      & Amonestación, multa económica cuyo monto varía según
+        la gravedad, suspensión del tratamiento de datos por
+        hasta 5~días y clausura de la base de datos como
+        medida más severa (esta última requiere control
+        judicial previo).
+      & Multas civiles del HHS de hasta USD~1.9~millones por
+        categoría de violación por año calendario. Sanciones
+        penales bajo HITECH Act: hasta USD~250,000 y 10~años
+        de prisión en los casos más graves que involucren
+        divulgación con ánimo de lucro.
+      & Hasta 20~millones de euros o el 4\% de la facturación
+        global anual del grupo, la cifra que resulte más
+        elevada (art.~83, párr.~5 GDPR). Sanciones penales
+        adicionales bajo el \S~42 del BDSG: hasta 3~años de
+        prisión para violaciones comerciales de datos
+        personales, incluyendo datos de salud. \\
+    \addlinespace
+
+    \textbf{8. Alineación con GDPR europeo}
+      & Parcial. La LFPDPPP comparte principios estructurales
+        con el GDPR (finalidad, proporcionalidad, consentimiento,
+        responsabilidad) pero no cuenta con una decisión de
+        adecuación formal reconocida por la Comisión Europea,
+        lo que limita la transferencia de datos entre México
+        y la UE.
+      & Alta. La LGPD fue diseñada explícitamente con el GDPR
+        como modelo. La Emenda Constitucional n°~115/2022
+        elevó la protección de datos a derecho fundamental,
+        equiparando a Brasil con el estándar europeo en el
+        nivel constitucional.
+      & Alta. Única ley de protección de datos de América
+        Latina basada en el Convenio~108 del Consejo de
+        Europa. Uruguay ratificó ese Convenio en 2013,
+        convirtiéndose en el primer Estado no europeo en
+        adherirse al instrumento del que derivó el GDPR.
+      & Baja a nivel federal. HIPAA es anterior al GDPR y
+        estructuralmente diferente: no contempla portabilidad
+        general, no exige DPO y tiene un enfoque sectorial.
+        La CCPA de California presenta mayor convergencia con
+        el GDPR en derechos del consumidor y opt-out de venta
+        de datos.
+      & Total. El GDPR es directamente aplicable en Alemania
+        sin necesidad de transposición. El BDSG y el PDSG
+        lo complementan mediante las cláusulas de apertura
+        del reglamento europeo sin contradecir ninguna de
+        sus disposiciones. \\
+    \addlinespace
+
+    \textbf{9. Marco técnico obligatorio para software de salud}
+      & NOM-004-SSA3-2012 (expediente clínico: contenido,
+        confidencialidad, conservación mínima 5~años) y
+        NOM-024-SSA3-2012 (ECE: cifrado, autenticación de
+        usuarios, trazabilidad de accesos). Ambas obligatorias
+        si se adopta un sistema electrónico. Sin embargo,
+        ninguna norma obliga al profesional a adoptar un
+        sistema digital: un nutriólogo puede operar con papel
+        o Excel sin incumplir ninguna obligación de adoptar
+        tecnología específica.
+      & Resoluciones del Conselho Federal de Medicina (CFM)
+        por tipo de servicio: CFM 2.299/2021 para documentos
+        médicos electrónicos (firma digital ICP-Brasil,
+        cifrado en tránsito); CFM 2.314/2022 para
+        telemedicina (datos clínicos bajo LGPD). No existe
+        una norma única equivalente a la NOM-024 que
+        establezca requerimientos técnicos unificados para
+        todo sistema de expediente clínico electrónico.
+      & Decreto 242/017 y Ordenanza MSP N°~1085/2017.
+        Historia Clínica Electrónica obligatoria para todos
+        los prestadores de salud públicos y privados sin
+        excepción de tamaño ni especialidad. Los principios
+        técnicos del sistema nacional (finalidad, veracidad,
+        completitud, reserva, accesibilidad) son de observancia
+        obligatoria. México tiene la norma técnica equivalente
+        (NOM-024) pero no la obligación de adoptarla.
+      & HIPAA Security Rule (45 CFR \S~164.300--318):
+        salvaguardas administrativas, físicas y técnicas
+        obligatorias para toda ePHI. El HITECH Act extendió
+        estas obligaciones directamente a los business
+        associates (proveedores de software). La propuesta
+        NPRM 2025 eliminará la distinción entre salvaguardas
+        \textit{required} y \textit{addressable}, convirtiendo
+        el cifrado de ePHI y la autenticación multifactor (MFA)
+        en obligaciones absolutas sin excepción posible.
+      & PDSG + SGB~V \S~393 (Digitalgesetz 2024). Los datos
+        de salud procesados en la nube solo pueden almacenarse
+        en Alemania, en otro Estado de la UE/EEA o en un
+        tercer país con decisión de adecuación de la Comisión
+        Europea. Las Cláusulas Contractuales Tipo no son
+        aceptadas como garantía suficiente. Todo proveedor
+        de nube o SaaS en salud debe contar con certificación
+        C5~BSI vigente (Tipo~2 desde julio 2025). AWS opera
+        regiones dentro de la UE con certificación C5~BSI,
+        lo que hace la arquitectura de NutriApp compatible
+        con este estándar sin modificaciones de diseño. \\
+
+    \bottomrule
+  \end{tabularx}
+
+  \smallskip
+  \small\textit{Nota.} UMA = Unidad de Medida y Actualización
+  (valor 2025: \$113.14 pesos diarios). PHI = Protected Health
+  Information. ECE = Expediente Clínico Electrónico. HCE = Historia
+  Clínica Electrónica. NPRM = Notice of Proposed Rulemaking.
+  SaaS = Software as a Service. Las equivalencias monetarias son
+  aproximadas al tipo de cambio de referencia de enero de 2026.
+  Elaboración propia con base en las fuentes citadas en este
+  capítulo.
+\end{table}
+
+Lo que el cuadro anterior revela no es que México esté en el
+peor lugar del análisis en todas las dimensiones: en el criterio
+de marco técnico obligatorio para software de salud, las NOMs
+mexicanas son el instrumento más específico y el único de la
+región que establece requerimientos técnicos concretos de cifrado,
+autenticación y trazabilidad en una sola norma. El problema no
+es la norma; es que nadie está obligado a usarla. En portabilidad
+y en notificación de brechas con plazo definido, México está por
+debajo de Brasil, Uruguay y Alemania. En independencia de la
+autoridad reguladora, México retrocedió en 2025 respecto a todos
+los países del comparativo. Y en la dimensión más crítica para
+el argumento central de este caso de estudio ---la responsabilidad
+del software de salud como sujeto obligado ante la ley--- México
+no tiene ningún mecanismo equivalente al Business Associate
+Agreement estadounidense ni al esquema de certificación de nube
+del SGB~V \S~393 alemán. NutriApp no puede cambiar el marco legal
+mexicano, pero puede adoptar por diseño los estándares que ese
+marco todavía no exige.
+
+% ────────────────────────────────────────────────────────────────────────────
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Análisis crítico de la ley mexicana}
-\mbox{}
+% PÁRRAFO INTRODUCTORIO DE SUBSECCIÓN
+El recorrido por los marcos normativos de Brasil, Uruguay, Estados
+Unidos y Alemania no tiene sentido si no se traduce en una
+evaluación concreta de la posición de México. Esta subsección
+hace ese ejercicio: identifica lo que la LFPDPPP y su ecosistema
+normativo tienen de sólido ---porque sí hay elementos que México
+construyó mejor que otros países de la región--- y lo que el
+comparativo reveló como ausencias reales con consecuencias
+prácticas para el nutriólogo de consulta privada y para el diseño
+de NutriApp. El objetivo no es emitir un veredicto sobre la ley
+sino calibrar con precisión qué problemas puede resolver una
+solución tecnológica y cuáles requieren cambios que están fuera
+del alcance de este caso de estudio.
+% ────────────────────────────────────────────────────────────────────────────
 
-\subsubsection{Fortalezas}
-\mbox{}
-% NOTA: Hablar de lo fuerte y respaldada que es tanto por la ley
-% como el reglamento.
+\subsubsection{Fortalezas del marco normativo mexicano}
+% NOTA: Lo que México tiene y que ningún otro país del comparativo
+% tiene igual: NOMs como único marco técnico obligatorio específico
+% para ECE en la región, doble anclaje constitucional, doble
+% obligación de consentimiento LFPDPPP + LGS, Reglamento de 2011
+% como instrumento técnico que cerró huecos.
 
-\subsubsection{Debilidades: la ambigüedad técnica}
-\mbox{}
-% NOTA: Debilidades técnicas y de sustento, así como la comparativa
-% directa con los países del punto 2.2.
+El análisis comparativo reveló algo que no siempre se reconoce
+en los debates sobre protección de datos en México: el país tiene
+instrumentos normativos que no existen en ningún otro país de la
+comparativa y que, bien aplicados, establecerían un estándar
+técnico-legal superior al de Brasil, Uruguay y, en aspectos
+específicos, al de Estados Unidos. El problema no es la ausencia
+de herramientas sino su subutilización sistemática.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{Las Normas Oficiales Mexicanas: el único marco
+  técnico obligatorio y específico para el expediente clínico
+  electrónico en toda la región.}
+  Ningún país del análisis comparativo tiene un equivalente a la
+  combinación NOM-004-SSA3-2012 y NOM-024-SSA3-2012. Brasil opera
+  con resoluciones gremiales del CFM dispersas por tipo de servicio,
+  sin una norma única que establezca requerimientos técnicos
+  unificados para todo sistema de expediente clínico electrónico.
+  Uruguay tiene el Decreto~242/017 y la Ordenanza MSP~1085/2017,
+  que obligan a adoptar la historia clínica electrónica pero no
+  especifican con el mismo nivel de detalle técnico los requisitos
+  de cifrado, autenticación y trazabilidad que la NOM-024 establece.
+  Estados Unidos tiene la HIPAA Security Rule, que es comparable
+  en rigor pero de alcance sectorial y sin la especificidad
+  diagnóstica del expediente clínico que la NOM-004 proporciona.
+  Alemania tiene el PDSG y el SGB~V \S~393, pero estos instrumentos
+  regulan el ecosistema digital de salud en su conjunto, no el
+  expediente clínico como documento clínico-legal en sí mismo.
+  La NOM-004 establece con precisión qué debe contener un
+  expediente de nutriología, cómo debe conservarse y por cuánto
+  tiempo, y la NOM-024 traduce esas obligaciones en requerimientos
+  técnicos verificables para cualquier sistema electrónico que lo
+  gestione. Ese nivel de especificidad clínica integrada con
+  requerimientos técnicos de seguridad es una fortaleza singular
+  del marco mexicano que ningún otro país de la comparativa ha
+  logrado en un solo instrumento normativo.
+
+  \item \textbf{Doble anclaje constitucional: la protección de
+  datos como derecho fundamental en dos artículos independientes.}
+  México reconoció la protección de datos personales como derecho
+  fundamental en la Constitución en dos momentos distintos y con
+  dos enfoques complementarios. La reforma de 2007 al artículo~6°
+  estableció el derecho de acceso a la información y la protección
+  de datos en el ámbito gubernamental. La reforma de 2009 al
+  artículo~16 extendió ese reconocimiento a todos los particulares,
+  estableciendo el derecho de toda persona a la protección de sus
+  datos personales y los derechos ARCO como garantías
+  constitucionales (CPEUM, 1917/2024, arts.~6° y~16). Este doble
+  anclaje constitucional es más robusto que el de Uruguay, cuya
+  Ley~18.331 tiene rango legal ordinario, y comparable al de
+  Brasil, que elevó la protección de datos a derecho fundamental
+  mediante la Emenda Constitucional n°~115 en 2022 ---trece años
+  después de que México lo hiciera. En la Unión Europea, el GDPR
+  tiene rango reglamentario europeo y se apoya en la Carta de
+  Derechos Fundamentales de la UE, no en las constituciones
+  nacionales de cada Estado miembro. El anclaje constitucional
+  mexicano es, en términos de jerarquía normativa, una fortaleza
+  real que protege el derecho frente a cambios legislativos
+  ordinarios.
+
+  \item \textbf{Doble obligación de consentimiento: la intersección
+  LFPDPPP y Ley General de Salud como el estándar más exigente
+  del análisis para el sector salud.}
+  Ningún otro país del comparativo establece para el sector salud
+  una doble obligación de consentimiento escrito proveniente de
+  dos leyes independientes con autoridades sancionadoras distintas.
+  En México, el nutriólogo que no cuenta con el consentimiento
+  firmado de su paciente está en incumplimiento simultáneo de la
+  LFPDPPP (art.~8) y de la Ley General de Salud (art.~51~Bis~2°),
+  lo que activa dos vías sancionadoras paralelas: la administrativa
+  de la SABG por la LFPDPPP y la sanitaria de la COFEPRIS por la
+  LGS. Brasil exige consentimiento bajo la LGPD, pero no tiene
+  una ley de salud que duplique esa obligación de forma independiente.
+  Uruguay exige consentimiento bajo la Ley~18.331, pero sin el
+  refuerzo de una ley sanitaria equivalente a la LGS mexicana.
+  Estados Unidos exige autorización escrita bajo HIPAA, pero no
+  tiene una segunda ley que genere responsabilidad simultánea ante
+  una autoridad distinta por el mismo acto. Este doble anclaje
+  legal del consentimiento ---que en 2.1.3 se describió como una
+  aparente redundancia--- es en realidad una fortaleza estructural
+  que hace al sistema mexicano más difícil de evadir en el sector
+  salud: no basta con cumplir una sola ley, hay que cumplir las dos.
+
+  \item \textbf{El Reglamento de 2011: el instrumento técnico que
+  adelantó soluciones que otras leyes tardaron años en incorporar.}
+  El Reglamento de la LFPDPPP, publicado en diciembre de 2011,
+  fue en su momento uno de los instrumentos reglamentarios más
+  detallados de América Latina en materia de protección de datos.
+  Sus artículos~57 y~61 establecieron desde entonces obligaciones
+  que países como Brasil apenas incorporaron con la LGPD en 2018:
+  medidas de seguridad aplicables con independencia del sistema
+  de tratamiento (art.~57), inventario de datos, análisis de
+  riesgos y análisis de brecha como procedimientos formales
+  obligatorios (art.~61). El artículo~52 del Reglamento fue
+  también uno de los primeros instrumentos legales en América
+  Latina en reconocer expresamente el uso de servicios de cómputo
+  en la nube como mecanismo legítimo de tratamiento de datos,
+  estableciendo como condición que el proveedor ofrezca niveles
+  de protección equivalentes a los de la ley mexicana (RLFPDPPP,
+  2011, art.~52). Ese artículo es el fundamento legal que respalda
+  el uso de Amazon Web Services como infraestructura de NutriApp,
+  y fue redactado catorce años antes de que Alemania promulgara
+  el SGB~V \S~393 para regular el mismo tema con mayor especificidad.
+
+\end{enumerate}
+
+Lo que estas fortalezas tienen en común es que ninguna es visible
+para el nutriólogo promedio. Las NOMs existen pero nadie las
+aplica en consultorios privados. El doble anclaje constitucional
+existe pero no se traduce en capacitación ni en requisitos de
+cumplimiento para el gremio. La doble obligación de consentimiento
+existe pero la mayoría de los consultorios opera sin un solo
+documento firmado. El Reglamento existe pero sus obligaciones
+de inventario y análisis de riesgo son desconocidas para quien
+no tiene asesoría legal especializada. La fortaleza del marco
+normativo mexicano es real, pero es una fortaleza en papel. Su
+conversión en práctica cotidiana es precisamente el problema que
+este caso de estudio busca atender.
 
 % ────────────────────────────────────────────────────────────────────────────
-\subsection{Traducción de la ley a requerimientos de software (Privacy by Design)}
-\mbox{}
-% NOTA: ¿Qué requerimientos técnicos son un must?
-% Así como las propias debilidades de estos.
+
+\subsubsection{Debilidades: la ambigüedad técnica y las ausencias
+estructurales}
+% NOTA: Lo que el comparativo reveló que México no tiene:
+% sin portabilidad explícita, brechas sin plazo, autoridad
+% dependiente del Ejecutivo, NOMs opcionales de facto, sin
+% responsabilidad directa del proveedor de software, sin DPO.
+
+Si las fortalezas del marco mexicano son reales pero invisibles,
+sus debilidades son visibles pero poco discutidas. El análisis
+comparativo de la sección anterior permite identificarlas con
+precisión: no como fallas de diseño teóricas sino como ausencias
+concretas que tienen consecuencias medibles para el nutriólogo
+que recibe una queja de un paciente, para el desarrollador de
+software que quiere saber cuáles son sus obligaciones legales y
+para el paciente que quiere saber si sus datos de salud están
+protegidos.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{La portabilidad de datos no existe: un derecho
+  que México no ha reconocido explícitamente.}
+  Brasil la incorporó en la LGPD desde 2018. Uruguay la tiene
+  desde la Ley~18.331 de 2008. El GDPR europeo la reconoce en
+  su artículo~20. La LFPDPPP mexicana de 2025 contempla los
+  derechos ARCO ---Acceso, Rectificación, Cancelación y
+  Oposición--- pero no la portabilidad como derecho autónomo.
+  Para el paciente de un nutriólogo, esto significa que puede
+  solicitar una copia de su expediente (derecho de acceso) y
+  puede exigir que lo eliminen (derecho de cancelación), pero
+  no puede exigir que su expediente le sea entregado en un
+  formato estructurado y transferible que otro profesional o
+  sistema pueda usar directamente. La diferencia entre acceso
+  y portabilidad no es semántica: el acceso da una copia, la
+  portabilidad da interoperabilidad. En un sector donde los
+  pacientes cambian de nutriólogo, de ciudad o de plataforma,
+  la ausencia de portabilidad explícita fragmenta la continuidad
+  del cuidado y concentra el historial clínico en el profesional
+  que lo generó, no en el paciente al que pertenece.
+
+  \item \textbf{La notificación de brechas no tiene plazo: una
+  obligación sin dientes operativos.}
+  El artículo~20 de la LFPDPPP 2025 obliga a notificar las
+  vulneraciones de seguridad que afecten significativamente los
+  derechos de los titulares, pero no establece un plazo concreto
+  para hacerlo. Brasil tiene 72~horas como referencia de la ANPD.
+  Uruguay tiene 72~horas por decreto. El GDPR europeo tiene
+  72~horas en su artículo~33. La HIPAA Breach Notification Rule
+  tiene 60~días. México no tiene ninguno. Esta ambigüedad tiene
+  consecuencias prácticas: sin un plazo definido, no hay criterio
+  claro para determinar si una notificación fue oportuna o tardía,
+  lo que dificulta la sanción del incumplimiento y desincentiva
+  la notificación proactiva. Para el nutriólogo que sufre una
+  brecha de seguridad ---un equipo robado con expedientes sin
+  cifrar, un acceso no autorizado a una hoja de cálculo
+  compartida--- la ausencia de un plazo definido genera incertidumbre
+  sobre cuándo y cómo debe actuar, y para el paciente afectado
+  significa que no hay garantía de ser informado en un tiempo
+  razonable.
+
+  \item \textbf{La autoridad reguladora perdió su independencia
+  en 2025: el retroceso institucional más significativo del
+  período analizado.}
+  Entre 2014 y 2025, México operó con el INAI como organismo
+  constitucional autónomo con independencia real del Ejecutivo,
+  equiparable en diseño institucional a la ANPD brasileña y a
+  la URCDP uruguaya. La extinción del INAI en marzo de 2025 y
+  la transferencia de sus funciones a la Secretaría Anticorrupción
+  y Buen Gobierno ---un organismo que depende directamente del
+  Ejecutivo Federal--- representa el retroceso más significativo
+  del marco normativo mexicano en el período analizado. Ningún
+  otro país del comparativo ha tomado una decisión equivalente:
+  Brasil mantiene la ANPD independiente, Uruguay mantiene la
+  URCDP independiente, Estados Unidos mantiene el HHS como
+  organismo federal con autonomía técnica, y Alemania opera con
+  dieciséis autoridades supervisoras estatales más el BfDI
+  federal, ninguna de las cuales depende del gobierno de turno.
+  Las implicaciones para el nutriólogo son concretas: la autoridad
+  ante la que debe responder si un paciente presenta una queja
+  es ahora parte del Ejecutivo que, en teoría, esa misma
+  dependencia debería vigilar. La percepción de imparcialidad
+  en la resolución de conflictos entre particulares y la
+  confianza en el sistema se ven afectadas por este cambio
+  estructural independientemente de la competencia técnica de
+  los funcionarios que lo integren.
+
+  \item \textbf{Las NOMs son opcionales de facto: la norma
+  técnica más específica de la región no obliga a nadie a
+  adoptarla.}
+  La NOM-024-SSA3-2012 establece requerimientos técnicos de
+  cifrado, autenticación y trazabilidad que ningún otro país de
+  la comparativa tiene en un solo instrumento obligatorio. Pero
+  esa obligatoriedad tiene un límite crítico: aplica solo si el
+  profesional o establecimiento decide adoptar un sistema de
+  expediente clínico electrónico. Nadie está obligado a hacerlo.
+  Un nutriólogo puede llevar sus expedientes en papel, en una
+  hoja de cálculo o en una aplicación cualquiera sin violar
+  ninguna norma que lo obligue a usar un sistema que cumpla
+  con la NOM-024. Uruguay cerró esta brecha en 2017 con el
+  Decreto~242/017, que hace la historia clínica electrónica
+  obligatoria para todos los prestadores sin excepción. Colombia
+  la está cerrando con la Ley~2015/2020 y la Resolución~1888/2025.
+  México tiene la norma técnica más detallada de la región pero
+  no ha tomado la decisión política de hacerla mandatoria. Ese
+  es el vacío más específico que NutriApp busca ocupar: no
+  esperar a que la ley lo exija, sino ofrecer desde hoy el
+  estándar que la evidencia comparada indica que tarde o temprano
+  será necesario cumplir.
+
+  \item \textbf{El proveedor de software no es sujeto obligado:
+  la ausencia más crítica para el ecosistema digital de salud.}
+  En Estados Unidos, el HITECH Act de 2009 convirtió a los
+  business associates ---proveedores de software que procesan
+  datos de salud--- en sujetos directamente responsables del
+  cumplimiento de la HIPAA Security Rule ante el HHS. En
+  Alemania, el SGB~V \S~393 obliga a los proveedores de nube
+  que procesan datos de salud a contar con certificación C5~BSI
+  independientemente de quién sea su cliente. En México, la
+  LFPDPPP establece que el responsable del tratamiento es el
+  nutriólogo o el establecimiento que contrata el software, no
+  el desarrollador que lo crea ni el proveedor de nube que lo
+  hospeda. El Reglamento de la LFPDPPP establece en su
+  artículo~51 que la relación entre responsable y encargado
+  debe formalizarse en un contrato, pero ese contrato no tiene
+  un formato estandarizado ni obligaciones mínimas definidas
+  equivalentes al Business Associate Agreement estadounidense.
+  Esto significa que cualquier desarrollador puede crear una
+  aplicación de nutrición en México, almacenar los expedientes
+  de miles de pacientes en un servidor sin cifrado, sin
+  autenticación robusta y sin registros de acceso, y no violar
+  ninguna ley directamente: la responsabilidad legal recae
+  sobre el nutriólogo que contrató la aplicación, no sobre
+  quien la desarrolló. Esta asimetría de responsabilidades
+  desincentiva la inversión en seguridad por parte de los
+  desarrolladores y deja al nutriólogo en una posición de
+  vulnerabilidad legal que no controla completamente.
+
+  \item \textbf{Sin figura de Delegado de Protección de Datos:
+  la ausencia de un responsable interno de cumplimiento.}
+  El GDPR europeo exige la designación de un Data Protection
+  Officer (DPO) para organizaciones que traten datos de salud
+  a gran escala (GDPR, 2016, art.~37). Uruguay promueve la
+  figura del Delegado de Protección de Datos como mecanismo
+  interno de supervisión y cumplimiento a través de la URCDP.
+  Brasil contempla la figura del Encarregado de Proteção de
+  Dados en el artículo~41 de la LGPD como obligación para
+  todos los controladores. La LFPDPPP mexicana no establece
+  ninguna figura equivalente ni para el sector salud ni para
+  ningún otro sector. Esto significa que en un consultorio de
+  nutrición en México no hay ninguna persona formalmente
+  designada para supervisar el cumplimiento de las obligaciones
+  de protección de datos, responder solicitudes ARCO, gestionar
+  incidentes de seguridad o mantener el inventario de datos
+  que el artículo~61 del Reglamento exige. La ausencia de esta
+  figura no es solo un vacío normativo: es una ausencia de
+  accountability interno que hace que el cumplimiento dependa
+  de la iniciativa individual del nutriólogo en lugar de estar
+  institucionalizado en el funcionamiento ordinario del
+  consultorio.
+
+\end{enumerate}
+
+Lo que estas debilidades tienen en común es que ninguna requiere
+una reforma constitucional para resolverse: la portabilidad puede
+incorporarse en un decreto o reglamento; el plazo de notificación
+de brechas puede establecerse en una circular de la SABG; la
+figura del encargado de cumplimiento puede promoverse sin necesidad
+de reforma legal. Lo que sí requieren es voluntad institucional
+y una autoridad con la independencia y la capacidad técnica para
+impulsarlas. Mientras esas condiciones no estén presentes, la
+brecha entre el estándar que las NOMs establecen en papel y la
+práctica cotidiana de miles de consultorios en México seguirá
+siendo el problema que este caso de estudio documenta y que
+NutriApp busca atender desde el diseño.
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsection{Traducción de la ley a requerimientos de software:
+Privacy by Design}
+% PÁRRAFO INTRODUCTORIO DE SUBSECCIÓN
+Después de analizar qué exige la ley mexicana, qué hacen mejor
+otros países y en qué puntos el marco normativo mexicano tiene
+vacíos reales, la pregunta que cierra este capítulo es práctica:
+¿qué significa todo eso en términos de decisiones de diseño de
+software? La respuesta a esa pregunta tiene un nombre en la
+literatura de ingeniería de privacidad: Privacy by Design. Esta
+subsección explica qué es ese concepto, por qué la LFPDPPP lo
+exige implícitamente aunque no lo nombre, y cómo cada obligación
+legal identificada en las secciones anteriores se traduce en un
+requerimiento técnico concreto de NutriApp. La tabla de
+trazabilidad que cierra la subsección es el puente entre el marco
+normativo de este capítulo y el diseño de la solución que se
+desarrolla en el capítulo~6.
+% ────────────────────────────────────────────────────────────────────────────
+
+\subsubsection{Privacy by Design: el concepto y su relación con
+la LFPDPPP}
+% NOTA: Definición de PbD (Cavoukian 1995, 7 principios),
+% relación directa con los 8 principios del art. 5 LFPDPPP,
+% el Reglamento art. 61 como mandato implícito de PbD,
+% por qué una hoja de cálculo no puede cumplir PbD.
+
+Privacy by Design es un enfoque de ingeniería de sistemas
+formulado por Ann Cavoukian en 1995 mientras se desempeñaba
+como Comisionada de Información y Privacidad de la provincia
+de Ontario, Canadá (Cavoukian, 2009). Su premisa central es
+que la privacidad no puede ser un requisito que se agrega a un
+sistema después de que este ha sido diseñado y construido: debe
+estar integrada en la arquitectura del sistema desde su concepción,
+como una condición de funcionamiento y no como una característica
+opcional. En 2010, la Asamblea Internacional de Comisionados de
+Protección de Datos y Privacidad adoptó Privacy by Design como
+estándar internacional, y en 2018 el GDPR europeo lo incorporó
+como obligación legal explícita en su artículo~25, bajo la
+denominación de \textit{protección de datos desde el diseño y
+por defecto} (GDPR, 2016, art.~25).
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{Los siete principios de Privacy by Design y su
+  correspondencia con la LFPDPPP.}
+  Cavoukian definió siete principios fundacionales que articulan
+  el enfoque de Privacy by Design (Cavoukian, 2009). Cada uno
+  de ellos tiene una correspondencia directa con obligaciones
+  ya establecidas en la LFPDPPP y su Reglamento, lo que significa
+  que México exige Privacy by Design implícitamente aunque no
+  lo nombre de esa manera:
+
+  \begin{itemize}
+    \item \textbf{Proactivo, no reactivo; preventivo, no correctivo.}
+    La privacidad debe anticiparse antes de que ocurra una
+    violación, no gestionarse después. Correspondencia en la
+    LFPDPPP: artículo~13 (responsabilidad de adoptar medidas
+    necesarias y suficientes) y Reglamento art.~61 (análisis
+    de riesgos y análisis de brecha como procesos obligatorios
+    previos al tratamiento).
+
+    \item \textbf{Privacidad como configuración predeterminada.}
+    El sistema debe entregar el máximo de privacidad de forma
+    automática, sin que el usuario tenga que hacer nada para
+    activarla. Correspondencia en la LFPDPPP: artículo~5
+    (principio de proporcionalidad --- solo los datos mínimos
+    necesarios para la finalidad declarada).
+
+    \item \textbf{Privacidad incrustada en el diseño.}
+    La privacidad es parte integral de la arquitectura del
+    sistema, no un complemento añadido. Correspondencia en el
+    Reglamento LFPDPPP: artículo~57 (medidas de seguridad
+    con independencia del sistema de tratamiento --- aplica
+    igual a software especializado que a hoja de cálculo).
+
+    \item \textbf{Funcionalidad plena: suma positiva, no de
+    cero.} La privacidad no debe sacrificarse por funcionalidad
+    ni viceversa. Ambas son alcanzables simultáneamente.
+    Correspondencia en la LFPDPPP: artículo~5 (principio de
+    calidad --- los datos deben ser exactos, completos y
+    actualizados para cumplir su finalidad).
+
+    \item \textbf{Seguridad de extremo a extremo durante todo
+    el ciclo de vida.} La protección de los datos debe mantenerse
+    desde su recolección hasta su eliminación. Correspondencia
+    en la NOM-004-SSA3-2012: conservación del expediente clínico
+    por un mínimo de cinco años con confidencialidad durante
+    todo ese período.
+
+    \item \textbf{Visibilidad y transparencia.} El sistema
+    debe ser verificable: sus componentes deben operar de
+    acuerdo con lo prometido al titular. Correspondencia en
+    la LFPDPPP: artículo~15 (aviso de privacidad como obligación
+    previa al tratamiento) y artículo~5 (principio de
+    información).
+
+    \item \textbf{Respeto por la privacidad del usuario.}
+    El diseño debe estar centrado en los intereses del titular
+    de los datos, no en los del responsable del tratamiento.
+    Correspondencia en la LFPDPPP: artículos~28 al~35 (derechos
+    ARCO como mecanismo de control del titular sobre sus
+    propios datos).
+  \end{itemize}
+
+  \item \textbf{El Reglamento de la LFPDPPP como mandato
+  implícito de Privacy by Design.}
+  El artículo~61 del Reglamento de la LFPDPPP establece que
+  el responsable del tratamiento debe elaborar un inventario
+  de datos y sistemas, realizar un análisis de riesgos
+  identificando las amenazas y vulnerabilidades a las que están
+  expuestos los datos, y ejecutar un análisis de brecha para
+  determinar las medidas de seguridad faltantes en comparación
+  con el estándar aplicable (RLFPDPPP, 2011, art.~61). Este
+  proceso es exactamente el ciclo metodológico de Privacy by
+  Design aplicado al contexto legal mexicano: identificar qué
+  datos se tienen, evaluar qué riesgos enfrentan y diseñar el
+  sistema para eliminar o mitigar esos riesgos desde el inicio.
+  La diferencia entre el mandato del Reglamento y la práctica
+  cotidiana de los consultorios de nutrición es que ningún
+  nutriólogo independiente ha sido capacitado para ejecutar ese
+  proceso ni cuenta con las herramientas para hacerlo. NutriApp
+  no exige que el nutriólogo lo haga: lo implementa por diseño,
+  de modo que el cumplimiento de esos artículos sea una
+  consecuencia automática de usar la plataforma, no una
+  responsabilidad adicional del profesional.
+
+  \item \textbf{Por qué una hoja de cálculo no puede cumplir
+  Privacy by Design: no es una limitación de intención sino
+  de arquitectura.}
+  Una hoja de cálculo convencional ---con o sin contraseña de
+  acceso--- es estructuralmente incompatible con los siete
+  principios de Privacy by Design y con las obligaciones
+  técnicas de la LFPDPPP, el Reglamento y las NOMs, por razones
+  que no dependen de la buena voluntad del nutriólogo que la
+  usa. No puede implementar autenticación diferenciada por
+  usuario ---cualquiera que conozca la contraseña del archivo
+  tiene acceso total a todos los expedientes---, lo que viola
+  el principio de privacidad como configuración predeterminada
+  y el requerimiento de autenticación de la NOM-024. No genera
+  registros de auditoría que documenten quién accedió a qué
+  expediente y cuándo, lo que viola el requerimiento de
+  trazabilidad del artículo~57 del Reglamento y de la NOM-024.
+  No permite implementar cifrado de extremo a extremo sin
+  herramientas externas que rompen el flujo de trabajo clínico.
+  No tiene mecanismo para gestionar solicitudes ARCO con registro
+  de resolución y plazo verificable. No puede segregar datos
+  por nivel de sensibilidad ni aplicar políticas de retención
+  diferenciadas. Estas no son limitaciones que se resuelvan
+  con una versión más nueva de la hoja de cálculo: son
+  consecuencias de la arquitectura fundamental de ese tipo de
+  herramienta, que fue diseñada para el análisis de datos
+  numéricos, no para el manejo de información clínica sensible
+  bajo un marco legal de protección de datos.
+
+\end{enumerate}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{De artículo legal a requerimiento técnico: tabla
+de trazabilidad normativa}
+% NOTA: Tabla dividida en dos partes por extensión. Tabla 1:
+% requerimientos LFPDPPP y Reglamento (filas 1-5). Tabla 2:
+% requerimientos Reglamento, NOMs y nube (filas 6-10).
+
+La tabla siguiente establece la trazabilidad directa entre cada
+obligación legal identificada en este capítulo y el requerimiento
+técnico correspondiente en NutriApp. Su función es doble: para
+el lector de este documento, es la demostración de que cada
+decisión de diseño de la plataforma tiene un fundamento normativo
+verificable; para el desarrollo del sistema, es el documento de
+referencia que conecta el marco legal con la arquitectura técnica
+descrita en el capítulo~6. Por razones de legibilidad, la tabla
+se presenta en dos partes.
+
+% ── TABLA 1: Requerimientos LFPDPPP y Reglamento ─────────────────
+\begin{table}[H]
+  \centering
+  \caption{Trazabilidad normativa: de obligación legal a
+  requerimiento técnico en NutriApp --- Parte~1: LFPDPPP
+  y Reglamento.}
+  \label{tab:trazabilidad-1}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}
+    >{\raggedright\arraybackslash}p{3.0cm}
+    >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Obligación legal}
+      & \textbf{Fuente normativa}
+      & \textbf{Requerimiento técnico en NutriApp} \\
+    \midrule
+
+    Consentimiento expreso por escrito para datos de salud
+      & LFPDPPP 2025, art.~8; LGS, art.~51~Bis~2°
+      & Módulo de consentimiento digital con firma electrónica
+        del paciente, registro inmutable en el expediente y
+        fecha de otorgamiento verificable. El consentimiento
+        debe poder revocarse desde el mismo módulo con registro
+        de la revocación. \\
+    \addlinespace
+
+    Aviso de privacidad previo al tratamiento
+      & LFPDPPP 2025, art.~15
+      & Aviso de privacidad generado automáticamente al crear
+        cada expediente, con registro de que fue presentado
+        al titular antes del primer tratamiento de datos.
+        Versión vigente del aviso siempre accesible desde
+        el perfil del paciente. \\
+    \addlinespace
+
+    Medidas de seguridad técnicas y administrativas
+      & LFPDPPP 2025, art.~18; RLFPDPPP 2011, art.~57
+      & Cifrado de datos en reposo (AES-256) y en tránsito
+        (TLS~1.2 como mínimo). Controles de acceso basados
+        en roles (RBAC). Separación de entornos de desarrollo
+        y producción. Revisión periódica de controles de
+        seguridad documentada. \\
+    \addlinespace
+
+    Autenticación verificable de usuarios
+      & NOM-024-SSA3-2012, requisito funcional de autenticación
+        de usuarios antes de permitir acceso a la información
+      & Autenticación multifactor (MFA) obligatoria para acceso
+        al sistema. Gestión de identidades a través de Amazon
+        Cognito. Sesiones con tiempo de expiración configurable
+        según rol del usuario. Registro de cada inicio de sesión
+        exitoso y fallido. \\
+    \addlinespace
+
+    Trazabilidad de consultas, accesos y modificaciones
+      & RLFPDPPP 2011, art.~57; NOM-024-SSA3-2012, requisito
+        funcional de trazabilidad
+      & Registro de auditoría (audit log) inmutable que documenta
+        cada consulta, modificación, descarga e intento de acceso
+        fallido al expediente, con identificación del usuario,
+        fecha, hora y acción realizada. Almacenado en AWS
+        CloudTrail con retención mínima de cinco años conforme
+        a NOM-004. \\
+
+    \bottomrule
+  \end{tabularx}
+
+  \smallskip
+  \small\textit{Nota.} AES = Advanced Encryption Standard.
+  TLS = Transport Layer Security. RBAC = Role-Based Access Control.
+  MFA = Multi-Factor Authentication. Elaboración propia con base
+  en las fuentes citadas en este capítulo.
+\end{table}
+
+% ── TABLA 2: Requerimientos Reglamento, NOMs y nube ──────────────
+\begin{table}[H]
+  \centering
+  \caption{Trazabilidad normativa: de obligación legal a
+  requerimiento técnico en NutriApp --- Parte~2: Reglamento,
+  NOMs y uso de nube.}
+  \label{tab:trazabilidad-2}
+  \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm}
+    >{\raggedright\arraybackslash}p{3.0cm}
+    >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Obligación legal}
+      & \textbf{Fuente normativa}
+      & \textbf{Requerimiento técnico en NutriApp} \\
+    \midrule
+
+    Inventario de datos, análisis de riesgos y análisis de brecha
+      & RLFPDPPP 2011, art.~61
+      & Catálogo de datos estructurado en AWS con clasificación
+        por nivel de sensibilidad. Evaluación de impacto a la
+        privacidad (Privacy Impact Assessment) documentada antes
+        del despliegue en producción. Revisión semestral del
+        análisis de brecha con registro de hallazgos y acciones
+        correctivas. \\
+    \addlinespace
+
+    Gestión de derechos ARCO en plazo legal
+      & LFPDPPP 2025, arts.~28--35 (plazo máximo: 20 días hábiles
+        para respuesta)
+      & Módulo ARCO con flujo de solicitud, asignación, resolución
+        y notificación automatizado. Registro de fecha de recepción,
+        fecha de resolución y respuesta emitida. Alertas automáticas
+        al nutriólogo cuando el plazo de respuesta está próximo a
+        vencer. Historial de solicitudes accesible para auditoría. \\
+    \addlinespace
+
+    Confidencialidad y conservación del expediente clínico
+      & NOM-004-SSA3-2012 (conservación mínima de 5 años desde
+        el último acto médico con confidencialidad durante todo
+        ese período)
+      & Políticas de retención de datos en Amazon S3 con ciclo
+        de vida configurado al mínimo legal. Acceso al expediente
+        restringido por roles y por relación activa con el paciente.
+        Eliminación segura (secure deletion) al vencer el período
+        de retención, con registro del evento de eliminación. \\
+    \addlinespace
+
+    Cifrado, autenticación y trazabilidad en sistema de expediente
+    clínico electrónico
+      & NOM-024-SSA3-2012 (requerimientos funcionales obligatorios
+        para todo sistema de ECE que adopte un establecimiento de
+        salud)
+      & Los tres requerimientos funcionales de la NOM-024 se
+        cumplen de forma integrada a través de la arquitectura AWS:
+        cifrado mediante AWS Key Management Service (KMS),
+        autenticación mediante Amazon Cognito con MFA, y
+        trazabilidad mediante AWS CloudTrail con logs inmutables.
+        Ninguno de los tres requiere configuración adicional por
+        parte del nutriólogo: son condiciones de operación
+        predeterminadas de la plataforma. \\
+    \addlinespace
+
+    Uso de proveedor de nube con niveles de protección equivalentes
+    a los exigidos por la ley mexicana
+      & RLFPDPPP 2011, art.~52 (el responsable puede contratar
+        servicios de cómputo en la nube siempre que el proveedor
+        garantice protección equivalente a la de la ley mexicana)
+      & Amazon Web Services con certificaciones SOC~2 Tipo~II,
+        ISO/IEC~27001 (gestión de seguridad de la información),
+        ISO/IEC~27018 (protección de datos personales en nubes
+        públicas) y C5~BSI del gobierno federal alemán. Cada
+        certificación es auditada de forma independiente y
+        periódica por terceros acreditados. La combinación de
+        estas certificaciones supera con amplitud el umbral de
+        protección equivalente establecido por el artículo~52
+        del Reglamento. \\
+
+    \bottomrule
+  \end{tabularx}
+
+  \smallskip
+  \small\textit{Nota.} ECE = Expediente Clínico Electrónico.
+  KMS = AWS Key Management Service. MFA = Multi-Factor
+  Authentication. ARCO = Acceso, Rectificación, Cancelación y
+  Oposición. SOC = Service Organization Control. ISO = International
+  Organization for Standardization. C5~BSI = Cloud Computing
+  Compliance Criteria Catalogue del Bundesamt für Sicherheit in
+  der Informationstechnik. Elaboración propia con base en las
+  fuentes citadas en este capítulo.
+\end{table}\href{}{}
+
+% ────────────────────────────────────────────────────────────────────────────
+\subsubsection{Requerimientos que la ley mexicana no exige pero
+el estándar internacional sí: decisiones de diseño proactivas}
+% NOTA: Portabilidad (Brasil, Uruguay, GDPR), notificación de
+% brechas en 72h (Uruguay, GDPR), DPO/Encargado de cumplimiento
+% (GDPR, Brasil). NutriApp los incorpora aunque MX no los exija,
+% como decisiones de diseño proactivas basadas en el comparativo.
+
+El análisis comparativo de este capítulo reveló tres ausencias
+en la LFPDPPP mexicana que los marcos más robustos de la región
+y del mundo sí contemplan: la portabilidad de datos, un plazo
+definido para la notificación de brechas y la figura del encargado
+interno de cumplimiento. NutriApp incorpora los tres elementos
+por diseño, no porque la ley mexicana lo exija, sino porque el
+estándar comparado indica que representan buenas prácticas
+verificables y porque su ausencia en la plataforma generaría
+una brecha innecesaria entre lo que el sistema ofrece y lo que
+el paciente tiene derecho a esperar en cualquier sistema de salud
+digital moderno.
+
+\begin{enumerate}[label=\Roman*.]
+
+  \item \textbf{Portabilidad de datos: el derecho que México
+  no tiene pero NutriApp implementa.}
+  Brasil lo exige en el artículo~18, fracción~V de la LGPD.
+  Uruguay lo reconoce en el artículo~14 de la Ley~18.331. El
+  GDPR lo establece en su artículo~20. La LFPDPPP mexicana de
+  2025 no lo contempla explícitamente. NutriApp incorpora la
+  portabilidad como funcionalidad nativa: el paciente puede
+  solicitar en cualquier momento la exportación de su expediente
+  completo en formato estructurado y estándar (PDF clínico y
+  JSON para interoperabilidad con otros sistemas), sin que el
+  nutriólogo pueda negarlo ni cobrarlo. Esta decisión de diseño
+  anticipa la evolución probable del marco legal mexicano en
+  esta materia y posiciona a NutriApp como una plataforma
+  que ya cumple el estándar internacional sin esperar a que la
+  ley local lo alcance.
+
+  \item \textbf{Notificación de brechas en 72 horas: el plazo
+  que la ley mexicana no define pero NutriApp sí.}
+  Uruguay establece 72~horas por decreto. El GDPR establece
+  72~horas en su artículo~33. La LFPDPPP mexicana obliga a
+  notificar pero sin plazo específico. NutriApp implementa un
+  protocolo interno de respuesta a incidentes con un tiempo
+  objetivo de notificación de 72~horas desde la detección de
+  la brecha: notificación automática al nutriólogo, generación
+  de un reporte del incidente con los datos afectados y el
+  alcance estimado, y guía paso a paso para la notificación
+  a la SABG y a los pacientes afectados. Este protocolo no
+  sustituye la obligación legal del nutriólogo de notificar
+  a la autoridad, pero la facilita y la hace operativamente
+  viable para un profesional independiente que no tiene
+  experiencia en gestión de incidentes de seguridad.
+
+  \item \textbf{Encargado de cumplimiento: la figura que México
+  no exige pero que NutriApp sugiere y apoya.}
+  El GDPR europeo exige un Data Protection Officer para
+  organizaciones que traten datos de salud a gran escala
+  (GDPR, 2016, art.~37). Brasil exige un Encarregado de
+  Proteção de Dados para todos los controladores (LGPD, 2018,
+  art.~41). La LFPDPPP mexicana no establece ninguna figura
+  equivalente. NutriApp no puede crear por diseño una figura
+  legal que la ley no exige, pero sí puede implementar dos
+  mecanismos que cumplen la misma función práctica: primero,
+  un panel de cumplimiento interno que consolida el estado de
+  todos los expedientes, consentimientos vigentes, solicitudes
+  ARCO pendientes y auditorías de acceso, de modo que el
+  nutriólogo tenga en todo momento una vista completa de su
+  posición de cumplimiento; segundo, una guía de mejores
+  prácticas integrada en la plataforma que explica en lenguaje
+  no legal qué debe hacer el nutriólogo ante cada situación
+  regulatoria ---una solicitud ARCO, una queja de un paciente,
+  una auditoría de la autoridad--- sin necesidad de contratar
+  asesoría legal externa para cada evento.
+
+\end{enumerate}
+
+Con esta subsección cierra el capítulo de Marco Normativo. El
+recorrido realizado ---desde los antecedentes constitucionales
+de la LFPDPPP hasta la tabla de trazabilidad entre obligaciones
+legales y requerimientos técnicos--- establece el fundamento
+sobre el que se construye NutriApp: no como una herramienta
+de gestión clínica que agrega privacidad como característica
+adicional, sino como un sistema diseñado desde su origen para
+que el cumplimiento normativo sea una consecuencia automática
+de su uso ordinario. Ese es el significado práctico de Privacy
+by Design aplicado al sector de la nutrición en México.
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diagnóstico: Situación Actual del Sector}
@@ -841,10 +2892,16 @@ origen del problema que este caso de estudio busca documentar.
 % Texto aquí
 
 % ═══════════════════════════════════════════════════════════════════════════
+% ═══════════════════════════════════════════════════════════════════════════
 \section*{Referencias}
 \addcontentsline{toc}{section}{Referencias}
 % ═══════════════════════════════════════════════════════════════════════════
 \begin{itemize}[leftmargin=*, itemsep=4pt]
+
+  % ── Código Penal Federal ──────────────────────────────────────────
+  \item Código Penal Federal. (1931, 14 de agosto; última reforma
+    2024). \textit{Diario Oficial de la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf}
 
   % ── Constitución ──────────────────────────────────────────────────
   \item Constitución Política de los Estados Unidos Mexicanos.
@@ -852,10 +2909,38 @@ origen del problema que este caso de estudio busca documentar.
     la Federación}.
     \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf}
 
-  % ── INAI ──────────────────────────────────────────────────────────
+  % ── DOF Reglamento Interior SABG 2025 ─────────────────────────────
+  \item Diario Oficial de la Federación. (2025, 22 de mayo).
+    \textit{Decreto por el que se reforman disposiciones del
+    Reglamento Interior de la Secretaría Anticorrupción y Buen
+    Gobierno}. DOF.
+    \url{https://sidof.segob.gob.mx/notas/docFuente/5752650}
+
+  % ── INAI Comunicado 032/21 (expediente clínico dato sensible) ─────
   \item Instituto Nacional de Transparencia, Acceso a la Información y
-    Protección de Datos Personales. (2021). \textit{Informe de
-    labores 2021}. INAI.
+    Protección de Datos Personales. (2021, 17 de abril).
+    \textit{Comunicado INAI/032/21: El expediente clínico constituye
+    un dato personal sensible}. INAI.
+    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Nota%20INAI-032-21.pdf}
+
+  % ── INAI Comunicado 008/23 (datos anuales 2022) ───────────────────
+  \item Instituto Nacional de Transparencia, Acceso a la Información y
+    Protección de Datos Personales. (2023a, 8 de enero).
+    \textit{Comunicado INAI/008/23: Multas impuestas en 2022 por
+    infringir la LFPDPPP suman más de 60 mdp}. INAI.
+    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-008-23.pdf}
+
+  % ── INAI Comunicado 230/23 (datos 1er semestre 2023) ─────────────
+  \item Instituto Nacional de Transparencia, Acceso a la Información y
+    Protección de Datos Personales. (2023b, 6 de agosto).
+    \textit{Comunicado INAI/230/23: Impone INAI multas por más de
+    11 mdp por infringir la LFPDPPP}. INAI.
+    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-230-23.pdf}
+
+  % ── INAI aviso cierre sitio 2025 ──────────────────────────────────
+  \item Instituto Nacional de Transparencia, Acceso a la Información y
+    Protección de Datos Personales. (2025). \textit{Aviso de cierre
+    del sitio institucional del INAI}. INAI.
     \url{https://home.inai.org.mx}
 
   % ── LFPDPPP 2010 (abrogada, referencia histórica) ─────────────────
@@ -875,10 +2960,37 @@ origen del problema que este caso de estudio busca documentar.
     Federación}. [Abrogada el 9 de mayo de 2016].
     \url{https://www.diputados.gob.mx/LeyesBiblio/abro/lftaipg.htm}
 
+  % ── Ley General de Salud ──────────────────────────────────────────
+  \item Ley General de Salud. (1984, 7 de febrero; última reforma
+    2024). \textit{Diario Oficial de la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LGS.pdf}
+
+  % ── Ley Reglamentaria Art. 5° Constitucional ──────────────────────
+  \item Ley Reglamentaria del Artículo 5° Constitucional, Relativo
+    al Ejercicio de las Profesiones en el Distrito Federal.
+    (1945, 26 de mayo; última reforma 2010).
+    \textit{Diario Oficial de la Federación}.
+    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/RPro.pdf}
+
   % ── Marván Laborde 2023 ───────────────────────────────────────────
   \item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
     la lucha por el derecho a saber. \textit{El Sol de México}.
     \url{https://oem.com.mx/elsoldemexico/mexico/del-ifai-al-inai-la-lucha-por-el-derecho-a-saber-15857467}
+
+  % ── NOM-004-SSA3-2012 ─────────────────────────────────────────────
+  \item Norma Oficial Mexicana NOM-004-SSA3-2012, Del expediente
+    clínico. (2012, 15 de octubre). \textit{Diario Oficial de la
+    Federación}.
+
+  % ── NOM-008-SSA3-2017 ─────────────────────────────────────────────
+  \item Norma Oficial Mexicana NOM-008-SSA3-2017, Para el
+    tratamiento integral del sobrepeso y la obesidad. (2018,
+    18 de mayo). \textit{Diario Oficial de la Federación}.
+
+  % ── NOM-024-SSA3-2012 ─────────────────────────────────────────────
+  \item Norma Oficial Mexicana NOM-024-SSA3-2012, Sistemas de
+    información de registro electrónico para la salud. (2012,
+    30 de noviembre). \textit{Diario Oficial de la Federación}.
 
   % ── OCDE 1980 ─────────────────────────────────────────────────────
   \item Organización para la Cooperación y el Desarrollo Económicos.
@@ -891,13 +3003,145 @@ origen del problema que este caso de estudio busca documentar.
     (1994). \textit{México en la OCDE}. OCDE.
     \url{https://www.oecd.org/mexico/}
 
-  % ── Reglamento 2011 ───────────────────────────────────────────────
+  % ── Reglamento LFPDPPP 2011 ───────────────────────────────────────
   \item Reglamento de la Ley Federal de Protección de Datos Personales
     en Posesión de los Particulares. (2011, 21 de diciembre).
     \textit{Diario Oficial de la Federación}.
     \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LFPDPPP.pdf}
 
-  % Agrega más referencias aquí con el mismo formato
+  % ── Saludiario 2017 médico sancionado ────────────────────────────
+  \item Saludiario. (2017, 28 de diciembre). INAI sanciona a médico
+    por entregar a un tercero expediente clínico.
+    \textit{Saludiario}.
+    \url{https://www.saludiario.com/inai-sanciona-a-medico-por-entregar-a-un-tercero-expediente-clinico/}
+
+  % ── Saludiario 2018 hospital sancionado ───────────────────────────
+  \item Saludiario. (2018, 3 de enero). INAI sanciona a hospital
+    por negar expediente clínico a paciente. \textit{Saludiario}.
+    \url{https://www.saludiario.com/inai-sanciona-a-hospital-por-negar-expediente-clinico/}
+
+  % ── SABG comunicado marzo 2025 ────────────────────────────────────
+  \item Secretaría Anticorrupción y Buen Gobierno. (2025, 21 de
+    marzo). La Secretaría Anticorrupción y Buen Gobierno reafirma
+    su compromiso con la transparencia y la protección de datos
+    personales. \textit{Gobierno de México}.
+    \url{https://www.gob.mx/buengobierno/prensa/la-secretaria-anticorrupcion-y-buen-gobierno-reafirma-su-compromiso-con-la-transparencia-y-la-proteccion-de-datos-personales}
+
+    % ── LGPD Brasil ───────────────────────────────────────────────────
+  \item Lei n°~13.709, de 14 de agosto de 2018 (Lei Geral de
+    Proteção de Dados Pessoais). (2018, 14 de agosto; vigente desde
+    18 de septiembre de 2020). \textit{Diário Oficial da União}.
+    \url{https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm}
+
+  % ── Emenda Constitucional 115/2022 ────────────────────────────────
+  \item Emenda Constitucional n°~115. (2022, 10 de febrero).
+    Inclui a proteção de dados pessoais entre os direitos e
+    garantias fundamentais. \textit{Diário Oficial da União}.
+    \url{https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc115.htm}
+
+  % ── Resolução CFM 2.314/2022 ──────────────────────────────────────
+  \item Conselho Federal de Medicina. (2022, 4 de noviembre).
+    \textit{Resolução CFM n°~2.314/2022: Define e regulamenta a
+    telemedicina no Brasil}. CFM.
+    \url{https://www.in.gov.br/en/web/dou/-/resolucao-cfm-n-2.314-2022-395326630}
+
+    % ── Ley 18.331 Uruguay ────────────────────────────────────────────
+  \item Ley~18.331, de Protección de Datos Personales y Acción de
+    Habeas Data. (2008, 11 de agosto). \textit{Diario Oficial de
+    la República Oriental del Uruguay}.
+    \url{https://www.impo.com.uy/bases/leyes/18331-2008}
+
+  % ── Decreto 414/009 Uruguay ───────────────────────────────────────
+  \item Decreto N°~414/009, Reglamentación de la Ley~18.331 relativa
+    a la protección de datos personales. (2009, 31 de agosto).
+    \textit{Diario Oficial de la República Oriental del Uruguay}.
+    \url{https://www.impo.com.uy/bases/decretos/414-2009}
+
+  % ── Decreto 242/017 Uruguay ───────────────────────────────────────
+  \item Decreto N°~242/017, Historia Clínica Electrónica Nacional.
+    (2017, 11 de septiembre). \textit{Diario Oficial de la República
+    Oriental del Uruguay}.
+    \url{https://www.impo.com.uy/bases/decretos/242-2017}
+
+  % ── Ordenanza MSP 1085/2017 Uruguay ──────────────────────────────
+  \item Ministerio de Salud Pública del Uruguay. (2017).
+    \textit{Ordenanza N°~1085/2017: Sistema de Historia Clínica
+    Electrónica Nacional}. MSP Uruguay.
+    \url{https://www.gub.uy/ministerio-salud-publica}
+
+    % ── HIPAA 1996 ────────────────────────────────────────────────────
+  \item Health Insurance Portability and Accountability Act of 1996.
+    (1996). \textit{Public Law 104-191}. U.S. Government Publishing
+    Office.
+    \url{https://www.govinfo.gov/content/pkg/PLAW-104publ191/pdf/PLAW-104publ191.pdf}
+
+  % ── HIPAA Privacy y Security Rules ───────────────────────────────
+  \item U.S. Department of Health and Human Services. (2013).
+    \textit{HIPAA Administrative Simplification: Regulation Text}
+    (45 CFR Parts 160, 162 and 164). HHS.
+    \url{https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/administrative/combined/hipaa-simplification-201303.pdf}
+
+  % ── HITECH Act 2009 ───────────────────────────────────────────────
+  \item Health Information Technology for Economic and Clinical
+    Health Act. (2009). \textit{Public Law 111-5, Division A,
+    Title XIII}. U.S. Government Publishing Office.
+    \url{https://www.govinfo.gov/content/pkg/PLAW-111publ5/pdf/PLAW-111publ5.pdf}
+
+  % ── CCPA California ───────────────────────────────────────────────
+  \item California Consumer Privacy Act. (2018). \textit{California
+    Civil Code \S~1798.100 et seq.} California Legislative
+    Information.
+    \url{https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.100.&lawCode=CIV}
+
+  % ── Washington My Health My Data Act ─────────────────────────────
+  \item Washington State Legislature. (2023). \textit{My Health My
+    Data Act} (RCW 70.372). Washington State Legislature.
+    \url{https://app.leg.wa.gov/RCW/default.aspx?cite=70.372}
+
+  % ── HIPAA Security Rule NPRM 2025 ─────────────────────────────────
+  \item U.S. Department of Health and Human Services. (2025,
+    6 de enero). \textit{HIPAA Security Rule to Strengthen the
+    Cybersecurity of Electronic Protected Health Information}
+    (Proposed Rule, 90 FR 898). Federal Register.
+    \url{https://www.federalregister.gov/documents/2025/01/06/2024-29903/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information}
+
+    % ── GDPR ──────────────────────────────────────────────────────────
+  \item Parlamento Europeo y Consejo de la Unión Europea. (2016,
+    27 de abril). \textit{Reglamento (UE) 2016/679 del Parlamento
+    Europeo y del Consejo relativo a la protección de las personas
+    físicas en lo que respecta al tratamiento de datos personales
+    y a la libre circulación de estos datos} (GDPR).
+    \textit{Diario Oficial de la Unión Europea}, L~119, 1--88.
+    \url{https://eur-lex.europa.eu/legal-content/ES/TXT/PDF/?uri=CELEX:32016R0679}
+
+  % ── BDSG 2018 ─────────────────────────────────────────────────────
+  \item Bundesdatenschutzgesetz. (2018, 30 de junio; última reforma
+    2021). \textit{Bundesgesetzblatt}, Teil~I, Nr.~44.
+    \url{https://www.gesetze-im-internet.de/bdsg_2018/BDSG.pdf}
+
+  % ── PDSG 2020 ─────────────────────────────────────────────────────
+  \item Patientendatenschutzgesetz. (2020, 14 de octubre).
+    \textit{Bundesgesetzblatt}, Teil~I, Nr.~46, 2115--2145.
+    \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl120s2115.pdf}
+
+  % ── SGB V §393 Digitalgesetz 2024 ────────────────────────────────
+  \item Digitalgesetz. (2024, 22 de marzo). \textit{Gesetz zur
+    Beschleunigung der Digitalisierung des Gesundheitswesens},
+    Artikel~1, \S~393 SGB~V. \textit{Bundesgesetzblatt}, Nr.~101.
+    \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl124s0101.pdf}
+
+  % ── BSI C5 ────────────────────────────────────────────────────────
+  \item Bundesamt für Sicherheit in der Informationstechnik. (2020).
+    \textit{Cloud Computing Compliance Criteria Catalogue (C5):
+    Criteria to Assess the Information Security of Cloud Services}.
+    BSI.
+    \url{https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/CloudComputing/ComplianceCriteriaCloud/ComplianceCriteriaCloud_C5.pdf}
+
+    % ── Cavoukian 2009 Privacy by Design ─────────────────────────────
+  \item Cavoukian, A. (2009). \textit{Privacy by design: The 7
+    foundational principles}. Information and Privacy Commissioner
+    of Ontario.
+    \url{https://www.ipc.on.ca/wp-content/uploads/resources/7foundationalprinciples.pdf}
 
 \end{itemize}
 % ═══════════════════════════════════════════════════════════════════════════
