@@ -16,12 +16,50 @@ jobs:
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex  # 👈 cambia esto si tu archivo principal tiene otro nombre
+          root_file: main.tex
+
+      - name: Install Google client library
+        run: pip install google-api-python-client google-auth
 
       - name: Upload PDF to Google Drive
-        uses: adityak74/google-drive-upload-git-action@main
-        with:
-          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
-          filename: main.pdf  # 👈 mismo nombre que tu root_file pero .pdf
-          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: true
+        env:
+          GDRIVE_CREDENTIALS: ${{ secrets.GDRIVE_CREDENTIALS }}
+          GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
+        run: |
+          python3 << 'EOF'
+          import os, json, base64
+          from googleapiclient.discovery import build
+          from googleapiclient.http import MediaFileUpload
+          from google.oauth2 import service_account
+
+          creds_b64 = os.environ["GDRIVE_CREDENTIALS"]
+          creds_json = json.loads(base64.b64decode(creds_b64).decode())
+          folder_id = os.environ["GDRIVE_FOLDER_ID"]
+
+          creds = service_account.Credentials.from_service_account_info(
+              creds_json, scopes=["https://www.googleapis.com/auth/drive"]
+          )
+          service = build("drive", "v3", credentials=creds)
+
+          # Buscar si ya existe el archivo para sobreescribir
+          results = service.files().list(
+              q=f"name='main.pdf' and '{folder_id}' in parents and trashed=false",
+              fields="files(id, name)"
+          ).execute()
+          files = results.get("files", [])
+
+          media = MediaFileUpload("main.pdf", mimetype="application/pdf")
+
+          if files:
+              service.files().update(
+                  fileId=files[0]["id"],
+                  media_body=media
+              ).execute()
+              print("PDF actualizado en Drive")
+          else:
+              service.files().create(
+                  body={"name": "main.pdf", "parents": [folder_id]},
+                  media_body=media
+              ).execute()
+              print("PDF subido a Drive")
+          EOF
