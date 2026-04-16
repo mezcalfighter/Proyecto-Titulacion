@@ -1,0 +1,27 @@
+name: Compile LaTeX and Upload to Drive
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex  # 👈 cambia esto si tu archivo principal tiene otro nombre
+
+      - name: Upload PDF to Google Drive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.GDRIVE_CREDENTIALS }}
+          filename: main.pdf  # 👈 mismo nombre que tu root_file pero .pdf
+          folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
+          overwrite: true
