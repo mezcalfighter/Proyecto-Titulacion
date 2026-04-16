@@ -1,4 +1,4 @@
-name: Compile LaTeX and Upload to Drive
+nname: Compile LaTeX and Upload to Drive
 
 on:
   push:
@@ -35,7 +35,6 @@ jobs:
           from google.oauth2.credentials import Credentials
           from googleapiclient.discovery import build
           from googleapiclient.http import MediaFileUpload
-
           creds = Credentials(
               token=None,
               refresh_token=os.environ["GDRIVE_REFRESH_TOKEN"],
@@ -43,18 +42,14 @@ jobs:
               client_secret=os.environ["GDRIVE_CLIENT_SECRET"],
               token_uri="https://oauth2.googleapis.com/token"
           )
-
           service = build("drive", "v3", credentials=creds)
           folder_id = os.environ["GDRIVE_FOLDER_ID"]
-
           results = service.files().list(
               q=f"name='main.pdf' and '{folder_id}' in parents and trashed=false",
               fields="files(id, name)"
           ).execute()
           files = results.get("files", [])
-
           media = MediaFileUpload("main.pdf", mimetype="application/pdf")
-
           if files:
               service.files().update(
                   fileId=files[0]["id"],
@@ -84,9 +79,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare PDF for Pages
+        run: |
+          mkdir -p public
+          cp main.pdf public/main.pdf
+
       - name: Deploy PDF to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          include_files: main.pdf
+          publish_dir: ./public
