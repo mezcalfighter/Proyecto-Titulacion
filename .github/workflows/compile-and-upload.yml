@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repo
@@ -45,7 +47,6 @@ jobs:
           service = build("drive", "v3", credentials=creds)
           folder_id = os.environ["GDRIVE_FOLDER_ID"]
 
-          # Buscar si ya existe para sobreescribir
           results = service.files().list(
               q=f"name='main.pdf' and '{folder_id}' in parents and trashed=false",
               fields="files(id, name)"
@@ -67,3 +68,18 @@ jobs:
               ).execute()
               print("PDF subido a Drive")
           EOF
+
+      - name: Delete existing release
+        run: |
+          gh release delete latest-pdf --yes || true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release and upload PDF
+        run: |
+          gh release create latest-pdf main.pdf \
+            --title "Tesis PDF" \
+            --notes "PDF compilado automáticamente" \
+            --latest
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
