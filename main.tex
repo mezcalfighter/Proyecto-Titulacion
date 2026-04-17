@@ -9,7 +9,10 @@
 \usepackage[T1]{fontenc}
 \usepackage[spanish, es-tabla]{babel}   % es-tabla: "Tabla" en lugar de "Cuadro"
 \usepackage{lmodern}                    % fuente moderna compatible con T1
-
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{amssymb}
 % Geometría e interlineado
 \usepackage{geometry}
 \usepackage{setspace}
@@ -2575,26 +2578,173 @@ by Design aplicado al sector de la nutrición en México.
 \section{Diagnóstico: Situación Actual del Sector}
 % ═══════════════════════════════════════════════════════════════════════════
 
+El análisis normativo del capítulo anterior establece con precisión
+qué exige la ley. Lo que este capítulo busca establecer es qué
+ocurre en la práctica: cómo manejan realmente sus datos los
+nutriólogos en México, qué herramientas usan, qué obligaciones
+desconocen y qué tan dispuestos están a adoptar una solución que
+cierre esa brecha. Para responder esas preguntas se diseñaron dos
+instrumentos de campo aplicados en momentos distintos del caso de
+estudio. El primero diagnostica el problema. El segundo valida la
+solución propuesta. Este capítulo presenta el diseño de ambos
+instrumentos, los resultados del primero y el análisis que conecta
+esos resultados con el diseño de NutriApp.
+
+% ────────────────────────────────────────────────────────────────────────────
 \subsection{Hábitos digitales del nutriólogo en México}
-\mbox{}
+% ────────────────────────────────────────────────────────────────────────────
 
+La práctica de la nutrición en México es, en su mayoría, una
+actividad independiente y poco supervisada desde el punto de vista
+tecnológico. A diferencia de los hospitales y clínicas institucionales,
+que operan con sistemas de información médica sujetos a protocolos
+internos, el nutriólogo de consulta privada toma sus propias
+decisiones sobre cómo registra, almacena y comparte la información
+de sus pacientes. Esas decisiones rara vez están informadas por el
+marco legal que las regula.
+
+El resultado es un ecosistema heterogéneo de herramientas que va
+desde hojas de cálculo sin contraseña hasta aplicaciones móviles
+de uso general, pasando por notas en papel y archivos compartidos
+por WhatsApp. Ninguna de esas herramientas fue diseñada para cumplir
+con los requerimientos técnicos de la NOM-024-SSA3-2012 ni con las
+obligaciones de seguridad que establece el Reglamento de la LFPDPPP.
+Y sin embargo, en ellas reposa la información más sensible que un
+paciente puede confiar a un profesionista: su peso, su historial
+clínico, sus diagnósticos, sus hábitos alimenticios y, en muchos
+casos, condiciones de salud que no comparte con nadie más.
+
+Este patrón no es producto de negligencia individual. Es el resultado
+predecible de una combinación de factores que este caso de estudio
+busca documentar con evidencia: planes de estudio que no incluyen
+formación jurídica ni tecnológica obligatoria, una ley que establece
+obligaciones sin traducirlas en requerimientos operativos para el
+gremio, y una autoridad reguladora que hasta 2025 orientó su
+capacidad sancionadora hacia sectores con mayor visibilidad. El
+nutriólogo promedio no incumple la ley porque decida hacerlo: la
+incumple porque nadie le explicó que la ley le aplicaba, qué
+significa cumplirla en su práctica cotidiana y qué consecuencias
+tiene no hacerlo.
+
+El instrumento de diagnóstico diseñado para este caso de estudio
+parte de ese supuesto: si el desconocimiento es el problema central,
+la encuesta no puede preguntar directamente si se conoce la ley,
+porque eso produce respuestas defensivas y poco representativas de
+la práctica real. En su lugar, pregunta qué se hace: qué herramienta
+se usa, si se entrega aviso de privacidad, si se pide consentimiento
+firmado, qué se haría ante un incidente de seguridad. Las respuestas
+a esas preguntas revelan el nivel de cumplimiento con mucha más
+fidelidad que cualquier pregunta de conocimiento declarativo, y lo
+hacen desde la voz del propio profesionista, en un instrumento
+anónimo que elimina el incentivo de responder lo que se cree correcto
+en lugar de lo que realmente se hace.
+
+% ────────────────────────────────────────────────────────────────────────────
 \subsubsection{Diseño de encuesta a nutriólogos}
-\mbox{}
-% NOTA: Tres instrumentos de medición en momentos distintos:
-% Encuesta de desconocimiento de la ley | Encuesta para MVP |
-% Encuesta resultados post MVP.
+% ────────────────────────────────────────────────────────────────────────────
 
-\paragraph{Encuesta 1: Diagnóstico de desconocimiento de la LFPDPPP}
-\mbox{}
-% Texto aquí
+La estrategia de campo de este caso de estudio utiliza dos
+instrumentos de encuesta aplicados en momentos distintos y con
+propósitos complementarios. El primero ---denominado Encuesta~1---
+se aplica antes de que los encuestados conozcan NutriApp y tiene
+como objetivo documentar el estado actual del problema. El segundo
+---denominado Encuesta~2--- se aplica después de que los encuestados
+han interactuado con una demostración o prototipo funcional de la
+plataforma y tiene como objetivo validar si la solución propuesta
+responde al problema documentado y qué funcionalidades adicionales
+identifican como necesarias para una versión posterior.
 
-\paragraph{Encuesta 2: Levantamiento de requerimientos para el MVP}
-\mbox{}
-% Texto aquí
+\paragraph{Encuesta 1: Diagnóstico de hábitos digitales y cumplimiento
+normativo}
 
-\paragraph{Encuesta 3: Validación de propuesta mediante wireframes/demo}
-\mbox{}
-% Texto aquí
+La Encuesta~1 está compuesta por 20 preguntas organizadas en seis
+secciones. Las tres primeras preguntas establecen el perfil del
+encuestado: su situación académica o profesional actual, su
+experiencia directa con pacientes y el volumen aproximado de
+expedientes que maneja o ha manejado. Este perfil permite cruzar
+las respuestas posteriores por segmento de audiencia ---estudiante,
+profesionista independiente, profesionista institucional o docente---
+y determinar si el desconocimiento es homogéneo o si se concentra
+en algún perfil específico.
+
+Las preguntas cuatro a once abordan la práctica real del encuestado
+como profesionista. No preguntan si conoce la ley ni si cree que la
+cumple: preguntan qué herramienta usa para registrar datos, si
+entrega aviso de privacidad, si obtiene consentimiento firmado, si
+su archivo tiene protección de acceso, si lo comparte con terceros
+y cómo respondería ante un incidente de seguridad o una solicitud
+de derechos ARCO. Este bloque está diseñado para que el encuestado
+se describa a sí mismo antes de saber que sus respuestas serán
+evaluadas contra el estándar legal, lo que reduce el sesgo de
+deseabilidad social y produce datos más representativos de la
+práctica cotidiana.
+
+Las preguntas doce a quince invierten el rol: el encuestado responde
+ahora desde su experiencia como paciente. ¿Le han entregado alguna
+vez un aviso de privacidad en una consulta médica? ¿Le han pedido
+que firme un documento específico para autorizar el uso de sus datos?
+¿Sabe dónde están guardados sus datos de salud de los últimos dos
+años? Este bloque tiene un propósito narrativo deliberado: el mismo
+profesionista que acaba de admitir que nunca entrega aviso de
+privacidad a sus propios pacientes, descubre que tampoco él lo ha
+recibido nunca como paciente. Ese espejo genera, al momento de
+responder la pregunta de cierre, una conclusión que el propio
+encuestado construye sin que el investigador se la imponga.
+
+Las preguntas dieciséis y diecisiete miden la formación recibida
+y la percepción de riesgo. La pregunta dieciséis indaga si la
+carrera o el posgrado incluyeron capacitación formal sobre
+protección de datos ---con una opción específica para docentes que
+admite que tampoco lo enseñan en sus clases, lo que convierte esa
+respuesta en evidencia de la omisión sistémica en los planes de
+estudio. La pregunta diecisiete mide en escala Likert qué tan
+probable considera el encuestado que sea sancionado económicamente
+por incumplir la ley, dato que se contrasta más adelante con el
+hecho documentado de que el sector salud fue el segundo más multado
+en México durante el primer semestre de 2023.
+
+Las preguntas dieciocho y diecinueve introducen la solución sin
+nombrarla: piden al encuestado que seleccione las funcionalidades
+que le parecerían más útiles en una plataforma para nutriólogos que
+cumpla automáticamente con la ley, y que indique su disposición de
+pago mensual. Las respuestas a estas dos preguntas informan
+directamente el alcance del Producto Mínimo Viable descrito en el
+capítulo~7 y el análisis costo-beneficio del capítulo~8.
+
+La pregunta veinte cierra el instrumento con una pregunta de
+percepción agregada: considerando todo lo que acaba de responder
+sobre su práctica y su experiencia como paciente, ¿cree que el
+sector de la nutrición en México cumple con sus obligaciones legales
+de protección de datos? Esta pregunta no tiene una respuesta correcta
+en términos normativos, pero sí tiene una respuesta predecible dado
+el recorrido que el encuestado acaba de hacer: la mayoría responderá
+que no se cumple, y esa respuesta en boca del propio profesionista
+tiene más peso argumentativo para la tesis que cualquier afirmación
+del investigador. El instrumento completo, con todas las opciones de
+respuesta para cada pregunta, se encuentra en el Anexo~A
+(véase cuadro~\ref{tab:encuesta1}).
+
+\paragraph{Encuesta 2: Validación del MVP y levantamiento de
+requerimientos para versión siguiente}
+
+La Encuesta~2 se aplica a los mismos perfiles de audiencia después
+de que han tenido acceso a una demostración funcional o a los
+wireframes de NutriApp. Su propósito es doble. Por un lado, valida
+si la solución propuesta efectivamente responde al problema
+documentado por la Encuesta~1: ¿la plataforma es percibida como
+útil? ¿Resuelve las preocupaciones legales que el encuestado
+identificó en el primer instrumento? ¿La curva de aprendizaje es
+manejable para un profesionista independiente sin formación técnica
+especializada? Por otro lado, levanta los requerimientos que los
+encuestados identifican como necesarios pero ausentes en la versión
+demostrada. Esos requerimientos no forman parte del alcance del MVP
+definido en este caso de estudio, pero constituyen la hoja de ruta
+de la siguiente versión de la plataforma y son documentados como
+parte de las recomendaciones de trabajo futuro del capítulo~9.
+El diseño detallado de la Encuesta~2, sus resultados y el análisis
+de validación se presentan en la sección~3.1.3 de este documento,
+una vez que se han establecido las métricas base del problema en la
+sección siguiente.
 
 \subsubsection{Resultados y métricas base del problema}
 \mbox{}
@@ -3088,8 +3238,339 @@ by Design aplicado al sector de la nutrición en México.
 
 \end{itemize}
 % ═══════════════════════════════════════════════════════════════════════════
-\section*{Anexos}
-\addcontentsline{toc}{section}{Anexos}
+\appendix
+\section{Instrumento de diagnóstico: Encuesta 1}
+\addcontentsline{toc}{section}{Anexo A: Instrumento de diagnóstico}
+\label{anexo:encuesta1}
+
+Esta encuesta fue diseñada como el primer instrumento de campo del
+caso de estudio. Su propósito es triple: documentar los hábitos
+digitales reales con los que los profesionistas de nutrición manejan
+datos de pacientes, evidenciar el desconocimiento de las obligaciones
+que establece la LFPDPPP desde la práctica cotidiana y no desde el
+conocimiento declarativo, y contrastar esa experiencia con la vivida
+por los mismos encuestados en su rol como pacientes. La encuesta es
+anónima, no contiene preguntas de identificación personal y fue
+diseñada para aplicarse a estudiantes de últimos semestres de la
+licenciatura en nutrición, profesionistas egresados en ejercicio
+independiente o institucional, y docentes del área.
+
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.5cm}>{\raggedright\arraybackslash}p{5.5cm}>{\raggedright\arraybackslash}p{8.5cm}}
+
+  \caption{Encuesta 1: Diagnóstico de hábitos digitales y cumplimiento
+  normativo en el sector de nutrición.}
+  \label{tab:encuesta1}\\
+
+  \toprule
+  \textbf{N°} & \textbf{Pregunta} & \textbf{Opciones de respuesta} \\
+  \midrule
+  \endfirsthead
+
+  \multicolumn{3}{l}{\small\textit{(Continúa de la página anterior)}} \\
+  \toprule
+  \textbf{N°} & \textbf{Pregunta} & \textbf{Opciones de respuesta} \\
+  \midrule
+  \endhead
+
+  \midrule
+  \multicolumn{3}{r}{\small\textit{(Continúa en la página siguiente)}} \\
+  \endfoot
+
+  \bottomrule
+  \multicolumn{3}{l}{%
+    \parbox{14.5cm}{\small\textit{Nota.} Las preguntas de opción
+    múltiple aceptan una sola respuesta. Las de selección múltiple
+    aceptan una o más. Las de escala Likert van del 1 (mínimo) al 5
+    (máximo). Elaboración propia.}}\\
+  \endlastfoot
+
+  % ── SECCIÓN: PERFIL ───────────────────────────────────────────────
+  \multicolumn{3}{l}{\textit{Sección 1: Perfil}} \\
+  \midrule
+
+  1
+    & Esta encuesta es completamente anónima. ¿Cuál describe mejor
+      tu situación actual? \newline \small\textit{(Opción múltiple)}
+    & Estudiante de nutrición (7mo--9no semestre) $\square$ \newline
+      Estudiante de nutrición (10mo semestre o servicio social) $\square$ \newline
+      Nutriólogo(a) egresado(a) en ejercicio independiente $\square$ \newline
+      Nutriólogo(a) egresado(a) en institución o clínica $\square$ \newline
+      Docente de nutrición (con o sin práctica clínica activa) $\square$ \newline
+      Otra $\square$ \\
+  \\[2pt]
+
+  2
+    & ¿Actualmente atiendes o has atendido pacientes de forma directa?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, tengo pacientes activos en este momento $\square$ \newline
+      Sí, los tuve durante prácticas o servicio social $\square$ \newline
+      Sí, en institución o clínica con supervisión $\square$ \newline
+      No, pero lo haré pronto $\square$ \newline
+      No, mi rol es principalmente docente $\square$ \newline
+      No, aún no he tenido pacientes $\square$ \\
+  \\[2pt]
+
+  3
+    & ¿Cuántos pacientes manejas o manejaste aproximadamente de forma
+      simultánea en tu punto de mayor actividad?
+      \newline \small\textit{(Opción múltiple)}
+    & Nunca he tenido pacientes $\square$ \newline
+      1 a 5 $\square$ \newline
+      6 a 15 $\square$ \newline
+      16 a 30 $\square$ \newline
+      Más de 30 $\square$ \\
+
+  % ── SECCIÓN: COMO PROFESIONISTA ───────────────────────────────────
+  \\[4pt]
+  \multicolumn{3}{l}{\textit{Sección 2: Como profesionista --- práctica real}} \\
+  \midrule
+
+  4
+    & Cuando registras datos de un paciente (nombre, edad, peso,
+      diagnóstico, historial), ¿qué herramienta usas?
+      \newline \small\textit{(Selección múltiple)}
+    & Hoja de cálculo (Excel o Google Sheets) $\square$ \newline
+      Documento de Word o Google Docs $\square$ \newline
+      Aplicación específica de nutrición (NutriSoft, Dietmaster, etc.) $\square$ \newline
+      Sistema institucional del hospital o clínica $\square$ \newline
+      Notas en papel sin respaldo digital $\square$ \newline
+      Notas del celular (iPhone Notes, Google Keep, etc.) $\square$ \newline
+      No registro nada de forma sistemática $\square$ \newline
+      Otra $\square$ \\
+  \\[2pt]
+
+  5
+    & Al iniciar con un nuevo paciente, ¿le entregas algún documento
+      donde le expliques qué datos vas a guardar de él y para qué
+      los usarás? \newline \small\textit{(Opción múltiple)}
+    & Sí, siempre entrego un aviso de privacidad por escrito $\square$ \newline
+      A veces, cuando recuerdo o el paciente lo pide $\square$ \newline
+      No, solo se lo explico verbalmente si me preguntan $\square$ \newline
+      No, nunca lo he hecho $\square$ \newline
+      No sabía que debía entregar algo así $\square$ \\
+  \\[2pt]
+
+  6
+    & ¿Pides a tus pacientes que firmen o confirmen de alguna forma
+      que aceptan que guardes y uses sus datos de salud?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, siempre tengo un documento o formato firmado específico
+      para esto $\square$ \newline
+      Sí, pero es parte del consentimiento clínico general, no uno
+      específico para datos $\square$ \newline
+      A veces, solo si el paciente lo solicita $\square$ \newline
+      No, nunca les pido que firmen nada para esto $\square$ \newline
+      No sabía que era necesario pedírselo $\square$ \\
+  \\[2pt]
+
+  7
+    & El archivo o sistema donde guardas datos de pacientes, ¿tiene
+      alguna protección de acceso específica?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, tiene contraseña o autenticación propia, separada del
+      dispositivo $\square$ \newline
+      Solo la contraseña del dispositivo (laptop o celular) $\square$ \newline
+      Está en la nube (Drive, Dropbox) con enlace compartido o
+      acceso abierto $\square$ \newline
+      No tiene ninguna protección $\square$ \newline
+      No sé si tiene o no $\square$ \newline
+      No aplica, no guardo datos digitalmente $\square$ \\
+  \\[2pt]
+
+  8
+    & ¿Compartes o has compartido ese archivo con alguien más?
+      \newline \small\textit{(Selección múltiple)}
+    & Sí, con compañeros de práctica o residentes $\square$ \newline
+      Sí, con mi tutor o supervisor $\square$ \newline
+      Sí, por WhatsApp o correo para trabajar desde otro
+      dispositivo $\square$ \newline
+      Sí, está en una carpeta compartida en la nube $\square$ \newline
+      No, solo yo tengo acceso $\square$ \newline
+      No aplica $\square$ \\
+  \\[2pt]
+
+  9
+    & Si un paciente te pidiera ver todos los datos que tienes de
+      él, ¿se los entregarías y en cuánto tiempo?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, de inmediato o al día siguiente $\square$ \newline
+      Sí, pero me tomaría varios días organizarlos $\square$ \newline
+      Se los daría solo si insiste mucho $\square$ \newline
+      Probablemente le diría que no tengo forma de dárselos
+      organizados $\square$ \newline
+      Nunca me ha pasado y no sé qué haría $\square$ \newline
+      No sabía que el paciente tenía ese derecho $\square$ \\
+  \\[2pt]
+
+  10
+    & Si un paciente te pidiera que eliminaras todos sus datos,
+      ¿lo harías? \newline \small\textit{(Opción múltiple)}
+    & Sí, los eliminaría completamente y le confirmaría por
+      escrito $\square$ \newline
+      Sí, los eliminaría pero sin ningún registro del proceso $\square$ \newline
+      Probablemente sí, aunque no sé si puedo por el expediente
+      clínico $\square$ \newline
+      No, necesito conservar el expediente por temas clínicos $\square$ \newline
+      No sabía que el paciente podía pedirme eso $\square$ \\
+  \\[2pt]
+
+  11
+    & Si mañana te robaran el dispositivo donde tienes datos de
+      pacientes o alguien accediera sin permiso a tu archivo,
+      ¿qué harías? \newline \small\textit{(Selección múltiple)}
+    & Notificaría a cada paciente afectado $\square$ \newline
+      Lo reportaría a la autoridad reguladora correspondiente $\square$ \newline
+      Cambiaría contraseñas y bloquearía accesos $\square$ \newline
+      Nada, los datos están suficientemente protegidos $\square$ \newline
+      No sabría qué hacer ni a quién reportarlo $\square$ \newline
+      No aplica, no guardo datos en dispositivos personales $\square$ \\
+
+  % ── SECCIÓN: COMO PACIENTE ────────────────────────────────────────
+  \\[4pt]
+  \multicolumn{3}{l}{\textit{Sección 3: Como paciente}} \\
+  \midrule
+
+  12
+    & Piensa en la última vez que fuiste a consulta con cualquier
+      profesionista de salud. ¿Te entregaron algún documento
+      explicando qué datos iban a guardar de ti y para qué?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, recibí un aviso de privacidad por escrito $\square$ \newline
+      Me dijeron algo verbalmente pero no me dieron nada
+      firmado $\square$ \newline
+      No, no me entregaron ni explicaron nada de eso $\square$ \newline
+      No recuerdo haber recibido algo así $\square$ \newline
+      Sí, pero era solo un formato genérico que nunca leí $\square$ \\
+  \\[2pt]
+
+  13
+    & ¿Alguna vez un profesionista de salud te pidió que firmaras
+      un documento específico para autorizar que guardara y usara
+      tus datos personales, diferente al consentimiento clínico?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, recuerdo haber firmado algo específico para eso $\square$ \newline
+      Tal vez, pero no recuerdo que fuera diferente al
+      consentimiento general $\square$ \newline
+      No, nunca me han pedido que firme algo específico para
+      mis datos $\square$ \newline
+      No, y ahora que lo pienso, me parece importante que
+      debería haberlo hecho $\square$ \\
+  \\[2pt]
+
+  14
+    & ¿Sabes dónde están guardados tus datos de salud de los
+      últimos dos años y quién tiene acceso a ellos?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, sé exactamente dónde están y quién los puede ver $\square$ \newline
+      Más o menos, imagino que en el sistema del consultorio
+      o hospital $\square$ \newline
+      No tengo idea de dónde están ni quién puede verlos $\square$ \newline
+      Nunca me lo dijeron y nunca pregunté $\square$ \newline
+      No me había puesto a pensar en eso hasta ahora $\square$ \\
+  \\[2pt]
+
+  15
+    & ¿Alguna vez has ejercido tu derecho a pedir que te muestren,
+      corrijan o eliminen datos que algún consultorio o clínica
+      tiene de ti? \newline \small\textit{(Opción múltiple)}
+    & Sí, lo hice y fue fácil $\square$ \newline
+      Sí, lo intenté pero no supe cómo o no obtuve respuesta $\square$ \newline
+      No, no sabía que tenía ese derecho $\square$ \newline
+      No, sé que tengo ese derecho pero nunca lo he
+      necesitado $\square$ \newline
+      No, y ahora que lo sé tampoco creo que lo haría $\square$ \\
+
+  % ── SECCIÓN: PERCEPCIÓN Y CONOCIMIENTO ───────────────────────────
+  \\[4pt]
+  \multicolumn{3}{l}{\textit{Sección 4: Percepción y conocimiento}} \\
+  \midrule
+
+  16
+    & ¿En tu formación académica recibiste alguna capacitación
+      formal sobre tus obligaciones legales en materia de
+      protección de datos de pacientes?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, tuve una materia obligatoria sobre esto $\square$ \newline
+      Sí, en un taller o conferencia optativa $\square$ \newline
+      El tema se mencionó brevemente en otra materia pero sin
+      profundidad $\square$ \newline
+      No, nunca se tocó en mi formación $\square$ \newline
+      Soy docente y tampoco lo incluyo en mis clases
+      actualmente $\square$ \\
+  \\[2pt]
+
+  17
+    & ¿Qué tan probable crees que es que tú, como nutriólogo(a),
+      seas sancionado(a) económicamente por no cumplir con la ley
+      de protección de datos de tus pacientes?
+      \newline \small\textit{(Escala Likert 1--5)}
+    & 1 --- Muy improbable, nadie fiscaliza eso en nutrición \newline
+      2 --- Poco probable en la práctica \newline
+      3 --- No lo sé, podría pasar \newline
+      4 --- Bastante probable si un paciente se queja
+      formalmente \newline
+      5 --- Muy probable, ya hay casos documentados en el
+      sector salud \\
+
+  % ── SECCIÓN: INTERÉS EN SOLUCIÓN ─────────────────────────────────
+  \\[4pt]
+  \multicolumn{3}{l}{\textit{Sección 5: Interés en solución}} \\
+  \midrule
+
+  18
+    & ¿Cuáles de las siguientes funcionalidades te parecerían más
+      útiles en una plataforma diseñada para nutriólogos que cumpla
+      automáticamente con la ley?
+      \newline \small\textit{(Selección múltiple)}
+    & Consentimiento digital que el paciente firma desde su
+      celular, sin papel $\square$ \newline
+      Expediente con cifrado automático --- solo tú puedes
+      acceder $\square$ \newline
+      Módulo para atender solicitudes de pacientes de ver o
+      eliminar sus datos $\square$ \newline
+      Alertas cuando estás cerca de vencer un plazo legal $\square$ \newline
+      Exportación del expediente en formato que el paciente
+      pueda llevar a otro nutriólogo $\square$ \newline
+      Panel que muestre si estás cumpliendo con la ley en
+      tiempo real $\square$ \newline
+      Guía integrada que explique en lenguaje simple qué hacer
+      en cada situación legal $\square$ \newline
+      Acceso seguro desde celular con huella o código $\square$ \\
+  \\[2pt]
+
+  19
+    & ¿Cuánto estarías dispuesto(a) a pagar mensualmente por una
+      herramienta que gestione expedientes cumpliendo con la ley
+      y que te proteja de sanciones?
+      \newline \small\textit{(Opción múltiple)}
+    & Nada, debería ser gratuita $\square$ \newline
+      Hasta \$99 pesos al mes $\square$ \newline
+      Entre \$100 y \$249 pesos al mes $\square$ \newline
+      Entre \$250 y \$499 pesos al mes $\square$ \newline
+      Más de \$500 pesos al mes $\square$ \newline
+      Dependería del número de pacientes que maneje $\square$ \\
+
+  % ── SECCIÓN: CIERRE ───────────────────────────────────────────────
+  \\[4pt]
+  \multicolumn{3}{l}{\textit{Sección 6: Cierre}} \\
+  \midrule
+
+  20
+    & Considerando todo lo que acabas de responder sobre cómo
+      manejas los datos de tus pacientes y cómo te han tratado
+      a ti como paciente, ¿crees que en general el sector de la
+      nutrición en México cumple con las obligaciones legales de
+      protección de datos de sus pacientes?
+      \newline \small\textit{(Opción múltiple)}
+    & Sí, creo que en general sí se cumple $\square$ \newline
+      En parte, algunos lo hacen bien pero es inconsistente $\square$ \newline
+      No, creo que en general no se cumple $\square$ \newline
+      No lo sé, no tengo información suficiente para
+      saberlo $\square$ \newline
+      Nunca me lo había planteado hasta responder esta
+      encuesta $\square$ \\
+
+\end{longtable}
 % ═══════════════════════════════════════════════════════════════════════════
 
 % Texto, imágenes o tablas de anexos aquí
