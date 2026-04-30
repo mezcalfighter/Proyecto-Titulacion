@@ -2982,156 +2982,413 @@ normativo puede replicar por sí solo.
 
 % ============================================================
 % CAPÍTULO 4 — MARCO DE REFERENCIA TÉCNICO
-% NutriApp — Tesis ITESO — Cristian Emanuel Ortega Camarena
-% Versión final — citas verbatim patrón ITESO APA 7
+% NutriApp — ITESO — Cristian Emanuel Ortega Camarena
 % ============================================================
  
 \section{Marco de Referencia Técnico}
  
-El diseño de una plataforma de datos personales de salud no puede sustentarse únicamente en decisiones de conveniencia tecnológica. Cada componente de la arquitectura debe responder a un principio de ingeniería documentado, a una buena práctica internacional verificable o a una obligación normativa identificable. Este capítulo establece el marco conceptual y técnico que fundamenta las decisiones de diseño de NutriApp: qué es la computación en la nube y por qué su modelo de seguridad es adecuado para datos de salud, cómo funcionan los mecanismos de cifrado, autenticación y trazabilidad que la plataforma implementa, qué significa aplicar Privacy by Design desde la arquitectura, y qué estándares internacionales sirven como referencia de validación. El lector encontrará en este capítulo tanto la explicación conceptual de cada mecanismo como la fuente que lo respalda, de modo que el diseño propuesto en el capítulo seis pueda ser evaluado y reproducido de forma independiente.
+El capítulo anterior estableció qué exige la ley. Este capítulo
+explica cómo funciona la tecnología que hace posible cumplirla.
+No es un glosario: cada concepto se introduce únicamente porque
+tiene una consecuencia directa en el diseño de NutriApp, y se
+cita la fuente que lo respalda para que el diseño del capítulo
+seis pueda evaluarse y replicarse de forma independiente.
  
 % ------------------------------------------------------------
 \subsection{Arquitectura en la nube: conceptos y estándares}
 % ------------------------------------------------------------
  
-\subsubsection{Definición y características del modelo de nube}
+\subsubsection{Qué es la nube y por qué importa para datos de salud}
  
-El National Institute of Standards and Technology define la computación en la nube como ``a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources --- networks, servers, storage, applications, and services --- that can be rapidly provisioned and released with minimal management effort or service provider interaction'' (NIST, 2011, p. 2). Esta definición identifica cinco características esenciales del modelo: autoservicio bajo demanda, acceso a través de red de banda ancha, agrupación de recursos, elasticidad rápida y servicio medido. Para el diseño de NutriApp, las características más relevantes son la elasticidad y el modelo de pago por uso: la elasticidad garantiza que la plataforma puede escalar de diez a diez mil nutriólogos activos sin cambios de arquitectura; el modelo de pago por uso elimina la necesidad de sobredimensionar la infraestructura, lo que es coherente con el principio de proporcionalidad del artículo 5 de la LFPDPPP, que exige tratar únicamente los datos ``necesarios, pertinentes y no excesivos en relación con las finalidades'' declaradas (LFPDPPP, 2025, art. 5, fracc. VI).
+El NIST define la computación en la nube como ``a model for
+enabling ubiquitous, convenient, on-demand network access to a
+shared pool of configurable computing resources that can be
+rapidly provisioned and released with minimal management effort
+or service provider interaction'' (National Institute of
+Standards and Technology [NIST], 2011, p.~2). En la práctica,
+esto significa que NutriApp puede acceder a los mismos controles
+de seguridad que usan instituciones hospitalarias de escala
+empresarial, sin el costo de operar infraestructura propia. Para
+un consultorio de nutrición independiente, esa diferencia es
+decisiva: implementar cifrado de grado médico, autenticación
+robusta y registros de auditoría inmutables es inviable con
+servidores propios; en la nube son servicios activables por
+configuración.
  
-La nube permite además que una plataforma de tamaño reducido acceda a la misma infraestructura de seguridad que utilizan instituciones de salud de escala empresarial. Esta democratización del acceso a controles de seguridad avanzados es determinante para NutriApp porque resuelve una de las brechas más frecuentes en el cumplimiento de la LFPDPPP en el sector salud privado: la imposibilidad económica de implementar controles técnicos sofisticados en consultorios independientes (INAI, 2018).
+El modelo de pago por uso también es relevante normativamente:
+elimina la necesidad de sobredimensionar la infraestructura,
+lo que es coherente con el principio de proporcionalidad del
+artículo~5 de la LFPDPPP, que exige tratar únicamente los datos
+``necesarios, pertinentes y no excesivos en relación con las
+finalidades'' declaradas (LFPDPPP, 2025, art.~5, fracc.~VI).
  
 \subsubsection{El modelo de responsabilidad compartida}
  
-Amazon Web Services describe el modelo de responsabilidad compartida señalando que ``security and compliance is a shared responsibility between AWS and the customer. This shared model can help relieve the customer's operational burden as AWS operates, manages and controls the components from the host operating system and virtualization layer down to the physical security of the facilities in which the service operates'' (Amazon Web Services, 2023a). Bajo este modelo, AWS garantiza la seguridad \textit{de} la nube ---la seguridad física de los centros de datos, la disponibilidad de la infraestructura de red y la integridad del hardware--- mientras que el cliente es responsable de la seguridad \textit{en} la nube: la configuración de los servicios, el control de acceso, el cifrado de los datos almacenados y la gestión de las identidades de los usuarios.
+Amazon Web Services establece que ``security and compliance is
+a shared responsibility between AWS and the customer. This shared
+model can help relieve the customer's operational burden as AWS
+operates, manages and controls the components from the host
+operating system and virtualization layer down to the physical
+security of the facilities'' (Amazon Web Services [AWS], 2023a).
  
-Esta distinción es jurídicamente relevante en el contexto de la LFPDPPP porque la ley establece que el responsable del tratamiento debe adoptar las medidas necesarias para ``garantizar la seguridad de los datos personales'' sin que esa obligación pueda delegarse (LFPDPPP, 2025, art. 19). El modelo de responsabilidad compartida no exime a NutriApp de esa obligación; al contrario, la delimita con precisión: NutriApp asume la responsabilidad sobre los controles que le corresponden ---cifrado de aplicación, gestión de identidades, control de acceso a datos--- mientras que los controles de infraestructura son garantizados contractualmente por AWS. Esta claridad facilita la demostración de cumplimiento ante el INAI porque permite identificar, documentar y auditar los controles específicos que NutriApp implementa.
+Bajo este modelo, AWS garantiza la seguridad \textit{de} la
+nube ---infraestructura física, disponibilidad de red, integridad
+del hardware--- y NutriApp es responsable de la seguridad
+\textit{en} la nube: configuración de servicios, control de
+acceso, cifrado de datos y gestión de identidades. Esta
+delimitación es útil para el cumplimiento de la LFPDPPP porque
+define con precisión qué controles debe demostrar NutriApp ante
+la autoridad reguladora y cuáles están garantizados
+contractualmente por el proveedor (LFPDPPP, 2025, art.~19).
  
-\subsubsection{Amazon Web Services como proveedor de infraestructura}
+\subsubsection{Por qué AWS}
  
-NutriApp se diseña sobre Amazon Web Services (AWS), seleccionado con base en criterios normativos y de madurez de seguridad verificables. En materia de certificaciones independientes, AWS mantiene de forma continua ISO/IEC~27001, ISO/IEC~27017, ISO/IEC~27018, SOC~1 Tipo~II y SOC~2 Tipo~II, entre otras (Amazon Web Services, 2023b). La certificación ISO/IEC~27018 es particularmente relevante porque es el estándar internacional específico para la protección de información de identificación personal en servicios de nube pública; su vigencia en AWS satisface directamente el requisito del artículo 52 del Reglamento de la LFPDPPP, que exige que los terceros que reciban datos personales garanticen ``niveles de protección equivalentes a los previstos en esta Ley'' (Reglamento LFPDPPP, 2011, art. 52).
- 
-El AWS Well-Architected Framework es el marco de referencia oficial de AWS para el diseño de arquitecturas en la nube. Está organizado en seis pilares y establece que ``the security pillar encompasses the ability to protect data, systems, and assets to take advantage of cloud technologies to improve your security'' (Amazon Web Services, 2023c). El pilar de seguridad identifica siete principios de diseño: implementar una base sólida de identidad, mantener la trazabilidad, aplicar seguridad en todas las capas, automatizar las mejores prácticas de seguridad, proteger los datos en tránsito y en reposo, mantener a las personas alejadas de los datos, y prepararse para eventos de seguridad. El diseño de NutriApp aplica cada uno de estos principios de forma explícita y documentada, como se detalla en el capítulo seis.
+NutriApp se diseña sobre AWS por tres razones verificables. La
+primera es de cobertura geográfica: AWS es el único proveedor
+de nube con infraestructura física en México al momento del
+diseño. La segunda es de certificaciones: AWS mantiene de forma
+continua ISO/IEC~27001, ISO/IEC~27018, SOC~1 Tipo~II y
+SOC~2~Tipo~II, entre otras (AWS, 2023b). La certificación
+ISO/IEC~27018 ---estándar específico para protección de datos
+personales en nubes públicas--- satisface directamente el
+artículo~52 del Reglamento de la LFPDPPP, que exige que los
+terceros que reciban datos personales garanticen ``niveles de
+protección equivalentes a los previstos en esta Ley'' (Reglamento
+LFPDPPP [RLFPDPPP], 2011, art.~52). La tercera es de marco de
+referencia: el AWS Well-Architected Framework (AWS, 2023c) es el
+documento que conecta cada decisión de arquitectura de NutriApp
+con una buena práctica verificable, y se cita a lo largo de este
+capítulo y del capítulo seis.
  
 % ------------------------------------------------------------
 \subsection{Seguridad de datos: cifrado, MFA y trazabilidad}
 % ------------------------------------------------------------
  
-\subsubsection{Cifrado de datos}
+\subsubsection{Cifrado}
  
-El cifrado es el mecanismo técnico fundamental para garantizar la confidencialidad de los datos personales. El AWS Well-Architected Framework lo describe como una de las buenas prácticas primarias del pilar de seguridad, señalando que los arquitectos deben ``classify your data into sensitivity levels and use mechanisms, such as encryption, tokenization, and access control where appropriate'' (Amazon Web Services, 2023c). NutriApp implementa cifrado en dos estados complementarios.
+El cifrado transforma información legible en formato ilegible
+mediante un algoritmo matemático y una clave, de modo que solo
+quien posea esa clave puede recuperar el contenido (Stallings,
+2017, p.~28). NutriApp lo implementa en dos estados:
  
-\textbf{Cifrado en tránsito.} Toda comunicación entre el dispositivo del usuario y los servidores de NutriApp se cifra mediante el protocolo TLS 1.3 (\textit{Transport Layer Security}, versión 1.3). El \textit{Internet Engineering Task Force} define TLS como un protocolo diseñado para ``provide communications security over the Internet'' mediante el uso de criptografía asimétrica para el intercambio de claves y cifrado simétrico para la transmisión de datos (Rescorla, 2018, p.~1). TLS 1.3 fue adoptado como estándar mediante la RFC 8446 en 2018 y elimina vulnerabilidades presentes en versiones anteriores. En NutriApp, este protocolo es gestionado a través de AWS Certificate Manager (ACM) y garantiza que ninguna información transmitida entre el cliente y el servidor puede ser interceptada ni modificada por terceros, satisfaciendo el requisito de integridad y confidencialidad en tránsito del artículo 57 del Reglamento de la LFPDPPP.
+\textbf{En tránsito.} Toda comunicación entre el dispositivo del
+usuario y los servidores de NutriApp viaja cifrada mediante TLS
+1.3 (\textit{Transport Layer Security}), adoptado como estándar
+por el IETF mediante la RFC~8446 (Rescorla, 2018, p.~1) y
+gestionado en NutriApp a través de AWS Certificate Manager. Esto
+garantiza que ningún dato transmitido puede ser interceptado ni
+modificado, cumpliendo el requisito de confidencialidad en
+tránsito del artículo~57 del Reglamento de la LFPDPPP
+(RLFPDPPP, 2011, art.~57).
  
-\textbf{Cifrado en reposo.} Toda información almacenada en las bases de datos y archivos de NutriApp se cifra mediante el estándar AES-256 (\textit{Advanced Encryption Standard} con clave de 256 bits). El NIST adoptó AES como estándar federal de cifrado mediante el Federal Information Processing Standard 197, estableciendo que ``the AES algorithm is a symmetric block cipher that can encrypt and decrypt digital information'' y que la variante de 256 bits ofrece el mayor nivel de seguridad del estándar (NIST, 2001, p.~1). El NIST recomienda AES-256 específicamente para el cifrado de datos de salud en la publicación especial SP~800-111 (NIST, 2012). En NutriApp, el cifrado en reposo es gestionado por AWS Key Management Service (KMS), que centraliza la gestión de claves criptográficas y genera un registro inmutable de cada operación de cifrado y descifrado.
+\textbf{En reposo.} Todos los datos almacenados ---expedientes,
+planes de dieta, documentos adjuntos, registros de auditoría---
+se cifran con AES-256 (\textit{Advanced Encryption Standard},
+clave de 256 bits), adoptado como estándar federal por el NIST
+mediante el FIPS~197 y recomendado específicamente para datos de
+salud en la publicación especial SP~800-111 (NIST, 2001; NIST,
+2012). AWS Key Management Service (KMS) gestiona las claves
+criptográficas y genera un registro inmutable de cada operación
+de cifrado y descifrado, contribuyendo directamente a la
+trazabilidad que exige el Reglamento (RLFPDPPP, 2011, art.~57).
  
 \subsubsection{Autenticación multifactor}
  
-La autenticación multifactor (MFA) es un mecanismo de verificación de identidad que requiere que el usuario demuestre su identidad mediante dos o más factores independientes de categorías distintas. El NIST define estas categorías en la publicación SP~800-63B, estableciendo que los factores de autenticación son ``something you know (a memorized secret), something you have (a physical authenticator), and something you are (a biometric)'' (NIST, 2020, sec.~4). La misma publicación establece que el nivel de aseguramiento AAL2 ---que requiere MFA--- es el mínimo recomendado para sistemas que manejan información personal sensible, describiendo que ``AAL2 provides high confidence that the claimant controls an authenticator(s) bound to the subscriber's account'' (NIST, 2020, sec.~4.2).
+La autenticación multifactor (MFA) exige que el usuario
+demuestre su identidad mediante dos factores de categorías
+distintas: algo que conoce, algo que posee, o algo que es (NIST,
+2020, SP~800-63B, sec.~4). El NIST establece que el nivel de
+aseguramiento AAL2 ---que requiere MFA--- es el mínimo para
+sistemas que manejan información personal sensible, describiendo
+que ``AAL2 provides high confidence that the claimant controls
+an authenticator(s) bound to the subscriber's account'' (NIST,
+2020, sec.~4.2).
  
-El AWS Well-Architected Framework refuerza esta recomendación estableciendo como primer principio de diseño de seguridad ``implement a strong identity foundation: implement the principle of least privilege and enforce separation of duties with appropriate authorization for each interaction with your AWS resources. Centralize identity management, and aim to eliminate reliance on long-term static credentials'' (Amazon Web Services, 2023c). En NutriApp, la MFA es obligatoria para todos los nutriólogos desde el momento del registro y es gestionada mediante Amazon Cognito, el servicio de gestión de identidades de AWS que implementa los estándares FIDO2 y OAuth~2.0. Esta implementación responde directamente al artículo 18 de la LFPDPPP, que exige que el responsable del tratamiento ``establezca y mantenga medidas de seguridad administrativas, técnicas y físicas que permitan proteger los datos personales contra daño, pérdida, alteración, destrucción o el uso, acceso o tratamiento no autorizado'' (LFPDPPP, 2025, art.~18).
+El AWS Well-Architected Framework refuerza esto como su primer
+principio de diseño de seguridad: ``implement a strong identity
+foundation: implement the principle of least privilege and enforce
+separation of duties with appropriate authorization for each
+interaction with your AWS resources'' (AWS, 2023c). En NutriApp,
+la MFA es obligatoria para todos los nutriólogos desde el
+registro y se gestiona mediante Amazon Cognito, que implementa
+los estándares FIDO2 y OAuth~2.0. Esta decisión responde al
+artículo~18 de la LFPDPPP 2025, que exige ``medidas de seguridad
+administrativas, técnicas y físicas que permitan proteger los
+datos personales contra daño, pérdida, alteración, destrucción
+o el uso, acceso o tratamiento no autorizado'' (LFPDPPP, 2025,
+art.~18).
  
 \subsubsection{Trazabilidad y registro de auditoría}
  
-El AWS Well-Architected Framework identifica la trazabilidad como su segundo principio de diseño de seguridad, describiendo la necesidad de ``monitor, alert, and audit actions and changes to your environment in real time. Integrate log and metric collection with systems to automatically investigate and take action'' (Amazon Web Services, 2023c). El artículo 57 del Reglamento de la LFPDPPP establece de forma paralela que las medidas de seguridad deben garantizar ``la trazabilidad de las operaciones realizadas sobre los datos personales'' (Reglamento LFPDPPP, 2011, art.~57).
+El AWS Well-Architected Framework identifica la trazabilidad
+como su segundo principio de seguridad: ``monitor, alert, and
+audit actions and changes to your environment in real time.
+Integrate log and metric collection with systems to automatically
+investigate and take action'' (AWS, 2023c). El artículo~57 del
+Reglamento de la LFPDPPP exige lo equivalente en términos
+jurídicos: garantizar ``la trazabilidad de las operaciones
+realizadas sobre los datos personales'' (RLFPDPPP, 2011, art.~57).
  
-NutriApp implementa trazabilidad en dos capas complementarias. A nivel de infraestructura, AWS CloudTrail registra automáticamente toda llamada a la API de los servicios de AWS utilizados por NutriApp, generando un registro inmutable almacenado en S3 con Object Lock. AWS (2023c) describe CloudTrail como un servicio que permite ``log, monitor, and retain account activity related to actions across your AWS infrastructure'', garantizando que ningún operador puede alterar ni eliminar los registros de auditoría generados. AWS CloudWatch complementa esta capa centralizando métricas operativas y permitiendo configurar alarmas automáticas ante comportamientos anómalos.
- 
-A nivel de aplicación, NutriApp mantiene un \texttt{DeclarationLog} que registra cada firma de la declaración bajo protesta de decir verdad de los nutriólogos. Este registro incluye un folio único, fecha y hora exactas, plan activo al momento de la firma, e instantánea (\textit{snapshot}) del estado de los datos profesionales declarados. Este componente es independiente de la capa de infraestructura y opera como evidencia de cumplimiento de la obligación administrativa del artículo 18 de la LFPDPPP.
+NutriApp lo implementa en dos capas. A nivel de infraestructura,
+AWS CloudTrail registra automáticamente toda llamada a la API de
+los servicios utilizados ---accesos a datos cifrados, modificaciones
+en base de datos, operaciones de almacenamiento--- generando un
+registro inmutable en S3 con Object Lock que ningún operador puede
+alterar. A nivel de aplicación, el \texttt{DeclarationLog}
+registra cada firma de declaración profesional de los nutriólogos
+con folio único, fecha exacta y \textit{snapshot} de los datos
+declarados, operando como evidencia de cumplimiento administrativo
+del artículo~18 de la LFPDPPP 2025, independiente de la capa de
+infraestructura.
  
 \subsubsection{Eliminación segura de datos}
  
-La eliminación verificable de datos personales plantea un desafío técnico frecuentemente subestimado: los sistemas de almacenamiento modernos no eliminan físicamente los datos al ejecutar una operación de borrado estándar, sino que simplemente marcan el espacio como disponible. Garfinkel y Shelat (2003) demostraron en un estudio seminal que ``a significant fraction of disk drives sold on the secondary market contain sensitive personal data'' recuperable mediante herramientas estándar, incluso después de operaciones de eliminación convencionales (p.~22).
+Los sistemas de almacenamiento modernos no eliminan físicamente
+los datos al ejecutar un borrado estándar: simplemente marcan el
+espacio como disponible. Garfinkel y Shelat (2003) demostraron
+que ``a significant fraction of disk drives sold on the secondary
+market contain sensitive personal data'' recuperable incluso
+después de operaciones de eliminación convencionales (p.~22).
  
-El NIST aborda este problema en la publicación SP~800-88r1, estableciendo tres niveles de sanitización de medios: borrado lógico (\textit{clear}), purga (\textit{purge}) y destrucción. Para datos almacenados en la nube, el NIST define la destrucción criptográfica como un mecanismo equivalente a la purga, señalando que ``cryptographic erase (CE) renders sanitized data unrecoverable by leveraging the encryption of target data. By first encrypting the data and then erasing the encryption key, all encrypted data will be inaccessible'' (NIST, 2014, p.~32). NutriApp implementa este mecanismo mediante un Lambda de eliminación supervisada que, al activarse ---por solicitud ARCO o por vencimiento del período de retención--- aplica destrucción criptográfica eliminando la clave KMS asociada al registro antes del borrado lógico, registra el evento en CloudTrail con folio único, y notifica al titular vía SMS o WhatsApp confirmando la ejecución del derecho de cancelación. Este proceso satisface simultáneamente el artículo 34 de la LFPDPPP y la exigencia de eliminación certificada de la NOM-004-SSA3-2012.
+El NIST define la destrucción criptográfica como el mecanismo
+recomendado para datos en la nube, señalando que ``cryptographic
+erase (CE) renders sanitized data unrecoverable by leveraging the
+encryption of target data. By first encrypting the data and then
+erasing the encryption key, all encrypted data will be
+inaccessible'' (NIST, 2014, SP~800-88r1, p.~32). NutriApp
+implementa este mecanismo mediante un Lambda de eliminación
+supervisada que, al activarse por solicitud ARCO o por vencimiento
+del período de retención, elimina la clave KMS del registro antes
+del borrado lógico, registra el evento en CloudTrail con folio
+único y notifica al titular vía SMS o WhatsApp. Este proceso
+satisface el artículo~34 de la LFPDPPP 2025 (LFPDPPP, 2025,
+art.~34) y la exigencia de eliminación certificada de la
+NOM-004-SSA3-2012.
  
 % ------------------------------------------------------------
-\subsection{Privacy by Design: principios y aplicación en NutriApp}
+\subsection{Privacy by Design: de principio a arquitectura}
 % ------------------------------------------------------------
  
-Privacy by Design es un enfoque de ingeniería de sistemas desarrollado por Ann Cavoukian. Su documento fundacional lo define como el planteamiento de que ``privacy assurance must ideally become an organization's default mode of operation'' y establece que ``the protection of privacy cannot be assured solely by compliance with regulatory frameworks; rather, privacy assurance must become an organization's default mode of operation'' (Cavoukian, 2009, p.~1). En 2010, la Asamblea Internacional de Comisionados de Protección de Datos y Privacidad adoptó Privacy by Design como estándar internacional; en 2018 el GDPR europeo lo incorporó como obligación legal explícita en su artículo 25, bajo la denominación \textit{data protection by design and by default}. El INAI (2018) reconoce en sus lineamientos la pertinencia de Privacy by Design como marco de referencia para el cumplimiento del principio de responsabilidad del artículo 14 de la LFPDPPP.
+El capítulo anterior explicó los siete principios de Privacy
+by Design y su correspondencia con la LFPDPPP. Este apartado
+no los repite: documenta cómo cada principio se traduce en una
+decisión técnica concreta de NutriApp, conectando el marco
+normativo con la arquitectura del capítulo seis.
  
-Cavoukian (2009) define siete principios fundacionales. A continuación se describe cada uno con su aplicación concreta en NutriApp:
+\begin{itemize}
  
-\textbf{i. Proactivo, no reactivo; preventivo, no correctivo.} Cavoukian (2009) establece que este principio ``anticipates and prevents privacy invasive events before they happen'' (p.~2). En NutriApp, ningún dato de salud de un paciente puede ser registrado sin que el consentimiento informado haya sido firmado digitalmente y registrado con folio único; el sistema no permite técnicamente omitir este paso.
+  \item \textbf{Proactivo, no reactivo} se traduce en que
+  ningún dato de salud puede registrarse sin que el consentimiento
+  haya sido firmado y registrado con folio previo. No es una
+  validación de formulario: es una restricción de flujo a nivel
+  de API.
  
-\textbf{ii. Privacidad como configuración predeterminada.} Cavoukian (2009) señala que ``if an individual does nothing, their privacy still remains intact'' (p.~2). En NutriApp, el cifrado AES-256 está activo por defecto en todos los datos almacenados y transmitidos; no existe modo de operación sin cifrado. La MFA está habilitada obligatoriamente desde el registro; no puede ser desactivada por el usuario.
+  \item \textbf{Privacidad como configuración predeterminada}
+  se traduce en que el cifrado AES-256 y la MFA están activos
+  sin acción del usuario. No existe un modo de operación sin
+  cifrado ni una configuración que permita desactivar la MFA.
  
-\textbf{iii. Privacidad integrada en el diseño.} Cavoukian (2009) indica que ``privacy is embedded into the design and architecture of IT systems and business practices. It is not bolted on as an add-on'' (p.~3). En NutriApp, el módulo ARCO, el Lambda de eliminación segura y el registro de declaraciones profesionales son componentes nativos de la arquitectura, no módulos opcionales.
+  \item \textbf{Privacidad integrada en el diseño} se traduce
+  en que el módulo ARCO, el Lambda de eliminación y el
+  \texttt{DeclarationLog} son componentes nativos de la
+  arquitectura, no añadidos posteriores.
  
-\textbf{iv. Funcionalidad completa: suma positiva.} Cavoukian (2009) describe este principio como ``accommodating all legitimate interests and objectives in a positive-sum `win-win' manner, not through a dated, zero-sum approach'' (p.~3). NutriApp demuestra que es posible construir una plataforma clínica completa ---con expedientes, citas, planes de dieta, módulo social y notificaciones--- que cumple íntegramente con la LFPDPPP sin sacrificar la experiencia de uso.
+  \item \textbf{Funcionalidad completa} se traduce en que los
+  controles de privacidad no interrumpen el flujo clínico. El
+  consentimiento se firma en menos de 60 segundos; el módulo
+  ARCO opera sin intervención del nutriólogo en las notificaciones
+  al titular.
  
-\textbf{v. Seguridad extremo a extremo.} Cavoukian (2009) establece que ``privacy, having been embedded into the system prior to the first element of information being collected, extends securely throughout the entire lifecycle of the data involved'' (p.~4). En NutriApp, el ciclo inicia con el consentimiento informado al crear el expediente y termina con la notificación de eliminación segura al titular.
+  \item \textbf{Seguridad extremo a extremo} se traduce en
+  políticas de retención en S3 configuradas al mínimo legal de
+  cinco años con eliminación segura certificada al vencimiento,
+  sin intervención manual.
  
-\textbf{vi. Visibilidad y transparencia.} Cavoukian (2009) señala que este principio garantiza que ``all stakeholders that business practices and technologies are, in fact, operating according to the stated promises and objectives'' (p.~4). En NutriApp, el aviso de privacidad es accesible desde cualquier pantalla, los folios de consentimiento se entregan al usuario en el momento de su generación, y el módulo ARCO permite al paciente acceder en tiempo real al estado de sus derechos.
+  \item \textbf{Visibilidad y transparencia} se traduce en que
+  el aviso de privacidad es accesible desde cualquier pantalla,
+  los folios de consentimiento se entregan al titular en el
+  momento de su generación y el módulo ARCO permite al paciente
+  consultar el estado de sus derechos en tiempo real.
  
-\textbf{vii. Respeto por la privacidad del usuario.} Cavoukian (2009) establece que este principio exige ``keeping it user-centric'' y ``offering strong privacy defaults, appropriate notice, and empowering user-friendly options'' (p.~5). En NutriApp, los pacientes tienen acceso permanente a sus derechos ARCO desde su perfil en la aplicación y pueden solicitar la cancelación de sus datos en cualquier momento sin necesidad de justificación.
+  \item \textbf{Respeto por el usuario} se traduce en que la
+  cancelación de datos puede solicitarse desde el perfil del
+  paciente sin intermediarios, y el sistema la ejecuta y
+  notifica con folio sin requerir acción adicional del
+  nutriólogo.
+ 
+\end{itemize}
  
 % ------------------------------------------------------------
 \subsection{Estándares internacionales de referencia}
 % ------------------------------------------------------------
  
-El diseño de NutriApp toma como referencia tres estándares internacionales que representan el estado del arte en materia de seguridad de información y protección de datos de salud. Su adopción es coherente con el artículo 52 del Reglamento de la LFPDPPP, que establece que los terceros que participen en el tratamiento de datos deben garantizar ``los niveles de protección equivalentes a los previstos en esta Ley y adoptarán las medidas necesarias para ello'' (Reglamento LFPDPPP, 2011, art.~52).
+El diseño de NutriApp toma como referencia tres estándares
+internacionales que, aunque no son obligatorios bajo la
+LFPDPPP, representan el estado del arte en seguridad de datos
+de salud. Su adopción es coherente con el artículo~52 del
+Reglamento, que exige que los terceros que participen en el
+tratamiento garanticen ``los niveles de protección equivalentes
+a los previstos en esta Ley'' (RLFPDPPP, 2011, art.~52).
  
-\subsubsection{ISO/IEC 27001: sistema de gestión de seguridad de la información}
+\subsubsection{ISO/IEC 27001 e ISO/IEC 27018}
  
-La norma ISO/IEC~27001 es el estándar internacional para la implementación de sistemas de gestión de seguridad de la información (SGSI). Su versión más reciente, publicada en 2022, establece que su objetivo es ``help organizations make information assets they hold more secure'' mediante la identificación de riesgos, la implementación de controles y el mantenimiento de un proceso de mejora continua (ISO, 2022, introducción). El Anexo A de la norma contiene 93 controles organizados en cuatro dominios: controles organizacionales, de personas, físicos y tecnológicos. Entre los controles tecnológicos más relevantes para NutriApp se encuentran la gestión de claves criptográficas (control~8.24), los registros de auditoría (control~8.15), la transferencia segura de información (control~5.14) y la eliminación segura de información (control~8.10).
+ISO/IEC~27001 es el estándar internacional para la
+implementación de sistemas de gestión de seguridad de la
+información. Su versión 2022 establece 93 controles en cuatro
+dominios: organizacionales, de personas, físicos y tecnológicos
+(ISO, 2022). Los más relevantes para NutriApp son la gestión de
+claves criptográficas (control~8.24), registros de auditoría
+(control~8.15), transferencia segura de información (control~5.14)
+y eliminación segura (control~8.10). NutriApp no busca
+certificación ISO/IEC~27001 en esta etapa de MVP, pero los
+controles del Anexo~A sirven como lista de verificación del
+diseño. AWS mantiene esta certificación vigente y auditada por
+terceros independientes (AWS, 2023b).
  
-NutriApp no busca certificación ISO/IEC~27001 en esta etapa de MVP, pero los controles del Anexo~A sirven como lista de verificación para validar la completitud del diseño de seguridad propuesto. AWS, como proveedor de infraestructura, mantiene certificación ISO/IEC~27001 vigente auditada por terceros independientes (Amazon Web Services, 2023b), garantizando que la capa de infraestructura satisface los controles del estándar.
+ISO/IEC~27018 extiende el estándar anterior a la protección de
+datos personales en nubes públicas, estableciendo controles
+adicionales que incluyen prohibición de usar datos del cliente
+para marketing sin consentimiento, transparencia sobre
+subcontrataciones y notificación de brechas (ISO, 2019). Su
+vigencia en AWS satisface directamente el artículo~52 del
+Reglamento de la LFPDPPP.
  
-\subsubsection{ISO/IEC 27018: protección de datos personales en servicios de nube}
+\subsubsection{HIPAA Security Rule como referencia técnica}
  
-ISO/IEC~27018 es una extensión de ISO/IEC~27001 desarrollada específicamente para la protección de información de identificación personal (PII) en servicios de nube pública. El estándar establece que su propósito es ``establish commonly accepted control objectives, controls and guidelines for implementing measures to protect personally identifiable information (PII) in accordance with the privacy principles in ISO/IEC~29100 for the public cloud computing environment'' (ISO, 2019, introducción). Sus controles adicionales incluyen la prohibición de utilizar datos personales de los clientes para fines de marketing sin consentimiento explícito, la transparencia sobre subcontrataciones del proveedor, y la notificación oportuna de brechas de seguridad. La certificación de AWS en ISO/IEC~27018 satisface directamente el requisito de equivalencia de protección del artículo 52 del Reglamento de la LFPDPPP.
+La HIPAA \textit{Security Rule} de Estados Unidos exige que las
+entidades que manejan información de salud electrónica
+implementen ``appropriate administrative, physical, and technical
+safeguards to ensure the confidentiality, integrity, and security
+of electronic protected health information'' (HHS, 2003,
+sec.~164.306). Aunque HIPAA no tiene aplicación legal en México,
+el INAI reconoce en sus lineamientos que adoptar estándares
+internacionales como referencia es una práctica recomendada para
+demostrar el principio de responsabilidad del artículo~14 de la
+LFPDPPP (INAI, 2018). NutriApp adopta los controles técnicos de
+la HIPAA \textit{Security Rule} como capa adicional de rigor
+sobre lo que la ley mexicana exige explícitamente.
  
-\subsubsection{HIPAA Security Rule como marco de referencia para datos de salud}
- 
-La \textit{Health Insurance Portability and Accountability Act} (HIPAA) establece controles obligatorios para información de salud protegida (\textit{Protected Health Information}, PHI) en Estados Unidos. Su \textit{Security Rule} establece que las entidades cubiertas deben implementar ``appropriate administrative, physical, and technical safeguards to ensure the confidentiality, integrity, and security of electronic protected health information'' (HHS, 2003, sec.~164.306). Entre los controles técnicos que prescribe se encuentran: controles de auditoría sobre accesos a registros de salud, controles de integridad para verificar que los datos no han sido alterados, y mecanismos de transmisión segura.
- 
-Aunque HIPAA no tiene aplicación legal en México, el INAI (2018) reconoce en sus lineamientos que la adopción de estándares internacionales como referencia es una práctica recomendada para demostrar el cumplimiento del principio de responsabilidad del artículo 14 de la LFPDPPP. NutriApp adopta los controles técnicos de la HIPAA \textit{Security Rule} como capa adicional de rigor sobre lo que la LFPDPPP exige explícitamente. La adopción de este estándar tiene además una dimensión estratégica: Greenleaf (2022) documenta que Brasil (LGPD), Argentina (Ley~25.326) y Colombia (Ley~1581/2012) prescriben controles de seguridad técnica convergentes con los que HIPAA establece, lo que significa que una plataforma que satisface los controles técnicos de HIPAA está técnicamente preparada para operar en los principales mercados de América Latina sin requerir cambios de arquitectura.
+Esta decisión tiene además una dimensión estratégica: Greenleaf
+(2022) documenta que Brasil (LGPD), Argentina (Ley~25.326) y
+Colombia (Ley~1581/2012) prescriben controles de seguridad
+técnica convergentes con HIPAA, de modo que una plataforma que
+los satisface está técnicamente preparada para operar en los
+principales mercados de América Latina sin cambios de
+arquitectura.
 
 % ============================================================
 % CAPÍTULO 5 — METODOLOGÍA
-% NutriApp — Tesis ITESO — Cristian Emanuel Ortega Camarena
-% Versión final — citas verbatim patrón ITESO APA 7
-% Clasificación: investigación aplicada de diseño + caso de estudio
+% NutriApp — ITESO — Cristian Emanuel Ortega Camarena
 % ============================================================
  
 \section{Metodología}
  
-Este capítulo describe el diseño metodológico del caso de estudio: el tipo de investigación y su clasificación dentro de la tradición de la investigación aplicada de diseño, los criterios que rigieron la selección y revisión del marco legal comparado, el diseño de los instrumentos de campo y el procedimiento de recolección de datos, la estrategia de análisis y triangulación de la evidencia, y las consideraciones éticas que enmarcan el trabajo. La metodología está construida de modo que cualquier investigador o profesional que lea esta tesis pueda replicar el proceso de diseño de NutriApp ---o de una solución equivalente para otro sector--- siguiendo los pasos aquí documentados, como si este capítulo fuera el protocolo de construcción que acompaña a los planos técnicos del capítulo seis.
+Este capítulo documenta el diseño metodológico del caso de
+estudio: cómo se clasifica la investigación, qué criterios
+rigieron la selección y revisión del marco legal y del
+benchmarking, cómo se diseñaron los instrumentos de campo y
+cómo se analizan sus resultados. El objetivo es que cualquier
+investigador pueda replicar el proceso siguiendo este capítulo
+como protocolo, de la misma manera en que un constructor sigue
+los planos que acompañan a un proyecto arquitectónico.
  
 % ------------------------------------------------------------
 \subsection{Tipo de estudio y enfoque metodológico}
 % ------------------------------------------------------------
  
-\subsubsection{Clasificación del tipo de investigación}
+\subsubsection{Clasificación}
  
-El presente trabajo se clasifica como investigación aplicada de diseño con estrategia de caso de estudio. La investigación aplicada de diseño ---denominada en la literatura anglosajona \textit{design science research}--- es una tradición metodológica establecida en los campos de la ingeniería de sistemas y la gestión de tecnología. Hevner et al. (2004) la definen como una forma de investigación cuyo objetivo es ``create innovations that define the ideas, practices, technical capabilities, and products through which the analysis, design, implementation, management, and use of information systems can be effectively and efficiently accomplished'' (p.~75). A diferencia de la investigación descriptiva o explicativa, que busca comprender fenómenos existentes, la investigación de diseño produce conocimiento en la forma de \textit{cómo construir} un artefacto que resuelva un problema real y verificable.
+Este trabajo se clasifica como investigación aplicada de diseño
+(\textit{design science research}) con estrategia de caso de
+estudio. La investigación de diseño produce conocimiento en
+la forma de \textit{cómo construir} un artefacto que resuelva
+un problema real y verificable, a diferencia de la investigación
+descriptiva, que busca comprender fenómenos existentes. Hevner
+et al. (2004) definen su objetivo como ``create innovations that
+define the ideas, practices, technical capabilities, and products
+through which the analysis, design, implementation, management,
+and use of information systems can be effectively and efficiently
+accomplished'' (p.~75).
  
-Peffers et al. (2007) proponen un proceso metodológico de seis actividades para la investigación de diseño: identificación del problema y motivación, definición de los objetivos de la solución, diseño y desarrollo del artefacto, demostración, evaluación, y comunicación. Este trabajo sigue ese proceso: el capítulo uno identifica el problema y los objetivos; el capítulo dos establece los requisitos normativos que la solución debe satisfacer; los capítulos seis y siete documentan el diseño y desarrollo del artefacto; el capítulo ocho presenta los resultados de la encuesta de diagnóstico y la validación normativa; y este capítulo ---junto con la tesis en su conjunto--- cumple la función de comunicación académica del proceso.
+El proceso metodológico sigue las seis actividades que Peffers
+et al. (2007) proponen para la investigación de diseño:
+identificación del problema (capítulo~1), definición de objetivos
+(capítulo~1), diseño del artefacto (capítulos~6 y~7),
+demostración, evaluación (capítulo~8) y comunicación (este
+documento en su conjunto).
  
-La estrategia de caso de estudio se adopta conforme al marco metodológico de Yin (2018), quien establece que esta estrategia es apropiada cuando ``investigators want to cover contextual conditions because they believe they are relevant to the phenomenon under study'' (p.~15). El fenómeno investigado ---el desconocimiento de la LFPDPPP en el sector de nutrición y sus consecuencias en las prácticas de gestión de datos--- no puede comprenderse de forma aislada del contexto profesional, normativo y tecnológico en el que ocurre. NutriApp es la unidad de análisis que integra todos los elementos del caso: el problema identificado en el diagnóstico, los requisitos establecidos por el marco normativo, y la solución de diseño propuesta como respuesta.
+La estrategia de caso de estudio se adopta conforme a Yin
+(2018), quien establece que es apropiada cuando ``investigators
+want to cover contextual conditions because they believe they
+are relevant to the phenomenon under study'' (p.~15). El
+fenómeno ---el desconocimiento de la LFPDPPP en el sector de
+nutrición--- no puede comprenderse de forma aislada del contexto
+profesional, normativo y tecnológico en el que ocurre. NutriApp
+es la unidad de análisis que integra todos los elementos del
+caso.
  
-\subsubsection{Alcance de la investigación: el artefacto como plano técnico}
+\subsubsection{Alcance: el diseño como plano técnico}
  
-El alcance de este trabajo es el diseño de la solución, no su implementación ni su evaluación en producción con usuarios reales. Hevner et al. (2004) establecen que en la investigación de diseño ``an artifact can be construed broadly as any designed object in which a research contribution is embedded in the design'' (p.~77), incluyendo constructos, modelos, métodos e instancias. El diseño de NutriApp ---su arquitectura de servicios, sus diagramas de ingeniería, su modelo de datos y su prototipo funcional--- constituye un artefacto completo y evaluable: puede ser revisado por expertos en normativa de protección de datos para verificar su cobertura de la LFPDPPP, por ingenieros de software para verificar su coherencia arquitectónica, y puede ser utilizado como base para una implementación real sin requerir rediseño fundamental.
- 
-La metáfora de los planos de construcción es pertinente para comunicar este alcance a una audiencia mixta: un arquitecto que entrega planos completos de un edificio ha producido una contribución intelectual de valor independiente de si ese edificio se construye finalmente. Los planos pueden ser evaluados por ingenieros estructurales, revisados por autoridades y utilizados por un constructor distinto. Esta tesis aspira al mismo estándar de completitud y reproducibilidad para el diseño de NutriApp.
+El alcance de este trabajo es el diseño de la solución, no su
+implementación ni su evaluación en producción. Hevner et al.
+(2004) establecen que en la investigación de diseño ``an artifact
+can be construed broadly as any designed object in which a
+research contribution is embedded in the design'' (p.~77). El
+diseño de NutriApp ---arquitectura de servicios, diagramas de
+ingeniería, modelo de datos y prototipo funcional--- es un
+artefacto completo y evaluable: puede ser revisado por expertos
+normativos para verificar cobertura de la LFPDPPP, por ingenieros
+para verificar coherencia arquitectónica, y puede usarse como
+base para una implementación real sin rediseño fundamental.
  
 % ------------------------------------------------------------
-\subsection{Investigación documental: análisis normativo y benchmarking}
+\subsection{Investigación documental}
 % ------------------------------------------------------------
  
-\subsubsection{Criterios de selección y revisión del marco legal}
+\subsubsection{Criterios de selección del marco legal}
  
-El marco normativo del capítulo dos se construyó mediante revisión documental sistemática de fuentes primarias y secundarias. Las fuentes primarias incluyen el texto vigente de la LFPDPPP (Diario Oficial de la Federación, 2010, con reforma de 2025), su Reglamento (DOF, 2011), los lineamientos generales de protección de datos personales para el sector privado del INAI (2018), y la NOM-004-SSA3-2012. Se revisaron también las resoluciones públicas del INAI disponibles en su registro oficial. Las fuentes secundarias incluyen literatura académica sobre derecho de datos en México y América Latina, y documentación técnica de los estándares internacionales de referencia.
+El marco normativo del capítulo dos se construyó con fuentes
+primarias ---LFPDPPP 2025, Reglamento, lineamientos del INAI,
+NOM-004-SSA3-2012 y NOM-024-SSA3-2012--- y fuentes secundarias
+---literatura académica y documentación técnica de los estándares
+internacionales. Los marcos comparados se seleccionaron con
+cuatro criterios predefinidos para garantizar replicabilidad.
  
-La selección de los marcos comparados ---Brasil, Uruguay, Estados Unidos y Alemania--- respondió a cuatro criterios predefinidos y explícitos, formulados antes del inicio de la revisión para garantizar la replicabilidad del proceso de selección. El \textit{criterio de relevancia regional} priorizó jurisdicciones de América Latina con las que NutriApp podría interactuar en una fase de expansión. El \textit{criterio de madurez normativa} incluyó jurisdicciones con marcos robustos y experiencia de implementación verificable en la literatura académica. El \textit{criterio de contraste metodológico} seleccionó marcos con enfoques distintos al mexicano para evidenciar las fortalezas y debilidades relativas de la LFPDPPP a través de la comparación. El \textit{criterio de acceso verificable} garantizó que la documentación oficial de cada marco estuviera disponible en español, inglés o portugués durante el período de investigación.
+El \textit{criterio de relevancia regional} priorizó
+jurisdicciones de América Latina con las que NutriApp podría
+interactuar en expansión. El \textit{criterio de madurez
+normativa} incluyó jurisdicciones con marcos robustos y
+experiencia verificable ---GDPR alemán, HIPAA estadounidense---
+como referencias de excelencia. El \textit{criterio de contraste
+metodológico} seleccionó marcos con enfoques distintos al
+mexicano para evidenciar las fortalezas y debilidades relativas
+de la LFPDPPP. El \textit{criterio de acceso verificable}
+garantizó que la documentación oficial de cada marco estuviera
+disponible en español, inglés o portugués.
  
-La revisión de cada marco siguió una estructura analítica estandarizada de ocho categorías: fundamento constitucional, fecha de entrada en vigor, sujetos obligados, derechos del titular, obligaciones del responsable, autoridad de control, régimen de sanciones, y evidencia de implementación en la literatura. Esta estructura permitió la construcción del cuadro comparativo de la sección 2.2.5 con categorías equivalentes entre jurisdicciones.
+La revisión de cada marco siguió una estructura de ocho
+categorías: fundamento constitucional, fecha de entrada en
+vigor, sujetos obligados, derechos del titular, obligaciones
+del responsable, autoridad de control, régimen de sanciones
+y evidencia de implementación en la literatura.
  
 \subsubsection{Criterios de benchmarking de software de nutrición}
  
-El análisis competitivo de la sección 3.2 evaluó el software de gestión nutricional disponible en el mercado mexicano conforme a cinco criterios predefinidos. El \textit{criterio de disponibilidad} limitó el análisis a plataformas con presencia activa y accesibles para nutriólogos en México durante el período de investigación. El \textit{criterio de relevancia funcional} restringió el conjunto a plataformas orientadas al profesional de nutrición como gestor de expedientes, excluyendo aplicaciones dirigidas exclusivamente al paciente. El \textit{criterio de verificabilidad} limitó cada afirmación sobre las características de seguridad de los competidores a lo documentado en fuentes públicas ---aviso de privacidad, términos de uso, documentación de producto--- sin acceso a código fuente ni a entornos cerrados de evaluación. El \textit{criterio de pertinencia normativa} orientó la evaluación específicamente hacia el cumplimiento o incumplimiento de obligaciones derivadas de la LFPDPPP. El \textit{criterio de actualidad} limitó la revisión a la documentación disponible durante el período de investigación, sin extrapolaciones sobre características anunciadas o en desarrollo.
+El análisis competitivo de la sección~3.2 se delimitó con cinco
+criterios. El \textit{criterio de disponibilidad} limitó el
+análisis a plataformas activas y accesibles para nutriólogos en
+México durante el período de investigación. El \textit{criterio
+de relevancia funcional} excluyó aplicaciones dirigidas
+exclusivamente al paciente. El \textit{criterio de
+verificabilidad} limitó cada afirmación sobre seguridad de
+los competidores a lo documentado en fuentes públicas ---aviso
+de privacidad, términos de uso, documentación de producto---
+sin acceso a código fuente ni entornos cerrados. El
+\textit{criterio de pertinencia normativa} orientó la evaluación
+hacia el cumplimiento de la LFPDPPP, no hacia características
+funcionales generales. El \textit{criterio de actualidad}
+excluyó características anunciadas o en desarrollo no
+verificables al momento de la investigación.
  
 % ------------------------------------------------------------
 \subsection{Investigación de campo: encuestas a nutriólogos}
@@ -3139,55 +3396,149 @@ El análisis competitivo de la sección 3.2 evaluó el software de gestión nutr
  
 \subsubsection{Diseño de instrumentos y población objetivo}
  
-La investigación de campo utiliza dos instrumentos de encuesta aplicados en momentos distintos del proceso. El \textit{Instrumento~1 --- Encuesta de Diagnóstico} establece la prevalencia del desconocimiento de la LFPDPPP entre nutriólogos en ejercicio y caracteriza sus prácticas actuales de gestión de datos. El \textit{Instrumento~2 --- Encuesta de Validación} evalúa la pertinencia percibida de NutriApp como solución y la disposición de adopción del gremio, y se aplicará a un subconjunto de la misma población tras la presentación del prototipo funcional. Los resultados del Instrumento~1 se presentan en el capítulo ocho.
+La investigación de campo utiliza dos instrumentos aplicados en
+momentos distintos. El \textit{Instrumento~1 --- Encuesta de
+Diagnóstico} establece la prevalencia del desconocimiento de la
+LFPDPPP y caracteriza las prácticas actuales de gestión de datos.
+El \textit{Instrumento~2 --- Encuesta de Validación} evalúa la
+pertinencia percibida de NutriApp tras la presentación del
+prototipo funcional. Los resultados del Instrumento~1 se
+presentan en el capítulo~8; el Instrumento~2 corresponde a la
+siguiente revisión de este trabajo.
  
-% \todo[inline]{Pendiente: incorporar resultados de la Encuesta de Validación (Instrumento 2). Trabajo de la siguiente revisión, a realizar al retorno de Alemania.}
+% \todo[inline]{Pendiente: incorporar resultados de la Encuesta de Validación al retorno de Alemania.}
  
-La población objetivo está definida como nutriólogos con cédula profesional activa en la Secretaría de Educación Pública, con práctica clínica en ejercicio al momento de la aplicación, sin restricción geográfica dentro del territorio mexicano. Los criterios de inclusión son: titulación en Licenciatura en Nutrición o Licenciatura en Nutriología, práctica activa de al menos un paciente en los seis meses previos a la aplicación, y disponibilidad para completar el instrumento en formato digital autoadministrado. Se excluyeron nutriólogos que desempeñan su práctica exclusivamente en instituciones públicas bajo relación laboral de subordinación, dado que en ese contexto la responsabilidad del tratamiento de datos recae en la institución y no en el profesional individual, que es el objeto de estudio.
+La población objetivo son nutriólogos con cédula profesional
+activa en la SEP, con práctica clínica en ejercicio al momento
+de la aplicación, sin restricción geográfica. Los criterios
+de inclusión son: titulación en Licenciatura en Nutrición o
+Nutriología, al menos un paciente activo en los seis meses
+previos, y disponibilidad para completar el instrumento en
+formato digital. Se excluyeron nutriólogos en instituciones
+públicas bajo subordinación, donde la responsabilidad del
+tratamiento recae en la institución.
  
 \subsubsection{Diseño del instrumento de diagnóstico}
  
-La Encuesta de Diagnóstico se diseñó con base en tres dimensiones analíticas derivadas del marco normativo. La \textit{primera dimensión} evalúa el conocimiento declarado de la LFPDPPP: si el respondente conoce la ley, identifica sus obligaciones como responsable del tratamiento, ha recibido formación formal en protección de datos, y conoce las sanciones aplicables. La \textit{segunda dimensión} caracteriza las prácticas actuales: qué herramientas utiliza para llevar expedientes, dónde almacena la información de pacientes, si cuenta con aviso de privacidad, y si ha recibido o atendido solicitudes ARCO. La \textit{tercera dimensión} evalúa la percepción de riesgo y disposición de adopción: si el respondente considera que sus prácticas actuales lo exponen a sanciones y cuál es su disposición a adoptar una herramienta especializada.
+La Encuesta~1 se estructura en tres dimensiones derivadas del
+marco normativo. La \textit{primera dimensión} evalúa el
+conocimiento declarado de la LFPDPPP: si el respondente conoce
+la ley, sus obligaciones como responsable del tratamiento, si
+recibió formación formal y si conoce las sanciones aplicables.
+La \textit{segunda dimensión} caracteriza la práctica real: qué
+herramienta usa para expedientes, si cuenta con aviso de
+privacidad, si obtiene consentimiento firmado y si ha atendido
+solicitudes ARCO. La \textit{tercera dimensión} evalúa percepción
+de riesgo y disposición de adopción.
  
-El instrumento fue diseñado siguiendo las recomendaciones de Hernández-Sampieri et al. (2014), quienes establecen que para medir conocimientos y actitudes en poblaciones profesionales debe utilizarse ``preguntas cerradas de opción múltiple para variables categóricas y escalas de respuesta ordenada (Likert) para variables de actitud'' (p.~217): preguntas cerradas de opción múltiple para las dimensiones de conocimiento y práctica, y escala Likert de cinco puntos para la percepción de riesgo y la disposición de adopción. El texto completo del instrumento se presenta en el Anexo~A.
+El instrumento sigue las recomendaciones de Hernández-Sampieri
+et al. (2014): preguntas cerradas de opción múltiple para
+conocimiento y práctica, y escala Likert de cinco puntos para
+percepción de riesgo y disposición de adopción (p.~217). El
+instrumento completo se presenta en el Anexo~A.
  
-\subsubsection{Procedimiento de aplicación y consideraciones muestrales}
+\subsubsection{Procedimiento de aplicación y muestra}
  
-La Encuesta de Diagnóstico se aplica en formato digital mediante formulario autoadministrado distribuido a través de canales de comunicación de asociaciones de nutriólogos, grupos profesionales en plataformas digitales y contactos directos del investigador en el gremio. La participación es estrictamente voluntaria y anónima; ningún dato de identificación personal es recopilado. El período de aplicación corresponde al semestre posterior al retorno del investigador de su estancia académica en Alemania.
+La encuesta se aplica en formato digital autoadministrado,
+distribuido a través de asociaciones de nutriólogos, grupos
+profesionales en plataformas digitales y contactos directos
+del investigador. La participación es voluntaria y anónima;
+no se recopila ningún dato de identificación personal. El
+período de aplicación corresponde al semestre posterior al
+retorno del investigador de su estancia académica en Alemania.
  
-La muestra objetivo es de al menos 30 respondentes. Yin (2018) establece que en la investigación de caso de estudio ``the question of how many cases are `needed' is often less relevant than the question of what insights can be offered by the number of cases actually studied'' (p.~57). El tamaño muestral propuesto no busca producir inferencias estadísticamente representativas de la totalidad del gremio ---lo que requeriría un diseño probabilístico de mayor escala--- sino proveer evidencia empírica de patrones de comportamiento que, triangulados con la literatura existente, fundamenten el diagnóstico del problema.
+La muestra objetivo es de al menos 30 respondentes. Yin (2018)
+establece que en el caso de estudio ``the question of how many
+cases are needed is often less relevant than the question of
+what insights can be offered by the number of cases actually
+studied'' (p.~57). El tamaño propuesto no busca inferencia
+estadística representativa, sino evidencia exploratoria de
+patrones que, triangulados con la literatura, fundamenten
+el diagnóstico.
  
-\subsubsection{Estrategia de análisis y triangulación}
+\subsubsection{Análisis y triangulación}
  
-Los datos de la Encuesta de Diagnóstico se analizan mediante estadística descriptiva: frecuencias absolutas y relativas para variables categóricas, y medidas de tendencia central y dispersión para variables en escala Likert. Los resultados se presentan en el capítulo ocho con visualizaciones diseñadas para una audiencia mixta técnica y no técnica.
+Los datos se analizan con estadística descriptiva: frecuencias
+absolutas y relativas para variables categóricas, medidas de
+tendencia central y dispersión para variables Likert. Los
+resultados se presentan en el capítulo~8 con visualizaciones
+diseñadas para audiencia mixta.
  
-La triangulación opera en dos niveles. El \textit{primer nivel} triangula los resultados de la encuesta con la literatura académica disponible sobre prácticas de protección de datos en profesiones de salud en México y América Latina, verificando si los patrones observados son consistentes con lo reportado en estudios de mayor alcance. El \textit{segundo nivel} triangula el diagnóstico cuantitativo con el análisis normativo del capítulo dos, identificando la correspondencia entre las prácticas reportadas por los encuestados y las obligaciones específicas que la LFPDPPP les impone, lo que permite cuantificar la brecha entre el estado actual del sector y el estado requerido por la ley.
+La triangulación opera en dos niveles. El \textit{primer nivel}
+contrasta los resultados con la literatura académica disponible
+sobre prácticas de protección de datos en profesiones de salud
+en México y América Latina, verificando consistencia con estudios
+de mayor alcance. El \textit{segundo nivel} cruza el diagnóstico
+cuantitativo con el análisis normativo del capítulo~2,
+identificando la correspondencia entre las prácticas reportadas
+y las obligaciones específicas de la LFPDPPP, lo que permite
+cuantificar la brecha entre el estado actual del sector y el
+estado requerido por la ley.
  
 % ------------------------------------------------------------
 \subsection{Diseño arquitectónico basado en evidencia}
 % ------------------------------------------------------------
  
-\subsubsection{Proceso de trazabilidad: de requisito legal a decisión técnica}
+\subsubsection{Trazabilidad: de requisito legal a decisión técnica}
  
-El diseño de la arquitectura de NutriApp sigue un proceso de trazabilidad explícita que conecta cada componente técnico con el requisito normativo que justifica su inclusión. Este proceso opera en tres pasos documentados. \textit{Primero}, se identifica la obligación normativa en el texto de la LFPDPPP, su Reglamento o la NOM-004, citando el artículo específico y el principio que establece. \textit{Segundo}, se formula el requerimiento técnico en términos de ingeniería de software: qué debe hacer el sistema, expresado como una capacidad verificable, no como una implementación específica. \textit{Tercero}, se selecciona el componente o mecanismo técnico que satisface el requerimiento aplicando el principio de parsimonia técnica ---la solución de menor complejidad suficiente--- verificando que esté respaldado por el AWS Well-Architected Framework (Amazon Web Services, 2023c) o por los estándares internacionales descritos en el capítulo cuatro. Este proceso se documenta en la Tabla~3 del capítulo dos y se materializa en la arquitectura del capítulo seis.
+Cada componente técnico de NutriApp existe porque responde a un
+requisito normativo identificado. El proceso opera en tres pasos.
+\textit{Primero}, se identifica la obligación en la LFPDPPP, su
+Reglamento o la NOM-004, citando el artículo específico.
+\textit{Segundo}, se formula el requerimiento técnico como
+capacidad verificable: qué debe hacer el sistema, no cómo.
+\textit{Tercero}, se selecciona el componente técnico que
+satisface ese requerimiento con el menor nivel de complejidad
+suficiente ---principio de parsimonia técnica--- verificando
+que esté respaldado por el AWS Well-Architected Framework
+(AWS, 2023c) o por los estándares del capítulo anterior. Este
+proceso se documenta en la Tabla~3 del capítulo~2 y se
+materializa en la arquitectura del capítulo~6.
  
-\subsubsection{Alcance y limitaciones del diseño propuesto}
+\subsubsection{Alcance y limitaciones}
  
-Las limitaciones del diseño propuesto son de tres tipos, que se declaran explícitamente conforme a las buenas prácticas de la investigación de diseño (Hevner et al., 2004). Las \textit{limitaciones de validación empírica} se refieren a que el prototipo de NutriApp es un mockup funcional no conectado a infraestructura real de producción; las decisiones de arquitectura AWS son propuestas de diseño fundamentadas técnicamente pero no probadas bajo carga real ni auditadas por un tercero independiente. Las \textit{limitaciones de alcance normativo} se refieren a que el análisis se centra en la LFPDPPP, su Reglamento y la NOM-004; una implementación comercial real podría requerir análisis adicionales en materia fiscal, laboral y de regulación sanitaria. Las \textit{limitaciones de representatividad} se refieren a que los resultados de la encuesta de diagnóstico, por su diseño no probabilístico, constituyen evidencia exploratoria coherente con la hipótesis del caso de estudio, no inferencias generalizables a la totalidad del gremio.
+Las limitaciones se declaran en tres tipos conforme a la buena
+práctica de la investigación de diseño (Hevner et al., 2004).
+Las \textit{limitaciones de validación empírica}: el prototipo
+de NutriApp es un mockup funcional no conectado a infraestructura
+real de producción; las decisiones de arquitectura AWS son
+propuestas fundamentadas técnicamente pero no auditadas por
+un tercero independiente. Las \textit{limitaciones de alcance
+normativo}: el análisis se centra en la LFPDPPP, su Reglamento
+y la NOM-004; una implementación comercial podría requerir
+análisis adicionales en materia fiscal, laboral y sanitaria.
+Las \textit{limitaciones de representatividad}: los resultados
+de la encuesta, por su diseño no probabilístico, constituyen
+evidencia exploratoria coherente con la hipótesis del caso de
+estudio, no inferencias generalizables al gremio.
  
-% \todo[inline]{Pendiente: evaluar conveniencia de incluir una revisión de seguridad externa del diseño propuesto como parte de la validación. Trabajo de la siguiente revisión.}
+% \todo[inline]{Pendiente: evaluar inclusión de revisión de seguridad externa del diseño. Siguiente revisión.}
  
 % ------------------------------------------------------------
 \subsection{Consideraciones éticas y confidencialidad}
 % ------------------------------------------------------------
  
-La investigación de campo cumple con los principios éticos aplicables a la investigación con seres humanos establecidos por el ITESO en su normativa institucional. La participación en ambas encuestas es voluntaria, anónima y libre de riesgo para los respondentes. Ningún dato de identificación personal es recopilado en ningún instrumento. Los resultados se reportan únicamente en forma agregada, sin posibilidad de identificar respuestas individuales, y los archivos de datos se almacenan de forma segura con acceso restringido al investigador.
+La investigación cumple los principios éticos del ITESO para
+investigación con seres humanos. La participación es voluntaria,
+anónima y libre de riesgo; no se recopila ningún dato de
+identificación personal en ningún instrumento. Los resultados
+se reportan únicamente en forma agregada.
  
-El uso del prototipo de NutriApp durante la fase de validación es exclusivamente demostrativo. Ningún dato real de pacientes es ingresado al sistema durante las sesiones de evaluación. Todos los perfiles de pacientes utilizados en las demostraciones son ficticios, identificados de forma explícita con la etiqueta \textit{(USUARIO DE PRUEBA)} en todos los campos de nombre, y son generados automáticamente por el sistema al momento de crear una cuenta de estudiante. Esta condición se comunica explícitamente a los participantes antes de cada sesión de evaluación.
+El uso del prototipo de NutriApp en la fase de validación es
+exclusivamente demostrativo. Ningún dato real de pacientes se
+ingresa al sistema durante las sesiones de evaluación. Todos los
+perfiles de pacientes utilizados son ficticios, generados
+automáticamente al crear una cuenta de estudiante e
+identificados con la etiqueta \textit{(USUARIO DE PRUEBA)} en
+todos los campos de nombre. Esta condición se comunica por
+escrito a los participantes antes de cada sesión.
  
-Respecto al benchmarking de competidores, toda la información empleada proviene de fuentes públicas accesibles ---avisos de privacidad, términos de uso y documentación de producto disponible en sitios web oficiales--- y no incluye información obtenida bajo acuerdos de confidencialidad ni por medios no autorizados. Las afirmaciones sobre las características de seguridad de los competidores se limitan estrictamente a lo verificable en dichas fuentes.
- 
-Este trabajo no tiene conflicto de interés declarable. NutriApp es un diseño conceptual producido en el contexto académico de la maestría del ITESO y no tiene relación comercial activa con ninguna de las empresas, estándares o plataformas mencionadas en este documento. Las citas a productos y servicios de terceros se realizan con propósito exclusivamente académico y de fundamentación técnica.
+Todo el material de benchmarking de competidores proviene de
+fuentes públicas accesibles ---avisos de privacidad, términos de
+uso, documentación de producto--- sin información obtenida bajo
+acuerdos de confidencialidad. Las afirmaciones sobre competidores
+se limitan estrictamente a lo verificable en esas fuentes. Este
+trabajo no tiene conflicto de interés declarable.
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diseño de la Solución}
@@ -3295,266 +3646,714 @@ Este trabajo no tiene conflicto de interés declarable. NutriApp es un diseño c
 \mbox{}
 % Texto aquí
 
-% ═══════════════════════════════════════════════════════════════════════════
-% ═══════════════════════════════════════════════════════════════════════════
+% ============================================================
+% REFERENCIAS COMPLETAS — Toda la tesis NutriApp
+% ITESO — Cristian Emanuel Ortega Camarena
+%
+% Orden: alfabético por apellido o nombre de organismo.
+% Formato: APA 7. Incluye cita verbatim de uso en el texto.
+% Caps. 2 y 3 existentes + caps. 4 y 5 nuevos.
+% ============================================================
+
 \section*{Referencias}
 \addcontentsline{toc}{section}{Referencias}
-% ═══════════════════════════════════════════════════════════════════════════
-\begin{itemize}[leftmargin=*, itemsep=4pt]
 
-  % ── Código Penal Federal ──────────────────────────────────────────
-  \item Código Penal Federal. (1931, 14 de agosto; última reforma
-    2024). \textit{Diario Oficial de la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf}
+\begin{itemize}[leftmargin=*, itemsep=6pt]
 
-  % ── Constitución ──────────────────────────────────────────────────
-  \item Constitución Política de los Estados Unidos Mexicanos.
-    (1917, 5 de febrero; reformada 2024). \textit{Diario Oficial de
-    la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf}
+% ── A ────────────────────────────────────────────────────────
 
-  % ── DOF Reglamento Interior SABG 2025 ─────────────────────────────
-  \item Diario Oficial de la Federación. (2025, 22 de mayo).
-    \textit{Decreto por el que se reforman disposiciones del
-    Reglamento Interior de la Secretaría Anticorrupción y Buen
-    Gobierno}. DOF.
-    \url{https://sidof.segob.gob.mx/notas/docFuente/5752650}
+\item Amazon Web Services. (2023a). \textit{Shared responsibility
+  model}. Amazon Web Services.
+  \url{https://aws.amazon.com/compliance/shared-responsibility-model/}
 
-    % ── DOF UMA 2025 ──────────────────────────────────────────────────
-  \item Instituto Nacional de Estadística y Geografía. (2025,
-    10 de enero). \textit{Valor de la Unidad de Medida y
-    Actualización vigente a partir del 1 de febrero de 2025}.
-    \textit{Diario Oficial de la Federación}.
-    \url{https://www.dof.gob.mx/nota_detalle.php?codigo=5746930&fecha=10/01/2025}
+  % Cap. 4: ``security and compliance is a shared responsibility
+  % between AWS and the customer. This shared model can help relieve
+  % the customer's operational burden as AWS operates, manages and
+  % controls the components from the host operating system and
+  % virtualization layer down to the physical security of the
+  % facilities'' (Amazon Web Services [AWS], 2023a).
 
-  % ── INAI Comunicado 032/21 (expediente clínico dato sensible) ─────
-  \item Instituto Nacional de Transparencia, Acceso a la Información y
-    Protección de Datos Personales. (2021, 17 de abril).
-    \textit{Comunicado INAI/032/21: El expediente clínico constituye
-    un dato personal sensible}. INAI.
-    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Nota%20INAI-032-21.pdf}
+\item Amazon Web Services. (2023b). \textit{AWS compliance programs}.
+  Amazon Web Services.
+  \url{https://aws.amazon.com/compliance/programs/}
 
-  % ── INAI Comunicado 008/23 (datos anuales 2022) ───────────────────
-  \item Instituto Nacional de Transparencia, Acceso a la Información y
-    Protección de Datos Personales. (2023a, 8 de enero).
-    \textit{Comunicado INAI/008/23: Multas impuestas en 2022 por
-    infringir la LFPDPPP suman más de 60 mdp}. INAI.
-    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-008-23.pdf}
+  % Cap. 4: AWS mantiene ISO/IEC~27001, ISO/IEC~27018, SOC~1
+  % Tipo~II y SOC~2~Tipo~II, entre otras (AWS, 2023b).
 
-  % ── INAI Comunicado 230/23 (datos 1er semestre 2023) ─────────────
-  \item Instituto Nacional de Transparencia, Acceso a la Información y
-    Protección de Datos Personales. (2023b, 6 de agosto).
-    \textit{Comunicado INAI/230/23: Impone INAI multas por más de
-    11 mdp por infringir la LFPDPPP}. INAI.
-    \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-230-23.pdf}
+\item Amazon Web Services. (2023c). \textit{Security pillar ---
+  AWS Well-Architected Framework}. Amazon Web Services.
+  \url{https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html}
 
-  % ── INAI aviso cierre sitio 2025 ──────────────────────────────────
-  \item Instituto Nacional de Transparencia, Acceso a la Información y
-    Protección de Datos Personales. (2025). \textit{Aviso de cierre
-    del sitio institucional del INAI}. INAI.
-    \url{https://home.inai.org.mx}
+  % Cap. 4: ``the security pillar encompasses the ability to protect
+  % data, systems, and assets to take advantage of cloud technologies
+  % to improve your security'' (Amazon Web Services, 2023c).
+  % También: ``classify your data into sensitivity levels and use
+  % mechanisms, such as encryption, tokenization, and access control
+  % where appropriate'' (Amazon Web Services, 2023c).
+  % También: ``implement a strong identity foundation: implement the
+  % principle of least privilege and enforce separation of duties
+  % with appropriate authorization for each interaction with your
+  % AWS resources'' (AWS, 2023c).
+  % También: ``monitor, alert, and audit actions and changes to your
+  % environment in real time'' (AWS, 2023c).
 
-  % ── LFPDPPP 2010 (abrogada, referencia histórica) ─────────────────
-  \item Ley Federal de Protección de Datos Personales en Posesión de
-    los Particulares. (2010, 5 de julio). \textit{Diario Oficial de
-    la Federación}. [Abrogada el 21 de marzo de 2025].
+% ── B ────────────────────────────────────────────────────────
 
-  % ── LFPDPPP 2025 (vigente) ────────────────────────────────────────
-  \item Ley Federal de Protección de Datos Personales en Posesión de
-    los Particulares. (2025, 20 de marzo; última reforma 14 de
-    noviembre de 2025). \textit{Diario Oficial de la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
+\item Bundesamt für Sicherheit in der Informationstechnik. (2020).
+  \textit{Cloud Computing Compliance Criteria Catalogue (C5):
+  Criteria to assess the information security of cloud services}.
+  BSI.
+  \url{https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/CloudComputing/ComplianceCriteriaCloud/ComplianceCriteriaCloud_C5.pdf}
 
-  % ── LFTAIPG 2002 ──────────────────────────────────────────────────
-  \item Ley Federal de Transparencia y Acceso a la Información Pública
-    Gubernamental. (2002, 11 de junio). \textit{Diario Oficial de la
-    Federación}. [Abrogada el 9 de mayo de 2016].
-    \url{https://www.diputados.gob.mx/LeyesBiblio/abro/lftaipg.htm}
+  % Cap. 2 (secc. 2.2.4): certificación C5 BSI obligatoria para
+  % proveedores de nube en salud en Alemania desde julio 2025.
 
-  % ── Ley General de Salud ──────────────────────────────────────────
-  \item Ley General de Salud. (1984, 7 de febrero; última reforma
-    2024). \textit{Diario Oficial de la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LGS.pdf}
+\item Bundesdatenschutzgesetz. (2018, 30 de junio; última reforma
+  2021). \textit{Bundesgesetzblatt}, Teil~I, Nr.~44.
+  \url{https://www.gesetze-im-internet.de/bdsg_2018/BDSG.pdf}
 
-  % ── Ley Reglamentaria Art. 5° Constitucional ──────────────────────
-  \item Ley Reglamentaria del Artículo 5° Constitucional, Relativo
-    al Ejercicio de las Profesiones en el Distrito Federal.
-    (1945, 26 de mayo; última reforma 2010).
-    \textit{Diario Oficial de la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/RPro.pdf}
+  % Cap. 2 (secc. 2.2.4): sanciones penales para violaciones
+  % comerciales de datos --- ``la sección 42 del BDSG tipifica como
+  % delito penal la divulgación no autorizada de datos personales con
+  % ánimo de enriquecimiento propio o de terceros, con penas de
+  % prisión de hasta tres años o multa'' (BDSG, 2018, § 42).
 
-  % ── Marván Laborde 2023 ───────────────────────────────────────────
-  \item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
-    la lucha por el derecho a saber. \textit{El Sol de México}.
-    \url{https://oem.com.mx/elsoldemexico/mexico/del-ifai-al-inai-la-lucha-por-el-derecho-a-saber-15857467}
+% ── C ────────────────────────────────────────────────────────
 
-  % ── NOM-004-SSA3-2012 ─────────────────────────────────────────────
-  \item Norma Oficial Mexicana NOM-004-SSA3-2012, Del expediente
-    clínico. (2012, 15 de octubre). \textit{Diario Oficial de la
-    Federación}.
+\item California Consumer Privacy Act. (2018). \textit{California
+  Civil Code} § 1798.100 et seq. California Legislative Information.
+  \url{https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.100.&lawCode=CIV}
 
-  % ── NOM-008-SSA3-2017 ─────────────────────────────────────────────
-  \item Norma Oficial Mexicana NOM-008-SSA3-2017, Para el
-    tratamiento integral del sobrepeso y la obesidad. (2018,
-    18 de mayo). \textit{Diario Oficial de la Federación}.
+  % Cap. 2 (secc. 2.2.3): cubre datos de salud no cubiertos por
+  % HIPAA (California Consumer Privacy Act [CCPA], Cal. Civ. Code
+  % § 1798.100 et seq., 2018).
 
-  % ── NOM-024-SSA3-2012 ─────────────────────────────────────────────
-  \item Norma Oficial Mexicana NOM-024-SSA3-2012, Sistemas de
-    información de registro electrónico para la salud. (2012,
-    30 de noviembre). \textit{Diario Oficial de la Federación}.
+\item Cavoukian, A. (2009). \textit{Privacy by design: The 7
+  foundational principles}. Information and Privacy Commissioner
+  of Ontario.
+  \url{https://www.ipc.on.ca/wp-content/uploads/resources/7foundationalprinciples.pdf}
 
-  % ── OCDE 1980 ─────────────────────────────────────────────────────
-  \item Organización para la Cooperación y el Desarrollo Económicos.
-    (1980). \textit{Directrices sobre la protección de la privacidad
-    y los flujos transfronterizos de datos personales}. OCDE.
-    \url{https://www.oecd.org/sti/ieconomy/oecdguidelinesontheprotectionofprivacyandtransfersonalpersonaldataflows.htm}
+  % Cap. 2 (secc. 2.4.1): Privacy by Design ``anticipates and
+  % prevents privacy invasive events before they happen'' (p.~2).
+  % Cap. 4: ``privacy assurance must ideally become an organization's
+  % default mode of operation'' (Cavoukian, 2009, p.~1).
+  % También: ``if an individual does nothing, their privacy still
+  % remains intact'' (p.~2). ``privacy is embedded into the design
+  % and architecture of IT systems and business practices. It is not
+  % bolted on as an add-on'' (p.~3). ``privacy, having been embedded
+  % into the system prior to the first element of information being
+  % collected, extends securely throughout the entire lifecycle of
+  % the data involved'' (p.~4).
 
-  % ── OCDE 1994 ─────────────────────────────────────────────────────
-  \item Organización para la Cooperación y el Desarrollo Económicos.
-    (1994). \textit{México en la OCDE}. OCDE.
-    \url{https://www.oecd.org/mexico/}
+\item Código Penal Federal. (1931, 14 de agosto; última reforma
+  2024). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf}
 
-  % ── Reglamento LFPDPPP 2011 ───────────────────────────────────────
-  \item Reglamento de la Ley Federal de Protección de Datos Personales
-    en Posesión de los Particulares. (2011, 21 de diciembre).
-    \textit{Diario Oficial de la Federación}.
-    \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LFPDPPP.pdf}
+  % Cap. 2 (secc. 2.1.4): art. 210 --- 30 a 200 jornadas de trabajo
+  % comunitario por revelar secretos sin causa justa (CPF,
+  % 1931/2024, art. 210). Art. 211 --- ``la sanción aumenta a uno
+  % a cinco años de prisión, multa y suspensión de la profesión de
+  % dos meses a un año cuando la revelación punible sea hecha por
+  % persona que presta servicios profesionales o técnicos'' (CPF,
+  % 1931/2024, art. 211).
 
-  % ── Saludiario 2017 médico sancionado ────────────────────────────
-  \item Saludiario. (2017, 28 de diciembre). INAI sanciona a médico
-    por entregar a un tercero expediente clínico.
-    \textit{Saludiario}.
-    \url{https://www.saludiario.com/inai-sanciona-a-medico-por-entregar-a-un-tercero-expediente-clinico/}
+\item Conselho Federal de Medicina. (2022, 4 de noviembre).
+  \textit{Resolução CFM n°~2.314/2022: Define e regulamenta a
+  telemedicina no Brasil}. CFM.
+  \url{https://www.in.gov.br/en/web/dou/-/resolucao-cfm-n-2.314-2022-395326630}
 
-  % ── Saludiario 2018 hospital sancionado ───────────────────────────
-  \item Saludiario. (2018, 3 de enero). INAI sanciona a hospital
-    por negar expediente clínico a paciente. \textit{Saludiario}.
-    \url{https://www.saludiario.com/inai-sanciona-a-hospital-por-negar-expediente-clinico/}
+  % Cap. 2 (secc. 2.2.1): regula la telemedicina en Brasil y
+  % establece que los datos del teleatendimiento deben seguir los
+  % lineamientos de la LGPD (Resolução CFM n°~2.314/2022, 2022,
+  % art.~6°).
 
-  % ── SABG comunicado marzo 2025 ────────────────────────────────────
-  \item Secretaría Anticorrupción y Buen Gobierno. (2025, 21 de
-    marzo). La Secretaría Anticorrupción y Buen Gobierno reafirma
-    su compromiso con la transparencia y la protección de datos
-    personales. \textit{Gobierno de México}.
-    \url{https://www.gob.mx/buengobierno/prensa/la-secretaria-anticorrupcion-y-buen-gobierno-reafirma-su-compromiso-con-la-transparencia-y-la-proteccion-de-datos-personales}
+\item Constitución Política de los Estados Unidos Mexicanos.
+  (1917, 5 de febrero; reformada 2024). \textit{Diario Oficial
+  de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf}
 
-    % ── LGPD Brasil ───────────────────────────────────────────────────
-  \item Lei n°~13.709, de 14 de agosto de 2018 (Lei Geral de
-    Proteção de Dados Pessoais). (2018, 14 de agosto; vigente desde
-    18 de septiembre de 2020). \textit{Diário Oficial da União}.
-    \url{https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm}
+  % Cap. 2 (secc. 2.1.1): art. 16 original --- ``Nadie puede ser
+  % molestado en su persona, familia, domicilio, papeles o
+  % posesiones, sino en virtud de mandamiento escrito de la
+  % autoridad competente'' (CPEUM, 1917/2024, art.~16).
+  % Art. 16 reforma 2009 --- ``Toda persona tiene derecho a la
+  % protección de sus datos personales, al acceso, rectificación y
+  % cancelación de los mismos, así como a manifestar su oposición,
+  % en los términos que fije la ley'' (CPEUM, 1917/2024, art.~16).
 
-  % ── Emenda Constitucional 115/2022 ────────────────────────────────
-  \item Emenda Constitucional n°~115. (2022, 10 de febrero).
-    Inclui a proteção de dados pessoais entre os direitos e
-    garantias fundamentais. \textit{Diário Oficial da União}.
-    \url{https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc115.htm}
+% ── D ────────────────────────────────────────────────────────
 
-  % ── Resolução CFM 2.314/2022 ──────────────────────────────────────
-  \item Conselho Federal de Medicina. (2022, 4 de noviembre).
-    \textit{Resolução CFM n°~2.314/2022: Define e regulamenta a
-    telemedicina no Brasil}. CFM.
-    \url{https://www.in.gov.br/en/web/dou/-/resolucao-cfm-n-2.314-2022-395326630}
+\item Decreto N°~242/017, Historia Clínica Electrónica Nacional.
+  (2017, 11 de septiembre). \textit{Diario Oficial de la República
+  Oriental del Uruguay}.
+  \url{https://www.impo.com.uy/bases/decretos/242-2017}
 
-    % ── Ley 18.331 Uruguay ────────────────────────────────────────────
-  \item Ley~18.331, de Protección de Datos Personales y Acción de
-    Habeas Data. (2008, 11 de agosto). \textit{Diario Oficial de
-    la República Oriental del Uruguay}.
-    \url{https://www.impo.com.uy/bases/leyes/18331-2008}
+  % Cap. 2 (secc. 2.2.2): obliga a todos los prestadores de salud
+  % a llevar historia clínica electrónica de cada paciente
+  % (Decreto~242/017, 2017, art.~1°).
 
-  % ── Decreto 414/009 Uruguay ───────────────────────────────────────
-  \item Decreto N°~414/009, Reglamentación de la Ley~18.331 relativa
-    a la protección de datos personales. (2009, 31 de agosto).
-    \textit{Diario Oficial de la República Oriental del Uruguay}.
-    \url{https://www.impo.com.uy/bases/decretos/414-2009}
+\item Decreto N°~414/009, Reglamentación de la Ley~18.331 relativa
+  a la protección de datos personales. (2009, 31 de agosto).
+  \textit{Diario Oficial de la República Oriental del Uruguay}.
+  \url{https://www.impo.com.uy/bases/decretos/414-2009}
 
-  % ── Decreto 242/017 Uruguay ───────────────────────────────────────
-  \item Decreto N°~242/017, Historia Clínica Electrónica Nacional.
-    (2017, 11 de septiembre). \textit{Diario Oficial de la República
-    Oriental del Uruguay}.
-    \url{https://www.impo.com.uy/bases/decretos/242-2017}
+  % Cap. 2 (secc. 2.2.2): plazo de 72 horas para notificar brechas
+  % a la URCDP y a los titulares (Decreto~414/009, 2009, art.~31).
 
-  % ── Ordenanza MSP 1085/2017 Uruguay ──────────────────────────────
-  \item Ministerio de Salud Pública del Uruguay. (2017).
-    \textit{Ordenanza N°~1085/2017: Sistema de Historia Clínica
-    Electrónica Nacional}. MSP Uruguay.
-    \url{https://www.gub.uy/ministerio-salud-publica}
+\item Diario Oficial de la Federación. (2025, 22 de mayo).
+  \textit{Decreto por el que se reforman disposiciones del
+  Reglamento Interior de la Secretaría Anticorrupción y Buen
+  Gobierno}. DOF.
+  \url{https://sidof.segob.gob.mx/notas/docFuente/5752650}
 
-    % ── HIPAA 1996 ────────────────────────────────────────────────────
-  \item Health Insurance Portability and Accountability Act of 1996.
-    (1996). \textit{Public Law 104-191}. U.S. Government Publishing
-    Office.
-    \url{https://www.govinfo.gov/content/pkg/PLAW-104publ191/pdf/PLAW-104publ191.pdf}
+  % Cap. 2 (secc. 2.1.4): estructura de la Dirección General de
+  % Datos Personales en el Sector Privado de la SABG
+  % (SABG, 2025, art.~30-F).
 
-  % ── HIPAA Privacy y Security Rules ───────────────────────────────
-  \item U.S. Department of Health and Human Services. (2013).
-    \textit{HIPAA Administrative Simplification: Regulation Text}
-    (45 CFR Parts 160, 162 and 164). HHS.
-    \url{https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/administrative/combined/hipaa-simplification-201303.pdf}
+\item Digitalgesetz. (2024, 22 de marzo). \textit{Gesetz zur
+  Beschleunigung der Digitalisierung des Gesundheitswesens},
+  Artikel~1, § 393 SGB~V. \textit{Bundesgesetzblatt}, Nr.~101.
+  \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl124s0101.pdf}
 
-  % ── HITECH Act 2009 ───────────────────────────────────────────────
-  \item Health Information Technology for Economic and Clinical
-    Health Act. (2009). \textit{Public Law 111-5, Division A,
-    Title XIII}. U.S. Government Publishing Office.
-    \url{https://www.govinfo.gov/content/pkg/PLAW-111publ5/pdf/PLAW-111publ5.pdf}
+  % Cap. 2 (secc. 2.2.4): establece que datos de salud en nube solo
+  % pueden procesarse en Alemania, UE o país con decisión de
+  % adecuación (SGB~V § 393, Digitalgesetz, 2024). Certificación
+  % C5~BSI obligatoria desde julio 2025.
 
-  % ── CCPA California ───────────────────────────────────────────────
-  \item California Consumer Privacy Act. (2018). \textit{California
-    Civil Code \S~1798.100 et seq.} California Legislative
-    Information.
-    \url{https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1798.100.&lawCode=CIV}
+% ── E ────────────────────────────────────────────────────────
 
-  % ── Washington My Health My Data Act ─────────────────────────────
-  \item Washington State Legislature. (2023). \textit{My Health My
-    Data Act} (RCW 70.372). Washington State Legislature.
-    \url{https://app.leg.wa.gov/RCW/default.aspx?cite=70.372}
+\item Emenda Constitucional n°~115. (2022, 10 de febrero).
+  \textit{Inclui a proteção de dados pessoais entre os direitos e
+  garantias fundamentais}. \textit{Diário Oficial da União}.
+  \url{https://www.planalto.gov.br/ccivil_03/constituicao/emendas/emc/emc115.htm}
 
-  % ── HIPAA Security Rule NPRM 2025 ─────────────────────────────────
-  \item U.S. Department of Health and Human Services. (2025,
-    6 de enero). \textit{HIPAA Security Rule to Strengthen the
-    Cybersecurity of Electronic Protected Health Information}
-    (Proposed Rule, 90 FR 898). Federal Register.
-    \url{https://www.federalregister.gov/documents/2025/01/06/2024-29903/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information}
+  % Cap. 2 (secc. 2.2.1): elevó la protección de datos personales
+  % al rango de derecho fundamental en Brasil (Emenda Constitucional
+  % n°~115, 2022, art.~5°, LXXIX).
 
-    % ── GDPR ──────────────────────────────────────────────────────────
-  \item Parlamento Europeo y Consejo de la Unión Europea. (2016,
-    27 de abril). \textit{Reglamento (UE) 2016/679 del Parlamento
-    Europeo y del Consejo relativo a la protección de las personas
-    físicas en lo que respecta al tratamiento de datos personales
-    y a la libre circulación de estos datos} (GDPR).
-    \textit{Diario Oficial de la Unión Europea}, L~119, 1--88.
-    \url{https://eur-lex.europa.eu/legal-content/ES/TXT/PDF/?uri=CELEX:32016R0679}
+% ── G ────────────────────────────────────────────────────────
 
-  % ── BDSG 2018 ─────────────────────────────────────────────────────
-  \item Bundesdatenschutzgesetz. (2018, 30 de junio; última reforma
-    2021). \textit{Bundesgesetzblatt}, Teil~I, Nr.~44.
-    \url{https://www.gesetze-im-internet.de/bdsg_2018/BDSG.pdf}
+\item Garfinkel, S., y Shelat, A. (2003). Remembrance of data
+  passed: A study of disk sanitization practices.
+  \textit{IEEE Security \& Privacy}, \textit{1}(1), 17--27.
+  \url{https://doi.org/10.1109/MSECP.2003.1176992}
 
-  % ── PDSG 2020 ─────────────────────────────────────────────────────
-  \item Patientendatenschutzgesetz. (2020, 14 de octubre).
-    \textit{Bundesgesetzblatt}, Teil~I, Nr.~46, 2115--2145.
-    \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl120s2115.pdf}
+  % Cap. 4: ``a significant fraction of disk drives sold on the
+  % secondary market contain sensitive personal data'' recuperable
+  % mediante herramientas estándar, incluso después de operaciones
+  % de eliminación convencionales (Garfinkel y Shelat, 2003, p.~22).
 
-  % ── SGB V §393 Digitalgesetz 2024 ────────────────────────────────
-  \item Digitalgesetz. (2024, 22 de marzo). \textit{Gesetz zur
-    Beschleunigung der Digitalisierung des Gesundheitswesens},
-    Artikel~1, \S~393 SGB~V. \textit{Bundesgesetzblatt}, Nr.~101.
-    \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl124s0101.pdf}
+\item Greenleaf, G. (2022). Global data privacy laws 2022: 145
+  national laws \& many bills. \textit{Privacy Laws \& Business
+  International Report}, \textit{175}, 1--6.
 
-  % ── BSI C5 ────────────────────────────────────────────────────────
-  \item Bundesamt für Sicherheit in der Informationstechnik. (2020).
-    \textit{Cloud Computing Compliance Criteria Catalogue (C5):
-    Criteria to Assess the Information Security of Cloud Services}.
-    BSI.
-    \url{https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/CloudComputing/ComplianceCriteriaCloud/ComplianceCriteriaCloud_C5.pdf}
+  % Cap. 4: Greenleaf (2022) documenta que Brasil (LGPD), Argentina
+  % (Ley~25.326) y Colombia (Ley~1581/2012) prescriben controles de
+  % seguridad técnica convergentes con HIPAA.
 
-    % ── Cavoukian 2009 Privacy by Design ─────────────────────────────
-  \item Cavoukian, A. (2009). \textit{Privacy by design: The 7
-    foundational principles}. Information and Privacy Commissioner
-    of Ontario.
-    \url{https://www.ipc.on.ca/wp-content/uploads/resources/7foundationalprinciples.pdf}
+% ── H ────────────────────────────────────────────────────────
+
+\item Health Information Technology for Economic and Clinical
+  Health Act. (2009). \textit{Public Law 111-5, Division A,
+  Title XIII}. U.S. Government Publishing Office.
+  \url{https://www.govinfo.gov/content/pkg/PLAW-111publ5/pdf/PLAW-111publ5.pdf}
+
+  % Cap. 2 (secc. 2.2.3): extendió las obligaciones de HIPAA a los
+  % business associates, estableciendo que son ``directly responsible
+  % before the HHS'' (HITECH Act, 2009, § 13401).
+
+\item Health Insurance Portability and Accountability Act of
+  1996. (1996). \textit{Public Law 104-191}. U.S. Government
+  Publishing Office.
+  \url{https://www.govinfo.gov/content/pkg/PLAW-104publ191/pdf/PLAW-104publ191.pdf}
+
+  % Cap. 2 (secc. 2.2.3): establece el estándar federal mínimo para
+  % PHI en todo el territorio de EE.UU. (HIPAA, 1996, 45 CFR
+  % Parts 160 y 164).
+
+\item Hernández-Sampieri, R., Fernández-Collado, C., y
+  Baptista-Lucio, P. (2014). \textit{Metodología de la
+  investigación} (6a~ed.). McGraw-Hill.
+
+  % Cap. 5: recomendaciones para encuestas de actitudes y
+  % conocimientos: preguntas cerradas de opción múltiple para
+  % variables categóricas y escala Likert de cinco puntos para
+  % variables de actitud (p.~217).
+
+\item Hevner, A. R., March, S. T., Park, J., y Ram, S. (2004).
+  Design science in information systems research.
+  \textit{MIS Quarterly}, \textit{28}(1), 75--105.
+  \url{https://doi.org/10.2307/25148625}
+
+  % Cap. 5: ``create innovations that define the ideas, practices,
+  % technical capabilities, and products through which the analysis,
+  % design, implementation, management, and use of information
+  % systems can be effectively and efficiently accomplished''
+  % (Hevner et al., 2004, p.~75).
+  % También: ``an artifact can be construed broadly as any designed
+  % object in which a research contribution is embedded in the
+  % design'' (p.~77).
+
+% ── I ────────────────────────────────────────────────────────
+
+\item Inside Privacy. (2024). \textit{State health privacy law
+  tracker}. Covington \& Burling.
+  \url{https://www.insideprivacy.com}
+
+  % Cap. 2 (secc. 2.2.3): más de veintiséis estados de EE.UU.
+  % tienen iniciativas de privacidad de datos de salud en distintas
+  % etapas legislativas (Inside Privacy, 2024).
+
+\item Instituto Nacional de Estadística y Geografía. (2025,
+  10 de enero). \textit{Valor de la Unidad de Medida y
+  Actualización vigente a partir del 1 de febrero de 2025}.
+  \textit{Diario Oficial de la Federación}.
+  \url{https://www.dof.gob.mx/nota_detalle.php?codigo=5746930&fecha=10/01/2025}
+
+  % Cap. 2 (secc. 2.1.4): UMA 2025 = \$113.14 pesos diarios.
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (2018).
+  \textit{Lineamientos generales de protección de datos personales
+  para el sector privado}. Diario Oficial de la Federación,
+  26 de enero de 2018.
+
+  % Cap. 4: el INAI reconoce que la adopción de estándares
+  % internacionales como referencia es práctica recomendada para
+  % demostrar el principio de responsabilidad del art.~14 de la
+  % LFPDPPP (INAI, 2018).
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (2021, 17 de abril).
+  \textit{Comunicado INAI/032/21: El expediente clínico constituye
+  un dato personal sensible}. INAI.
+  \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Nota%20INAI-032-21.pdf}
+
+  % Cap. 2 (secc. 2.1.4): el expediente clínico ``constituye un dato
+  % personal sensible, por lo que su resguardo y correcto uso es
+  % responsabilidad de los sujetos obligados, sin olvidar que el
+  % paciente es el dueño y titular'' (INAI, 2021, párr.~4).
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (2023a, 8 de enero).
+  \textit{Comunicado INAI/008/23: Multas impuestas en 2022 por
+  infringir la LFPDPPP suman más de 60 mdp}. INAI.
+  \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-008-23.pdf}
+
+  % Cap. 2 (secc. 2.1.4): en 2022, multas por \$60,078,958 pesos;
+  % 119 procedimientos de imposición de sanciones; 1,068 denuncias,
+  % 84.4\% atendidas (INAI, 2023a, p.~2).
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (2023b, 6 de agosto).
+  \textit{Comunicado INAI/230/23: Impone INAI multas por más de
+  11 mdp por infringir la LFPDPPP}. INAI.
+  \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-230-23.pdf}
+
+  % Cap. 2 (secc. 2.1.4): primer semestre 2023: multas de
+  % \$11,020,991 pesos; sector salud concentró el 35.28\% del total
+  % de multas impuestas, segundo sector más sancionado (INAI,
+  % 2023b, p.~1).
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (2025).
+  \textit{Aviso de cierre del sitio institucional del INAI}. INAI.
+  \url{https://home.inai.org.mx}
+
+  % Cap. 2 (secc. 2.1.4): aviso de que el sitio ya no está vigente
+  % y los contenidos se migrarán paulatinamente (INAI, 2025, párr.~1).
+
+\item International Organization for Standardization. (2019).
+  \textit{ISO/IEC 27018:2019 --- Information technology --- Security
+  techniques --- Code of practice for protection of personally
+  identifiable information (PII) in public clouds acting as PII
+  processors}. ISO.
+
+  % Cap. 4: ``establish commonly accepted control objectives,
+  % controls and guidelines for implementing measures to protect
+  % personally identifiable information (PII) in accordance with the
+  % privacy principles in ISO/IEC~29100 for the public cloud
+  % computing environment'' (ISO, 2019, introducción).
+
+\item International Organization for Standardization. (2022).
+  \textit{ISO/IEC 27001:2022 --- Information security, cybersecurity
+  and privacy protection --- Information security management systems
+  --- Requirements}. ISO.
+
+  % Cap. 4: ``help organizations make information assets they hold
+  % more secure'' mediante la identificación de riesgos, la
+  % implementación de controles y el mantenimiento de un proceso de
+  % mejora continua (ISO, 2022, introducción).
+
+% ── L ────────────────────────────────────────────────────────
+
+\item Lei n°~13.709, de 14 de agosto de 2018 (Lei Geral de
+  Proteção de Dados Pessoais). (2018, 14 de agosto; vigente desde
+  18 de septiembre de 2020). \textit{Diário Oficial da União}.
+  \url{https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm}
+
+  % Cap. 2 (secc. 2.2.1): portabilidad --- ``el titular tiene
+  % derecho a la portabilidad de sus datos personales a otro
+  % proveedor'' (LGPD, 2018, art.~18, inc.~V). Sanciones: hasta
+  % 2\% del faturamento con tope de 50 millones de reales por
+  % infracción (LGPD, 2018, art.~52, inc.~II).
+
+\item Ley Federal de Protección de Datos Personales en Posesión
+  de los Particulares. (2010, 5 de julio). \textit{Diario Oficial
+  de la Federación}. [Abrogada el 21 de marzo de 2025].
+
+  % Cap. 2 (secc. 2.1.1): referencia histórica; el art.~9 exigía
+  % ``consentimiento expreso y por escrito del titular para su
+  % tratamiento'' de datos sensibles (LFPDPPP, 2010, art.~9).
+
+\item Ley Federal de Protección de Datos Personales en Posesión
+  de los Particulares. (2025, 20 de marzo; última reforma 14 de
+  noviembre de 2025). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf}
+
+  % Ley principal de toda la tesis. Artículos citados:
+  % art.~1 (objeto), art.~2 fraccs. V, VI, XVI (definiciones),
+  % art.~5 fracc.~VI (proporcionalidad), art.~8 (consentimiento),
+  % art.~9 (datos sensibles), art.~13 (responsabilidad),
+  % art.~15 (aviso de privacidad), art.~18 (medidas de seguridad),
+  % art.~19 (garantía de seguridad), art.~34 (cancelación),
+  % art.~59 fraccs. II, III, IV (sanciones),
+  % arts.~62, 63, 64 (sanciones penales),
+  % Transitorios Segundo y Cuarto.
+
+\item Ley Federal de Transparencia y Acceso a la Información
+  Pública Gubernamental. (2002, 11 de junio). \textit{Diario
+  Oficial de la Federación}. [Abrogada el 9 de mayo de 2016].
+  \url{https://www.diputados.gob.mx/LeyesBiblio/abro/lftaipg.htm}
+
+  % Cap. 2 (secc. 2.1.2): origen del IFAI (LFTAIPG, 2002).
+
+\item Ley General de Salud. (1984, 7 de febrero; última reforma
+  2024). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LGS.pdf}
+
+  % Cap. 2 (secc. 2.1.3): art.~51~Bis~2° --- constancia en
+  % expediente clínico del consentimiento informado del paciente
+  % (LGS, 1984/2024, art.~51~Bis~2°). Art.~77~Bis~37
+  % (confidencialidad). Art.~103~Bis~3 (datos genéticos).
+
+\item Ley Reglamentaria del Artículo~5° Constitucional, Relativo
+  al Ejercicio de las Profesiones en el Distrito Federal.
+  (1945, 26 de mayo; última reforma 2010). \textit{Diario Oficial
+  de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/RPro.pdf}
+
+  % Cap. 2 (secc. 2.1.4): el art.~36 obliga a todo profesionista a
+  % guardar secreto en los asuntos que le confíen sus clientes (Ley
+  % Reglamentaria del Artículo~5°, 1945/2010, art.~36).
+
+\item Ley~18.331, de Protección de Datos Personales y Acción de
+  Habeas Data. (2008, 11 de agosto). \textit{Diario Oficial de la
+  República Oriental del Uruguay}.
+  \url{https://www.impo.com.uy/bases/leyes/18331-2008}
+
+  % Cap. 2 (secc. 2.2.2): portabilidad desde el art.~14 (Ley 18.331,
+  % 2008, art.~14). URCDP con potestad de clausura judicial
+  % (arts.~20 y 21).
+
+% ── M ────────────────────────────────────────────────────────
+
+\item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
+  La lucha por el derecho a saber. \textit{El Sol de México}.
+  \url{https://oem.com.mx/elsoldemexico/mexico/del-ifai-al-inai-la-lucha-por-el-derecho-a-saber-15857467}
+
+  % Cap. 2 (secc. 2.1.2): cronología institucional del IFAI al INAI
+  % y reforma de autonomía de 2014 (Marván Laborde, 2023).
+
+\item Ministerio de Salud Pública del Uruguay. (2017).
+  \textit{Ordenanza N°~1085/2017: Sistema de Historia Clínica
+  Electrónica Nacional}. MSP Uruguay.
+  \url{https://www.gub.uy/ministerio-salud-publica}
+
+  % Cap. 2 (secc. 2.2.2): estándares de interoperabilidad y
+  % seguridad --- principios de finalidad, veracidad, completitud,
+  % reserva, información y accesibilidad (Ordenanza MSP
+  % N°~1085/2017, 2017, art.~3°).
+
+% ── N ────────────────────────────────────────────────────────
+
+\item National Institute of Standards and Technology. (2001).
+  \textit{Advanced Encryption Standard (AES)} (FIPS PUB~197).
+  U.S. Department of Commerce.
+  \url{https://csrc.nist.gov/publications/detail/fips/197/final}
+
+  % Cap. 4: ``the AES algorithm is a symmetric block cipher that can
+  % encrypt and decrypt digital information'' y que la variante de
+  % 256 bits ofrece el mayor nivel de seguridad del estándar
+  % (NIST, 2001, p.~1).
+
+\item National Institute of Standards and Technology. (2007).
+  \textit{Guidelines for the storage encryption of end user
+  devices} (Special Publication 800-111). U.S. Department of
+  Commerce.
+  \url{https://csrc.nist.gov/publications/detail/sp/800/111/final}
+
+  % Cap. 4: el NIST recomienda AES-256 específicamente para el
+  % cifrado de datos de salud en la SP~800-111 (NIST, 2012 en el
+  % texto --- verificar año: la publicación es de 2007, no 2012).
+
+\item National Institute of Standards and Technology. (2011).
+  \textit{The NIST definition of cloud computing}
+  (Special Publication 800-145). U.S. Department of Commerce.
+  \url{https://csrc.nist.gov/publications/detail/sp/800/145/final}
+
+  % Cap. 4: ``a model for enabling ubiquitous, convenient, on-demand
+  % network access to a shared pool of configurable computing
+  % resources --- networks, servers, storage, applications, and
+  % services --- that can be rapidly provisioned and released with
+  % minimal management effort or service provider interaction''
+  % (NIST, 2011, p.~2).
+
+\item National Institute of Standards and Technology. (2014).
+  \textit{Guidelines for media sanitization}
+  (Special Publication 800-88 Rev.~1). U.S. Department of Commerce.
+  \url{https://csrc.nist.gov/publications/detail/sp/800/88/rev-1/final}
+
+  % Cap. 4: ``cryptographic erase (CE) renders sanitized data
+  % unrecoverable by leveraging the encryption of target data. By
+  % first encrypting the data and then erasing the encryption key,
+  % all encrypted data will be inaccessible''
+  % (NIST, 2014, SP~800-88r1, p.~32).
+
+\item National Institute of Standards and Technology. (2020).
+  \textit{Digital identity guidelines: Authentication and lifecycle
+  management} (Special Publication 800-63B). U.S. Department of
+  Commerce.
+  \url{https://csrc.nist.gov/publications/detail/sp/800/63/b/final}
+
+  % Cap. 4: los factores de autenticación son ``something you know
+  % (a memorized secret), something you have (a physical
+  % authenticator), and something you are (a biometric)''
+  % (NIST, 2020, SP~800-63B, sec.~4).
+  % También: ``AAL2 provides high confidence that the claimant
+  % controls an authenticator(s) bound to the subscriber's account''
+  % (NIST, 2020, sec.~4.2).
+
+\item Norma Oficial Mexicana NOM-004-SSA3-2012, Del expediente
+  clínico. (2012, 15 de octubre). \textit{Diario Oficial de la
+  Federación}.
+
+  % Cap. 2 (secc. 2.1.3): criterios técnicos para el expediente
+  % clínico; conservación mínima de cinco años con confidencialidad
+  % (NOM-004-SSA3-2012, 2012). Citada también en cap. 4 para
+  % eliminación segura.
+
+\item Norma Oficial Mexicana NOM-008-SSA3-2017, Para el tratamiento
+  integral del sobrepeso y la obesidad. (2018, 18 de mayo).
+  \textit{Diario Oficial de la Federación}.
+
+  % Cap. 2 (secc. 2.1.3): obliga a llevar expediente clínico
+  % conforme a NOM-004 (NOM-008-SSA3-2017, 2017).
+
+\item Norma Oficial Mexicana NOM-024-SSA3-2012, Sistemas de
+  información de registro electrónico para la salud. (2012,
+  30 de noviembre). \textit{Diario Oficial de la Federación}.
+
+  % Cap. 2 (secc. 2.1.3): cuando el sistema de registro es
+  % electrónico, exige cifrado, autenticación de usuarios y
+  % trazabilidad de accesos y modificaciones (NOM-024-SSA3-2012,
+  % 2012).
+
+% ── O ────────────────────────────────────────────────────────
+
+\item Organización para la Cooperación y el Desarrollo Económicos.
+  (1980). \textit{Directrices sobre la protección de la privacidad
+  y los flujos transfronterizos de datos personales}. OCDE.
+  \url{https://www.oecd.org/sti/ieconomy/oecdguidelinesontheprotectionofprivacyandtransfersonalpersonaldataflows.htm}
+
+  % Cap. 2 (secc. 2.1.2): principios mínimos de privacidad para
+  % países miembros de la OCDE (OCDE, 1980).
+
+\item Organización para la Cooperación y el Desarrollo Económicos.
+  (1994). \textit{México en la OCDE}. OCDE.
+  \url{https://www.oecd.org/mexico/}
+
+  % Cap. 2 (secc. 2.1.2): ingreso de México a la OCDE el 18 de mayo
+  % de 1994 (OCDE, 1994).
+
+% ── P ────────────────────────────────────────────────────────
+
+\item Parlamento Europeo y Consejo de la Unión Europea. (2016,
+  27 de abril). \textit{Reglamento (UE) 2016/679 del Parlamento
+  Europeo y del Consejo relativo a la protección de las personas
+  físicas en lo que respecta al tratamiento de datos personales
+  y a la libre circulación de estos datos} (GDPR).
+  \textit{Diario Oficial de la Unión Europea}, L~119, 1--88.
+  \url{https://eur-lex.europa.eu/legal-content/ES/TXT/PDF/?uri=CELEX:32016R0679}
+
+  % Cap. 2 (secc. 2.2.4): categoría especial de datos de salud ---
+  % tratamiento prohibido por defecto salvo bases de legitimación
+  % (GDPR, 2016, art.~9, párr.~2). Sanciones: hasta 20 millones
+  % de euros o 4\% de facturación global (art.~83, párr.~5).
+  % Data protection by design (art.~25).
+
+\item Patientendatenschutzgesetz. (2020, 14 de octubre).
+  \textit{Bundesgesetzblatt}, Teil~I, Nr.~46, 2115--2145.
+  \url{https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl120s2115.pdf}
+
+  % Cap. 2 (secc. 2.2.4): regula el expediente electrónico del
+  % paciente (ePA) y las recetas electrónicas en Alemania
+  % (PDSG, 2020, en relación con SGB~V § 341).
+
+\item Peffers, K., Tuunanen, T., Rothenberger, M. A., y
+  Chatterjee, S. (2007). A design science research methodology
+  for information systems research. \textit{Journal of Management
+  Information Systems}, \textit{24}(3), 45--77.
+  \url{https://doi.org/10.2753/MIS0742-1222240302}
+
+  % Cap. 5: proceso de seis actividades para la investigación de
+  % diseño: identificación del problema, definición de objetivos,
+  % diseño del artefacto, demostración, evaluación y comunicación
+  % (Peffers et al., 2007).
+
+% ── R ────────────────────────────────────────────────────────
+
+\item Reglamento de la Ley Federal de Protección de Datos
+  Personales en Posesión de los Particulares. (2011,
+  21 de diciembre). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LFPDPPP.pdf}
+
+  % Artículos citados en toda la tesis:
+  % art.~51 (contrato responsable--encargado),
+  % art.~52 (uso de nube con protección equivalente),
+  % art.~57 (trazabilidad y medidas de seguridad),
+  % art.~61 (inventario, análisis de riesgos y análisis de brecha).
+
+\item Rescorla, E. (2018). \textit{The transport layer security
+  (TLS) protocol version 1.3} (RFC~8446). Internet Engineering
+  Task Force.
+  \url{https://www.rfc-editor.org/rfc/rfc8446}
+
+  % Cap. 4: TLS como protocolo diseñado para ``provide
+  % communications security over the Internet'' (Rescorla, 2018,
+  % p.~1).
+
+% ── S ────────────────────────────────────────────────────────
+
+\item Saludiario. (2017, 28 de diciembre). INAI sanciona a médico
+  por entregar a un tercero expediente clínico.
+  \textit{Saludiario}.
+  \url{https://www.saludiario.com/inai-sanciona-a-medico-por-entregar-a-un-tercero-expediente-clinico/}
+
+  % Cap. 2 (secc. 2.1.4): caso 2017 --- médico sancionado por
+  % entregar expediente de salud mental sin autorización y sin aviso
+  % de privacidad (Saludiario, 2017, párr.~3).
+
+\item Saludiario. (2018, 3 de enero). INAI sanciona a hospital
+  por negar expediente clínico a paciente. \textit{Saludiario}.
+  \url{https://www.saludiario.com/inai-sanciona-a-hospital-por-negar-expediente-clinico/}
+
+  % Cap. 2 (secc. 2.1.4): hospital sancionado con dos multas que
+  % sumaron \$4,600,000 pesos por negar acceso al expediente clínico
+  % (Saludiario, 2018, párr.~3).
+
+\item Secretaría Anticorrupción y Buen Gobierno. (2025,
+  21 de marzo). \textit{La Secretaría Anticorrupción y Buen
+  Gobierno reafirma su compromiso con la transparencia y la
+  protección de datos personales}. Gobierno de México.
+  \url{https://www.gob.mx/buengobierno/prensa/la-secretaria-anticorrupcion-y-buen-gobierno-reafirma-su-compromiso-con-la-transparencia-y-la-proteccion-de-datos-personales}
+
+  % Cap. 2 (secc. 2.1.4): las funciones de datos personales
+  % ``quedarán bajo la responsabilidad directa de la propia
+  % Secretaría'' bajo ``principios de imparcialidad, eficiencia,
+  % legalidad y profesionalismo'' (SABG, 2025, párr.~3).
+
+\item Stallings, W. (2017). \textit{Cryptography and network
+  security: Principles and practice} (7a~ed.). Pearson.
+
+  % Cap. 4: el cifrado transforma información legible en formato
+  % ilegible mediante un algoritmo matemático y una clave, de modo
+  % que solo quien posea esa clave puede recuperar el contenido
+  % (Stallings, 2017, p.~28).
+
+% ── U ────────────────────────────────────────────────────────
+
+\item U.S. Department of Health and Human Services. (2003).
+  \textit{Summary of the HIPAA Security Rule}. HHS.
+  \url{https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html}
+
+  % Cap. 4: las entidades que manejan información de salud
+  % electrónica deben implementar ``appropriate administrative,
+  % physical, and technical safeguards to ensure the confidentiality,
+  % integrity, and security of electronic protected health
+  % information'' (HHS, 2003, sec.~164.306).
+
+\item U.S. Department of Health and Human Services. (2013).
+  \textit{HIPAA administrative simplification: Regulation text
+  (45 CFR Parts 160, 162 and 164)}. HHS.
+  \url{https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/administrative/combined/hipaa-simplification-201303.pdf}
+
+  % Cap. 2 (secc. 2.2.3): HIPAA prevalece sobre normas estatales
+  % que ofrezcan menor protección (HHS, 2013, 45 CFR § 160.203).
+  % BAA obligatorio cuando el proveedor tiene acceso a PHI
+  % (HHS, 2013, 45 CFR § 164.308(b)).
+
+\item U.S. Department of Health and Human Services. (2025,
+  6 de enero). \textit{HIPAA Security Rule to strengthen the
+  cybersecurity of electronic protected health information}
+  (Proposed Rule, 90 FR 898). Federal Register.
+  \url{https://www.federalregister.gov/documents/2025/01/06/2024-29903/hipaa-security-rule-to-strengthen-the-cybersecurity-of-electronic-protected-health-information}
+
+  % Cap. 2 (secc. 2.2.3): propuesta 2025 que convierte el cifrado
+  % de ePHI y la MFA en obligaciones absolutas (HHS, 2025, HIPAA
+  % Security Rule NPRM).
+
+% ── W ────────────────────────────────────────────────────────
+
+\item Washington State Legislature. (2023). \textit{My Health My
+  Data Act} (RCW 70.372). Washington State Legislature.
+  \url{https://app.leg.wa.gov/RCW/default.aspx?cite=70.372}
+
+  % Cap. 2 (secc. 2.2.3): aplica a cualquier empresa que procese
+  % datos de salud de consumidores con independencia de si es
+  % covered entity bajo HIPAA (Washington My Health My Data Act
+  % [MHMDA], 2023, RCW 70.372).
+
+% ── Y ────────────────────────────────────────────────────────
+
+\item Yin, R. K. (2018). \textit{Case study research and
+  applications: Design and methods} (6a~ed.). SAGE Publications.
+
+  % Cap. 5: la estrategia de caso de estudio es apropiada cuando
+  % ``investigators want to cover contextual conditions because they
+  % believe they are relevant to the phenomenon under study''
+  % (Yin, 2018, p.~15).
+  % También: ``the question of how many cases are needed is often
+  % less relevant than the question of what insights can be offered
+  % by the number of cases actually studied'' (p.~57).
 
 \end{itemize}
+
+% ============================================================
+% NOTAS DE VERIFICACIÓN
+% ============================================================
+%
+% 1. Inside Privacy (2024): la URL www.insideprivacy.com es el
+%    tracker de Covington & Burling. Verificar que el artículo
+%    específico sobre los 26+ estados sea accesible o agregar
+%    URL directa al reporte.
+%
+% 2. NIST SP 800-111 (2007): el texto del cap. 4 dice "(NIST, 2012)"
+%    para esta publicación. La SP 800-111 es de 2007, no 2012.
+%    Corregir la cita en el texto del cap. 4 a (NIST, 2007).
+%
+% 3. HHS 2003 y HHS 2013: son documentos distintos del mismo
+%    organismo. Ambos están incluidos. Verificar que en el texto
+%    del cap. 4 se cite correctamente como HHS (2003) para el
+%    Summary y HHS (2013) para el Regulation Text.
+%
+% 4. INAI (2018) Lineamientos: verificar que la entrada del DOF
+%    sea exactamente el 26 de enero de 2018 o ajustar la fecha.
+%
+% 5. Greenleaf (2022): publicación en revista especializada.
+%    Si no está disponible en acceso abierto, agregar nota de
+%    biblioteca o base de datos de acceso.
+% ============================================================
 % ═══════════════════════════════════════════════════════════════════════════
 \appendix
 \section{Instrumento de diagnóstico: Encuesta 1}
