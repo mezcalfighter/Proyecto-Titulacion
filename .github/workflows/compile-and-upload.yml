@@ -26,14 +26,18 @@ jobs:
           GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
+          echo "$GDRIVE_SERVICE_ACCOUNT_JSON" > /tmp/sa.json
           python3 << 'EOF'
           import os, json
           from google.oauth2 import service_account
           from googleapiclient.discovery import build
           from googleapiclient.http import MediaFileUpload
 
+          with open("/tmp/sa.json") as f:
+              sa_info = json.load(f)
+
           creds = service_account.Credentials.from_service_account_info(
-              json.loads(os.environ["GDRIVE_SERVICE_ACCOUNT_JSON"]),
+              sa_info,
               scopes=["https://www.googleapis.com/auth/drive"]
           )
           service = build("drive", "v3", credentials=creds)
