@@ -23,25 +23,19 @@ jobs:
 
       - name: Upload PDF to Google Drive
         env:
-          GDRIVE_REFRESH_TOKEN: ${{ secrets.GDRIVE_REFRESH_TOKEN }}
-          GDRIVE_CLIENT_ID: ${{ secrets.GDRIVE_CLIENT_ID }}
-          GDRIVE_CLIENT_SECRET: ${{ secrets.GDRIVE_CLIENT_SECRET }}
+          GDRIVE_SERVICE_ACCOUNT_JSON: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
           GDRIVE_FOLDER_ID: ${{ secrets.GDRIVE_FOLDER_ID }}
         run: |
           python3 << 'EOF'
-          import os
-          from google.oauth2.credentials import Credentials
+          import os, json
+          from google.oauth2 import service_account
           from googleapiclient.discovery import build
           from googleapiclient.http import MediaFileUpload
 
-          creds = Credentials(
-              token=None,
-              refresh_token=os.environ["GDRIVE_REFRESH_TOKEN"],
-              client_id=os.environ["GDRIVE_CLIENT_ID"],
-              client_secret=os.environ["GDRIVE_CLIENT_SECRET"],
-              token_uri="https://oauth2.googleapis.com/token"
+          creds = service_account.Credentials.from_service_account_info(
+              json.loads(os.environ["GDRIVE_SERVICE_ACCOUNT_JSON"]),
+              scopes=["https://www.googleapis.com/auth/drive"]
           )
-
           service = build("drive", "v3", credentials=creds)
           folder_id = os.environ["GDRIVE_FOLDER_ID"]
 
@@ -49,8 +43,8 @@ jobs:
               q=f"name='main.pdf' and '{folder_id}' in parents and trashed=false",
               fields="files(id, name)"
           ).execute()
-
           files = results.get("files", [])
+
           media = MediaFileUpload("main.pdf", mimetype="application/pdf")
 
           if files:
