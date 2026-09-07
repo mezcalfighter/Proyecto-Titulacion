@@ -289,15 +289,6 @@ Seis momentos clave nos llevan a el marco legal vigente:
   privacidad de las personas desprotegida frente a los riesgos que
   traería la era digital.
 
-  \item \textbf{2001--2009:}
-  Con el paso de los años y la llegada de internet a la vida
-  cotidiana, quedó claro que la Constitución no era suficiente para
-  proteger la información personal que ya circulaba en bases de datos
-  privadas. Para sectores como el de la
-  nutrición, que nunca habían tenido reglas claras en esta materia,
-  esos huecos tendrían consecuencias concretas que se analizan más
-  adelante en este documento.
-
   \item \textbf{2007:} Antes de que los datos personales
   fueran reconocidos como un derecho de todas las personas, hubo un
   antecedente que suele pasarse por alto: la reforma de 2007 al
@@ -1214,10 +1205,8 @@ marco todavía no exige.
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Análisis crítico de la ley mexicana}
 % PÁRRAFO INTRODUCTORIO DE SUBSECCIÓN
-El recorrido por los marcos normativos de Brasil, Uruguay, Estados
-Unidos y Alemania no tiene sentido si no se traduce en una
-evaluación concreta de la posición de México. Esta subsección
-hace ese ejercicio: identifica lo que la LFPDPPP y su ecosistema
+Esta subsección
+hace el siguiente ejercicio: identifica lo que la LFPDPPP y su ecosistema
 normativo tienen de sólido ---porque sí hay elementos que México
 construyó mejor que otros países de la región--- y lo que el
 comparativo reveló como ausencias reales con consecuencias
@@ -1354,9 +1343,7 @@ sus debilidades son visibles pero poco discutidas. Para el nutriólogo que recib
   Oposición) pero no la portabilidad como derecho autónomo.
   La LFPDPPP 2025 permite al paciente solicitar una copia de su expediente (art.~28) y exigir su cancelación (art.~34), pero no exigir que le sea entregado en un formato estructurado y transferible que otro profesional o sistema pueda usar directamente —derecho que sí reconocen el GDPR (2016, art.~20), la LGPD (2018, art.~18, inc.~V) y la Ley~18.331 de Uruguay (2008, art.~14). La diferencia entre acceso y portabilidad no es semántica: el acceso da una copia, la portabilidad da interoperabilidad. En un sector donde los pacientes cambian de nutriólogo, de ciudad o de plataforma, la ausencia de portabilidad explícita fragmenta la continuidad del cuidado y concentra el historial clínico en el profesional que lo generó, no en el paciente al que pertenece.
 
-  \item \textbf{La notificación de brechas no tiene plazo: una
-  obligación sin dientes operativos.}
-  El artículo~20 de la LFPDPPP 2025 obliga a notificar las
+  \item El artículo~20 de la LFPDPPP 2025 obliga a notificar las
   vulneraciones de seguridad que afecten significativamente los
   derechos de los titulares, pero no establece un plazo concreto
   para hacerlo. Brasil tiene 72~horas como referencia de la ANPD.
@@ -2431,40 +2418,40 @@ normativo con la arquitectura del capítulo seis.
  
 \begin{itemize}
  
-  \item \textbf{Proactivo, no reactivo} se traduce en que
+  \item Proactivo, no reactivo se traduce en que
   ningún dato de salud puede registrarse sin que el consentimiento
   haya sido firmado y registrado con folio previo. No es una
   validación de formulario: es una restricción de flujo a nivel
   de API.
  
-  \item \textbf{Privacidad como configuración predeterminada}
+  \item Privacidad como configuración predeterminada
   se traduce en que el cifrado AES-256 y la MFA están activos
   sin acción del usuario. No existe un modo de operación sin
   cifrado ni una configuración que permita desactivar la MFA.
  
-  \item \textbf{Privacidad integrada en el diseño} se traduce
+  \item Privacidad integrada en el diseño se traduce
   en que el módulo ARCO, el Lambda de eliminación y el
   \texttt{DeclarationLog} son componentes nativos de la
   arquitectura, no añadidos posteriores.
  
-  \item \textbf{Funcionalidad completa} se traduce en que los
+  \item Funcionalidad completa se traduce en que los
   controles de privacidad no interrumpen el flujo clínico. El
   consentimiento se firma en menos de 60 segundos; el módulo
   ARCO opera sin intervención del nutriólogo en las notificaciones
   al titular.
  
-  \item \textbf{Seguridad extremo a extremo} se traduce en
+  \item Seguridad extremo a extremo se traduce en
   políticas de retención en S3 configuradas al mínimo legal de
   cinco años con eliminación segura certificada al vencimiento,
   sin intervención manual.
  
-  \item \textbf{Visibilidad y transparencia} se traduce en que
+  \item Visibilidad y transparencia se traduce en que
   el aviso de privacidad es accesible desde cualquier pantalla,
   los folios de consentimiento se entregan al titular en el
   momento de su generación y el módulo ARCO permite al paciente
   consultar el estado de sus derechos en tiempo real.
  
-  \item \textbf{Respeto por el usuario} se traduce en que la
+  \item Respeto por el usuario se traduce en que la
   cancelación de datos puede solicitarse desde el perfil del
   paciente sin intermediarios, y el sistema la ejecuta y
   notifica con folio sin requerir acción adicional del
@@ -2532,9 +2519,7 @@ arquitectura.
 % ============================================================
  
 \section{Metodología}
- 
-Este capítulo documenta el diseño metodológico del caso de
-estudio: cómo se clasifica la investigación, qué criterios
+Este capítulo es el diseño metodológico usado: cómo se clasifica la investigación, qué criterios
 rigieron la selección y revisión del marco legal y del
 benchmarking, cómo se diseñaron los instrumentos de campo y
 cómo se analizan sus resultados. El objetivo es que cualquier
