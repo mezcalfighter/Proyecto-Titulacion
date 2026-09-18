@@ -2092,20 +2092,6 @@ normativo puede replicar por sí solo.
 % Texto aquí
 
 % ────────────────────────────────────────────────────────────────────────────
-\subsection{Estudio de mercado y competencia}
-\mbox{}
-
-\subsubsection{Softwares actuales de nutrición en México}
-\mbox{}
-% NOTA: Presentar las diferentes empresas que tienen software dedicado
-% que son las alternativas a las hojas de cálculo.
-
-\subsubsection{Benchmarking de seguridad: carencias de la competencia}
-\mbox{}
-% NOTA: Benchmarking con las aplicaciones, no con las empresas.
-
-\subsubsection{Diferenciador de NutriApp}
-\mbox{}
 % NOTA: Diferenciadores de NutriApp.
 
 % ============================================================
@@ -2125,30 +2111,6 @@ seis pueda evaluarse y replicarse de forma independiente.
 % ------------------------------------------------------------
 \subsection{Arquitectura en la nube: conceptos y estándares}
 % ------------------------------------------------------------
- 
-\subsubsection{Qué es la nube y por qué importa para datos de salud}
- 
-El NIST define la computación en la nube como ``a model for
-enabling ubiquitous, convenient, on-demand network access to a
-shared pool of configurable computing resources that can be
-rapidly provisioned and released with minimal management effort
-or service provider interaction'' (National Institute of
-Standards and Technology [NIST], 2011, p.~2). En la práctica,
-esto significa que NutriApp puede acceder a los mismos controles
-de seguridad que usan instituciones hospitalarias de escala
-empresarial, sin el costo de operar infraestructura propia. Para
-un consultorio de nutrición independiente, esa diferencia es
-decisiva: implementar cifrado de grado médico, autenticación
-robusta y registros de auditoría inmutables es inviable con
-servidores propios; en la nube son servicios activables por
-configuración.
- 
-El modelo de pago por uso también es relevante normativamente:
-elimina la necesidad de sobredimensionar la infraestructura,
-lo que es coherente con el principio de proporcionalidad del
-artículo~5 de la LFPDPPP, que exige tratar únicamente los datos
-``necesarios, pertinentes y no excesivos en relación con las
-finalidades'' declaradas (LFPDPPP, 2025, art.~5, fracc.~VI).
  
 \subsubsection{El modelo de responsabilidad compartida}
  
@@ -2212,7 +2174,8 @@ tránsito del artículo~57 del Reglamento de la LFPDPPP
 \textbf{En reposo.} Todos los datos almacenados ---expedientes,
 planes de dieta, documentos adjuntos, registros de auditoría---
 se cifran con AES-256 (\textit{Advanced Encryption Standard},
-clave de 256 bits), adoptado como estándar federal por el NIST
+clave de 256 bits), adoptado como estándar federal por el National
+Institute of Standards and Technology (NIST)
 mediante el FIPS~197 y recomendado específicamente para datos de
 salud en la publicación especial SP~800-111 (NIST, 2001; NIST,
 2012). AWS Key Management Service (KMS) gestiona las claves
@@ -2380,25 +2343,6 @@ para marketing sin consentimiento, transparencia sobre
 subcontrataciones y notificación de brechas (ISO, 2019). Su
 vigencia en AWS satisface directamente el artículo~52 del
 Reglamento de la LFPDPPP.
- 
-\subsubsection{HIPAA Security Rule como referencia técnica}
- 
-La HIPAA \textit{Security Rule} de Estados Unidos exige que las
-entidades que manejan información de salud electrónica
-implementen ``appropriate administrative, physical, and technical
-safeguards to ensure the confidentiality, integrity, and security
-of electronic protected health information'' (HHS, 2003,
-sec.~164.306). NutriApp adopta los controles técnicos de
-la HIPAA \textit{Security Rule} como capa adicional de rigor
-sobre lo que la ley mexicana exige explícitamente.
- 
-Esta decisión tiene además una dimensión estratégica: Greenleaf
-(2022) documenta que Brasil (LGPD), Argentina (Ley~25.326) y
-Colombia (Ley~1581/2012) prescriben controles de seguridad
-técnica convergentes con HIPAA, de modo que una plataforma que
-los satisface está técnicamente preparada para operar en los
-principales mercados de América Latina sin cambios de
-arquitectura.
 
 % ============================================================
 % CAPÍTULO 5 — METODOLOGÍA
@@ -2483,23 +2427,6 @@ vigor, sujetos obligados, derechos del titular, obligaciones
 del responsable, autoridad de control, régimen de sanciones
 y evidencia de implementación en la literatura.
  
-\subsubsection{Criterios de benchmarking de software de nutrición}
- 
-El análisis competitivo de la sección~3.2 se delimitó con cinco
-criterios. El \textit{criterio de disponibilidad} limitó el
-análisis a plataformas activas y accesibles para nutriólogos en
-México durante el período de investigación. El \textit{criterio
-de relevancia funcional} excluyó aplicaciones dirigidas
-exclusivamente al paciente. El \textit{criterio de
-verificabilidad} limitó cada afirmación sobre seguridad de
-los competidores a lo documentado en fuentes públicas ---aviso
-de privacidad, términos de uso, documentación de producto---
-sin acceso a código fuente ni entornos cerrados. El
-\textit{criterio de pertinencia normativa} orientó la evaluación
-hacia el cumplimiento de la LFPDPPP, no hacia características
-funcionales generales. El \textit{criterio de actualidad}
-excluyó características anunciadas o en desarrollo no
-verificables al momento de la investigación.
  
 % ------------------------------------------------------------
 \subsection{Investigación de campo: encuestas a nutriólogos}
@@ -2644,12 +2571,7 @@ identificados con la etiqueta \textit{(USUARIO DE PRUEBA)} en
 todos los campos de nombre. Esta condición se comunica por
 escrito a los participantes antes de cada sesión.
  
-Todo el material de benchmarking de competidores proviene de
-fuentes públicas accesibles ---avisos de privacidad, términos de
-uso, documentación de producto--- sin información obtenida bajo
-acuerdos de confidencialidad. Las afirmaciones sobre competidores
-se limitan estrictamente a lo verificable en esas fuentes. Este
-trabajo no tiene conflicto de interés declarable.
+Este trabajo no tiene conflicto de interés declarable.
 
 % ═══════════════════════════════════════════════════════════════════════════
 % ═══════════════════════════════════════════════════════════════════════════
@@ -3502,15 +3424,13 @@ de riesgo legal.
   % mediante herramientas estándar, incluso después de operaciones
   % de eliminación convencionales (Garfinkel y Shelat, 2003, p.~22).
 
-\item Greenleaf, G. (2022). Global data privacy laws 2022: 145
+\item Global data privacy laws 2022: 145
   national laws \& many bills. \textit{Privacy Laws \& Business
   International Report}, \textit{175}, 1--6.
 
   % Cap. 4: Greenleaf (2022) documenta que Brasil (LGPD), Argentina
   % (Ley~25.326) y Colombia (Ley~1581/2012) prescriben controles de
   % seguridad técnica convergentes con HIPAA.
-
-% ── H ────────────────────────────────────────────────────────
 
 \item Health Information Technology for Economic and Clinical
   Health Act. (2009). \textit{Public Law 111-5, Division A,
@@ -3746,14 +3666,6 @@ de riesgo legal.
   Commerce.
   \url{https://csrc.nist.gov/publications/detail/sp/800/111/final}
 
-  % Cap. 4: el NIST recomienda AES-256 específicamente para el
-  % cifrado de datos de salud en la SP~800-111 (NIST, 2012 en el
-  % texto --- verificar año: la publicación es de 2007, no 2012).
-
-\item National Institute of Standards and Technology. (2011).
-  \textit{The NIST definition of cloud computing}
-  (Special Publication 800-145). U.S. Department of Commerce.
-  \url{https://csrc.nist.gov/publications/detail/sp/800/145/final}
 
   % Cap. 4: ``a model for enabling ubiquitous, convenient, on-demand
   % network access to a shared pool of configurable computing
@@ -3943,16 +3855,6 @@ de riesgo legal.
   % (Stallings, 2017, p.~28).
 
 % ── U ────────────────────────────────────────────────────────
-
-\item U.S. Department of Health and Human Services. (2003).
-  \textit{Summary of the HIPAA Security Rule}. HHS.
-  \url{https://www.hhs.gov/hipaa/for-professionals/security/laws-regulations/index.html}
-
-  % Cap. 4: las entidades que manejan información de salud
-  % electrónica deben implementar ``appropriate administrative,
-  % physical, and technical safeguards to ensure the confidentiality,
-  % integrity, and security of electronic protected health
-  % information'' (HHS, 2003, sec.~164.306).
 
 \item U.S. Department of Health and Human Services. (2013).
   \textit{HIPAA administrative simplification: Regulation text
