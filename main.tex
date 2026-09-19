@@ -324,9 +324,11 @@ Cinco momentos explican el marco legal vigente:
   Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X); 
 el artículo~57 añadió que las medidas de seguridad se exigen \textit{``con independencia del sistema de tratamiento''} (RLFPDPPP, 2011, art.~57). Para este caso de estudio, es particularmente 
   relevante el artículo~52 del mismo Reglamento, que permite expresamente 
-  el uso de servicios de cómputo en la nube siempre que el proveedor ofrezca 
-  niveles de protección equivalentes a los que exige la ley mexicana (RLFPDPPP,
-  2011, art.~52).
+   el uso de servicios de cómputo en la nube siempre que el proveedor
+  cumpla las condiciones que el propio artículo fija: políticas afines
+  a la ley, transparencia sobre subcontrataciones, medidas de seguridad
+  y supresión de los datos al concluir el servicio (RLFPDPPP, 2011,
+  art.~52).
 
   \item \textbf{2025:} En marzo de 2025 entró en vigor una nueva versión de la
   Ley Federal de Protección de Datos Personales en Posesión de los
@@ -606,7 +608,13 @@ realidad institucional}
   solicitud de acceso a datos. Omisiones de la misma clase, como no
   tener aviso de privacidad o no pedir consentimiento por escrito,
   exponen a cualquier profesional de la salud que opera sin conocer
-  sus obligaciones. Al resolver un recurso de revisión sobre expedientes (INAI, 2021, párr.~4).
+  sus obligaciones. Al resolver un recurso de revisión sobre expedientes
+  clínicos del sector público, la comisionada del INAI Norma
+  Julieta del Río Venegas señaló que el expediente clínico
+  \textit{``constituye un dato personal sensible, por lo que su
+  resguardo y correcto uso es responsabilidad de los sujetos
+  obligados, sin olvidar que el paciente es el dueño y titular''}
+  de esa información (INAI, 2021, párr.~4).
  
 \item El sistema de consecuencias no se limita a las multas
   administrativas. El Código Penal Federal establece en su
@@ -750,7 +758,7 @@ Uruguay [MSP Uruguay], 2017, art.~3°). México cuenta con reglas
 técnicas de intercambio en la NOM-024-SSA3-2012: cuando un sistema
 intercambia información con otros, debe usar interfaces conforme a las
 Guías y Formatos vigentes, catálogos fundamentales y la CURP como dato
-mínimo de identificación (Norma Oficial Mexicana NOM-024-SSA3-2012, numerales~6.3.1, 6.4.1, 6.4.2 y 6.5.1). La diferencia es que en Uruguay adoptar el sistema es obligatorio y en México es voluntario.
+mínimo de identificación (Norma Oficial Mexicana NOM-024-SSA3-2012, 2012, numerales~6.3.1, 6.4.1, 6.4.2 y 6.5.1). La diferencia es que en Uruguay adoptar el sistema es obligatorio y en México es voluntario.
 
 % ────────────────────────────────────────────────────────────────────────────
 \subsubsection{Estados Unidos: HIPAA, HITECH y el modelo de
@@ -1189,10 +1197,11 @@ puede adoptar por diseño los estándares que ese marco todavía no exige.
   art.~57) y un procedimiento formal de inventario de datos,
   análisis de riesgos y análisis de brecha (RLFPDPPP, 2011,
   art.~61). También reconoció el cómputo en la nube como medio
-  legítimo de tratamiento, a condición de que el proveedor ofrezca
-  protección equivalente a la de la ley mexicana (RLFPDPPP, 2011,
-  art.~52). Ese artículo es el fundamento legal del uso de Amazon
-  Web Services en el diseño de NutriApp. Brasil incorporó
+   legítimo de tratamiento, a condición de que el proveedor cumpla
+  las políticas, la transparencia sobre subcontrataciones y las
+  medidas de seguridad y supresión que el propio artículo fija
+  (RLFPDPPP, 2011, art.~52). Ese artículo es el fundamento legal
+  del uso de Amazon Web Services en el diseño de NutriApp. Brasil incorporó
   obligaciones equivalentes en 2018 (LGPD, 2018, arts.~46 y~50) y
   Alemania reguló la nube en salud en 2024 (Digitalgesetz, 2024,
   SGB~V \S~393).
@@ -1632,23 +1641,250 @@ se presenta en dos partes.
       plataforma. \\
   \\[4pt]
 
-  Uso de proveedor de nube con niveles de protección
-  equivalentes a los exigidos por la ley mexicana
-    & RLFPDPPP 2011, art.~52 (el responsable puede contratar
-      servicios de cómputo en la nube siempre que el proveedor
-      garantice protección equivalente a la de la ley mexicana)
-    & Amazon Web Services con certificaciones SOC~2 Tipo~II,
-      ISO/IEC~27001 (gestión de seguridad de la información),
-      ISO/IEC~27018 (protección de datos personales en nubes
-      públicas) y C5~BSI del gobierno federal alemán. Cada
-      certificación es auditada de forma independiente y
-      periódica por terceros acreditados. La combinación de
-      estas certificaciones supera con amplitud el umbral de
-      protección equivalente establecido por el artículo~52
-      del Reglamento. \\
+  Uso de proveedor de cómputo en la nube
+    & RLFPDPPP 2011, arts.~51 y 52 (relación con el encargado por
+      contrato; políticas, transparencia de subcontrataciones,
+      confidencialidad y mecanismos de seguridad y supresión
+      exigibles al proveedor)
+    & Amazon Web Services bajo contrato de servicio, con auditorías
+      independientes ISO/IEC~27001, ISO/IEC~27018, SOC~2 Tipo~II y
+      C5~BSI como evidencia de sus políticas y medidas de seguridad.
+      Los controles que quedan del lado del responsable se
+      configuran y documentan en el diseño. \\
 
 \end{longtable}
-
+% ------------------------------------------------------------
+\subsection{Marco técnico de referencia}
+% ------------------------------------------------------------
+ 
+Las obligaciones anteriores se cumplen con controles técnicos que
+tienen nombre, fuente y límites conocidos. Esta sección reúne los
+que el diseño de NutriApp utiliza: el reparto de responsabilidades
+con el proveedor de nube, la gestión de identidad, el cifrado y las
+llaves, la auditoría, el ciclo de vida del dato y los estándares que
+sirven de referencia.
+ 
+\subsubsection{Responsabilidad compartida en la nube}
+ 
+Un proveedor de nube pública opera la infraestructura física, la
+red y la capa de virtualización. El cliente configura y opera lo
+que corre sobre ella. AWS documenta ese reparto como modelo de
+responsabilidad compartida: el proveedor responde por la seguridad
+\textit{de} la nube y el cliente por la seguridad \textit{en} la
+nube, que abarca la configuración de los servicios, el control de
+acceso, el cifrado y la gestión de identidades (Amazon Web Services
+[AWS], 2023a). ISO/IEC~27017 formaliza el mismo reparto como
+controles asignados al proveedor, al cliente o a ambos
+(International Organization for Standardization [ISO], 2015). Para la LFPDPPP ese reparto tiene una traducción jurídica. El
+nutriólogo o su organización es el responsable del tratamiento y
+el proveedor de nube actúa como encargado, con una relación que
+debe constar en cláusulas contractuales u otro instrumento jurídico
+(RLFPDPPP, 2011, art.~51). El artículo~52 fija lo que el proveedor
+de cómputo en la nube debe cumplir: políticas de protección de
+datos afines a los principios y deberes de la ley, transparencia
+sobre las subcontrataciones, no asumir la titularidad de la
+información, confidencialidad, y mecanismos para limitar el
+tratamiento, mantener medidas de seguridad, suprimir los datos al
+concluir el servicio e impedir accesos no autorizados (RLFPDPPP,
+2011, art.~52). Las medidas de seguridad que la ley pide al
+responsable (LFPDPPP, 2025, art.~18) quedan así en dos listas: las
+que el proveedor acredita con sus certificaciones y las que el
+responsable debe configurar, operar y poder demostrar. La
+Tabla~\ref{tab:responsabilidad} recoge ese reparto para los
+controles que usa NutriApp.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Reparto de responsabilidades entre el proveedor de nube
+  y el responsable del tratamiento en los controles de NutriApp.}
+  \label{tab:responsabilidad}
+  \small
+  \begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm}
+    >{\raggedright\arraybackslash}p{5.3cm}
+    >{\raggedright\arraybackslash}p{5.8cm}}
+  \toprule
+  \textbf{Control} & \textbf{AWS (encargado)}
+    & \textbf{Responsable del tratamiento} \\
+  \midrule
+  Identidad y acceso
+    & Servicio de identidades y su disponibilidad
+    & Políticas de acceso por rol, MFA obligatoria, altas y bajas
+      de usuarios \\[4pt]
+  Configuración de servicios
+    & Valores seguros por defecto y documentación de cada servicio
+    & Cifrado activado, retención inmutable, políticas de llaves,
+      separación de entornos \\[4pt]
+  Monitoreo y auditoría
+    & Generación y resguardo de los registros de la plataforma
+    & Activar los eventos de datos, revisar los registros y
+      conservarlos cinco años \\[4pt]
+  Segregación de datos
+    & Aislamiento lógico entre clientes de la nube
+    & Aislamiento entre nutriólogos y entre pacientes dentro de la
+      aplicación \\[4pt]
+  Operación y actualizaciones
+    & Infraestructura física, red, hipervisor y servicios
+      administrados
+    & Código de la aplicación, dependencias y versiones \\[4pt]
+  Terminación del servicio
+    & Supresión de los datos al concluir el contrato
+    & Exportar los expedientes y verificar la supresión \\
+  \bottomrule
+  \end{tabular}
+ 
+  \vspace{4pt}
+  \parbox{14cm}{\small\textit{Nota.} MFA = Multi-Factor
+  Authentication. Elaboración propia con base en AWS (2023a),
+  ISO (2015) y RLFPDPPP (2011, arts.~51 y 52).}
+\end{table}
+subsubsection{Identidad y acceso}
+ 
+La autenticación multifactor pide al usuario dos factores de
+categorías distintas: algo que sabe, algo que tiene o algo que es.
+El NIST define el nivel de aseguramiento AAL2 como el que da
+confianza alta en que quien inicia sesión controla los
+autenticadores ligados a su cuenta, y lo condiciona a la posesión
+y el control de dos factores distintos (NIST, 2025a). NutriApp
+adopta AAL2 como nivel objetivo para el nutriólogo: la ley pide
+medidas de seguridad administrativas, técnicas y físicas contra el
+acceso no autorizado (LFPDPPP, 2025, art.~18) y la NOM-024 pide
+credenciales propias por usuario y permisos según su perfil
+(NOM-024-SSA3-2012, 2012, numerales~6.6.3 y~6.6.4). El diseño
+gestiona identidades con Amazon Cognito, que admite \textit{passkeys}
+sobre los estándares WebAuthn y FIDO2 (AWS, 2024) además de
+OAuth~2.0, y aplica control de acceso por rol: el nutriólogo ve
+solo a sus pacientes, el paciente solo su expediente, y el
+administrador no ve contenido clínico. La MFA no puede
+desactivarse desde la configuración del usuario.
+ 
+\subsubsection{Cifrado y gestión de llaves}
+ 
+El cifrado convierte la información en un formato ilegible sin la
+llave correspondiente (Stallings, 2017, p.~28). En tránsito, el
+diseño usa TLS~1.3 (Rescorla, 2018) con certificados gestionados
+en AWS Certificate Manager. El protocolo reduce el riesgo de
+intercepción y alteración cuando los certificados y la
+configuración son correctos, no lo elimina. En reposo, los
+expedientes, planes, adjuntos y registros de auditoría se cifran
+con AES-256, estándar federal desde el FIPS~197 (NIST, 2001).
+ 
+Las llaves siguen un esquema de cifrado por envolvente (AWS,
+s.f.-a): una llave maestra en AWS Key Management Service por
+entorno, cuyas políticas definen quién puede usarla, y una llave de
+datos por expediente, cifrada bajo la maestra. Cada uso de la llave
+maestra queda en el registro de auditoría. El esquema tiene una
+consecuencia para la eliminación: una llave maestra no se borra en
+el acto, su eliminación se programa con una espera de siete a
+treinta días (AWS, s.f.-b), así que destruir un expediente
+significa destruir su llave de datos y no la llave del entorno. Con
+esto el diseño cubre el deber de proteger los datos contra acceso o
+tratamiento no autorizado (LFPDPPP, 2025, art.~18) con
+independencia del sistema de tratamiento (RLFPDPPP, 2011,
+art.~57).
+ 
+\subsubsection{Trazabilidad y auditoría}
+ 
+El Reglamento pide medidas que permitan rastrear los datos
+personales durante su tratamiento (RLFPDPPP, 2011, art.~48,
+fracc.~X) y la NOM-024 exige trazabilidad dentro del sistema de
+gestión de seguridad (NOM-024-SSA3-2012, 2012, numeral~6.6.1).
+El diseño la resuelve en tres capas. AWS CloudTrail registra por
+defecto los eventos de administración de la cuenta. Los eventos de
+datos, como las lecturas y escrituras de objetos en S3 y las
+invocaciones de funciones, no se registran por defecto y el diseño
+los activa de forma explícita (AWS, s.f.-d). La actividad SQL de la
+base de datos, que CloudTrail no cubre, se audita con Database
+Activity Streams de Amazon RDS (AWS, s.f.-e). En la capa de
+aplicación, el registro \texttt{DeclarationLog} conserva cada
+consentimiento, solicitud ARCO y declaración profesional con folio,
+fecha y una copia de los datos declarados. Los tres registros se
+almacenan en S3 con Object Lock en modo de cumplimiento, que
+impide borrarlos o sobrescribirlos durante la retención, incluso
+con privilegios administrativos (AWS, s.f.-c), y se conservan los
+cinco años que la NOM-004 fija para el expediente
+(NOM-004-SSA3-2012, 2012, numeral~5.4). Solo un rol de auditoría
+accede a ellos. El nutriólogo consulta el historial de su propio
+expediente sin poder alterarlo.
+ 
+\subsubsection{Retención, bloqueo y eliminación}
+ 
+Dos obligaciones tiran en sentidos opuestos. La NOM-004 obliga a
+conservar el expediente clínico al menos cinco años desde el último
+acto médico (NOM-004-SSA3-2012, 2012, numeral~5.4). La LFPDPPP da
+al titular el derecho de pedir en todo momento la cancelación de
+sus datos (LFPDPPP, 2025, art.~24). La propia ley concilia ambas:
+la cancelación abre un periodo de bloqueo, durante el cual el
+responsable conserva los datos solo para las responsabilidades
+nacidas del tratamiento, y después procede la supresión (art.~24);
+además, el responsable no está obligado a cancelar los datos que
+trata para la prevención o el diagnóstico médico o la gestión de
+servicios de salud, cuando lo hace un profesional sujeto a deber de
+secreto (LFPDPPP, 2025, art.~25, fracc.~VII).
+ 
+El diseño sigue esa secuencia. Una solicitud de cancelación llega
+al nutriólogo, que es quien resuelve como responsable en un plazo
+de veinte días y la hace efectiva en los quince siguientes
+(LFPDPPP, 2025, art.~31). Si procede, el expediente pasa a estado
+de bloqueo: deja de ser accesible en la operación diaria, sigue
+cifrado y sigue bajo la retención inmutable de Object Lock hasta
+cumplir los cinco años de la NOM-004. Los datos que no forman parte
+del expediente clínico, como la cuenta, los datos de contacto y las
+preferencias de notificación, se suprimen de inmediato. Al vencer
+la retención, una función programada ejecuta la supresión por
+borrado criptográfico: destruye la llave de datos del expediente,
+lo que hace irrecuperable el contenido cifrado (NIST, 2025b), y
+después borra los objetos. Esta técnica responde a un problema
+conocido: el borrado convencional marca el espacio como disponible
+y deja los datos recuperables (Garfinkel y Shelat, 2003). Cada
+paso deja un evento con folio en el registro de auditoría.
+ 
+El titular recibe una notificación de la resolución por SMS o
+WhatsApp con el folio y un enlace autenticado. El mensaje no
+contiene datos clínicos, y el proveedor de mensajería se contrata
+como encargado con las cláusulas que el Reglamento exige
+(RLFPDPPP, 2011, art.~51).
+ 
+\subsubsection{Estándares de referencia}
+ 
+Ninguno de los estándares siguientes es obligatorio bajo la
+LFPDPPP. Sirven para tres cosas distintas, que conviene no
+mezclar: como lista de verificación del diseño, como evidencia de
+las medidas de seguridad que el proveedor de nube debe acreditar
+(RLFPDPPP, 2011, art.~52, fracc.~II) y como referencia de las
+obligaciones que siguen siendo del responsable, que ninguna
+certificación del proveedor cubre.
+ 
+ISO/IEC~27001:2022 define los requisitos de un sistema de gestión
+de seguridad de la información y, en su Anexo~A, 93 controles en
+cuatro temas: organizacionales, de personas, físicos y
+tecnológicos (ISO, 2022). Los que más pesan en NutriApp son la
+gestión de llaves criptográficas (control~8.24), el registro de
+eventos (8.15), la transferencia de información (5.14) y el borrado
+de información (8.10). El diseño no busca la certificación en la
+etapa de MVP. Usa el Anexo~A de ISO/IEC~27001:2022 como lista de
+verificación. AWS mantiene esa certificación auditada por terceros
+(AWS, 2023b).
+ 
+ISO/IEC~27018:2025 adapta esos controles a la protección de datos
+personales en nubes públicas que actúan como encargados, con
+obligaciones como no usar los datos del cliente para fines propios,
+transparentar las subcontrataciones y notificar incidentes (ISO,
+2025b). Sustituye a la edición de 2019. ISO/IEC~27701:2025
+especifica un sistema de gestión de información de privacidad que
+distingue las obligaciones del responsable y del encargado (ISO,
+2025c). El diseño lo toma como referencia para repartir controles
+entre NutriApp y el proveedor. ISO~27799:2025 adapta los controles
+de ISO/IEC~27002 a la información de salud (ISO, 2025a) y es el
+estándar sectorial más cercano al expediente nutricional.
+ 
+En México, estos estándares circulan como normas mexicanas de
+adopción voluntaria, distintas de las NOM, que sí obligan. La
+NMX-I-27001-NYCE-2015 (Secretaría de Economía, 2015) y la
+NMX-I-27701-NYCE-2021 (Secretaría de Economía, 2021) adoptan
+ediciones anteriores de ISO/IEC~27001 y 27701. El diseño cita las
+ediciones internacionales vigentes al corte de esta investigación
+y menciona las normas mexicanas como referencia, no como criterio
+de evaluación.
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diagnóstico: Situación Actual del Sector}
 % ═══════════════════════════════════════════════════════════════════════════
@@ -2061,49 +2297,7 @@ No es un glosario: cada concepto se introduce únicamente porque
 tiene una consecuencia directa en el diseño de NutriApp, y se
 cita la fuente que lo respalda para que el diseño del capítulo
 seis pueda evaluarse y replicarse de forma independiente.
- 
-% ------------------------------------------------------------
-\subsection{Arquitectura en la nube: conceptos y estándares}
-% ------------------------------------------------------------
- 
-\subsubsection{El modelo de responsabilidad compartida}
- 
-Amazon Web Services establece que ``security and compliance is
-a shared responsibility between AWS and the customer. This shared
-model can help relieve the customer's operational burden as AWS
-operates, manages and controls the components from the host
-operating system and virtualization layer down to the physical
-security of the facilities'' (Amazon Web Services [AWS], 2023a).
- 
-Bajo este modelo, AWS garantiza la seguridad \textit{de} la
-nube ---infraestructura física, disponibilidad de red, integridad
-del hardware--- y NutriApp es responsable de la seguridad
-\textit{en} la nube: configuración de servicios, control de
-acceso, cifrado de datos y gestión de identidades. Esta
-delimitación es útil para el cumplimiento de la LFPDPPP porque
-define con precisión qué controles debe demostrar NutriApp ante
-la autoridad reguladora y cuáles están garantizados
-contractualmente por el proveedor (LFPDPPP, 2025, art.~19).
- 
-\subsubsection{Por qué AWS}
- 
-NutriApp se diseña sobre AWS por tres razones verificables. La
-primera es de cobertura geográfica: AWS es el único proveedor
-de nube con infraestructura física en México al momento del
-diseño. La segunda es de certificaciones: AWS mantiene de forma
-continua ISO/IEC~27001, ISO/IEC~27018, SOC~1 Tipo~II y
-SOC~2~Tipo~II, entre otras (AWS, 2023b). La certificación
-ISO/IEC~27018 ---estándar específico para protección de datos
-personales en nubes públicas--- satisface directamente el
-artículo~52 del Reglamento de la LFPDPPP, que exige que los
-terceros que reciban datos personales garanticen ``niveles de
-protección equivalentes a los previstos en esta Ley'' (Reglamento
-LFPDPPP [RLFPDPPP], 2011, art.~52). La tercera es de marco de
-referencia: el AWS Well-Architected Framework (AWS, 2023c) es el
-documento que conecta cada decisión de arquitectura de NutriApp
-con una buena práctica verificable, y se cita a lo largo de este
-capítulo y del capítulo seis.
- 
+
 % ------------------------------------------------------------
 \subsection{Seguridad de datos: cifrado, MFA y trazabilidad}
 % ------------------------------------------------------------
@@ -2532,8 +2726,8 @@ Este trabajo no tiene conflicto de interés declarable.
 \section{Diseño de la Solución}
 % ═══════════════════════════════════════════════════════════════════════════
 
-El diseño de NutriApp traduce las obligaciones normativas identificadas en el
-capítulo dos y los principios técnicos del capítulo cuatro en una arquitectura
+El diseño de NutriApp traduce las obligaciones normativas y el marco
+técnico del capítulo dos en una arquitectura
 de servicios concreta. Cada decisión de infraestructura corresponde a un
 requisito legal específico; la Tabla~3 del capítulo dos es el documento de
 trazabilidad que conecta ambos. Este capítulo describe la infraestructura
@@ -2544,13 +2738,23 @@ datos que la sustenta.
 \subsection{Infraestructura AWS: KMS, Cognito, Lambda, RDS}
 % ─────────────────────────────────────────────────────────────────────────
 
-NutriApp se despliega íntegramente sobre Amazon Web Services bajo el modelo
-de responsabilidad compartida descrito en el capítulo cuatro: AWS garantiza la
-seguridad de la infraestructura física y de red; NutriApp asume la
-responsabilidad de la configuración de servicios, el control de acceso y el
-cifrado de datos (Amazon Web Services [AWS], 2023a). La región de despliegue
-primaria es \texttt{us-east-1}, la única con infraestructura física en México
-al momento del diseño, con configuración de failover a \texttt{us-west-2}.
+NutriApp se diseña sobre Amazon Web Services bajo el modelo de
+responsabilidad compartida de la sección~2.5.1: AWS responde por la
+seguridad de la infraestructura física y de red, y el responsable
+del tratamiento por la configuración de los servicios, el control
+de acceso y el cifrado (Amazon Web Services [AWS], 2023a). Tres
+razones sostienen la elección del proveedor. La región AWS Mexico
+(Central), abierta en enero de 2025, permite mantener el
+tratamiento dentro del país (AWS, 2025). Las auditorías
+independientes que AWS mantiene bajo ISO/IEC~27001, ISO/IEC~27018 y
+SOC~2 Tipo~II (AWS, 2023b) sirven como evidencia de las medidas de
+seguridad que el artículo~52 del Reglamento exige al proveedor de
+cómputo en la nube (RLFPDPPP, 2011, art.~52, fracc.~II). El AWS
+Well-Architected Framework (AWS, 2023c) documenta una buena práctica
+publicada para cada decisión de arquitectura de este capítulo. La
+región primaria es \texttt{mx-central-1}. La continuidad se resuelve
+dentro de ella, en sus tres zonas de disponibilidad, para no
+trasladar datos fuera del territorio nacional.
 
 Los componentes de la arquitectura se organizan en cinco capas funcionales:
 
@@ -3201,8 +3405,13 @@ de riesgo legal.
   % AWS resources'' (AWS, 2023c).
   % También: ``monitor, alert, and audit actions and changes to your
   % environment in real time'' (AWS, 2023c).
-
-% ── B ────────────────────────────────────────────────────────
+  
+\item Amazon Web Services. (2025, 14 de enero). \textit{Now open ---
+  AWS Mexico (Central) Region}. AWS News Blog.
+  \url{https://aws.amazon.com/blogs/aws/now-open-aws-mexico-central-region/}
+ 
+  % Cap. 6 (secc. 6.1): disponibilidad general de la región
+  % mx-central-1 con tres zonas de disponibilidad (AWS, 2025).
 
 \item Bundesamt für Sicherheit in der Informationstechnik. (2020).
   \textit{Cloud Computing Compliance Criteria Catalogue (C5):
@@ -3485,6 +3694,15 @@ de riesgo legal.
 
   % Cap. 2 (secc. 2.1.4): aviso de que el sitio ya no está vigente
   % y los contenidos se migrarán paulatinamente (INAI, 2025, párr.~1).
+
+\item International Organization for Standardization. (2015).
+  \textit{ISO/IEC 27017:2015 --- Information technology --- Security
+  techniques --- Code of practice for information security controls
+  based on ISO/IEC 27002 for cloud services}. ISO.
+  \url{https://www.iso.org/standard/43757.html}
+ 
+  % Cap. 2 (secc. 2.5.1): controles de seguridad asignados al
+  % proveedor de nube, al cliente o a ambos (ISO, 2015).
 
 \item International Organization for Standardization. (2019).
   \textit{ISO/IEC 27018:2019 --- Information technology --- Security
@@ -3822,6 +4040,23 @@ de riesgo legal.
 
 \item Stallings, W. (2017). \textit{Cryptography and network
   security: Principles and practice} (7a~ed.). Pearson.
+
+\item Secretaría de Economía. (2015, 14 de abril). \textit{Declaratoria
+  de vigencia de las normas mexicanas NMX-I-25021-NYCE-2015,
+  NMX-I-27001-NYCE-2015 y NMX-I-27002-NYCE-2015}. Diario Oficial de
+  la Federación.
+  \url{https://www.dof.gob.mx/nota_detalle.php?codigo=5388688&fecha=14/04/2015}
+ 
+  % Cap. 2 (secc. 2.5.6): norma mexicana voluntaria que adopta
+  % ISO/IEC 27001 (Secretaría de Economía, 2015).
+ 
+\item Secretaría de Economía. (2021, 21 de diciembre).
+  \textit{Declaratoria de vigencia de la Norma Mexicana
+  NMX-I-27701-NYCE-2021}. Diario Oficial de la Federación.
+  \url{https://dof.gob.mx/nota_detalle.php?codigo=5638890&fecha=21/12/2021}
+ 
+  % Cap. 2 (secc. 2.5.6): norma mexicana voluntaria que adopta
+  % ISO/IEC 27701 (Secretaría de Economía, 2021).
 
   % Cap. 4: el cifrado transforma información legible en formato
   % ilegible mediante un algoritmo matemático y una clave, de modo
