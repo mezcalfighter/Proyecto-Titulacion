@@ -1419,8 +1419,8 @@ la LFPDPPP}
   no hay autenticación por usuario ni el control de acceso que pide
   la NOM-024 (NOM-024-SSA3-2012, 2012, numeral~6.6.3). Tampoco
   queda registro de quién abrió qué expediente y cuándo, que es la
-  trazabilidad del artículo~57 del Reglamento (RLFPDPPP, 2011,
-  art.~57). El cifrado exige herramientas externas que rompen el
+  trazabilidad del artículo~48 del Reglamento (RLFPDPPP, 2011,
+  art.~48, fracc.~X). El cifrado exige herramientas externas que rompen el
   flujo de la consulta. Las solicitudes ARCO no tienen dónde
   registrarse con un plazo verificable, y los datos no pueden
   separarse por sensibilidad ni conservarse con reglas distintas.
@@ -1443,7 +1443,7 @@ el lector de este documento, es la demostración de que cada
 decisión de diseño de la plataforma tiene un fundamento normativo
 verificable; para el desarrollo del sistema, es el documento de
 referencia que conecta el marco legal con la arquitectura técnica
-descrita en el capítulo~6. Por razones de legibilidad, la tabla
+descrita en el capítulo~5. Por razones de legibilidad, la tabla
 se presenta en dos partes.
 
 % ── TABLA 1: Requerimientos LFPDPPP y Reglamento ─────────────────
@@ -1531,8 +1531,7 @@ se presenta en dos partes.
   \\[4pt]
 
   Trazabilidad de consultas, accesos y modificaciones
-    & RLFPDPPP 2011, art.~57; NOM-024-SSA3-2012, requisito
-      funcional de trazabilidad
+    & RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, requisito funcional de trazabilidad
     & Registro de auditoría (audit log) inmutable que documenta
       cada consulta, modificación, descarga e intento de acceso
       fallido al expediente, con identificación del usuario,
@@ -1737,8 +1736,8 @@ controles que usa NutriApp.
   Authentication. Elaboración propia con base en AWS (2023a),
   ISO (2015) y RLFPDPPP (2011, arts.~51 y 52).}
 \end{table}
-subsubsection{Identidad y acceso}
- 
+\subsubsection{Identidad y acceso}
+
 La autenticación multifactor pide al usuario dos factores de
 categorías distintas: algo que sabe, algo que tiene o algo que es.
 El NIST define el nivel de aseguramiento AAL2 como el que da
@@ -2026,7 +2025,7 @@ que le parecerían más útiles en una plataforma para nutriólogos que
 cumpla automáticamente con la ley, y que indique su disposición de
 pago mensual. Las respuestas a estas dos preguntas informan
 directamente el alcance del Producto Mínimo Viable descrito en el
-capítulo~7 y el análisis costo-beneficio del capítulo~8.
+capítulo~6 y el análisis costo-beneficio del capítulo~7.
 
 La pregunta veinte cierra el instrumento con una pregunta de
 percepción agregada: considerando todo lo que acaba de responder
@@ -2057,7 +2056,7 @@ encuestados identifican como necesarios pero ausentes en la versión
 demostrada. Esos requerimientos no forman parte del alcance del MVP
 definido en este caso de estudio, pero constituyen la hoja de ruta
 de la siguiente versión de la plataforma y son documentados como
-parte de las recomendaciones de trabajo futuro del capítulo~9.
+parte de las recomendaciones de trabajo futuro del capítulo~8.
 El diseño detallado de la Encuesta~2, sus resultados y el análisis
 de validación se presentan en la sección~3.1.3 de este documento,
 una vez que se han establecido las métricas base del problema en la
@@ -2246,7 +2245,7 @@ rango de precio mensual más seleccionado--- y el porcentaje de
 encuestados dispuesto a pagar cualquier monto mayor a cero por la
 solución. Este último indicador, combinado con el costo estimado de
 operación de NutriApp en AWS, es el insumo principal del análisis
-parte de las recomendaciones de trabajo futuro del capítulo~8.
+costo-beneficio del capítulo~7.
 
 \paragraph{Métrica de cierre: percepción agregada del sector}
 
@@ -2976,7 +2975,7 @@ que este caso de estudio documenta.
 
 La validación normativa del diseño de NutriApp opera mediante la verificación
 de que cada obligación legal identificada en la Tabla~3 del capítulo dos tiene
-un componente técnico correspondiente en la arquitectura del capítulo seis. La
+un componente técnico correspondiente en la arquitectura del capítulo cinco. La
 Tabla~4 de este capítulo sintetiza esa correspondencia. El criterio de validez
 es la completitud: no puede haber ninguna obligación de la LFPDPPP~2025, su
 Reglamento o la NOM-004-SSA3-2012 que quede sin respuesta técnica en el diseño.
