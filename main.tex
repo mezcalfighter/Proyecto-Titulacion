@@ -2246,7 +2246,7 @@ rango de precio mensual más seleccionado--- y el porcentaje de
 encuestados dispuesto a pagar cualquier monto mayor a cero por la
 solución. Este último indicador, combinado con el costo estimado de
 operación de NutriApp en AWS, es el insumo principal del análisis
-costo-beneficio del capítulo~8.
+parte de las recomendaciones de trabajo futuro del capítulo~8.
 
 \paragraph{Métrica de cierre: percepción agregada del sector}
 
@@ -2283,215 +2283,6 @@ normativo puede replicar por sí solo.
 
 % ────────────────────────────────────────────────────────────────────────────
 % NOTA: Diferenciadores de NutriApp.
-
-% ============================================================
-% CAPÍTULO 4 — MARCO DE REFERENCIA TÉCNICO
-% NutriApp — ITESO — Cristian Emanuel Ortega Camarena
-% ============================================================
- 
-\section{Marco de Referencia Técnico}
- 
-El capítulo anterior estableció qué exige la ley. Este capítulo
-explica cómo funciona la tecnología que hace posible cumplirla.
-No es un glosario: cada concepto se introduce únicamente porque
-tiene una consecuencia directa en el diseño de NutriApp, y se
-cita la fuente que lo respalda para que el diseño del capítulo
-seis pueda evaluarse y replicarse de forma independiente.
-
-% ------------------------------------------------------------
-\subsection{Seguridad de datos: cifrado, MFA y trazabilidad}
-% ------------------------------------------------------------
- 
-\subsubsection{Cifrado}
- 
-El cifrado transforma información legible en formato ilegible
-mediante un algoritmo matemático y una clave, de modo que solo
-quien posea esa clave puede recuperar el contenido (Stallings,
-2017, p.~28). NutriApp lo implementa en dos estados:
- 
-\textbf{En tránsito.} Toda comunicación entre el dispositivo del
-usuario y los servidores de NutriApp viaja cifrada mediante TLS
-1.3 (\textit{Transport Layer Security}), adoptado como estándar
-por el IETF mediante la RFC~8446 (Rescorla, 2018, p.~1) y
-gestionado en NutriApp a través de AWS Certificate Manager. Esto
-garantiza que ningún dato transmitido puede ser interceptado ni
-modificado, cumpliendo el requisito de confidencialidad en
-tránsito del artículo~57 del Reglamento de la LFPDPPP
-(RLFPDPPP, 2011, art.~57).
- 
-\textbf{En reposo.} Todos los datos almacenados ---expedientes,
-planes de dieta, documentos adjuntos, registros de auditoría---
-se cifran con AES-256 (\textit{Advanced Encryption Standard},
-clave de 256 bits), adoptado como estándar federal por el National
-Institute of Standards and Technology (NIST)
-mediante el FIPS~197 y recomendado específicamente para datos de
-salud en la publicación especial SP~800-111 (NIST, 2001; NIST,
-2012). AWS Key Management Service (KMS) gestiona las claves
-criptográficas y genera un registro inmutable de cada operación
-de cifrado y descifrado, contribuyendo directamente a la
-trazabilidad que exige el Reglamento (RLFPDPPP, 2011, art.~57).
- 
-\subsubsection{Autenticación multifactor}
- 
-La autenticación multifactor (MFA) exige que el usuario
-demuestre su identidad mediante dos factores de categorías
-distintas: algo que conoce, algo que posee, o algo que es (NIST,
-2020, SP~800-63B, sec.~4). El NIST establece que el nivel de
-aseguramiento AAL2 ---que requiere MFA--- es el mínimo para
-sistemas que manejan información personal sensible, describiendo
-que ``AAL2 provides high confidence that the claimant controls
-an authenticator(s) bound to the subscriber's account'' (NIST,
-2020, sec.~4.2).
- 
-El AWS Well-Architected Framework refuerza esto como su primer
-principio de diseño de seguridad: ``implement a strong identity
-foundation: implement the principle of least privilege and enforce
-separation of duties with appropriate authorization for each
-interaction with your AWS resources'' (AWS, 2023c). En NutriApp,
-la MFA es obligatoria para todos los nutriólogos desde el
-registro y se gestiona mediante Amazon Cognito, que implementa
-los estándares FIDO2 y OAuth~2.0. Esta decisión responde al
-artículo~18 de la LFPDPPP 2025, que exige ``medidas de seguridad
-administrativas, técnicas y físicas que permitan proteger los
-datos personales contra daño, pérdida, alteración, destrucción
-o el uso, acceso o tratamiento no autorizado'' (LFPDPPP, 2025,
-art.~18).
- 
-\subsubsection{Trazabilidad y registro de auditoría}
- 
-El AWS Well-Architected Framework identifica la trazabilidad
-como su segundo principio de seguridad: ``monitor, alert, and
-audit actions and changes to your environment in real time.
-Integrate log and metric collection with systems to automatically
-investigate and take action'' (AWS, 2023c). El artículo~57 del
-Reglamento de la LFPDPPP exige lo equivalente en términos
-jurídicos: garantizar ``la trazabilidad de las operaciones
-realizadas sobre los datos personales'' (RLFPDPPP, 2011, art.~57).
- 
-NutriApp lo implementa en dos capas. A nivel de infraestructura,
-AWS CloudTrail registra automáticamente toda llamada a la API de
-los servicios utilizados ---accesos a datos cifrados, modificaciones
-en base de datos, operaciones de almacenamiento--- generando un
-registro inmutable en S3 con Object Lock que ningún operador puede
-alterar. A nivel de aplicación, el \texttt{DeclarationLog}
-registra cada firma de declaración profesional de los nutriólogos
-con folio único, fecha exacta y \textit{snapshot} de los datos
-declarados, operando como evidencia de cumplimiento administrativo
-del artículo~18 de la LFPDPPP 2025, independiente de la capa de
-infraestructura.
- 
-\subsubsection{Eliminación segura de datos}
- 
-Los sistemas de almacenamiento modernos no eliminan físicamente
-los datos al ejecutar un borrado estándar: simplemente marcan el
-espacio como disponible. Garfinkel y Shelat (2003) demostraron
-que ``a significant fraction of disk drives sold on the secondary
-market contain sensitive personal data'' recuperable incluso
-después de operaciones de eliminación convencionales (p.~22).
- 
-El NIST define la destrucción criptográfica como el mecanismo
-recomendado para datos en la nube, señalando que ``cryptographic
-erase (CE) renders sanitized data unrecoverable by leveraging the
-encryption of target data. By first encrypting the data and then
-erasing the encryption key, all encrypted data will be
-inaccessible'' (NIST, 2014, SP~800-88r1, p.~32). NutriApp
-implementa este mecanismo mediante un Lambda de eliminación
-supervisada que, al activarse por solicitud ARCO o por vencimiento
-del período de retención, elimina la clave KMS del registro antes
-del borrado lógico, registra el evento en CloudTrail con folio
-único y notifica al titular vía SMS o WhatsApp. Este proceso
-satisface el artículo~34 de la LFPDPPP 2025 (LFPDPPP, 2025,
-art.~34) y la exigencia de eliminación certificada de la
-NOM-004-SSA3-2012.
- 
-% ------------------------------------------------------------
-\subsection{Privacy by Design: de principio a arquitectura}
-% ------------------------------------------------------------
- 
-El capítulo anterior explicó los siete principios de Privacy
-by Design y su correspondencia con la LFPDPPP. Este apartado
-no los repite: documenta cómo cada principio se traduce en una
-decisión técnica concreta de NutriApp, conectando el marco
-normativo con la arquitectura del capítulo seis.
- 
-\begin{itemize}
- 
-  \item Proactivo, no reactivo se traduce en que
-  ningún dato de salud puede registrarse sin que el consentimiento
-  haya sido firmado y registrado con folio previo. No es una
-  validación de formulario: es una restricción de flujo a nivel
-  de API.
- 
-  \item Privacidad como configuración predeterminada
-  se traduce en que el cifrado AES-256 y la MFA están activos
-  sin acción del usuario. No existe un modo de operación sin
-  cifrado ni una configuración que permita desactivar la MFA.
- 
-  \item Privacidad integrada en el diseño se traduce
-  en que el módulo ARCO, el Lambda de eliminación y el
-  \texttt{DeclarationLog} son componentes nativos de la
-  arquitectura, no añadidos posteriores.
- 
-  \item Funcionalidad completa se traduce en que los
-  controles de privacidad no interrumpen el flujo clínico. El
-  consentimiento se firma en menos de 60 segundos; el módulo
-  ARCO opera sin intervención del nutriólogo en las notificaciones
-  al titular.
- 
-  \item Seguridad extremo a extremo se traduce en
-  políticas de retención en S3 configuradas al mínimo legal de
-  cinco años con eliminación segura certificada al vencimiento,
-  sin intervención manual.
- 
-  \item Visibilidad y transparencia se traduce en que
-  el aviso de privacidad es accesible desde cualquier pantalla,
-  los folios de consentimiento se entregan al titular en el
-  momento de su generación y el módulo ARCO permite al paciente
-  consultar el estado de sus derechos en tiempo real.
- 
-  \item Respeto por el usuario se traduce en que la
-  cancelación de datos puede solicitarse desde el perfil del
-  paciente sin intermediarios, y el sistema la ejecuta y
-  notifica con folio sin requerir acción adicional del
-  nutriólogo.
- 
-\end{itemize}
- 
-% ------------------------------------------------------------
-\subsection{Estándares internacionales de referencia}
-% ------------------------------------------------------------
- 
-El diseño de NutriApp toma como referencia dos estándares
-internacionales que, aunque no son obligatorios bajo la
-LFPDPPP, representan el estado del arte en seguridad de datos
-de salud. Su adopción es coherente con el artículo~52 del
-Reglamento, que exige que los terceros que participen en el
-tratamiento garanticen ``los niveles de protección equivalentes
-a los previstos en esta Ley'' (RLFPDPPP, 2011, art.~52).
- 
-\subsubsection{ISO/IEC 27001 e ISO/IEC 27018}
- 
-ISO/IEC~27001 es el estándar internacional para la
-implementación de sistemas de gestión de seguridad de la
-información. Su versión 2022 establece 93 controles en cuatro
-dominios: organizacionales, de personas, físicos y tecnológicos
-(ISO, 2022). Los más relevantes para NutriApp son la gestión de
-claves criptográficas (control~8.24), registros de auditoría
-(control~8.15), transferencia segura de información (control~5.14)
-y eliminación segura (control~8.10). NutriApp no busca
-certificación ISO/IEC~27001 en esta etapa de MVP, pero los
-controles del Anexo~A sirven como lista de verificación del
-diseño. AWS mantiene esta certificación vigente y auditada por
-terceros independientes (AWS, 2023b).
- 
-ISO/IEC~27018 extiende el estándar anterior a la protección de
-datos personales en nubes públicas, estableciendo controles
-adicionales que incluyen prohibición de usar datos del cliente
-para marketing sin consentimiento, transparencia sobre
-subcontrataciones y notificación de brechas (ISO, 2019). Su
-vigencia en AWS satisface directamente el artículo~52 del
-Reglamento de la LFPDPPP.
-
 % ============================================================
 % CAPÍTULO 5 — METODOLOGÍA
 % NutriApp — ITESO — Cristian Emanuel Ortega Camarena
@@ -2517,8 +2308,8 @@ accomplished'' (p.~75).
 El proceso metodológico sigue las seis actividades que Peffers
 et al. (2007) proponen para la investigación de diseño:
 identificación del problema (capítulo~1), definición de objetivos
-(capítulo~1), diseño del artefacto (capítulos~6 y~7),
-demostración, evaluación (capítulo~8) y comunicación (este
+(capítulo~1), diseño del artefacto (capítulos~5 y~6),
+demostración, evaluación (capítulo~7) y comunicación (este
 documento en su conjunto).
  
 La estrategia de caso de estudio se adopta conforme a Yin
@@ -2589,7 +2380,7 @@ LFPDPPP y caracteriza las prácticas actuales de gestión de datos.
 El \textit{Instrumento~2 --- Encuesta de Validación} evalúa la
 pertinencia percibida de NutriApp tras la presentación del
 prototipo funcional. Los resultados del Instrumento~1 se
-presentan en el capítulo~8; el Instrumento~2 corresponde a la
+presentan en el capítulo~7; el Instrumento~2 corresponde a la
 siguiente revisión de este trabajo.
  
 % \todo[inline]{Pendiente: incorporar resultados de la Encuesta de Validación al retorno de Alemania.}
@@ -2647,7 +2438,7 @@ el diagnóstico.
 Los datos se analizan con estadística descriptiva: frecuencias
 absolutas y relativas para variables categóricas, medidas de
 tendencia central y dispersión para variables Likert. Los
-resultados se presentan en el capítulo~8 con visualizaciones
+resultados se presentan en el capítulo~7 con visualizaciones
 diseñadas para audiencia mixta.
  
 La triangulación opera en dos niveles. El \textit{primer nivel}
@@ -2679,7 +2470,7 @@ suficiente ---principio de parsimonia técnica--- verificando
 que esté respaldado por el AWS Well-Architected Framework
 (AWS, 2023c) o por los estándares del capítulo anterior. Este
 proceso se documenta en la Tabla~3 del capítulo~2 y se
-materializa en la arquitectura del capítulo~6.
+materializa en la arquitectura del capítulo~5.
  
 \subsubsection{Alcance y limitaciones}
  
@@ -3369,8 +3160,43 @@ de riesgo legal.
 
 \begin{itemize}[leftmargin=*, itemsep=6pt]
 
-% ── A ────────────────────────────────────────────────────────
-
+\item Amazon Web Services. (s.f.-a). \textit{AWS KMS keys}. AWS Key
+  Management Service Developer Guide.
+  \url{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html}
+ 
+  % Cap. 2 (secc. 2.5.3): cifrado por envolvente y llaves de datos
+  % (AWS, s.f.-a).
+ 
+\item Amazon Web Services. (s.f.-b). \textit{Delete an AWS KMS key}.
+  AWS Key Management Service Developer Guide.
+  \url{https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html}
+ 
+  % Cap. 2 (secc. 2.5.3): la eliminación de una llave se programa
+  % con un periodo de espera de 7 a 30 días (AWS, s.f.-b).
+ 
+\item Amazon Web Services. (s.f.-c). \textit{Locking objects with
+  Object Lock}. Amazon Simple Storage Service User Guide.
+  \url{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}
+ 
+  % Cap. 2 (secc. 2.5.4 y 2.5.5): modo de cumplimiento; ningún
+  % usuario puede borrar ni sobrescribir durante la retención
+  % (AWS, s.f.-c).
+ 
+\item Amazon Web Services. (s.f.-d). \textit{Logging data events}.
+  AWS CloudTrail User Guide.
+  \url{https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}
+ 
+  % Cap. 2 (secc. 2.5.4): los eventos de datos no se registran por
+  % defecto; deben configurarse (AWS, s.f.-d).
+ 
+\item Amazon Web Services. (s.f.-e). \textit{Monitoring Amazon RDS
+  with Database Activity Streams}. Amazon Relational Database
+  Service User Guide.
+  \url{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/DBActivityStreams.html}
+ 
+  % Cap. 2 (secc. 2.5.4): auditoría de la actividad SQL de la base
+  % de datos (AWS, s.f.-e).
+  
 \item Amazon Web Services. (2023a). \textit{Shared responsibility
   model}. Amazon Web Services.
   \url{https://aws.amazon.com/compliance/shared-responsibility-model/}
@@ -3405,7 +3231,15 @@ de riesgo legal.
   % AWS resources'' (AWS, 2023c).
   % También: ``monitor, alert, and audit actions and changes to your
   % environment in real time'' (AWS, 2023c).
-  
+
+\item Amazon Web Services. (2024, 22 de noviembre). \textit{Amazon
+  Cognito now supports passwordless authentication for low-friction
+  and secure logins}. AWS What's New.
+  \url{https://aws.amazon.com/about-aws/whats-new/2024/11/amazon-cognito-passwordless-authentication-low-friction-secure-logins/}
+ 
+  % Cap. 2 (secc. 2.5.2): passkeys (WebAuthn/FIDO2) en Cognito
+  % (AWS, 2024).
+
 \item Amazon Web Services. (2025, 14 de enero). \textit{Now open ---
   AWS Mexico (Central) Region}. AWS News Blog.
   \url{https://aws.amazon.com/blogs/aws/now-open-aws-mexico-central-region/}
@@ -3704,18 +3538,6 @@ de riesgo legal.
   % Cap. 2 (secc. 2.5.1): controles de seguridad asignados al
   % proveedor de nube, al cliente o a ambos (ISO, 2015).
 
-\item International Organization for Standardization. (2019).
-  \textit{ISO/IEC 27018:2019 --- Information technology --- Security
-  techniques --- Code of practice for protection of personally
-  identifiable information (PII) in public clouds acting as PII
-  processors}. ISO.
-
-  % Cap. 4: ``establish commonly accepted control objectives,
-  % controls and guidelines for implementing measures to protect
-  % personally identifiable information (PII) in accordance with the
-  % privacy principles in ISO/IEC~29100 for the public cloud
-  % computing environment'' (ISO, 2019, introducción).
-
 \item International Organization for Standardization. (2022).
   \textit{ISO/IEC 27001:2022 --- Information security, cybersecurity
   and privacy protection --- Information security management systems
@@ -3726,7 +3548,32 @@ de riesgo legal.
   % implementación de controles y el mantenimiento de un proceso de
   % mejora continua (ISO, 2022, introducción).
 
-% ── L ────────────────────────────────────────────────────────
+\item International Organization for Standardization. (2025a).
+  \textit{ISO 27799:2025 --- Health informatics --- Information
+  security controls in health based on ISO/IEC 27002}. ISO.
+  \url{https://www.iso.org/standard/84647.html}
+ 
+  % Cap. 2 (secc. 2.5.6): controles de ISO/IEC 27002 adaptados a
+  % la información de salud (ISO, 2025a).
+ 
+\item International Organization for Standardization. (2025b).
+  \textit{ISO/IEC 27018:2025 --- Information technology --- Security
+  techniques --- Code of practice for protection of personally
+  identifiable information (PII) in public clouds acting as PII
+  processors}. ISO.
+  \url{https://www.iso.org/standard/27018}
+ 
+  % Cap. 2 (secc. 2.5.6): sustituye a la edición 2019, retirada
+  % (ISO, 2025b).
+
+\item International Organization for Standardization. (2025c).
+  \textit{ISO/IEC 27701:2025 --- Information security, cybersecurity
+  and privacy protection --- Privacy information management
+  systems --- Requirements and guidance}. ISO.
+  \url{https://www.iso.org/standard/85819}
+ 
+  % Cap. 2 (secc. 2.5.6): sistema de gestión de información de
+  % privacidad; roles de responsable y encargado (ISO, 2025c).
 
 \item Lei n°~13.709, de 14 de agosto de 2018 (Lei Geral de
   Proteção de Dados Pessoais). (2018, 14 de agosto; vigente desde
@@ -3841,20 +3688,6 @@ de riesgo legal.
   % 256 bits ofrece el mayor nivel de seguridad del estándar
   % (NIST, 2001, p.~1).
 
-\item National Institute of Standards and Technology. (2007).
-  \textit{Guidelines for the storage encryption of end user
-  devices} (Special Publication 800-111). U.S. Department of
-  Commerce.
-  \url{https://csrc.nist.gov/publications/detail/sp/800/111/final}
-
-
-  % Cap. 4: ``a model for enabling ubiquitous, convenient, on-demand
-  % network access to a shared pool of configurable computing
-  % resources --- networks, servers, storage, applications, and
-  % services --- that can be rapidly provisioned and released with
-  % minimal management effort or service provider interaction''
-  % (NIST, 2011, p.~2).
-
 \item National Institute of Standards and Technology. (2014).
   \textit{Guidelines for media sanitization}
   (Special Publication 800-88 Rev.~1). U.S. Department of Commerce.
@@ -3879,6 +3712,24 @@ de riesgo legal.
   % También: ``AAL2 provides high confidence that the claimant
   % controls an authenticator(s) bound to the subscriber's account''
   % (NIST, 2020, sec.~4.2).
+
+\item National Institute of Standards and Technology. (2025a).
+  \textit{Digital identity guidelines: Authentication and
+  authenticator management} (Special Publication 800-63B-4).
+  U.S. Department of Commerce.
+  \url{https://doi.org/10.6028/NIST.SP.800-63B-4}
+ 
+  % Cap. 2 (secc. 2.5.2): AAL2 exige la posesión y el control de
+  % dos factores de autenticación distintos (NIST, 2025a).
+ 
+\item National Institute of Standards and Technology. (2025b).
+  \textit{Guidelines for media sanitization} (Special Publication
+  800-88 Rev.~2). U.S. Department of Commerce.
+  \url{https://doi.org/10.6028/NIST.SP.800-88r2}
+ 
+  % Cap. 2 (secc. 2.5.5): el borrado criptográfico sanea los datos
+  % al destruir las llaves que protegen su confidencialidad
+  % (NIST, 2025b).
 
 \item Norma Oficial Mexicana NOM-004-SSA3-2012, Del expediente
   clínico. (2012, 15 de octubre). \textit{Diario Oficial de la
@@ -4037,6 +3888,23 @@ de riesgo legal.
   \url{https://sidof.segob.gob.mx/notas/docFuente/5752650}
 % Cap. 2 (secc. 2.1.4): estructura de la Dirección General de
 % Datos Personales en el Sector Privado (SABG, 2025b, art.~30-F). 
+
+\item Secretaría de Economía. (2015, 14 de abril). \textit{Declaratoria
+  de vigencia de las normas mexicanas NMX-I-25021-NYCE-2015,
+  NMX-I-27001-NYCE-2015 y NMX-I-27002-NYCE-2015}. Diario Oficial de
+  la Federación.
+  \url{https://www.dof.gob.mx/nota_detalle.php?codigo=5388688&fecha=14/04/2015}
+ 
+  % Cap. 2 (secc. 2.5.6): norma mexicana voluntaria que adopta
+  % ISO/IEC 27001 (Secretaría de Economía, 2015).
+ 
+\item Secretaría de Economía. (2021, 21 de diciembre).
+  \textit{Declaratoria de vigencia de la Norma Mexicana
+  NMX-I-27701-NYCE-2021}. Diario Oficial de la Federación.
+  \url{https://dof.gob.mx/nota_detalle.php?codigo=5638890&fecha=21/12/2021}
+ 
+  % Cap. 2 (secc. 2.5.6): norma mexicana voluntaria que adopta
+  % ISO/IEC 27701 (Secretaría de Economía, 2021).
 
 \item Stallings, W. (2017). \textit{Cryptography and network
   security: Principles and practice} (7a~ed.). Pearson.
