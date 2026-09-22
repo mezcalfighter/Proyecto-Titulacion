@@ -2286,60 +2286,82 @@ normativo puede replicar por sí solo.
 \paragraph{Resultados 3: Validación de propuesta mediante wireframes/demo}
 \mbox{}
 % Texto aquí
-
-% ────────────────────────────────────────────────────────────────────────────
-% NOTA: Diferenciadores de NutriApp.
 % ============================================================
-% CAPÍTULO 5 — METODOLOGÍA
-% NutriApp — ITESO — Cristian Emanuel Ortega Camarena
+% CAPÍTULO 4 — METODOLOGÍA (versión con grupos focales, 20-sep-2026)
+% Sustituye COMPLETO el bloque que va desde «\section{Metodología}»
+% (l. 2290) hasta «Este trabajo no tiene conflicto de interés
+% declarable.» (l. 2512), tanto en tu push 8c5078a como en
+% main_5_preview.tex (la numeración coincide en ese tramo).
+% Lo que va entre corchetes «[…]» son datos que dependen de la
+% junta con el consultor o de la academia de nutrición; búscalos
+% con Ctrl+F «[por confirmar» antes de la entrega.
+% Sin entradas bibliográficas nuevas.
 % ============================================================
- 
 \section{Metodología}
+% ═══════════════════════════════════════════════════════════════════════════
+ 
+Este capítulo describe cómo se produjo la evidencia del caso: qué tipo
+de estudio es, de qué fuentes se alimenta, con qué instrumentos se
+levantó la información de campo, cómo se valida y bajo qué condiciones
+éticas. La intención es que otro investigador pueda seguir el mismo
+camino con los mismos materiales y llegar a conclusiones comparables.
+ 
 % ------------------------------------------------------------
 \subsection{Tipo de estudio y enfoque metodológico}
 % ------------------------------------------------------------
  
 \subsubsection{Clasificación}
-Este trabajo se clasifica como investigación aplicada de diseño
-(\textit{design science research}) con estrategia de caso de
-estudio. La investigación de diseño produce conocimiento en
-la forma de \textit{cómo construir} un artefacto que resuelva
-un problema real y verificable, que busca comprender fenómenos existentes. Hevner
-et al. (2004) definen su objetivo como ``create innovations that
-define the ideas, practices, technical capabilities, and products
-through which the analysis, design, implementation, management,
-and use of information systems can be effectively and efficiently
-accomplished'' (p.~75).
  
-El proceso metodológico sigue las seis actividades que Peffers
-et al. (2007) proponen para la investigación de diseño:
-identificación del problema (capítulo~1), definición de objetivos
-(capítulo~1), diseño del artefacto (capítulos~5 y~6),
-demostración, evaluación (capítulo~7) y comunicación (este
-documento en su conjunto).
+Este trabajo es una investigación aplicada de diseño (\textit{design
+science research}) con estrategia de caso de estudio. La investigación
+de diseño produce conocimiento sobre cómo construir un artefacto que
+responda a un problema real, a diferencia de la investigación
+descriptiva, cuyo propósito es comprender fenómenos existentes. Hevner
+et al. (2004) definen su objetivo como ``create innovations that define
+the ideas, practices, technical capabilities, and products through which
+the analysis, design, implementation, management, and use of information
+systems can be effectively and efficiently accomplished'' (p.~76).
  
-La estrategia de caso de estudio se adopta conforme a Yin
-(2018), quien establece que es apropiada cuando ``investigators
-want to cover contextual conditions because they believe they
-are relevant to the phenomenon under study'' (p.~15). El desconocimiento de la LFPDPPP en el sector de
-nutrición no puede comprenderse de forma aislada del contexto
-profesional, normativo y tecnológico en el que ocurre. NutriApp
-es la unidad de análisis que integra todos los elementos del
-caso.
+El proceso sigue las seis actividades que Peffers et al. (2007) proponen
+para este tipo de investigación, y conviene decir desde ahora hasta
+dónde llega cada una en este documento. La identificación del problema
+y la definición de objetivos ocupan los capítulos uno y tres. El diseño
+del artefacto es el capítulo cinco. La demostración, que en Peffers et
+al. consiste en mostrar que el artefacto resuelve una instancia del
+problema, es el capítulo seis: maquetas navegables de la interfaz, un
+video de inducción y una prueba piloto con los grupos focales. La
+evaluación es el capítulo siete, y se hace por tres vías: casos de
+prueba de aceptación ejecutados sobre las maquetas, revisión del diseño
+por docentes de nutrición y contraste entre las prácticas reportadas por
+los participantes y la cobertura de obligaciones del diseño. La
+comunicación es este documento. Lo que el ciclo no incluye, porque el
+alcance termina en el diseño, es la implementación del sistema y su
+evaluación en operación; el capítulo ocho deja la ruta para quien la
+continúe.
+ 
+La estrategia de caso de estudio se adopta conforme a Yin (2018), para
+quien esta estrategia es apropiada cuando el contexto es relevante para
+el fenómeno y los límites entre uno y otro no son nítidos (p.~15). El
+desconocimiento de la LFPDPPP en el sector de nutrición no se entiende
+fuera del contexto profesional, normativo y tecnológico en que ocurre.
+NutriApp es la unidad de análisis que integra esos elementos.
  
 \subsubsection{Alcance: el diseño como plano técnico}
  
 El alcance de este trabajo es el diseño de la solución, no su
-implementación ni su evaluación en producción. Hevner et al.
-(2004) establecen que en la investigación de diseño ``an artifact
-can be construed broadly as any designed object in which a
-research contribution is embedded in the design'' (p.~77). El
-diseño de arquitectura en NutriApp es de servicios, diagramas de
-ingeniería, modelo de datos y prototipo funcional es un
-artefacto completo y evaluable: puede ser revisado por expertos
-normativos para verificar cobertura de la LFPDPPP, por ingenieros
-para verificar coherencia arquitectónica, y puede usarse como
-base para una implementación real sin rediseño fundamental.
+implementación ni su evaluación en producción. Peffers et al. (2007)
+admiten como artefacto de investigación de diseño cualquier objeto
+diseñado en el que esté incorporada una contribución de investigación.
+El artefacto de este caso es el paquete de diseño: el marco normativo y
+técnico del capítulo dos, la matriz de trazabilidad entre obligaciones y
+requerimientos, la arquitectura de servicios, los diagramas de
+ingeniería, el modelo de datos, los requerimientos del producto mínimo
+viable, los casos de prueba de aceptación y las maquetas navegables de
+interfaz. Ese paquete se evalúa por revisión de expertos y por los
+grupos focales, y se documenta con el detalle necesario para que un
+tercero lo implemente. Las maquetas son representaciones de pantalla
+sin lógica de negocio ni datos reales; ninguna decisión de arquitectura
+fue desplegada ni probada.
  
 % ------------------------------------------------------------
 \subsection{Investigación documental}
@@ -2347,119 +2369,191 @@ base para una implementación real sin rediseño fundamental.
  
 \subsubsection{Criterios de selección del marco legal}
  
-El marco normativo del capítulo dos se construyó con fuentes
-primarias ---LFPDPPP 2025, Reglamento, lineamientos del INAI,
-NOM-004-SSA3-2012 y NOM-024-SSA3-2012--- y fuentes secundarias
----literatura académica y documentación técnica de los estándares
-internacionales. Los marcos comparados se seleccionaron con
-cuatro criterios predefinidos para garantizar replicabilidad.
+El marco normativo del capítulo dos se construyó con fuentes primarias
+(la LFPDPPP de 2025 y su Reglamento, los lineamientos del INAI, la
+NOM-004-SSA3-2012 y la NOM-024-SSA3-2012) y con fuentes secundarias:
+literatura académica y documentación técnica de los estándares
+internacionales. Los marcos comparados se seleccionaron con cuatro
+criterios fijados de antemano.
  
-El \textit{criterio de relevancia regional} priorizó
-jurisdicciones de América Latina con las que NutriApp podría
-interactuar en expansión. El \textit{criterio de madurez
-normativa} incluyó jurisdicciones con marcos robustos y
-experiencia verificable ---GDPR alemán, HIPAA estadounidense---
-como referencias de excelencia. El \textit{criterio de contraste
-metodológico} seleccionó marcos con enfoques distintos al
-mexicano para evidenciar las fortalezas y debilidades relativas
-de la LFPDPPP. El \textit{criterio de acceso verificable}
-garantizó que la documentación oficial de cada marco estuviera
+El \textit{criterio de relevancia regional} priorizó jurisdicciones de
+América Latina que sirven de referencia para el diseño por compartir
+tradición jurídica con México. El \textit{criterio de madurez
+normativa} incluyó jurisdicciones con marcos consolidados y experiencia
+documentada, el GDPR aplicado en Alemania y la HIPAA estadounidense. El
+\textit{criterio de contraste metodológico} buscó marcos con enfoques
+distintos al mexicano, para que las fortalezas y debilidades de la
+LFPDPPP se vieran por comparación. El \textit{criterio de acceso
+verificable} exigió que la documentación oficial de cada marco estuviera
 disponible en español, inglés o portugués.
  
-La revisión de cada marco siguió una estructura de ocho
-categorías: fundamento constitucional, fecha de entrada en
-vigor, sujetos obligados, derechos del titular, obligaciones
-del responsable, autoridad de control, régimen de sanciones
-y evidencia de implementación en la literatura.
+\subsubsection{Estructura de la revisión comparada}
  
+Cada marco se revisó con las mismas nueve categorías, que son las filas
+del cuadro comparativo de la sección~2.2.5: ley principal vigente,
+autoridad reguladora, tratamiento de los datos de salud como sensibles,
+consentimiento expreso por escrito, notificación de brechas,
+portabilidad de datos, sanciones máximas, alineación con el GDPR y marco
+técnico para software de salud. Las categorías se eligieron porque cada
+una corresponde a una decisión que el diseño de NutriApp tiene que tomar.
+ 
+\subsubsection{Verificación de fuentes y fecha de corte}
+ 
+Cada cita a un artículo de la LFPDPPP, de su Reglamento, de la Ley
+General de Salud o a un numeral de las NOM se cotejó contra el texto
+publicado por la fuente oficial (Cámara de Diputados, Diario Oficial
+de la Federación, sitios de los organismos emisores); las citas a la
+legislación extranjera se tomaron de los textos consolidados que
+publican sus autoridades. Las
+ediciones de los estándares internacionales se tomaron como estaban
+vigentes al 31 de enero de 2026, que es la fecha de corte de este
+trabajo: las modificaciones normativas posteriores se mencionan cuando
+son relevantes, pero no se incorporan al análisis. La decisión evita un
+ciclo de revisión sin fin en un marco que cambia con frecuencia, y
+ubica al lector en un estado del derecho identificable.
  
 % ------------------------------------------------------------
-\subsection{Investigación de campo: encuestas a nutriólogos}
+\subsection{Investigación de campo: grupos focales}
 % ------------------------------------------------------------
  
-\subsubsection{Diseño de instrumentos y población objetivo}
+\subsubsection{Diseño del estudio de campo y población}
  
-La investigación de campo utiliza dos instrumentos aplicados en
-momentos distintos. El \textit{Instrumento~1 --- Encuesta de
-Diagnóstico} establece la prevalencia del desconocimiento de la
-LFPDPPP y caracteriza las prácticas actuales de gestión de datos.
-El \textit{Instrumento~2 --- Encuesta de Validación} evalúa la
-pertinencia percibida de NutriApp tras la presentación del
-prototipo funcional. Los resultados del Instrumento~1 se
-presentan en el capítulo~7; el Instrumento~2 corresponde a la
-siguiente revisión de este trabajo.
+La investigación de campo se hace con grupos focales, no con encuestas.
+La decisión se tomó con el asesor y responde a dos razones. La primera
+es de acceso: la academia de nutrición del ITESO facilita grupos
+completos en horario de clase, lo que da un número de participantes
+que una encuesta autoadministrada difícilmente reuniría en el mismo
+plazo. La segunda es de tipo de evidencia: el problema que estudia
+este caso no es cuántos nutriólogos desconocen la ley, sino cómo
+manejan en la práctica los datos de sus pacientes y qué entienden por
+cumplir con ella; eso se observa mejor en la conversación que en una
+casilla.
  
-% \todo[inline]{Pendiente: incorporar resultados de la Encuesta de Validación al retorno de Alemania.}
+La población son estudiantes de la Licenciatura en Nutrición del ITESO
+con exposición a pacientes, en práctica supervisada o en consulta
+propia, y docentes de la misma licenciatura con ejercicio clínico. Se
+incluyen participantes mayores de edad que acepten participar por
+escrito; se excluyen quienes no han atendido pacientes, porque las
+preguntas sobre práctica requieren práctica sobre la cual responder.
+Los estudiantes aportan la formación reciente y la práctica inicial;
+los docentes aportan la práctica consolidada y la revisión experta del
+diseño.
  
-La población objetivo son nutriólogos con cédula profesional
-activa en la SEP, con práctica clínica en ejercicio al momento
-de la aplicación, sin restricción geográfica. Los criterios
-de inclusión son: titulación en Licenciatura en Nutrición o
-Nutriología, al menos un paciente activo en los seis meses
-previos, y disponibilidad para completar el instrumento en
-formato digital. Se excluyeron nutriólogos en instituciones
-públicas bajo subordinación, donde la responsabilidad del
-tratamiento recae en la institución.
+Las sesiones se realizan [por confirmar: fechas y número de sesiones]
+en instalaciones del ITESO, con grupos de no más de 35 participantes y
+duración de [por confirmar: 60 o 120] minutos. El diseño del
+instrumento, la conducción de las sesiones y el procesamiento de los
+datos están a cargo de un consultor metodológico externo con formación
+en construcción de instrumentos de evaluación; la interpretación de los
+resultados y su relación con el marco normativo son responsabilidad del
+autor.
  
-\subsubsection{Diseño del instrumento de diagnóstico}
+\subsubsection{Instrumentos}
  
-La Encuesta~1 se estructura en tres dimensiones derivadas del
-marco normativo. La \textit{primera dimensión} evalúa el
-conocimiento declarado de la LFPDPPP: si el respondente conoce
-la ley, sus obligaciones como responsable del tratamiento, si
-recibió formación formal y si conoce las sanciones aplicables.
-La \textit{segunda dimensión} caracteriza la práctica real: qué
-herramienta usa para expedientes, si cuenta con aviso de
-privacidad, si obtiene consentimiento firmado y si ha atendido
-solicitudes ARCO. La \textit{tercera dimensión} evalúa percepción
-de riesgo y disposición de adopción.
+El estudio de campo usa cinco materiales, todos incluidos en los
+anexos.
  
-El instrumento sigue las recomendaciones de Hernández-Sampieri
-et al. (2014): preguntas cerradas de opción múltiple para
-conocimiento y práctica, y escala Likert de cinco puntos para
-percepción de riesgo y disposición de adopción (p.~217). El
-instrumento completo se presenta en el Anexo~A.
+El \textit{cuestionario de pre-registro}, aplicado en línea antes de la
+sesión, recoge el perfil del participante (semestre o antigüedad
+docente, exposición a pacientes, número de pacientes atendidos) y su
+práctica actual con datos de pacientes: en qué herramienta lleva el
+expediente, si entrega aviso de privacidad, si obtiene consentimiento
+por escrito y si ha recibido alguna solicitud de acceso o eliminación.
+Este cuestionario es la línea base del capítulo tres y se contesta
+antes de que el participante conozca NutriApp.
  
-\subsubsection{Procedimiento de aplicación y muestra}
+La \textit{guía de discusión} organiza la sesión en tres temas, que son
+las tres dimensiones del diagnóstico: el aviso de privacidad, el
+consentimiento por escrito para datos de salud, y los derechos ARCO
+junto con las medidas de seguridad. Cada tema abre con una situación
+de consultorio y sigue con preguntas de práctica antes que de
+conocimiento, para que el participante hable de lo que hace y no de lo
+que sabe que debería hacer.
  
-La encuesta se aplica en formato digital autoadministrado,
-distribuido a través de asociaciones de nutriólogos, grupos
-profesionales en plataformas digitales y contactos directos
-del investigador. La participación es voluntaria y anónima;
-no se recopila ningún dato de identificación personal. El
-período de aplicación corresponde al semestre posterior al
-retorno del investigador de su estancia académica en Alemania.
+El \textit{video de inducción}, de entre seis y ocho minutos, recorre
+las maquetas de NutriApp ordenadas por obligación legal: qué exige la
+ley y con qué práctica y qué pantalla se atiende. Se proyecta después
+del primer bloque de discusión y cumple la función de capacitación
+breve que la guía de casos de estudio pide en la fase de
+implementación.
  
-La muestra objetivo es de al menos 30 respondentes. Yin (2018)
-establece que en el caso de estudio ``the question of how many
-cases are needed is often less relevant than the question of
-what insights can be offered by the number of cases actually
-studied'' (p.~57). El tamaño propuesto no busca inferencia
-estadística representativa, sino evidencia exploratoria de
-patrones que, triangulados con la literatura, fundamenten
-el diagnóstico.
+La \textit{rúbrica de revisión del diseño}, aplicada solo a los
+docentes, pide valorar en escala de cuatro puntos la claridad de cada
+flujo normativo de las maquetas, su correspondencia con la práctica
+del consultorio y la carga que impondría al profesional. Es el
+instrumento de la revisión de expertos.
+ 
+Los \textit{reactivos de cierre}, tres preguntas cerradas sobre el plazo
+de respuesta a una solicitud ARCO, sobre quién otorga el consentimiento
+y sobre qué hacer ante un incidente, se contestan al final de la sesión
+y se comparan con el pre-registro.
+ 
+Los grupos focales son una técnica de recolección cualitativa
+reconocida en la metodología de la investigación (Hernández-Sampieri
+et al., 2014); el pre-registro y los reactivos de cierre agregan una
+medición cerrada que permite comparar antes y después dentro de la
+misma sesión.
+ 
+\subsubsection{Procedimiento de sesión}
+ 
+Cada sesión sigue el mismo orden, y el orden importa: la línea base se
+mide antes de mostrar cualquier material de NutriApp, para que la
+maqueta no condicione las respuestas sobre la práctica actual.
+ 
+\begin{enumerate}
+  \item Bienvenida, explicación del proyecto, consentimiento de
+    participación y de grabación, y verificación de que el
+    pre-registro esté contestado.
+  \item Primer bloque de discusión: práctica actual con datos de
+    pacientes, sin mención del diseño.
+  \item Video de inducción y navegación de las maquetas en pantalla.
+  \item Segundo bloque de discusión: qué se entiende de cada flujo,
+    qué falta, qué no se usaría. Con docentes, rúbrica de revisión
+    del diseño.
+  \item Reactivos de cierre.
+\end{enumerate}
+ 
+Las sesiones se graban en audio con autorización de los participantes y
+se toman notas de campo. [por confirmar: si las sesiones son de una
+hora, los pasos 3 y 4 se realizan en una segunda sesión con el mismo
+grupo].
+ 
+\subsubsection{Muestra}
+ 
+La muestra es no probabilística y por conveniencia: los grupos que la
+academia de nutrición pone a disposición en las fechas acordadas. Se
+espera un total de [por confirmar: n] participantes en [por confirmar:
+k] sesiones. Yin (2018) sostiene que en un caso de estudio importa
+menos cuántos casos se observan que qué permiten ver los observados.
+El tamaño no busca inferencia estadística sobre el gremio,
+sino evidencia de patrones que, contrastados con la literatura y con
+el marco normativo, sostengan el diagnóstico.
  
 \subsubsection{Análisis y triangulación}
  
-Los datos se analizan con estadística descriptiva: frecuencias
-absolutas y relativas para variables categóricas, medidas de
-tendencia central y dispersión para variables Likert. Los
-resultados se presentan en el capítulo~7 con visualizaciones
-diseñadas para audiencia mixta.
+El pre-registro y los reactivos de cierre se procesan con estadística
+descriptiva: frecuencias absolutas y relativas por reactivo y por
+perfil, y comparación de las respuestas de cierre contra las de
+pre-registro en las tres preguntas comunes. La discusión se transcribe
+y se codifica por los tres temas de la guía; dentro de cada tema se
+agrupan las prácticas reportadas, las razones que los participantes
+dan para ellas y los obstáculos que identifican. La rúbrica de los
+docentes se resume por flujo con la mediana y la dispersión de cada
+criterio, más los comentarios abiertos.
  
-La triangulación opera en dos niveles. El \textit{primer nivel}
-contrasta los resultados con la literatura académica disponible
-sobre prácticas de protección de datos en profesiones de salud
-en México y América Latina, verificando consistencia con estudios
-de mayor alcance. El \textit{segundo nivel} cruza el diagnóstico
-cuantitativo con el análisis normativo del capítulo~2,
-identificando la correspondencia entre las prácticas reportadas
-y las obligaciones específicas de la LFPDPPP, lo que permite
-cuantificar la brecha entre el estado actual del sector y el
-estado requerido por la ley.
+La triangulación opera en tres niveles. El primero contrasta lo que los
+participantes declaran en el pre-registro con lo que describen en la
+discusión, para detectar diferencias entre lo que se dice y lo que se
+hace. El segundo cruza las prácticas reportadas con las obligaciones
+de las Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2}, lo
+que permite decir qué obligaciones se atienden en la práctica y cuáles
+no. El tercero compara esos hallazgos con la literatura sobre
+protección de datos en profesiones de salud en México y América
+Latina. Los resultados del diagnóstico se presentan en el capítulo
+tres; los de la evaluación del diseño, en el capítulo siete.
  
 % ------------------------------------------------------------
-\subsection{Diseño arquitectónico basado en evidencia}
+\subsection{Diseño y evaluación del artefacto}
 % ------------------------------------------------------------
  
 \subsubsection{Trazabilidad: de requisito legal a decisión técnica}
@@ -2467,56 +2561,91 @@ estado requerido por la ley.
 Cada componente técnico de NutriApp existe porque responde a un
 requisito normativo identificado. El proceso opera en tres pasos.
 \textit{Primero}, se identifica la obligación en la LFPDPPP, su
-Reglamento o la NOM-004, citando el artículo específico.
-\textit{Segundo}, se formula el requerimiento técnico como
-capacidad verificable: qué debe hacer el sistema, no cómo.
-\textit{Tercero}, se selecciona el componente técnico que
-satisface ese requerimiento con el menor nivel de complejidad
-suficiente ---principio de parsimonia técnica--- verificando
-que esté respaldado por el AWS Well-Architected Framework
-(AWS, 2023c) o por los estándares del capítulo anterior. Este
-proceso se documenta en la Tabla~3 del capítulo~2 y se
-materializa en la arquitectura del capítulo~5.
+Reglamento, la NOM-004 o la NOM-024, citando el artículo o numeral.
+\textit{Segundo}, se formula el requerimiento técnico como capacidad
+verificable: qué debe hacer el sistema, no cómo. \textit{Tercero}, se
+selecciona el componente que satisface ese requerimiento con el menor
+nivel de complejidad suficiente, verificando que esté respaldado por el
+AWS Well-Architected Framework (AWS, 2023c) o por los estándares de la
+sección~2.5.6. Este proceso se documenta en las
+Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2} y se
+materializa en la arquitectura del capítulo cinco.
+ 
+\subsubsection{Demostración y evaluación}
+ 
+La demostración del diseño se hace con maquetas navegables construidas
+en Figma Make a partir de los requerimientos del capítulo seis, con un
+video de inducción que las recorre por obligación legal y con la
+prueba piloto que constituyen las sesiones de los grupos focales. La
+evaluación combina tres métodos de los que Hevner et al. (2004)
+reconocen para artefactos de diseño: pruebas, revisión por expertos y
+observación en un caso.
+ 
+Las \textit{pruebas} son casos de aceptación derivados de los
+requerimientos. Cada caso fija la obligación que lo origina, la
+precondición, los pasos, el resultado esperado conforme a la ley y la
+evidencia que debe verse en la maqueta; se ejecutan como recorrido
+sobre las maquetas y se califican en tres valores: cumple, cumple
+parcialmente o no cumple. El capítulo seis presenta los tres casos del
+producto mínimo viable (consentimiento del paciente, alta de un
+expediente y solicitud de cancelación) y el capítulo siete reporta su
+resultado. Un resultado de «no cumple» es un hallazgo del caso, no un
+defecto a ocultar: señala la distancia entre la maqueta y el diseño.
+ 
+La \textit{revisión por expertos} es la rúbrica que los docentes
+contestan sobre cada flujo normativo. La \textit{observación en el
+caso} es lo que los participantes dicen y hacen frente a las maquetas
+durante el segundo bloque de discusión, más los reactivos de cierre.
  
 \subsubsection{Alcance y limitaciones}
  
-Las limitaciones se declaran en tres tipos conforme a la buena
-práctica de la investigación de diseño (Hevner et al., 2004).
-Las \textit{limitaciones de validación empírica}: el prototipo
-de NutriApp es un mockup funcional no conectado a infraestructura
-real de producción; las decisiones de arquitectura AWS son
-propuestas fundamentadas técnicamente pero no auditadas por
-un tercero independiente. Las \textit{limitaciones de alcance
-normativo}: el análisis se centra en la LFPDPPP, su Reglamento
-y la NOM-004; una implementación comercial podría requerir
-análisis adicionales en materia fiscal, laboral y sanitaria.
-Las \textit{limitaciones de representatividad}: los resultados
-de la encuesta, por su diseño no probabilístico, constituyen
-evidencia exploratoria coherente con la hipótesis del caso de
-estudio, no inferencias generalizables al gremio.
- 
-% \todo[inline]{Pendiente: evaluar inclusión de revisión de seguridad externa del diseño. Siguiente revisión.}
+Las limitaciones se declaran en tres tipos, conforme a la práctica de
+la investigación de diseño (Hevner et al., 2004). Las
+\textit{limitaciones de validación empírica}: las maquetas de NutriApp
+son representaciones de interfaz sin lógica ni infraestructura, y las
+decisiones de arquitectura son propuestas fundamentadas que ningún
+tercero independiente ha auditado; los casos de prueba verifican que
+la maqueta muestre el flujo correcto, no que un sistema lo ejecute. Las
+\textit{limitaciones de alcance normativo}: el análisis se centra en la
+LFPDPPP, su Reglamento, la NOM-004 y la NOM-024; una implementación
+requeriría análisis adicionales en materia fiscal, laboral y sanitaria.
+Las \textit{limitaciones de representatividad}: los participantes son
+estudiantes y docentes de una sola universidad, seleccionados por
+conveniencia, de modo que los resultados describen ese grupo y sirven
+como evidencia exploratoria del sector, no como inferencia sobre el
+gremio; en particular, el nutriólogo independiente con años de
+consulta privada está representado solo a través de los docentes.
  
 % ------------------------------------------------------------
 \subsection{Consideraciones éticas y confidencialidad}
 % ------------------------------------------------------------
  
-La investigación cumple los principios éticos del ITESO para
-investigación con seres humanos. La participación es voluntaria,
-anónima y libre de riesgo; no se recopila ningún dato de
-identificación personal en ningún instrumento. Los resultados
-se reportan únicamente en forma agregada.
+La investigación sigue los principios éticos del ITESO para
+investigación con seres humanos. La participación es voluntaria y puede
+abandonarse en cualquier momento sin consecuencia; cada participante
+firma un consentimiento de participación y de grabación antes de la
+sesión. El pre-registro y los reactivos de cierre no recogen nombre ni
+dato de contacto: se vinculan por un código de sesión. Las
+transcripciones se anonimizan antes del análisis y los resultados se
+reportan en forma agregada o con citas sin atribución.
  
-El uso del prototipo de NutriApp en la fase de validación es
-exclusivamente demostrativo. Ningún dato real de pacientes se
-ingresa al sistema durante las sesiones de evaluación. Todos los
-perfiles de pacientes utilizados son ficticios, generados
-automáticamente al crear una cuenta de estudiante e
-identificados con la etiqueta \textit{(USUARIO DE PRUEBA)} en
-todos los campos de nombre. Esta condición se comunica por
-escrito a los participantes antes de cada sesión.
+El uso de las maquetas de NutriApp en las sesiones es demostrativo.
+Ningún dato real de pacientes se captura en ellas: todos los perfiles
+son ficticios y llevan la etiqueta \textit{(USUARIO DE PRUEBA)} en los
+campos de nombre, y así se comunica por escrito a los participantes.
+Los datos personales que sí se tratan en el estudio son los de los
+participantes, y a ellos se les entrega el aviso de privacidad
+correspondiente.
  
-Este trabajo no tiene conflicto de interés declarable.
+El autor declara que, concluido el caso, el diseño podrá transferirse
+o licenciarse a un tercero para su implementación. Ninguna
+organización externa financió ni condicionó este trabajo, y ningún
+participante tiene relación con esa eventual transferencia. El
+consultor metodológico externo recibió honorarios por el diseño del
+instrumento, la conducción de las sesiones y el procesamiento de los
+datos; no participa en la interpretación de los resultados ni tiene
+interés en el diseño.
+ 
 
 % ═══════════════════════════════════════════════════════════════════════════
 % ═══════════════════════════════════════════════════════════════════════════
