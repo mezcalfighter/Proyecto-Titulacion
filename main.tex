@@ -1039,7 +1039,7 @@ por encima de cada uno.
     & Hasta 320,000 veces la UMA (\$36{,}204{,}800 pesos)
       por infracción grave; duplicables en datos sensibles
       de salud (\$72{,}409{,}600 pesos) (LFPDPPP, 2025,
-      art.~59, fraccs.~III y~IV). Sanciones penales adicionales
+      art.~59, fracc.~III y último párrafo). Sanciones penales adicionales
       bajo CPF arts.~210--211: hasta 5~años de prisión para
       profesionistas que revelen datos de pacientes (CPF,
       1931/2024, arts.~210--211).
@@ -1447,7 +1447,7 @@ de trazabilidad normativa}
 % requerimientos LFPDPPP y Reglamento (filas 1-5). Tabla 2:
 % requerimientos Reglamento, NOMs y nube (filas 6-10).
 
-La siguientes tablas establecen la trazabilidad directa entre cada
+Las siguientes tablas establecen la trazabilidad directa entre cada
 obligación legal identificada en este capítulo y el requerimiento
 técnico correspondiente en NutriApp. Su función es doble: para
 el lector de este documento, es la demostración de que cada
@@ -1542,9 +1542,11 @@ se presenta en dos partes.
     & Registro de auditoría (audit log) inmutable que documenta
       cada consulta, modificación, descarga e intento de acceso
       fallido al expediente, con identificación del usuario,
-      fecha, hora y acción realizada. Almacenado en AWS
-      CloudTrail con retención mínima de cinco años conforme
-      a NOM-004. \\
+      fecha, hora y acción realizada, en tres capas: AWS
+      CloudTrail, Database Activity Streams de RDS y el
+      \texttt{DeclarationLog} de la aplicación. Los tres se
+      exportan a S3 con Object Lock y se conservan cinco años
+      (sección~2.5.4). \\
 
 \end{longtable}
 
@@ -1615,15 +1617,17 @@ se presenta en dos partes.
     & NOM-004-SSA3-2012 (conservación mínima de 5 años desde
       el último acto médico con confidencialidad durante todo
       ese período)
-    & Repositorio clínico en Amazon S3 con versionado y S3 Object
-      Lock en modo de cumplimiento, con retención fija de cinco
-      años desde el último acto médico: durante ese periodo
-      ningún usuario, ni con privilegios administrativos, puede
-      borrar ni sobrescribir el expediente. Las reglas de ciclo de
-      vida actúan solo después, para archivar o expirar los
-      objetos. Acceso restringido por roles y por relación activa
-      con el paciente. Eliminación segura al vencer la retención,
-      con registro del evento. \\
+        & El expediente estructurado se guarda en Amazon RDS para
+      PostgreSQL y sus adjuntos en Amazon S3 con versionado y S3
+      Object Lock en modo de cumplimiento, con retención fija de
+      cinco años desde el último acto médico. Durante ese periodo
+      la aplicación no ofrece ninguna operación de borrado sobre el
+      expediente y ningún usuario, ni con privilegios
+      administrativos, puede borrar ni sobrescribir los adjuntos.
+      Las reglas de ciclo de vida actúan solo después, para
+      archivar o expirar los objetos. Acceso restringido por roles
+      y por relación activa con el paciente. Eliminación segura al
+      vencer la retención, con registro del evento. \\
   \\[4pt]
 
   Cifrado, autenticación y trazabilidad en sistema de expediente
@@ -1832,8 +1836,9 @@ al nutriólogo, que es quien resuelve como responsable en un plazo
 de veinte días y la hace efectiva en los quince siguientes
 (LFPDPPP, 2025, art.~31). Si procede, el expediente pasa a estado
 de bloqueo: deja de ser accesible en la operación diaria, sigue
-cifrado y sigue bajo la retención inmutable de Object Lock hasta
-cumplir los cinco años de la NOM-004. Los datos que no forman parte
+cifrado en RDS sin operación de borrado disponible, y sus adjuntos
+siguen bajo la retención inmutable de Object Lock, hasta cumplir los
+cinco años de la NOM-004. Los datos que no forman parte
 del expediente clínico, como la cuenta, los datos de contacto y las
 preferencias de notificación, se suprimen de inmediato. Al vencer
 la retención, una función programada ejecuta la supresión por
@@ -3143,13 +3148,17 @@ obligaciones principales identificadas:
   \item Autenticación de usuarios (NOM-024-SSA3-2012): Amazon Cognito
     con MFA obligatoria para nutriólogos.
   \item Trazabilidad de accesos y modificaciones (RLFPDPPP, art.~48,
-    fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1): CloudTrail con retención mínima de cinco años.
+    fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1): CloudTrail, Database
+    Activity Streams y \texttt{DeclarationLog}, exportados a S3 con Object
+    Lock y conservados cinco años.
   \item Inventario de datos y análisis de riesgos (RLFPDPPP, art.~61):
     catálogo de datos en AWS clasificado por nivel de sensibilidad.
   \item Gestión de derechos ARCO en plazo legal (LFPDPPP~2025,
     art.~31): módulo ARCO con alertas automáticas de vencimiento.
-  \item Conservación del expediente clínico (NOM-004-SSA3-2012): políticas
-    de ciclo de vida en S3 configuradas a cinco años.
+ \item Conservación del expediente clínico (NOM-004-SSA3-2012): expediente
+    en RDS sin operación de borrado durante la retención; adjuntos y
+    registros en S3 con Object Lock en modo de cumplimiento durante cinco
+    años y reglas de ciclo de vida después.
   \item Eliminación segura al vencer el período de retención
     (LFPDPPP~2025, arts.~24 y~25; NOM-004-SSA3-2012): Lambda con destrucción
     criptográfica y notificación al titular.
@@ -3195,10 +3204,10 @@ confirmaciones de cita.
     Amazon Cognito & 5,500 MAU (gratis hasta 50k) & \$0 \\
     RDS PostgreSQL (db.t4g.small) & 720 hrs/mes + 20~GB storage & \$35 \\
     KMS + ACM & 1 CMK + 10k API calls & \$1 \\
-    S3 (expedientes y adjuntos) & 50~GB + lifecycle policies & \$2 \\
+    S3 (adjuntos y registros de auditoría) & 50~GB con Object Lock + lifecycle & \$2 \\
     CloudTrail + CloudWatch & 1 trail + 5~GB logs + 5 alarmas & \$8 \\
     Lambda eliminación + EventBridge & $\sim$10k invocaciones/mes & \$0 \\
-    Twilio SMS + WhatsApp & $\sim$1,000 SMS + 500 WhatsApp/mes & \$27 \\
+    Mercado Pago & comisión por transacción sobre cada suscripción cobrada; sin cuota fija & \$0 \\ & \$27 \\
     \midrule
     \textbf{Total estimado} & & \textbf{\$110--147} \\
     \bottomrule
@@ -3225,7 +3234,7 @@ sanciones de hasta 320,000 veces la Unidad de Medida y Actualización (UMA) por
 infracciones graves (LFPDPPP, 2025, art.~59, fracc.~III). Con el valor de la
 UMA~2025 de \$113.14 pesos diarios (INEGI, 2025), el techo máximo de una multa
 grave es de \$36,204,800~MXN, duplicable a \$72,409,600~MXN cuando involucra
-datos sensibles de salud (LFPDPPP, 2025, art.~59, fracc.~IV). En la práctica,
+datos sensibles de salud (LFPDPPP, 2025, art.~59, último párrafo). En la práctica,
 el INAI impuso en 2022 multas por un total de \$60,078,958~MXN a 119 sujetos
 sancionados (INAI, 2023a, p.~1), lo que implica una multa promedio de
 aproximadamente \$504,864~MXN por infractor.
