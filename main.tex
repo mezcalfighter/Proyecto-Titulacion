@@ -364,8 +364,10 @@ internacionales y necesidades internas}
 
   \item \textbf{1994:} Cuando México ingresó a la Organización para la
   Cooperación y el Desarrollo Económicos el 18 de mayo de 1994,
-  asumió algo más que compromisos de política económica (Organización
-  para la Cooperación y el Desarrollo Económicos [OCDE], 1994). Ser
+    asumió algo más que compromisos de política económica (Decreto de
+  Promulgación de la Declaración del Gobierno de los Estados Unidos
+  Mexicanos sobre la aceptación de sus obligaciones como Miembro de la
+  Organización de Cooperación y Desarrollo Económicos, 1994). Ser
   parte de ese grupo de países significaba adoptar estándares que ya
   llevaban años construyéndose en Europa y Estados Unidos, incluyendo
   los relacionados con el manejo de información personal. Desde 1980, la OCDE contaba con sus Directrices sobre protección de la privacidad y flujos transfronterizos de datos personales, un documento que recomendaba a los países miembros principios mínimos para que la información de las personas pudiera circular de forma segura entre economías (OCDE, 1980). El asunto era
@@ -617,8 +619,13 @@ realidad institucional}
   \textit{``constituye un dato personal sensible, por lo que su
   resguardo y correcto uso es responsabilidad de los sujetos
   obligados, sin olvidar que el paciente es el dueño y titular''}
-  de esa información (INAI, 2021, párr.~4).
- 
+  de esa información (INAI, 2021, párr.~4). La NOM-004 matiza esa
+  frase: el expediente es propiedad del prestador que lo genera y el
+  paciente tiene derechos de titularidad sobre la información que
+  contiene (Norma Oficial Mexicana NOM-004-SSA3-2012, 2012,
+  numeral~5.4); son dos titularidades distintas sobre el mismo
+  documento.
+  
 \item El sistema de consecuencias no se limita a las multas
   administrativas. El Código Penal Federal establece en su
   artículo~210 que comete un delito quien \textit{``sin justa
@@ -1082,8 +1089,7 @@ por encima de cada uno.
     & Alta. Uruguay fue el primer Estado no europeo en
       adherirse al Convenio~108, instrumento del que derivó
       el GDPR; el Convenio entró en vigor para Uruguay el
-      1 de agosto de 2013 (Consejo de Europa, 1981, 2013).
-    & Baja a nivel federal. HIPAA es anterior al GDPR y
+      1 de agosto de 2013 (Consejo de Europa, 1981, s.f.).    & Baja a nivel federal. HIPAA es anterior al GDPR y
       estructuralmente diferente (HIPAA, 1996). La CCPA de
       California presenta mayor convergencia con el GDPR en
       derechos del consumidor (CCPA, 2018).
@@ -2743,7 +2749,7 @@ anómalos.
 Basic y Pro se cobra a través de Mercado Pago con \textit{checkout}
 alojado: la tarjeta se captura en las páginas del proveedor y NutriApp
 recibe solo un identificador de suscripción y las notificaciones de
-cobro, cuya firma verifica antes de procesarlas (Mercado Pago, s.f.).
+cobro, cuya firma verifica antes de procesarlas (Mercado Pago, s.f.-a).
 El proveedor de pagos es responsable independiente de los datos
 financieros que recaba, con su propio aviso de privacidad. Esos datos
 exigen consentimiento expreso (LFPDPPP, 2025, art.~7) y su comunicación
@@ -2890,161 +2896,338 @@ identificador de suscripción que devuelve el proveedor de pagos.
 \end{figure}
 
 % ═══════════════════════════════════════════════════════════════════════════
-\section{Propuesta del Producto Mínimo Viable (MVP)}
+\section{Demostración del diseño: maquetas y prueba piloto}
 % ═══════════════════════════════════════════════════════════════════════════
-
-El Producto Mínimo Viable (MVP) de NutriApp es el conjunto mínimo de módulos
-funcionales que demuestran la viabilidad técnica y normativa de la propuesta.
-Hevner et al. (2004) establecen que en la investigación de diseño el artefacto
-producido debe ser evaluable en sus propios términos: ``an artifact can be
-construed broadly as any designed object in which a research contribution is
-embedded in the design'' (p.~77). El prototipo funcional de NutriApp ---construido
-en Figma Make con React, TypeScript y Tailwind--- es ese artefacto: puede ser
-revisado por expertos normativos para verificar la cobertura de la LFPDPPP y
-por ingenieros para verificar la coherencia arquitectónica, y puede usarse como
-base para una implementación real sin rediseño fundamental.
-
+ 
+Este capítulo muestra el diseño del capítulo cinco convertido en algo
+que se puede recorrer: un producto mínimo viable (MVP) definido como el
+subconjunto de módulos que cubre las obligaciones trazadas en las
+Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2}, representado
+en maquetas navegables construidas en Figma Make con React, TypeScript
+y Tailwind. Peffers et al. (2007) admiten como artefacto cualquier
+objeto diseñado en el que esté incorporada una contribución de
+investigación, y la maqueta es ese objeto en su forma evaluable: permite
+que un revisor con perfil jurídico compruebe pantalla por pantalla si
+el flujo cumple lo que la ley pide, y que un grupo de estudiantes y
+docentes lo use como caso en la prueba piloto. Ninguna pantalla ha
+operado con datos de personas reales; lo que sigue es especificación
+de interfaz y de flujo, en el mismo sentido en que el capítulo cinco
+es especificación de arquitectura.
+ 
+La sección 6.1 fija los requerimientos mínimos y lo que queda fuera. La
+6.2 presenta las maquetas por flujo, en el orden en que un paciente y un
+nutriólogo las recorren, y señala en cada una la obligación que
+demuestra. La 6.3 describe la prueba piloto: el video de inducción, la
+sesión con los grupos focales y los tres casos de prueba de aceptación
+que el capítulo siete reporta. La 6.4 justifica el alcance.
+ 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Requerimientos mínimos del sistema}
 % ─────────────────────────────────────────────────────────────────────────
-
-Los requerimientos del MVP se derivan directamente de las obligaciones
-normativas identificadas en las Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2}. Se organizan en tres
-categorías:
-
-\textbf{Requerimientos de seguridad técnica} (NOM-024-SSA3-2012; RLFPDPPP,
-2011, art.~57): cifrado AES-256 en reposo y TLS~1.3 en tránsito; autenticación
-multifactor obligatoria para nutriólogos; registro de auditoría inmutable de
-todos los accesos y modificaciones a expedientes; eliminación segura con
-destrucción criptográfica al vencer el período de retención.
-
-\textbf{Requerimientos de derechos del titular} (LFPDPPP~2025, arts.~8,
-15, 22--34): módulo de consentimiento digital con acción afirmativa explícita,
-sin casillas pre-marcadas, con registro de folio y timestamp; aviso de
-privacidad accesible desde cualquier pantalla; módulo ARCO con flujo
-completo de solicitud, resolución y notificación en el plazo de veinte
-días del artículo~31.
-
-\textbf{Requerimientos de trazabilidad normativa} (RLFPDPPP, 2011, arts.~57,
-61): inventario de datos clasificado por nivel de sensibilidad; registro de
+ 
+Los requerimientos del MVP se derivan de las obligaciones de las
+Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2} y se
+organizan en tres grupos.
+ 
+\textbf{Seguridad técnica} (LFPDPPP 2025, art.~18; NOM-024-SSA3-2012,
+numerales~6.6.1, 6.6.3 y~6.6.4; sección~2.5): cifrado AES-256 en reposo
+y TLS~1.3 en tránsito; autenticación multifactor obligatoria para el
+nutriólogo; registro de auditoría en las tres capas de la
+sección~2.5.4; y eliminación por bloqueo y supresión, con destrucción
+de la llave de datos al vencer la retención (sección~2.5.5).
+ 
+\textbf{Derechos del titular} (LFPDPPP 2025, arts.~8, 15 y 22--34):
+consentimiento otorgado por el propio paciente, con acción afirmativa y
+sin casillas premarcadas, registrado con folio y fecha; aviso de
+privacidad accesible desde cualquier pantalla; y módulo ARCO con
+solicitud, resolución y notificación, con respuesta en veinte días y
+ejecución en los quince siguientes (art.~31).
+ 
+\textbf{Trazabilidad normativa} (RLFPDPPP, 2011, arts.~48 fracc.~X
+y~61): inventario de datos clasificado por sensibilidad; registro de
 declaraciones profesionales (\texttt{DeclarationLog}) con folio único y
-\textit{snapshot} de datos en cada firma; notificación al titular ante
-eliminación de datos con folio de trazabilidad.
-
-Los requerimientos excluidos del MVP (módulo de inteligencia artificial para
-análisis nutricional, integración con sistemas de laboratorio, telemedicina y
-módulo social V2 con getstream.io) requieren análisis normativos adicionales
-fuera del alcance de este caso de estudio.
-
+copia de los datos declarados en cada firma; y notificación al titular,
+con folio, ante el bloqueo y la supresión de sus datos.
+ 
+Dos obligaciones sanitarias quedan fuera del MVP y se declaran aquí
+para que el alcance sea explícito y no implícito. La NOM-004 fija las
+secciones que debe contener la nota clínica (numerales 5.2, 5.9 a 5.11
+y 6.1.1) y la NOM-024 exige firma electrónica avanzada del profesional
+en el expediente electrónico (numeral 6.6.2). El expediente de NutriApp
+guarda notas de nutrición como texto libre con autor, fecha y hora, y
+no incorpora la estructura de la nota ni la firma avanzada. Ambas se
+documentan como siguiente paso en la sección~8.3; el criterio de
+completitud de la sección~6.4 se refiere, por tanto, a las obligaciones
+trazadas en las tablas del capítulo dos y no a la totalidad de las
+normas sanitarias. Los módulos de inteligencia artificial para análisis
+nutricional, la integración con laboratorios, la telemedicina y la
+segunda versión del módulo social también quedan fuera, porque
+requieren análisis normativos en materia sanitaria y de responsabilidad
+profesional que exceden este caso.
+ 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Módulo de consentimiento digital y derechos ARCO}
+\subsection{Maquetas por flujo}
 % ─────────────────────────────────────────────────────────────────────────
-
-El módulo de consentimiento y el módulo ARCO son los dos componentes de mayor
-relevancia normativa del MVP, dado que responden a las obligaciones más
-frecuentemente incumplidas en el sector de la nutrición según los datos del
-INAI (2023a; 2023b).
-
-\textbf{Módulo de consentimiento digital (\texttt{ConsentForm.tsx}).}
-Se activa obligatoriamente al crear un expediente de paciente, antes de que
-cualquier dato de salud sea registrado. El sistema no permite técnicamente
-omitir este paso: el formulario de creación de expediente no puede completarse
-si el módulo de consentimiento no ha sido ejecutado en la sesión activa. El
-diseño implementa el primer principio de Privacy by Design de Cavoukian (2009):
-``anticipates and prevents privacy invasive events before they happen'' (p.~2).
-
-El formulario incluye: aviso de privacidad en texto legible con opción de
-descarga en PDF; una casilla obligatoria no pre-marcada para el consentimiento
-al tratamiento de datos sensibles de salud, conforme al artículo~8 de la
-LFPDPPP~2025, que exige consentimiento expreso y por escrito para esos datos
-(LFPDPPP, 2025, art.~8), entendido como ``manifestación de la voluntad
-libre, específica e informada'' (LFPDPPP, 2025, art.~2, fracc.~IV); y una
-casilla opcional para
-el consentimiento a notificaciones por SMS y WhatsApp. Al confirmar, el sistema
-genera un folio único (\texttt{DEC-XXXXXXXX}), registra la fecha y hora exactas
-en el \texttt{DeclarationLog} y muestra un toast de confirmación al nutriólogo.
-
-\textbf{Módulo ARCO (\texttt{patient/Profile.tsx} + notificaciones Lambda).}
-Los pacientes acceden a sus derechos ARCO desde su perfil en la aplicación,
-sin necesidad de contactar al nutriólogo ni iniciar procesos externos. Cuatro
-tarjetas presentan los derechos de Acceso, Rectificación, Cancelación y
-Oposición con descripciones en lenguaje simple. Al solicitar Cancelación, el
-sistema muestra un diálogo de confirmación con advertencia sobre la
-irrevocabilidad del proceso y el folio que se generará.
-
-Del lado del nutriólogo, \texttt{PatientDetail.tsx} incluye una pestaña de
-solicitudes ARCO activas con columnas de folio, tipo, fecha, días restantes y
-estado. Las alarmas de CloudWatch disparan notificaciones automáticas al
-nutriólogo cuando quedan cinco días o menos para responder, de modo que
-la respuesta salga dentro del plazo de veinte días que fija el
-artículo~31 (LFPDPPP, 2025, art.~31).
-
-\textbf{Programa NutriApp Students.} El MVP incluye un plan diferenciado para
-estudiantes de Licenciatura en Nutrición o Nutriología, activado mediante
-correo institucional con dominio verificado (\texttt{.edu}, \texttt{.edu.mx},
-\texttt{.ipn.mx} y equivalentes) y ticket de aprobación institucional previo.
-Al crear una cuenta Students, una función Lambda genera automáticamente diez
-pacientes ficticios identificados con la etiqueta \textit{(USUARIO DE PRUEBA)},
-eliminando cualquier posibilidad de confusión con datos reales de personas. Esta
-decisión de diseño responde al principio de minimización de datos del
-artículo~5 de la LFPDPPP~2025: si no se recopilan datos reales de pacientes,
-no puede haber violación de su tratamiento (LFPDPPP, 2025, art.~5). El plan
-Students tiene vigencia de seis meses; al vencer, el sistema envía un correo
-de aviso 24 horas antes de la eliminación automática de la cuenta conforme a
-la NOM-004-SSA3-2012 (NOM-004-SSA3-2012, 2012).
-
-\textbf{Módulo de moderación social (\texttt{AdminSocialModeration.tsx}).}
-El módulo social de NutriApp permite a los nutriólogos publicar contenido
-educativo ---texto e imagen--- visible para sus pacientes y para otros
-nutriólogos. El contenido publicado es responsabilidad exclusiva del nutriólogo
-como profesionista independiente; NutriApp actúa como plataforma tecnológica
-sin aval ni verificación del contenido, conforme al deslinde de responsabilidad
-del artículo~19 de la LFPDPPP~2025 (LFPDPPP, 2025, art.~19). El sistema de
-moderación progresiva opera con los estados: \texttt{ACTIVE},
-\texttt{1ST\_STRIKE}, \texttt{2ND\_STRIKE}, \texttt{SUSPENDED},
-\texttt{UNDER\_REVIEW}, \texttt{REINSTATED} y \texttt{CANCELLED}. Cada acción
-de moderación genera un folio \texttt{MOD-XXXXXXXX} registrado en el
-\texttt{ModerationEvent} con razón, nota interna y timestamp, constituyendo
-evidencia de la medida de seguridad administrativa exigida por el artículo~18
-de la LFPDPPP~2025 (LFPDPPP, 2025, art.~18).
-
+ 
+Las maquetas se presentan por flujo y no por pantalla, porque una
+obligación legal rara vez cabe en una sola pantalla. Cada flujo indica
+qué obligación demuestra y qué evidencia debe verse en la maqueta; esa
+evidencia es la que los casos de prueba de la sección~6.3 verifican. El
+Anexo~B reúne las capturas de todas las pantallas del prototipo y el
+repositorio del proyecto contiene las maquetas navegables y el código
+(NutriApp, 2026).
+ 
+\subsubsection{Registro del nutriólogo y consentimiento del paciente}
+ 
+El nutriólogo se registra en \texttt{NutritionistRegister} con su cédula
+profesional y la institución que expidió su título, firma una
+declaración bajo protesta que el \texttt{DeclarationLog} conserva con
+folio, y configura el segundo factor en \texttt{MFASetup} antes de poder
+entrar a cualquier expediente. La cédula pasa a una cola de verificación
+del administrador (\texttt{AdminVerification}); cuando se valida, el
+perfil recibe la insignia «Perfil verificado».
+ 
+El consentimiento del paciente es el flujo con más carga normativa del
+MVP y el que más cambió respecto del diseño inicial, en el que era el
+nutriólogo quien marcaba la casilla al crear el expediente. La LFPDPPP
+exige para datos sensibles el consentimiento expreso y por escrito del
+titular, con firma autógrafa, electrónica o mecanismo de autenticación
+(LFPDPPP, 2025, art.~8), y lo define como manifestación de la voluntad
+libre, específica e informada (art.~2, fracc.~IV). En la maqueta, por
+tanto, es el paciente quien consiente: en su propia sesión autenticada
+desde su dispositivo o, en el consultorio, sobre el dispositivo del
+nutriólogo autenticándose él mismo. La pantalla de consentimiento
+muestra el aviso de privacidad completo, con opción de descarga en PDF,
+y dos casillas sin marcar: la obligatoria para el tratamiento de datos
+de salud y una opcional para recibir avisos por WhatsApp o SMS, que
+según la sección~2.5.5 nunca llevan contenido clínico y cuyo proveedor
+actúa como encargado. Al confirmar, el sistema genera el folio
+\texttt{DEC-XXXXXXXX} y el \texttt{DeclarationLog} guarda la identidad
+del titular, el mecanismo de autenticación usado, la versión del aviso,
+la fecha y la hora, y una copia de lo consentido. El expediente
+permanece en estado «pendiente de consentimiento» hasta ese momento y
+no admite el registro de ningún dato de salud; el nutriólogo ve ese
+estado en \texttt{PatientList} y recibe un aviso emergente cuando el
+paciente completa el trámite. Este es el flujo del caso de prueba
+CP-01.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{maqueta-consentimiento.png}
+  \caption{Maqueta del flujo de consentimiento del paciente: aviso de
+  privacidad, casillas sin marcar, folio y estado del expediente.
+  Elaboración propia.}
+  \label{fig:maq-consentimiento}
+\end{figure}
+ 
+\subsubsection{Alta de paciente y expediente}
+ 
+Con el consentimiento registrado, \texttt{AddPatient} y
+\texttt{PatientDetail} abren el expediente: datos de identificación,
+antecedentes, mediciones, notas de nutrición con autor, fecha y hora, y
+adjuntos. La API entrega a cada pantalla solo los campos que esa
+pantalla necesita, que es la forma en que el diseño aplica el principio
+de proporcionalidad (LFPDPPP, 2025, art.~5). Toda consulta,
+modificación, descarga e intento fallido de acceso queda en el registro
+de auditoría de la sección~2.5.4, y el paciente puede ver desde su
+\texttt{Dashboard} quién accedió a su expediente y cuándo. El plan de
+alimentación se asigna en \texttt{AssignDiet} a partir de
+\texttt{TemplateLibrary} y el paciente lo consulta en
+\texttt{CurrentDiet} y \texttt{ProgressTracking}. Este es el flujo del
+caso de prueba CP-02: la maqueta debe mostrar que el expediente no
+puede crearse sin consentimiento previo y que cada acceso deja rastro.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{maqueta-expediente.png}
+  \caption{Maqueta del alta de paciente y del expediente con registro
+  de accesos. Elaboración propia.}
+  \label{fig:maq-expediente}
+\end{figure}
+ 
+\subsubsection{Derechos ARCO y cancelación}
+ 
+El paciente ejerce sus derechos desde su perfil, sin contactar al
+nutriólogo ni iniciar trámites externos: cuatro tarjetas presentan
+acceso, rectificación, cancelación y oposición en lenguaje llano y
+generan una solicitud con folio. La cancelación es el caso que la
+maqueta debe explicar con más cuidado, porque no es inmediata ni
+irrevocable, como decía el diseño inicial. El diálogo de confirmación
+informa que la solicitud la resuelve el nutriólogo como responsable en
+un plazo de veinte días (LFPDPPP, 2025, art.~31); que, si procede, el
+expediente clínico pasa a estado de bloqueo y se conserva cifrado e
+inaccesible para la operación diaria durante los cinco años que fija la
+NOM-004 (LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012, 2012,
+numeral~5.4); que los datos ajenos al expediente, como la cuenta, los
+datos de contacto y las preferencias de notificación, se suprimen de
+inmediato; y que al vencer la retención el expediente se elimina por
+borrado criptográfico con notificación al titular (sección~2.5.5). Del
+lado del nutriólogo, \texttt{PatientDetail} muestra las solicitudes
+activas con folio, tipo, fecha, días restantes y estado, y una alarma de
+CloudWatch le avisa cuando quedan cinco días o menos para responder,
+de modo que la respuesta salga dentro del plazo del artículo~31. Este es
+el flujo del caso de prueba CP-03.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{maqueta-arco.png}
+  \caption{Maqueta del módulo ARCO: solicitud del paciente, diálogo de
+  cancelación con bloqueo y plazo, y bandeja del nutriólogo.
+  Elaboración propia.}
+  \label{fig:maq-arco}
+\end{figure}
+ 
+\subsubsection{Catálogo y reserva de cita}
+ 
+En \texttt{FindNutritionist} el paciente busca por ciudad y
+especialidad. Los resultados se ordenan por disponibilidad, cercanía
+declarada y especialidad; ningún dato de salud del paciente interviene
+en el orden. Entre los cinco primeros resultados, a lo sumo dos llevan
+la etiqueta «Patrocinado», que corresponde al servicio de exposición
+descrito en la sección~8.3. Cada tarjeta muestra la insignia «Perfil
+verificado» cuando la cédula del profesional fue validada, y en todos
+los casos la institución que expidió el título y el número de cédula,
+como exige la publicidad de servicios de salud (Reglamento de la Ley
+General de Salud en Materia de Publicidad, 2000, art.~19). Un enlace al pie explica cómo
+se ordenan los resultados. La reserva sigue la secuencia de la
+Figura~\ref{fig:uml-seq}: el paciente elige una franja horaria, inicia
+sesión con MFA, confirma en \texttt{ConfirmAppointment} y el nutriólogo
+recibe la solicitud en \texttt{AppointmentsManager} con 48 horas para
+aceptarla; si no responde, el sistema sugiere alternativas. Las citas
+se notifican dentro de la aplicación, no por mensajería.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{maqueta-catalogo.png}
+  \caption{Maqueta del catálogo con resultados patrocinados
+  etiquetados, insignia de perfil verificado y reserva de cita.
+  Elaboración propia.}
+  \label{fig:maq-catalogo}
+\end{figure}
+ 
+\subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
+ 
+El MVP incluye cuentas de práctica para estudiantes de nutrición, que
+son la base de la prueba piloto y del Plan Universidad de la
+sección~8.3. La regla de diseño es que ningún estudiante crea una
+cuenta por su cuenta: primero el administrador da de alta a la
+institución y al programa académico en \texttt{AdminInstitutions}, con
+la lista de dominios de correo permitidos, la vigencia del semestre, el
+cupo y las cuentas docentes, y genera códigos de activación con usos
+máximos y fecha de vencimiento en \texttt{ActivationCodes}. El
+estudiante se activa en \texttt{StudentsActivation} en tres pasos:
+introduce un código vigente, verifica un correo cuyo dominio está en la
+lista de su institución, y acepta el aviso de privacidad y los términos
+en casillas sin marcar, una de las cuales declara que la cuenta solo
+funciona con pacientes ficticios. Al crearse la cuenta, una función
+genera diez pacientes ficticios etiquetados como usuarios de prueba, de
+modo que no existe dato personal alguno en el sentido del artículo~2 de
+la ley y ninguna obligación de conservación aplica. La cuenta vence con
+el semestre de la institución, con aviso previo por correo; al vencer,
+el estudiante puede pasar a un plan Basic con descuento de egresado. El
+docente responsable ve en \texttt{TeacherDashboard} los expedientes
+ficticios de sus estudiantes en modo de solo lectura, el avance del
+módulo de inducción y el reporte semestral.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{maqueta-students.png}
+  \caption{Maqueta de la activación Students en tres pasos y del panel
+  docente. Elaboración propia.}
+  \label{fig:maq-students}
+\end{figure}
+ 
+\subsubsection{Comunidad y moderación}
+ 
+El módulo social permite al nutriólogo publicar contenido educativo, de
+texto e imagen, visible para sus pacientes y para otros nutriólogos
+(\texttt{SocialFeed}, \texttt{CreatePost}, \texttt{PostDetail}). La
+responsabilidad por el contenido es del nutriólogo como profesionista
+independiente y se establece en los términos de uso; NutriApp opera la
+plataforma sin avalar ni verificar lo publicado. Cualquier usuario puede
+reportar una publicación (\texttt{ReportContent}) y el administrador la
+revisa en \texttt{AdminSocialModeration} con una escala progresiva de
+estados: \texttt{ACTIVE}, \texttt{1ST\_STRIKE}, \texttt{2ND\_STRIKE},
+\texttt{SUSPENDED}, \texttt{UNDER\_REVIEW}, \texttt{REINSTATED} y
+\texttt{CANCELLED}. Cada decisión genera un folio \texttt{MOD-XXXXXXXX}
+en el \texttt{ModerationEvent} con motivo, nota interna, fecha y hora:
+es trazabilidad de decisiones (RLFPDPPP, 2011, art.~48, fracc.~X), no
+una medida de seguridad de datos.
+ 
+% ─────────────────────────────────────────────────────────────────────────
+\subsection{Prueba piloto: video de inducción, sesión y casos de prueba}
+% ─────────────────────────────────────────────────────────────────────────
+ 
+La prueba piloto es la demostración del diseño en el sentido de la
+guía metodológica de este caso: la solución llevada a la práctica con
+usuarios, aunque sea sobre maquetas. Tiene tres piezas, alineadas con el
+procedimiento de sesión de la sección~4.3.3.
+ 
+La primera es un \textbf{video de inducción} de entre cinco y diez
+minutos que recorre las maquetas por obligación legal: qué exige la ley
+en cada punto (consentimiento, expediente, ARCO, seguridad, catálogo) y
+cómo lo resuelve la pantalla. Se proyecta en la sesión antes de que los
+participantes toquen la maqueta y queda disponible para las cuentas de
+práctica como módulo de inducción a la LFPDPPP. Su guion sale de la
+sección~6.2 y de las Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}.
+ 
+La segunda es la \textbf{sesión}: después del video, los participantes
+recorren las maquetas con cuentas de práctica, discuten en el segundo
+bloque del grupo focal lo que vieron frente a lo que hacen hoy en su
+práctica, y los docentes contestan la rúbrica de revisión por flujo.
+Los instrumentos están en la sección~4.3.2 y en el Anexo~A.
+ 
+La tercera son los \textbf{casos de prueba de aceptación}, que la
+sección~4.4.2 define y la Tabla~\ref{tab:casos-prueba} concreta. Cada
+uno fija la obligación, la precondición, los pasos, el resultado que la
+ley exige y la evidencia que debe verse en la maqueta; se ejecutan como
+recorrido y se califican en cumple, cumple parcialmente o no cumple. Un
+«no cumple» es un hallazgo del caso: mide la distancia entre la maqueta
+y el diseño, y el capítulo siete lo reporta como tal.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Casos de prueba de aceptación del MVP.}
+  \label{tab:casos-prueba}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{l X X X}
+    \toprule
+    \textbf{Caso} & \textbf{Obligación y precondición} & \textbf{Pasos} & \textbf{Resultado esperado y evidencia} \\
+    \midrule
+    CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2 fracc.~IV, 8 y 15. Nutriólogo registrado con MFA; paciente invitado sin expediente. & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
+    CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y 18; RLFPDPPP art.~48 fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto; el paciente consulta su plan; un tercero sin relación intenta abrir el expediente. & Sin consentimiento previo el alta no se completa; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica plazo de veinte días, bloqueo y retención de cinco años; folio de la solicitud; el expediente cambia a bloqueado y desaparece de la operación diaria; cuenta y contacto se suprimen; alarma visible en la bandeja del nutriólogo. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+ 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Justificación del alcance del MVP}
 % ─────────────────────────────────────────────────────────────────────────
-
-El alcance del MVP responde a tres criterios explícitos. El \textit{criterio
-de completitud normativa} exige que todos los módulos necesarios para satisfacer
-la LFPDPPP~2025, su Reglamento y la NOM-004-SSA3-2012 estén presentes en la
-versión inicial: consentimiento, ARCO, cifrado, MFA, trazabilidad y eliminación
-segura. El \textit{criterio de viabilidad técnica} limita el MVP a
-funcionalidades implementables con el stack tecnológico definido ---AWS más
-React--- sin dependencias externas no certificadas. El \textit{criterio de
-prioridad de adopción} incluye los módulos que, según la hipótesis de la
-Encuesta~1, generan mayor disposición de adopción entre los nutriólogos: gestión
-de expedientes, agenda de citas y planes de dieta.
-
-Los módulos excluidos ---inteligencia artificial, telemedicina, integración con
-laboratorios--- se reservan para versiones posteriores porque requieren análisis
-normativos adicionales en materia sanitaria y de responsabilidad civil
-profesional que exceden el alcance de este caso de estudio.
-
-El prototipo funcional del MVP está disponible en el repositorio Figma Make del
-proyecto (clave: \texttt{qdxiWCrUhtL4W0CjmTjxRZ}) e incluye los siguientes
-módulos implementados: flujos de autenticación (\texttt{Login},
-\texttt{MFASetup}, \texttt{MFAVerification}, \texttt{AccountLocked},
-\texttt{PasswordReset}); registro de nutriólogos con declaración bajo protesta
-(\texttt{NutritionistRegister}); activación Students (\texttt{StudentsActivation});
-gestión clínica completa (\texttt{PatientList}, \texttt{AddPatient},
-\texttt{PatientDetail}, \texttt{TemplateLibrary}, \texttt{AssignDiet},
-\texttt{ViewPatientDiet}); agenda (\texttt{Appointments},
-\texttt{AppointmentsManager}, \texttt{SetAvailability}); módulos del paciente
-(\texttt{Dashboard}, \texttt{CurrentDiet}, \texttt{ProgressTracking},
-\texttt{Goals}, \texttt{FindNutritionist}, \texttt{ConfirmAppointment});
-módulo social (\texttt{SocialFeed}, \texttt{CreatePost}, \texttt{PostDetail},
-\texttt{ReportContent}); administración (\texttt{AdminSocialModeration});
-landing pública con carrusel dual nutriólogo/paciente (\texttt{LandingPage});
-y módulos legales (\texttt{PrivacyPolicy}, \texttt{TermsOfService}).
-
+ 
+El alcance del MVP responde a tres criterios. El de \textit{completitud
+normativa} exige que estén presentes los módulos que cubren las
+obligaciones trazadas en las Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}: consentimiento, ARCO, cifrado, MFA,
+trazabilidad y eliminación; las obligaciones sanitarias declaradas fuera
+en la sección~6.1 no forman parte de ese criterio. El de
+\textit{viabilidad técnica} limita el MVP a lo que el diseño del
+capítulo cinco puede sostener con AWS y React, con proveedores
+contratados como encargados (Twilio) o responsables independientes
+(Mercado Pago) en los términos de la sección~2.5.1. El de
+\textit{prioridad de uso} incluye los módulos que un nutriólogo
+independiente usa a diario y que, por eso, son los que los grupos
+focales pueden juzgar con conocimiento de causa: gestión de
+expedientes, agenda de citas y planes de alimentación.
+ 
+Las maquetas navegables y el código del prototipo están en el
+repositorio del proyecto (NutriApp, 2026), y el Anexo~B reproduce las
+pantallas principales. Antes de cualquier despliegue, el diseño tendría
+que verificarse contra un catálogo de pruebas de seguridad de
+aplicaciones, lo que se propone como siguiente paso en la
+sección~8.3.
+ 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Resultados y Análisis}
 % ═══════════════════════════════════════════════════════════════════════════
@@ -3173,80 +3356,256 @@ esa reforma implementando por diseño la exportación estructurada del expedient
 en formato transferible, aunque la ley aún no lo exija.
 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Análisis costo-beneficio: prevención de multas vs.\ costo operativo}
+\subsection{Costo de operar el diseño y relación costo-beneficio}
+\label{sec:costos}
 % ─────────────────────────────────────────────────────────────────────────
-
+ 
 El análisis costo-beneficio compara el costo operativo mensual de NutriApp con
 el valor esperado de las sanciones que un nutriólogo independiente enfrenta por
 incumplimiento de la LFPDPPP~2025.
-
-\textbf{Costo operativo estimado (AWS, MVP, 500 nutriólogos activos).}
-La estimación de costos de infraestructura para la fase inicial de NutriApp ---500
-nutriólogos activos y 5,000 pacientes--- se detalla en la Tabla~\ref{tab:costos}. El costo
-total oscila entre \$111 y \$147 USD mensuales, equivalente a \$0.29 USD por
-nutriólogo activo por mes. El componente de mayor variabilidad es Twilio
-(SMS y WhatsApp), cuyo costo depende del volumen de notificaciones ARCO y de
-confirmaciones de cita.
-
+ 
+Lo que sigue es una estimación de referencia para quien implemente el
+diseño, no la contabilidad de un servicio en operación: el caso termina
+en el diseño y la prueba piloto, y estas cifras miden lo que costaría
+llevarlo a la práctica.
+ 
+\textbf{Modelo de carga.} Antes de estimar costos hay que saber cuánto
+trabajo real recibe la plataforma, porque la mayor parte de los servicios
+del capítulo cinco cobra por hora, no por uso, y solo unos cuantos crecen
+con el tráfico. La Tabla~\ref{tab:carga} traduce los 500 nutriólogos y
+5,000 pacientes del MVP en solicitudes: con seis consultas diarias por
+nutriólogo, treinta llamadas a la API por consulta y seis sesiones
+mensuales por paciente, el sistema atiende 2.2 millones de solicitudes al
+mes, que en la hora hábil media son 3.5 por segundo y en la hora pico
+(tres veces la media) 10.5 por segundo. Con funciones de 200 milisegundos,
+eso son dos ejecuciones simultáneas de Lambda. La ruta crítica multiplica
+la actividad por 1.5 y el pico por cinco, y aun así queda en 36
+solicitudes por segundo y once ejecuciones simultáneas. Los límites de
+referencia son de otro orden: mil ejecuciones simultáneas por cuenta en
+Lambda, 2,500 solicitudes por segundo en API Gateway para la región de
+México y unas 225 conexiones en una instancia db.t4g.small (Amazon Web
+Services, s.f.-g). No hay, en ningún escenario, transacciones simultáneas
+que la instancia o las funciones no puedan atender; el costo no se
+dispara por capacidad sino por los componentes que cobran por mensaje.
+ 
 \begin{table}[H]
   \centering
-  \caption{Estimación de costos operativos de infraestructura AWS --- NutriApp
-  (500 nutriólogos activos, 5,000 pacientes).}
-  \label{tab:costos}
-  \begin{tabularx}{\textwidth}{l X r}
+  \caption{Modelo de carga del MVP: de usuarios a solicitudes por segundo.}
+  \label{tab:carga}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{X r r}
     \toprule
-    \textbf{Servicio} & \textbf{Base de cálculo} & \textbf{USD/mes} \\
+    \textbf{Variable} & \textbf{Base} & \textbf{Ruta crítica} \\
     \midrule
-    CloudFront + S3 & 50~GB transferencia + 500k requests & \$5 \\
-    WAF + Shield & 1 ACL web + 500k requests & \$7 \\
-    ALB & 720 hrs/mes + 5 LCU estimadas & \$22 \\
-    API Gateway + Lambda & 1M requests + 400k GB-seg & \$3 \\
-    Amazon Cognito & 5,500 MAU (gratis hasta 50k) & \$0 \\
-    RDS PostgreSQL (db.t4g.small) & 720 hrs/mes + 20~GB storage & \$35 \\
-    KMS + ACM & 1 CMK + 10k API calls & \$1 \\
-    S3 (adjuntos y registros de auditoría) & 50~GB con Object Lock + lifecycle & \$2 \\
-    CloudTrail + CloudWatch & 1 trail + 5~GB logs + 5 alarmas & \$8 \\
-    Lambda eliminación + EventBridge & $\sim$10k invocaciones/mes & \$0 \\
-    Twilio SMS + WhatsApp & $\sim$1,000 SMS + 500 WhatsApp/mes & \$27 \\
-    Mercado Pago & comisión por transacción sobre cada suscripción cobrada; sin cuota fija & \$0 \\
+    Consultas por nutriólogo por día & 6 & 9 \\
+    Solicitudes a la API por consulta & 30 & 40 \\
+    Sesiones mensuales por paciente (8 / 10 solicitudes) & 6 & 12 \\
+    Consultas al mes & 66,000 & 99,000 \\
+    Solicitudes a la API al mes (millones) & 2.2 & 4.6 \\
+    Solicitudes por segundo, hora hábil media & 3.5 & 7.2 \\
+    Factor de hora pico & 3$\times$ & 5$\times$ \\
+    Solicitudes por segundo en hora pico & 10.5 & 36.0 \\
+    Ejecuciones Lambda simultáneas en hora pico (200 / 300 ms) & 2.1 & 10.8 \\
+    Mensajes con efecto jurídico al mes (acuse de consentimiento, ARCO, supresión) & 540 & 2,700 \\
     \midrule
-    \textbf{Total estimado} & & \textbf{\$110--147} \\
+    \textit{Límites de referencia:} Lambda 1,000 simultáneas; API Gateway 2,500 req/s (mx-central-1); RDS db.t4g.small $\approx$ 225 conexiones & & \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+ 
+\textbf{Costo operativo en dos escenarios.} La Tabla~\ref{tab:costos}
+estima el costo mensual con ese modelo de carga y con las reglas de la
+Tabla~\ref{tab:costos-reglas}. La columna «varía» dice si el componente
+crece con la carga: los que cobran por hora (balanceador, instancia de
+base de datos, NAT Gateway, fragmento de Kinesis, punto de enlace) cuestan
+lo mismo con dos o con once ejecuciones simultáneas; los que cobran por
+solicitud o por mensaje (API Gateway, CloudTrail, WhatsApp, SMS) son los
+que forman la ruta crítica. Los precios son de lista, consultados en
+septiembre de 2026 (Amazon Web Services, s.f.-f; Twilio, 2026; Meta,
+2025; Mercado Pago, s.f.-b); AWS no publica en texto plano las tarifas de
+mx-central-1, así que se usan las de us-east-1 con un factor regional del
+5~\% (regla R2).
+ 
+El escenario base cuesta \$164~USD al mes (\$1,960 al año; \$0.33 por
+nutriólogo activo) y la ruta crítica \$318 (\$3,820 al año; \$0.64). La
+diferencia, \$154, se explica casi toda por dos filas: el SMS de
+respaldo (\$88 más) y API Gateway con CloudTrail (\$21 más). El SMS en
+México cuesta \$0.1819~USD por mensaje (Twilio, 2026) frente a \$0.013 del
+mensaje de utilidad de WhatsApp, por lo que el diseño lo reserva para el
+paciente sin WhatsApp y solo para avisos con efecto jurídico (regla R3);
+las citas se notifican dentro de la aplicación. La alta disponibilidad
+(base de datos en dos zonas, NAT y punto de enlace redundantes) no es
+consecuencia de la carga sino una decisión de servicio, y por eso se
+muestra aparte: \$67 al mes con el factor regional.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Estimación de costos operativos en dos escenarios (500 nutriólogos
+  activos, 5,000 pacientes; USD por mes).}
+  \label{tab:costos}
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.05}
+  \begin{tabularx}{\textwidth}{p{3.4cm} c X r r}
+    \toprule
+    \textbf{Componente} & \textbf{Varía} & \textbf{Base de cálculo (base / ruta crítica)} & \textbf{Base} & \textbf{Crít.} \\
+    \midrule
+    CloudFront + S3 (sitio) & sí & 21 / 65~GB, capa gratuita permanente & \$1 & \$1 \\
+    WAF + Shield Standard & parcial & 1 ACL y 4 reglas fijas; 2.2 / 4.6~M solicitudes & \$10 & \$12 \\
+    Application Load Balancer & no & 730~h y 1 LCU en ambos & \$22 & \$22 \\
+    API Gateway + Lambda & sí & 2.2 / 4.6~M solicitudes; Lambda dentro / fuera de capa gratuita & \$8 & \$21 \\
+    Amazon Cognito & no & 5,500~MAU; Essentials, 10,000 gratuitos & \$0 & \$0 \\
+    RDS PostgreSQL (db.t4g.small) & no & instancia en una zona; 20 / 40~GB & \$26 & \$30 \\
+    Activity Streams (Kinesis) & parcial & 1 fragmento fijo; registros por solicitud & \$11 & \$11 \\
+    NAT Gateway & parcial & 1 zona; salida hacia Twilio y Mercado Pago & \$33 & \$33 \\
+    Puntos de enlace privados & no & S3 por gateway (sin costo); KMS por interfaz & \$8 & \$8 \\
+    KMS + ACM & parcial & 1 / 2 llaves; una llamada por cada dos solicitudes & \$4 & \$9 \\
+    S3 (adjuntos y registros) & sí & 50 / 150~GB acumulados; Object Lock sin cargo & \$3 & \$8 \\
+    CloudTrail + CloudWatch & sí & un evento de datos por solicitud; 5 / 15~GB de logs & \$5 & \$13 \\
+    EventBridge + Lambda eliminación & no & capa gratuita permanente & \$0 & \$0 \\
+    Route 53 & parcial & zona fija + consultas & \$1 & \$2 \\
+    \midrule
+    \textit{Subtotal AWS (us-east-1)} & & & \$133 & \$171 \\
+    Factor regional (R2) & no & 5~\% sobre el subtotal AWS & \$7 & \$9 \\
+    Dominio (anual prorrateado) & no & .com / .com y .mx & \$1 & \$7 \\
+    Twilio: WhatsApp (R3) & sí & 486 / 2,160 mensajes de utilidad a \$0.013 & \$6 & \$28 \\
+    Twilio: SMS de respaldo (R3) & sí & 54 / 540 mensajes a \$0.1819 + número local & \$16 & \$105 \\
+    \midrule
+    \textbf{Total mensual} & & & \textbf{\$164} & \textbf{\$318} \\
+    \textbf{Total anual} & & & \textbf{\$1,960} & \textbf{\$3,820} \\
+    \textbf{Por nutriólogo activo al mes} & & & \textbf{\$0.33} & \textbf{\$0.64} \\
+    \midrule
+    \textit{Opción: alta disponibilidad (no incluida)} & opción & RDS Multi-AZ, NAT y punto de enlace en 2ª zona, con factor regional & \$67 & \$67 \\
     \bottomrule
   \end{tabularx}
   \begin{flushleft}
-    \small\textit{Nota.} Estimación sin instancias reservadas. Con reserva
-    de un año, RDS reduce su costo aproximadamente un 35~\%. Twilio es el
-    componente de mayor variabilidad: SMS en México $\approx$ \$0.0079/msg;
-    WhatsApp $\approx$ \$0.005--0.015/conversación. Elaboración propia con
-    base en calculadoras de precios de AWS (2023b) y Twilio (2024).
+    \footnotesize\textit{Nota.} Precios de lista sin instancias reservadas (con
+    reserva de un año, RDS baja cerca de un 35~\%). Cifras redondeadas al
+    dólar; los totales se calculan sin redondear. Mercado Pago es comisión
+    sobre cada cobro, no infraestructura (Tabla~\ref{tab:ingresos}).
+    Elaboración propia; la hoja de cálculo con precios, supuestos y
+    fórmulas acompaña al repositorio del prototipo.
   \end{flushleft}
 \end{table}
-
-\textbf{Costo de la suscripción para el nutriólogo individual.} NutriApp opera
-con tres planes: Students (\$0, seis meses, datos ficticios), Basic (\$6~USD/mes
-o \$3~USD/mes en pago anual) y Pro (\$9~USD/mes o \$5~USD/mes en pago anual).
-El plan Pro ---\$9~USD/mes o \$162~MXN al tipo de cambio de referencia--- representa
-menos del 2~\% del ingreso mensual promedio de un nutriólogo independiente en
-México, estimado entre \$10,000 y \$40,000~MXN según el volumen de pacientes
-atendidos.
-
+ 
+\begin{table}[H]
+  \centering
+  \caption{Reglas de estimación de los dos escenarios de costo.}
+  \label{tab:costos-reglas}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{l X}
+    \toprule
+    \textbf{Regla} & \textbf{Enunciado} \\
+    \midrule
+    R1 Carga & Los volúmenes salen del modelo de la Tabla~\ref{tab:carga}, no de multiplicadores fijos. La ruta crítica es el mes de mayor actividad plausible con los mismos usuarios: 1.5 veces las consultas, pico de cinco veces la hora media, el doble de pacientes nuevos y cuatro veces las solicitudes ARCO. No supone crecimiento de usuarios. \\
+    R2 Región & Los precios de mx-central-1 se estiman como los de us-east-1 más 5~\%, diferencial observado en cómputo de propósito general entre ambas regiones (aws-pricing.com, 2026); se sustituye por la tarifa exacta de la calculadora de AWS al presupuestar. \\
+    R3 Mensajería & Twilio se usa solo para avisos con efecto jurídico (acuse de consentimiento, respuestas ARCO, bloqueo y supresión, incidentes), con dos mensajes por evento en la base y tres en la ruta crítica, al 60 / 90~\% de pacientes que aceptan la casilla de avisos. WhatsApp con plantillas de utilidad es el canal; el SMS cubre al 10 / 20~\% que no tiene WhatsApp. Las citas se notifican dentro de la aplicación. Ningún factor de autenticación viaja por SMS. \\
+    R4 Disponibilidad & Ambos escenarios usan RDS en una zona con respaldo continuo. Multi-AZ, NAT y punto de enlace en segunda zona son una opción de servicio que se cotiza aparte (\$67 al mes). \\
+    R5 Salida a internet & Las funciones dentro de la VPC salen a Twilio y Mercado Pago por NAT Gateway; se estima que el 10~\% del tráfico de la API cruza el NAT. S3 se alcanza por punto de enlace de gateway (sin costo) y KMS por interfaz. \\
+    R6 Auditoría & Database Activity Streams publica en un fragmento aprovisionado de Kinesis; CloudTrail registra un evento de datos por solicitud además del trail de administración gratuito. \\
+    R7 Identidad & Cognito Essentials: 10,000 usuarios activos mensuales sin costo; el MVP no los alcanza en ningún escenario. \\
+    R8 Dominio & .com en Route 53 en la base; .com y .mx en la ruta crítica. Precio anual, variable por registrador, prorrateado a doce meses. \\
+    R9 Cobros & La comisión de Mercado Pago es costo variable sobre el ingreso (Tabla~\ref{tab:ingresos}), no infraestructura. \\
+    R10 Capas gratuitas & Solo las permanentes (Lambda, CloudFront, EventBridge, primer trail de CloudTrail), no las de doce meses. \\
+    R11 Vigencia & Precios de lista del 24 de septiembre de 2026; se revisan al presupuestar cada fase. \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+ 
+\textbf{Inversión inicial.} El costo operativo supone que el sistema ya
+existe. La Tabla~\ref{tab:inversion} estima lo que cuesta llevar el
+diseño de este trabajo a un producto en operación, sin marketing. Dos
+rubros son tarifas publicadas: la constitución de una Sociedad por
+Acciones Simplificada, que es gratuita en línea (Secretaría de Economía,
+2016), y el registro de marca ante el IMPI, \$2,597.77~MXN por clase
+(Instituto Mexicano de la Propiedad Industrial, 2023). El resto son
+estimaciones del autor con rango, y el desarrollo domina: ochocientas
+horas para convertir las maquetas en el sistema descrito en los
+capítulos cinco y seis, a tarifas de mercado de entre \$300 y \$500~MXN
+por hora. Si el propio autor construye el MVP, la inversión en efectivo
+baja a entre \$63,000 y \$148,000~MXN.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Inversión inicial estimada, sin marketing (MXN).}
+  \label{tab:inversion}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{X l r r}
+    \toprule
+    \textbf{Concepto} & \textbf{Tipo} & \textbf{Mínimo} & \textbf{Máximo} \\
+    \midrule
+    Constitución de la sociedad (SAS en línea) & tarifa & \$0 & \$0 \\
+    Registro de marca ante el IMPI, una clase & tarifa & \$2,598 & \$2,598 \\
+    Aviso de privacidad, términos de uso y contratos con encargados & estimación & \$15,000 & \$40,000 \\
+    Alta fiscal y contabilidad del primer trimestre & estimación & \$6,000 & \$12,000 \\
+    Desarrollo del MVP a partir de las maquetas (800~h) & estimación & \$240,000 & \$400,000 \\
+    Pruebas de seguridad (pentest básico) & estimación & \$25,000 & \$60,000 \\
+    Constancias NOM-151 con un prestador de servicios de certificación & estimación & \$5,000 & \$15,000 \\
+    Dominio, primer año & tarifa & \$270 & \$1,440 \\
+    Herramientas de diseño y colaboración, doce meses & estimación & \$3,500 & \$7,000 \\
+    Ambiente AWS de desarrollo y pruebas, tres meses & estimación & \$6,000 & \$10,000 \\
+    \midrule
+    \textbf{Total} & & \textbf{\$303,000} & \textbf{\$548,000} \\
+    Equivalente en USD (18~MXN/USD) & & \$16,900 & \$30,400 \\
+    Sin el desarrollo, si el autor construye el MVP & & \$63,000 & \$148,000 \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+ 
+\textbf{Destacado en el catálogo.} El catálogo de nutriólogos que el
+paciente consulta en \texttt{FindNutritionist} admite un servicio
+adicional de exposición: por \$99~MXN al mes, o \$990 al año, el
+nutriólogo aparece en una de las posiciones patrocinadas al inicio de los
+resultados de su ciudad y especialidad. El precio es deliberadamente
+bajo. Doctoralia, el directorio de referencia en México, cobra entre
+\$1,740 y \$2,970~MXN al mes por su perfil con agenda y visibilidad
+(Doctoralia, 2026); NutriApp no compite con ese producto sino que lo
+complementa desde el expediente, y el Destacado se vende como un
+complemento de alta adopción y costo marginal cero, no como fuente
+principal de ingreso. Con 20~\% de los 500 nutriólogos pagantes, aporta
+\$9,900~MXN al mes.
+ 
+El servicio se diseña con cuatro reglas que evitan que la exposición
+pagada distorsione la confianza del paciente, porque la ley y el diseño
+de este trabajo lo exigen. Primera: las posiciones pagadas se marcan
+«Patrocinado», a lo sumo dos de los cinco primeros resultados, y el
+resto se ordena por disponibilidad, cercanía declarada y especialidad;
+la información y la publicidad deben ser veraces, comprobables y claras
+(Ley Federal de Protección al Consumidor, 1992/2024, art.~32). Segunda: ningún
+dato de pacientes interviene en el orden de los resultados, ni en el
+patrocinado ni en el orgánico, en línea con el principio de
+proporcionalidad (LFPDPPP, 2025, art.~5). Tercera: el Destacado solo se
+activa con cédula profesional validada y perfil completo, y la ficha
+muestra la institución que expidió el título y el número de cédula,
+como exige la publicidad de servicios de salud (Reglamento de la Ley
+General de Salud en Materia de Publicidad, 2000, art.~19); los servicios
+que un profesional presta de forma individual no requieren permiso
+publicitario (Reglamento de la Ley General de Salud en Materia de
+Publicidad, 2000, art.~79, fracc.~I), pero la ficha no admite promesas de
+resultados ni afirmaciones sobre tratamientos. Cuarta: cuando varios
+destacados coinciden en una búsqueda, rotan de forma equitativa; pagar
+más no compra un lugar fijo. La insignia «Perfil verificado» se otorga
+sin costo a todo nutriólogo con cédula validada, para que la verificación
+nunca se confunda con el patrocinio.
+ 
 \textbf{Valor esperado de las sanciones evitadas.} La LFPDPPP~2025 establece
 sanciones de hasta 320,000 veces la Unidad de Medida y Actualización (UMA) por
 infracciones graves (LFPDPPP, 2025, art.~59, fracc.~III). Con el valor de la
 UMA~2025 de \$113.14 pesos diarios (INEGI, 2025), el techo máximo de una multa
 grave es de \$36,204,800~MXN, duplicable a \$72,409,600~MXN cuando involucra
 datos sensibles de salud (LFPDPPP, 2025, art.~59, último párrafo). En la práctica,
-el INAI impuso en 2022 multas por un total de \$60,078,958~MXN a 119 sujetos
-sancionados (INAI, 2023a, p.~1), lo que implica una multa promedio de
-aproximadamente \$504,864~MXN por infractor.
-
-La relación costo-beneficio es contundente: el costo anual del plan Pro de
-NutriApp (\$60~USD~$\approx$\$1,080~MXN) es 467 veces menor que la multa promedio
-impuesta por el INAI en 2022, y 33,523 veces menor que el techo máximo de
-sanción para datos de salud. Para el nutriólogo independiente, adoptar NutriApp
-no es un gasto de cumplimiento; es la opción económicamente racional de gestión
-de riesgo legal.
-
+el INAI divulgó para 2022 multas por un total de \$60,078,958~MXN en 119
+procedimientos de imposición de sanciones iniciados (INAI, 2023a, p.~1),
+lo que da una multa promedio aproximada de \$504,864~MXN por
+procedimiento.
+ 
+La relación costo-beneficio es clara: el costo anual del plan Pro de
+NutriApp (\$3,490~MXN) es 145 veces menor que la multa promedio
+impuesta por el INAI en 2022, y 20,748 veces menor que el techo máximo de
+sanción para datos de salud. El trade-off para el nutriólogo
+independiente es, por tanto, entre un costo cierto y pequeño y un riesgo
+improbable pero desproporcionado.
+ 
 \begin{table}[H]
   \centering
   \caption{Análisis costo-beneficio: NutriApp Pro vs.\ sanciones LFPDPPP~2025.}
@@ -3255,16 +3614,16 @@ de riesgo legal.
     \toprule
     \textbf{Concepto} & \textbf{MXN/año} & \textbf{Factor} \\
     \midrule
-    Suscripción NutriApp Pro (anual) & \$1,080 & 1$\times$ \\
-    Multa promedio INAI 2022 (por infractor) & \$504,864 & 467$\times$ \\
-    Techo máximo sanción grave (datos salud) & \$72,409,600 & 67,046$\times$ \\
-    Honorarios defensa legal (estimado) & \$150,000--\$300,000 & 139--278$\times$ \\
+    Suscripción NutriApp Pro (anual) & \$3,490 & 1$\times$ \\
+    Multa promedio INAI 2022 (por procedimiento) & \$504,864 & 145$\times$ \\
+    Techo máximo sanción grave (datos salud) & \$72,409,600 & 20,748$\times$ \\
+    Honorarios defensa legal (estimado) & \$150,000--\$300,000 & 43--86$\times$ \\
     \bottomrule
   \end{tabularx}
   \begin{flushleft}
     \small\textit{Nota.} Tipo de cambio de referencia: 1~USD~=~18~MXN. Multa
     promedio calculada sobre el total de multas de 2022 (\$60,078,958~MXN)
-    entre 119 sujetos sancionados (INAI, 2023a). Honorarios de defensa legal
+    entre 119 procedimientos iniciados (INAI, 2023a). Honorarios de defensa legal
     son estimaciones de mercado; no constituyen asesoría jurídica. Elaboración
     propia con base en LFPDPPP (2025), INAI (2023a) e INEGI (2025).
   \end{flushleft}
@@ -3276,11 +3635,6 @@ de riesgo legal.
 % en orden alfabético
 % ═══════════════════════════════════════════════════════════════════════════
 
-% \item Instituto Nacional de Estadística y Geografía. (2024).
-%   \textit{Calculadora de precios de Twilio}. Twilio.
-%   \url{https://www.twilio.com/en-us/sms/pricing/mx}
-%   [Citado como Twilio, 2024 en la nota de la Tabla 5]
-%
 % Nota: Las demás referencias de caps. 6, 7 y 8 (LFPDPPP, RLFPDPPP,
 % NOM-004, NOM-024, AWS 2023a/b/c, NIST 2001/2014/2020, Cavoukian 2009,
 % Hevner et al. 2004, INAI 2023a/b, INEGI 2025, Rescorla 2018)
@@ -3298,9 +3652,214 @@ de riesgo legal.
 \mbox{}
 % Texto aquí
 
-\subsection{Limitaciones del estudio y trabajo futuro}
+\subsection{Limitaciones, siguientes pasos y transferencia del diseño}
 \mbox{}
-% Texto aquí
+% Texto de limitaciones y siguientes pasos: se escribe después de los
+% grupos focales (octubre de 2026). Debe incluir, como siguientes pasos
+% del tercero que implemente: (1) estructura de la nota clínica
+% conforme a NOM-004 numerales 5.2, 5.9–5.11 y 6.1.1; (2) firma
+% electrónica avanzada del profesional, NOM-024 numeral 6.6.2;
+% (3) verificación contra OWASP ASVS 5.0 nivel 2 antes de cualquier
+% despliegue; (4) análisis fiscal, laboral y sanitario de una operación
+% real (secc. 4.4.3).
+ 
+\subsubsection{Transferencia del diseño: modelo de negocio propuesto}
+ 
+El caso termina en el diseño y en su prueba piloto; lo que sigue es lo
+que necesitaría quien decida llevarlo al mercado. Se documenta aquí, y
+no como resultado, porque ninguna de estas cifras se ha observado: es
+la propuesta de precios, canales y economía con la que el diseño podría
+sostenerse, construida sobre los costos de operación de la
+sección~\ref{sec:costos} y sobre los precios publicados de los
+productos con los que competiría.
+ 
+\textbf{Precio de la suscripción frente a la competencia.} NutriApp opera
+con tres planes: Students (gratuito durante el semestre de la
+institución, con datos ficticios),
+Basic y Pro. Los precios se fijan en pesos, porque el cobro se hace en
+México a través de Mercado Pago y así no dependen del tipo de cambio:
+Basic a \$199~MXN al mes o \$1,990 al año, y Pro a \$349~MXN al mes o
+\$3,490 al año, con IVA incluido. La Tabla~\ref{tab:competencia} los
+compara con los productos que un nutriólogo mexicano encuentra hoy. El
+competidor local de referencia, Avena, cobra \$329~MXN por veinte
+pacientes y \$999 por ochenta; los internacionales (Nutrium, NutriAdmin,
+Practice Better, Healthie) cuestan entre \$20 y \$75~USD al mes, es decir,
+entre \$360 y \$1,350~MXN. Con \$349 el plan Pro queda por debajo del plan
+básico de Avena y de cualquier opción internacional, y representa el 2~\%
+del ingreso mensual promedio de un nutriólogo, que el Instituto Mexicano
+para la Competitividad estima en \$17,773~MXN (Instituto Mexicano para la
+Competitividad, 2026, citado en La Silla Rota, 2026). El argumento de
+venta no es el precio sino lo que
+ninguno de los competidores ofrece: expediente y consentimiento diseñados
+sobre la LFPDPPP~2025, con la trazabilidad y los plazos ARCO resueltos en
+el sistema.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Precios de la competencia y de NutriApp (planes base; consultados
+  en septiembre de 2026).}
+  \label{tab:competencia}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{l l l r X}
+    \toprule
+    \textbf{Producto} & \textbf{País} & \textbf{Plan base} & \textbf{MXN/mes} & \textbf{Oferta a estudiantes o universidades} \\
+    \midrule
+    Avena & México & Basic, 20 pacientes & \$329 & Gratis seis meses, ocho pacientes; plan Docente bajo solicitud \\
+    Avena & México & Premium, 80 pacientes & \$999 & \\
+    Nutrimind & México & Licencia única, referencia & $\approx$\$100 & Plan institucional desde diez licencias con cuentas de administración; precio no publicado \\
+    Nutrium & Portugal & Limited, 10 pacientes & \$450 & 50~\% de descuento a estudiantes; convenios con universidades \\
+    NutriAdmin & EE.~UU. & Basic, 10 nuevos al mes & \$630 & Plan gratuito para estudiantes de instituciones aliadas \\
+    Practice Better & EE.~UU. & Starter, 10 clientes & \$630 & Plan Sprout gratuito, tres clientes \\
+    Healthie & EE.~UU. & Core, 10 clientes & \$360 & No publicada \\
+    Dietopro & España & PRO INI, 20 pacientes & $\approx$\$585 & Plan gratuito de dos pacientes \\
+    \midrule
+    NutriApp & México & Basic & \$199 & Students gratis un semestre, con datos ficticios \\
+    NutriApp & México & Pro & \$349 & Plan Universidad (Tabla~\ref{tab:universidad}) \\
+    \bottomrule
+  \end{tabularx}
+  \begin{flushleft}
+    \small\textit{Nota.} Precios de lista publicados por cada proveedor
+    (Avena, 2026; Nutrimind, s.f.; Nutrium, 2026; NutriAdmin, 2026;
+    Practice Better, 2026; Healthie, 2026; Dietopro, 2026); los que se
+    publican en dólares o euros se convierten a 18~MXN/USD y 1.08~USD/EUR.
+    Nutrimind se vende como licencia de pago único (entre \$2,190 y
+    \$2,990~MXN según fuentes no oficiales), prorrateada aquí a 24 meses.
+  \end{flushleft}
+\end{table}
+ 
+\textbf{Plan Universidad: paquetes de uso y servicios.} La competencia
+regala el producto al estudiante (Avena, Nutrium, NutriAdmin) y vende a
+la institución, cuando vende, cuentas de administración (Nutrimind).
+NutriApp separa el uso de la plataforma, que cuesta poco servir, de lo
+que este trabajo demuestra en los grupos focales y que ninguna
+plataforma ofrece: que el cumplimiento de la LFPDPPP se enseña con
+práctica. La oferta a la universidad se arma con tres paquetes por
+semestre (Tabla~\ref{tab:universidad}). El paquete \textit{Aula} da
+cuentas Students a todos los alumnos del programa, tres cuentas docentes
+con supervisión sobre los expedientes ficticios y un reporte semestral
+de uso. El paquete \textit{Formación} añade cinco simposios de dos horas
+por semestre sobre protección de datos en la práctica nutricional:
+consentimiento y expediente, derechos ARCO, seguridad y encargados,
+incidentes y sanciones, y ética profesional con la maqueta como caso,
+cada uno con constancia de participación. El paquete \textit{Integral}
+suma dos talleres para docentes, el reporte de evidencia para
+acreditación y la vinculación con egresados: descuento del 50~\% en
+Basic durante el primer año de ejercicio y presencia de NutriApp en las
+jornadas del programa. La vinculación no se cobra: es el canal de
+adquisición de usuarios del producto, y por eso conviene incluirla.
+ 
+Los precios se anclan en el mercado de capacitación: un curso abierto de
+ocho horas sobre la LFPDPPP cuesta \$3,500~MXN más IVA por persona (CIGE
+México, 2026), mientras que los cursos del INAI son gratuitos pero generales, no
+sectoriales (Instituto Nacional de Transparencia, Acceso a la
+Información y Protección de Datos Personales, s.f.). Un simposio de dos
+horas para una cohorte completa, específico de nutrición, se cotiza en
+\$8,000~MXN suelto y en \$7,000 dentro del paquete, el equivalente a dos
+lugares en un curso abierto. Con
+cinco programas en el plan Integral el primer año, la línea universitaria
+aporta \$750,000~MXN, más que los 500 nutriólogos individuales del MVP,
+con un margen del 34~\% que depende sobre todo de las horas de quien
+imparte los simposios. El mercado es amplio: 81,849 alumnos inscritos en
+programas de nutrición en el país en el último ciclo escolar (Secretaría
+del Trabajo y Previsión Social, s.f.), once programas en Jalisco.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Plan Universidad: paquetes por semestre y economía de un programa
+  (MXN, IVA incluido).}
+  \label{tab:universidad}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{X r r r}
+    \toprule
+    \textbf{Concepto} & \textbf{Aula} & \textbf{Formación} & \textbf{Integral} \\
+    \midrule
+    Cuentas Students del programa, 3 docentes, reporte de uso & sí & sí & sí \\
+    Cinco simposios de 2~h por semestre, con constancia & --- & sí & sí \\
+    Dos talleres docentes, reporte para acreditación, vinculación con egresados & --- & --- & sí \\
+    \midrule
+    Precio por semestre & \$15,000 & \$50,000 & \$75,000 \\
+    IVA incluido & (\$2,069) & (\$6,897) & (\$10,345) \\
+    Implantación y soporte (10~h) y Cognito & (\$5,324) & (\$5,324) & (\$5,324) \\
+    Simposios (5 $\times$ 8~h a \$600) & --- & (\$24,000) & (\$24,000) \\
+    Talleres docentes y reporte de acreditación (22~h) & --- & --- & (\$13,200) \\
+    \textbf{Margen por semestre antes de ISR} & \textbf{\$7,607} & \textbf{\$13,779} & \textbf{\$22,131} \\
+    Margen sobre ingreso neto & 59~\% & 32~\% & 34~\% \\
+    \midrule
+    Ingreso anual por programa (dos semestres) & \$30,000 & \$100,000 & \$150,000 \\
+    Ingreso anual con cinco programas & \$150,000 & \$500,000 & \$750,000 \\
+    \bottomrule
+  \end{tabularx}
+  \begin{flushleft}
+    \small\textit{Nota.} Estimación del autor; horas y tarifa interna
+    (\$600~MXN por hora de preparación e impartición) editables en la hoja
+    de cálculo. Un programa de 200 estudiantes; Cognito solo cobra por
+    encima de 10,000 usuarios activos. Mercado potencial: 81,849 alumnos
+    (Secretaría del Trabajo y Previsión Social, s.f.).
+  \end{flushleft}
+\end{table}
+ 
+\textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
+cierra el cálculo con los ingresos de los planes del MVP y los impuestos
+que les aplican. Con 500 nutriólogos pagantes, 40~\% en plan Pro y la
+mitad con pago anual, a los precios de la Tabla~\ref{tab:competencia}, el
+ingreso por suscripciones es de \$118,700~MXN al mes, \$6,595~USD al tipo
+de cambio de referencia, y el Destacado añade \$550 más: \$7,145 en total.
+Como los precios incluyen IVA, \$986~USD son impuesto trasladado (Ley del
+Impuesto al Valor Agregado, 1978/2024, art.~1) y el ingreso neto queda en \$6,159. De ahí salen la comisión de Mercado Pago
+(3.49~\% más \$4~MXN por cobro, más IVA acreditable; Mercado Pago,
+s.f.-b), que equivale a cerca del 5~\% del ingreso bruto, y la
+infraestructura de la Tabla~\ref{tab:costos}. El impuesto sobre la renta
+depende del régimen: una persona moral paga 30~\% sobre la utilidad
+fiscal (Ley del Impuesto sobre la Renta, 2013/2025, art.~9); una persona física en
+el Régimen Simplificado de Confianza paga entre 1.0 y 2.5~\% sobre el
+ingreso cobrado, sin deducciones, mientras no exceda de 3.5 millones de
+pesos al año (Ley del Impuesto sobre la Renta, 2013/2025, art.~113-E). Con el
+ingreso neto del MVP, unos \$111,000~MXN al mes, la tasa aplicable es
+2.0~\%.
+La tabla muestra los dos regímenes en los dos escenarios: RESICO en la
+base y persona moral con alta disponibilidad en la ruta crítica. El IVA
+que AWS factura desde 2026 a través de su entidad mexicana (Amazon Web
+Services, s.f.-h) y el de Mercado Pago son acreditables contra el IVA
+trasladado. No hay participación de utilidades porque el MVP no tiene
+empleados. Estos cálculos son una estimación para dimensionar el caso,
+no asesoría fiscal; los supuestos están en la hoja de cálculo y se
+revisan con un contador antes de operar.
+ 
+\begin{table}[H]
+  \centering
+  \caption{Ingresos, impuestos y utilidad mensual del MVP (500 nutriólogos
+  pagantes; USD por mes).}
+  \label{tab:ingresos}
+  \footnotesize
+  \begin{tabularx}{\textwidth}{X r r}
+    \toprule
+    \textbf{Concepto} & \textbf{Base (RESICO)} & \textbf{Crítica (persona moral)} \\
+    \midrule
+    Suscripciones (40~\% Pro; 50~\% anual; \$118,700~MXN) & \$6,595 & \$6,595 \\
+    Destacado en el catálogo (20~\% de adopción a \$99~MXN) & \$550 & \$550 \\
+    Ingreso bruto & \$7,145 & \$7,145 \\
+    IVA trasladado (16~\%, incluido en el precio) & (\$986) & (\$986) \\
+    Ingreso neto de IVA & \$6,159 & \$6,159 \\
+    Comisión de Mercado Pago & (\$360) & (\$360) \\
+    Infraestructura y mensajería (Tabla~\ref{tab:costos}) & (\$164) & (\$318) \\
+    Alta disponibilidad (opción) & --- & (\$67) \\
+    Utilidad operativa (sin sueldos) & \$5,635 & \$5,414 \\
+    Amortización de la inversión inicial a 36 meses (mín. / máx.) & (\$468) & (\$846) \\
+    Utilidad antes de ISR & \$5,167 & \$4,568 \\
+    ISR (RESICO 2.0~\% del ingreso / persona moral 30~\% de la utilidad) & (\$123) & (\$1,370) \\
+    \textbf{Utilidad neta mensual} & \textbf{\$5,044} & \textbf{\$3,198} \\
+    Utilidad neta anual & \$60,530 & \$38,370 \\
+    Margen neto sobre ingreso bruto & 71~\% & 45~\% \\
+    Meses para recuperar la inversión inicial (sin amortizar) & 3.1 & 7.5 \\
+    \bottomrule
+  \end{tabularx}
+  \begin{flushleft}
+    \small\textit{Nota.} Sin sueldos ni marketing. La amortización usa el
+    mínimo de la Tabla~\ref{tab:inversion} en la base y el máximo en la
+    ruta crítica. Tipo de cambio de referencia: 18~MXN/USD. Elaboración
+    propia; no constituye asesoría fiscal.
+  \end{flushleft}
+\end{table}
 
 % ============================================================
 % REFERENCIAS COMPLETAS — Toda la tesis NutriApp
@@ -3352,7 +3911,27 @@ de riesgo legal.
  
   % Cap. 2 (secc. 2.5.4): auditoría de la actividad SQL de la base
   % de datos (AWS, s.f.-e).
-  
+
+\item Amazon Web Services. (s.f.-f). \textit{AWS Pricing}. Amazon Web
+  Services. \url{https://aws.amazon.com/pricing/}
+ 
+  % Cap. 7 (secc. 7.3): precios de lista de los servicios de la
+  % Tabla de costos (Amazon Web Services, s.f.-f).
+ 
+\item Amazon Web Services. (s.f.-g). \textit{AWS service quotas}. AWS General Reference.\url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
+ 
+  % Cap. 7 (secc. 7.3, modelo de carga): mil ejecuciones simultáneas
+  % de Lambda por cuenta y 2,500 solicitudes por segundo en API
+  % Gateway para mx-central-1; conexiones de RDS según la clase de
+  % instancia (Amazon Web Services, s.f.-g).
+ 
+\item Amazon Web Services. (s.f.-h). \textit{Tax help: Mexico}. Amazon
+  Web Services. \url{https://aws.amazon.com/tax-help/mexico/}
+ 
+  % Cap. 7 (secc. 7.3): AWS factura a clientes en México a través de
+  % Amazon Web Services México y traslada el IVA desde 2026 (Amazon
+  % Web Services, s.f.-h).
+
 \item Amazon Web Services. (2023a). \textit{Shared responsibility
   model}. Amazon Web Services.
   \url{https://aws.amazon.com/compliance/shared-responsibility-model/}
@@ -3400,8 +3979,17 @@ de riesgo legal.
   AWS Mexico (Central) Region}. AWS News Blog.
   \url{https://aws.amazon.com/blogs/aws/now-open-aws-mexico-central-region/}
  
-  % Cap. 6 (secc. 6.1): disponibilidad general de la región
-  % mx-central-1 con tres zonas de disponibilidad (AWS, 2025).
+\item Avena. (2026). \textit{Precios}. Avena. \url{https://avena.io/en-us/precios/}
+ 
+  % Cap. 7 (secc. 7.3, Tabla de competencia): planes Basic, Standard y
+  % Premium; plan Estudiante gratuito seis meses (Avena, 2026).
+ 
+\item aws-pricing.com. (2026). \textit{AWS Mexico (Central)
+  mx-central-1 pricing}. \url{https://aws-pricing.com/mx-central-1.html}
+ 
+  % Cap. 7 (secc. 7.3, regla R2): diferencial de precio entre
+  % mx-central-1 y us-east-1 en cómputo de propósito general
+  % (aws-pricing.com, 2026)..
 
 \item Bundesamt für Sicherheit in der Informationstechnik. (2020).
   \textit{Cloud Computing Compliance Criteria Catalogue (C5):
@@ -3461,6 +4049,14 @@ de riesgo legal.
   % persona que presta servicios profesionales o técnicos'' (CPF,
   % 1931/2024, art. 211).
 
+\item CIGE México. (2026). \textit{Curso de protección de datos
+  personales (LFPDPPP)} [Ficha del curso]. Emagister.
+  \url{https://www.emagister.com.mx/curso_proteccion_datos_personales_lfpdppp-cursos-833890.htm}
+ 
+  % Cap. 7 (secc. 7.3, Plan Universidad): curso abierto de ocho horas
+  % a \$3,500 MXN más IVA por persona, como referencia de precio de la
+  % capacitación en LFPDPPP (CIGE, 2026).
+
 \item Conselho Federal de Medicina. (2022, 4 de noviembre).
   \textit{Resolução CFM n°~2.314/2022: Define e regulamenta a
   telemedicina no Brasil}. CFM.
@@ -3494,17 +4090,16 @@ de riesgo legal.
   % Cap. 2 (secc. 2.2.5, tabla): instrumento del que derivó el
   % GDPR; base de la Ley 18.331 uruguaya (Consejo de Europa, 1981).
  
-\item Consejo de Europa. (2013, 12 de abril). \textit{Personal data
-  protection: Uruguay becomes first non-European state to accede
-  to ``Convention 108''}. Consejo de Europa.
-  \url{https://www.coe.int/en/web/portal/-/personal-data-protection-uruguay-becomes-first-non-european-state-to-accede-to-convention-108-}
+\item Consejo de Europa. (s.f.). \textit{Chart of signatures and
+  ratifications of Treaty 108: Convention for the Protection of
+  Individuals with regard to Automatic Processing of Personal Data}.
+  Treaty Office.
+  \url{https://www.coe.int/en/web/conventions/full-list?module=signatures-by-treaty&treatynum=108}
  
   % Cap. 2 (secc. 2.2.5, tabla): Uruguay, primer Estado no europeo
-  % en adherirse al Convenio 108; en vigor para Uruguay desde el
-  % 1 de agosto de 2013 (Consejo de Europa, 2013).
-
-% ── D ────────────────────────────────────────────────────────
-
+ % parte del Convenio 108; en vigor para Uruguay desde el 1 de
+  % agosto de 2013 (Consejo de Europa, s.f.).
+  
 \item Decreto N°~242/017, Historia Clínica Electrónica Nacional.
   (2017, 11 de septiembre). \textit{Diario Oficial de la República
   Oriental del Uruguay}.
@@ -3534,6 +4129,17 @@ de riesgo legal.
   % afectados de forma significativa, en lenguaje claro y sencillo
   % y sin plazo numérico (Decreto~64/020, 2020, art.~4).
 
+\item Decreto de Promulgación de la Declaración del Gobierno de los
+  Estados Unidos Mexicanos sobre la aceptación de sus obligaciones como
+  Miembro de la Organización de Cooperación y Desarrollo Económicos.
+  (1994, 5 de julio). \textit{Diario Oficial de la Federación}.
+  \url{https://www.dof.gob.mx/nota_detalle.php?codigo=4711014&fecha=05/07/1994}
+ 
+  % Cap. 2 (secc. 2.1.2): México depositó su instrumento de adhesión
+  % a la Convención de la OCDE el 18 de mayo de 1994 (Decreto de
+  % Promulgación..., 1994).
+ 
+
 \item Decreto por el que se reforman y adicionan diversas
   disposiciones de la Constitución Política de los Estados Unidos
   Mexicanos, en materia de transparencia. (2014, 7 de febrero).
@@ -3543,6 +4149,9 @@ de riesgo legal.
   % Cap. 2 (secc. 2.1.2): reforma constitucional que dio autonomía
   % al organismo garante (Decreto por el que se reforman y
   % adicionan, 2014).
+
+\item Dietopro. (2026). \textit{Precios}. Dietopro.
+  \url{https://dietopro.com/precios}
 
 \item Digitalgesetz. (2024, 22 de marzo). \textit{Gesetz zur
   Beschleunigung der Digitalisierung des Gesundheitswesens},
@@ -3555,6 +4164,15 @@ de riesgo legal.
   % C5~BSI obligatoria desde julio 2025.
 
 % ── E ────────────────────────────────────────────────────────
+
+\item Doctoralia. (2026). \textit{Precios para médicos y
+  especialistas}. Doctoralia PRO.
+  \url{https://pro.doctoralia.com.mx/precios/medicos-y-especialistas}
+ 
+  % Cap. 7 (secc. 7.3, Destacado): planes Starter, Plus y VIP de
+  % \$1,740 a \$2,970 MXN al mes con facturación anual (Doctoralia,
+  % 2026).
+ 
 
 \item Emenda Constitucional n°~115. (2022, 10 de febrero).
   \textit{Inclui a proteção de dados pessoais entre os direitos e
@@ -3599,6 +4217,9 @@ de riesgo legal.
   % PHI en todo el territorio de EE.UU. (HIPAA, 1996, 45 CFR
   % Parts 160 y 164).
 
+\item Healthie. (2026). \textit{Healthie pricing}. Healthie Help Center.
+  \url{https://help.gethealthie.com/article/773-healthie-pricing}
+
 \item Hernández-Sampieri, R., Fernández-Collado, C., y
   Baptista-Lucio, P. (2014). \textit{Metodología de la
   investigación} (6a~ed.). McGraw-Hill.
@@ -3613,16 +4234,26 @@ de riesgo legal.
   \textit{MIS Quarterly}, \textit{28}(1), 75--105.
   \url{https://doi.org/10.2307/25148625}
 
-  % Cap. 5: ``create innovations that define the ideas, practices,
-  % technical capabilities, and products through which the analysis,
-  % design, implementation, management, and use of information
-  % systems can be effectively and efficiently accomplished''
-  % (Hevner et al., 2004, p.~75).
-  % También: ``an artifact can be construed broadly as any designed
-  % object in which a research contribution is embedded in the
-  % design'' (p.~77).
+ % Cap. 4 (secc. 4.1.1): ``create innovations that define the ideas,
+  % practices, technical capabilities, and products through which the
+  % analysis, design, implementation, management, and use of
+  % information systems can be effectively and efficiently
+  % accomplished'' (Hevner et al., 2004, p.~76). Cap. 4 (secc. 4.4.2):
+  % métodos de evaluación (pruebas, revisión por expertos, observación).
+  % La frase ``any designed object in which a research contribution is
+  % embedded'' es de Peffers et al. (2007), no de Hevner.
 
 % ── I ────────────────────────────────────────────────────────
+
+\item Instituto Mexicano de la Propiedad Industrial. (2023, 12 de
+  mayo). \textit{Acuerdo por el que se modifica el diverso por el que
+  se da a conocer la tarifa por los servicios que presta el Instituto
+  Mexicano de la Propiedad Industrial}. Secretaría de Economía.
+  \url{https://www.gob.mx/cms/uploads/attachment/file/824879/Acuerdo.Tarifa.12.05.23.pdf}
+ 
+  % Cap. 7 (secc. 7.3, Tabla de inversión inicial): tarifa por
+  % solicitud de registro de marca, una clase (Instituto Mexicano de
+  % la Propiedad Industrial, 2023).
 
 \item Instituto Nacional de Estadística y Geografía. (2025,
   10 de enero). \textit{Valor de la Unidad de Medida y
@@ -3634,6 +4265,17 @@ de riesgo legal.
   % internacionales como referencia es práctica recomendada para
   % demostrar el principio de responsabilidad del art.~14 de la
   % LFPDPPP (INAI, 2018).
+
+\item Instituto Nacional de Transparencia, Acceso a la Información
+  y Protección de Datos Personales. (s.f.). \textit{Centro Virtual de
+  Capacitación en Acceso a la Información y Protección de Datos}
+  (CEVINAI). \url{https://cevifaipublica.inai.org.mx/}
+ 
+  % Cap. 7 (secc. 7.3, Plan Universidad): cursos gratuitos y generales
+  % sobre protección de datos, sin enfoque sectorial (Instituto Nacional
+  % de Transparencia, Acceso a la Información y Protección de Datos
+  % Personales, s.f.).
+
 
 \item Instituto Nacional de Transparencia, Acceso a la Información
   y Protección de Datos Personales. (2017, 31 de diciembre).
@@ -3742,6 +4384,38 @@ de riesgo legal.
   % 2\% del faturamento con tope de 50 millones de reales por
   % infracción (LGPD, 2018, art.~52, inc.~II).
 
+\item La Silla Rota. (2026, 27 de agosto). Las 10 carreras con los
+  salarios más bajos en México, según el IMCO. \textit{La Silla Rota}.
+  \url{https://lasillarota.com/dinero/2026/8/27/las-10-carreras-con-los-salarios-mas-bajos-en-mexico-segun-el-imco-526227.html}
+ 
+  % Cap. 7 (secc. 7.3): ingreso mensual promedio de nutrición,
+  % \$17,773 MXN, según Compara Carreras 2026 del IMCO (Instituto
+  % Mexicano para la Competitividad, 2026, citado en La Silla Rota, 2026).
+ 
+\item Ley del Impuesto al Valor Agregado. (1978, 29 de diciembre;
+  última reforma 2024). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf}
+ 
+  % Cap. 7 (secc. 7.3): tasa general del 16~\% (Ley del Impuesto al
+  % Valor Agregado, art.~1).
+ 
+\item Ley del Impuesto sobre la Renta. (2013, 11 de diciembre;
+  última reforma 2025). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LISR.pdf}
+ 
+  % Cap. 7 (secc. 7.3): tasa del 30~\% para personas morales
+  % (art.~9) y tabla del Régimen Simplificado de Confianza para
+  % personas físicas, del 1.0 al 2.5~\% sobre ingresos cobrados, con
+  % tope de 3.5 millones de pesos (art.~113-E).
+ 
+\item Ley Federal de Protección al Consumidor. (1992, 24 de diciembre;
+  última reforma 2024). \textit{Diario Oficial de la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPC.pdf}
+ 
+  % Cap. 7 (secc. 7.3, Destacado): la información y la publicidad deben
+  % ser veraces, comprobables y claras (Ley Federal de Protección al
+  % Consumidor, art.~32).
+
 \item Ley Federal de Protección de Datos Personales en Posesión
   de los Particulares. (2010, 5 de julio). \textit{Diario Oficial
   de la Federación}. [Abrogada el 21 de marzo de 2025].
@@ -3827,13 +4501,27 @@ de riesgo legal.
   % Cap. 2 (secc. 2.1.2): cronología institucional del IFAI al INAI
   % y reforma de autonomía de 2014 (Marván Laborde, 2023).
   
-\item Mercado Pago. (s.f.). \textit{Checkout Pro}. Mercado Pago
-  Developers.
-  \url{https://www.mercadopago.com.mx/developers/es/docs/checkout-pro/overview}
+\textit{Checkout »):
+\item Mercado Pago. (s.f.-a). \textit{Checkout Pro}. Mercado Pago Developers.
+\url{https://www.mercadopago.com.mx/developers/es/docs/checkout-pro/overview}
 
   % Cap. 5 (secc. 5.1): la tarjeta se captura en las páginas del
   % proveedor; el integrador no recibe ni almacena datos de tarjeta
-  % (Mercado Pago, s.f.).
+  
+ \item Mercado Pago. (s.f.-b). \textit{Costos y comisiones de Checkout
+  Pro}. Mercado Pago México.
+  \url{https://www.mercadopago.com.mx/herramientas-para-vender/check-out}
+ 
+  % Cap. 7 (secc. 7.3, nota de la Tabla de costos): comisión por
+  % transacción con depósito inmediato o a 14 días (Mercado Pago,
+  % s.f.-b).
+ 
+\item Meta. (2025). \textit{Pricing}. WhatsApp Business Platform,
+  Meta for Developers.
+  \url{https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing}
+ 
+  % Cap. 7 (secc. 7.3): modelo de cobro por mensaje desde julio de
+  % 2025 y categorías de plantilla (Meta, 2025).
  
 \item Ministerio de Salud Pública del Uruguay. (2017).
   \textit{Ordenanza N°~1085/2017: Sistema de Historia Clínica
@@ -3916,6 +4604,22 @@ de riesgo legal.
   % consentimientos y contratos de suscripción como mensajes de
   % datos (Norma Oficial Mexicana NOM-151-SCFI-2016, 2017).
 
+\item NutriAdmin. (2026). \textit{Pricing}. NutriAdmin.
+  \url{https://nutriadmin.com/pricing}
+ 
+\item NutriApp. (2026). \textit{Prototipo de NutriApp} [Maquetas
+  navegables y código fuente]. Repositorio del proyecto.
+  \url{[por confirmar: URL del repositorio público del prototipo]}
+ 
+  % Cap. 6 (secc. 6.2 y 6.4): maquetas navegables construidas en Figma
+  % Make con React, TypeScript y Tailwind (NutriApp, 2026).
+ 
+\item Nutrimind. (s.f.). \textit{Nutrimind para universidades}. Nutrimind.
+  \url{https://www.nutrimind.net/page/noticias/universidades}
+ 
+\item Nutrium. (2026). \textit{Pricing}. Nutrium.
+  \url{https://nutrium.com/en/pricing}
+
 \item Organización para la Cooperación y el Desarrollo Económicos.
   (1980). \textit{Directrices sobre la protección de la privacidad
   y los flujos transfronterizos de datos personales}. OCDE.
@@ -3924,13 +4628,6 @@ de riesgo legal.
   % Cap. 2 (secc. 2.1.2): principios mínimos de privacidad para
   % países miembros de la OCDE (OCDE, 1980).
 
-\item Organización para la Cooperación y el Desarrollo Económicos.
-  (1994, 18 de mayo). \textit{Accession of Mexico to the OECD}
-  [Comunicado de prensa SG/PRESS(94)32]. OCDE.
-  \url{https://one.oecd.org/document/SG/PRESS(94)32/en/pdf}
-
-  % Cap. 2 (secc. 2.1.2): México depositó su instrumento de adhesión
-  % a la Convención de la OCDE el 18 de mayo de 1994 (OCDE, 1994).
 
 % ── P ────────────────────────────────────────────────────────
 
@@ -3969,6 +4666,15 @@ de riesgo legal.
 
 % ── R ────────────────────────────────────────────────────────
 
+\item Practice Better. (2026). \textit{Practice Better pricing, plans and
+  features comparison}. Practice Better Help Center.
+  \url{https://help.practicebetter.io/hc/en-us/articles/41860197371291-Practice-Better-Pricing-Plans-and-Features-Comparison}
+ 
+  % Cap. 7 (secc. 7.3, Tabla de competencia): precios de lista de los
+  % competidores y sus ofertas a estudiantes y universidades (Dietopro,
+  % 2026; Healthie, 2026; NutriAdmin, 2026; Nutrimind, s.f.; Nutrium,
+  % 2026; Practice Better, 2026).
+
 \item Reglamento de la Ley Federal de Protección de Datos
   Personales en Posesión de los Particulares. (2011,
   21 de diciembre). \textit{Diario Oficial de la Federación}.
@@ -3979,6 +4685,17 @@ de riesgo legal.
   % art.~52 (uso de nube con protección equivalente),
   % art.~57 (trazabilidad y medidas de seguridad),
   % art.~61 (inventario, análisis de riesgos y análisis de brecha).
+  
+  \item Reglamento de la Ley General de Salud en Materia de Publicidad.
+  (2000, 4 de mayo; última reforma 2019). \textit{Diario Oficial de la
+  Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LGS_MP.pdf}
+ 
+  % Cap. 7 (secc. 7.3, Destacado): la publicidad de servicios de salud
+  % informa tipo, características y finalidades (art.~16) y muestra la
+  % institución que expidió el título y la cédula (art.~19); requiere
+  % permiso salvo los servicios otorgados en forma individual (art.~79,
+  % fracc.~I).
 
 \item Rescorla, E. (2018). \textit{The transport layer security
   (TLS) protocol version 1.3} (RFC~8446). Internet Engineering
@@ -4027,6 +4744,22 @@ de riesgo legal.
 % Cap. 2 (secc. 2.1.4): estructura de la Dirección General de
 % Datos Personales en el Sector Privado (SABG, 2025b, art.~30-F). 
 
+\item Secretaría del Trabajo y Previsión Social. (s.f.).
+  \textit{Nutriología: una carrera que beneficia a todos}. Observatorio
+  Laboral.
+  \url{https://www.observatoriolaboral.gob.mx/static/preparate-empleo/Articulo_nutriologia.html}
+ 
+  % Cap. 7 (secc. 7.3, Plan Universidad): 81,849 alumnos inscritos en
+  % nutriología en el último ciclo escolar (Secretaría del Trabajo y
+  % Previsión Social, s.f.).
+ 
+\item Secretaría de Economía. (s.f.). \textit{Sociedad por Acciones
+  Simplificada}. Tu empresa, Gobierno de México.
+  \url{https://www.gob.mx/tuempresa}
+ 
+  % Cap. 7 (secc. 7.3, Tabla de inversión inicial): constitución en
+  % línea sin costo (Secretaría de Economía, s.f.).
+
 \item Secretaría de Economía. (2015, 14 de abril). \textit{Declaratoria
   de vigencia de las normas mexicanas NMX-I-25021-NYCE-2015,
   NMX-I-27001-NYCE-2015 y NMX-I-27002-NYCE-2015}. Diario Oficial de
@@ -4052,8 +4785,12 @@ de riesgo legal.
   % que solo quien posea esa clave puede recuperar el contenido
   % (Stallings, 2017, p.~28).
 
-% ── U ────────────────────────────────────────────────────────
-
+\item Twilio. (2026). \textit{SMS pricing: Mexico}. Twilio.
+  \url{https://www.twilio.com/en-us/sms/pricing/mx}
+ 
+  % Cap. 7 (secc. 7.3): precio del SMS saliente en México y del
+  % número local; cargo por mensaje de WhatsApp (Twilio, 2026).
+  
 \item U.S. Department of Health and Human Services. (2013).
   \textit{HIPAA administrative simplification: Regulation text
   (45 CFR Parts 160, 162 and 164)}. HHS.
@@ -4093,7 +4830,8 @@ de riesgo legal.
   % Cap. 2 (secc. 2.2.3): aplica a cualquier empresa que procese
   % datos de salud de consumidores con independencia de si es
   % covered entity bajo HIPAA (Washington My Health My Data Act
-  % [MHMDA], 2023, RCW 70.372).
+  % [MHMDA], 2023, RCW 19.373).
+
 
 % ── Y ────────────────────────────────────────────────────────
 
@@ -4452,8 +5190,8 @@ independiente o institucional, y docentes del área.
   \\[4pt]
   \multicolumn{3}{l}{\textit{Sección 6: Cierre}} \\
   \midrule
-
-  20
+ 
+20
     & Considerando todo lo que acabas de responder sobre cómo
       manejas los datos de tus pacientes y cómo te han tratado
       a ti como paciente, ¿crees que en general el sector de la
