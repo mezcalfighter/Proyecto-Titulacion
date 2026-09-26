@@ -13,7 +13,6 @@
 \usepackage{longtable}
 \usepackage{xcolor}
 \usepackage{amssymb}
-\usepackage{svg}
 % Geometría e interlineado
 \usepackage{geometry}
 \usepackage{setspace}
@@ -146,7 +145,7 @@
 % ═══════════════════════════════════════════════════════════════════════════
 \title{
   \large Instituto Tecnológico y de Estudios Superiores de Occidente\\[1em]
-  \includegraphics[width=0.6\textwidth]{logo-iteso-fondoAzul.pdf}\\[1em]
+  \includegraphics[width=0.6\textwidth]{logo-iteso-fondoAzul.png}\\[1em]
   \rule{\linewidth}{0.5pt}\\[0.8em]
   \LARGE \textbf{Caso de Estudio}\\[0.4em]
   \Large Privacidad por Diseño en la Práctica Nutriológica:\\
@@ -2299,14 +2298,10 @@ normativo puede replicar por sí solo.
 \mbox{}
 % Texto aquí
 % ============================================================
-% CAPÍTULO 4 — METODOLOGÍA (versión con grupos focales, 20-sep-2026)
-% Sustituye COMPLETO el bloque que va desde «\section{Metodología}»
-% (l. 2290) hasta «Este trabajo no tiene conflicto de interés
-% declarable.» (l. 2512), tanto en tu push 8c5078a como en
-% main_5_preview.tex (la numeración coincide en ese tramo).
-% Lo que va entre corchetes «[…]» son datos que dependen de la
-% junta con el consultor o de la academia de nutrición; búscalos
-% con Ctrl+F «[por confirmar» antes de la entrega.
+% CAPÍTULO 4 — METODOLOGÍA (versión con grupos focales, 25-sep-2026)
+% Parámetros de campo cerrados con valores propios: octubre 2026,
+% 120 min (o dos encuentros de 60), 40–70 participantes, tres
+% sesiones. Ajustar solo si la academia asigna algo distinto.
 % Sin entradas bibliográficas nuevas.
 % ============================================================
 \section{Metodología}
@@ -2451,14 +2446,19 @@ Los estudiantes aportan la formación reciente y la práctica inicial;
 los docentes aportan la práctica consolidada y la revisión experta del
 diseño.
  
-Las sesiones se realizan [por confirmar: fechas y número de sesiones]
-en instalaciones del ITESO, con grupos de no más de 35 participantes y
-duración de [por confirmar: 60 o 120] minutos. El diseño del
-instrumento, la conducción de las sesiones y el procesamiento de los
-datos están a cargo de un consultor metodológico externo con formación
-en construcción de instrumentos de evaluación; la interpretación de los
-resultados y su relación con el marco normativo son responsabilidad del
-autor.
+Las sesiones se realizan en octubre de 2026, en instalaciones del
+ITESO y en las fechas que la academia de nutrición asigne, con grupos
+de no más de 35 participantes y una duración prevista de 120 minutos;
+si la disponibilidad de los grupos solo permite encuentros de 60
+minutos, el procedimiento se divide en dos encuentros con el mismo
+grupo, como se precisa más adelante. El diseño de los instrumentos se
+fundamenta en la metodología de grupos focales y de construcción de
+instrumentos de la investigación en ciencias sociales
+(Hernández-Sampieri et al., 2014) y se somete a revisión de expertos
+antes de su aplicación; la conducción de las sesiones y el
+procesamiento de los datos están a cargo del autor, y la
+interpretación de los resultados y su relación con el marco normativo
+son también responsabilidad suya.
  
 \subsubsection{Instrumentos}
  
@@ -2526,16 +2526,17 @@ maqueta no condicione las respuestas sobre la práctica actual.
 \end{enumerate}
  
 Las sesiones se graban en audio con autorización de los participantes y
-se toman notas de campo. [por confirmar: si las sesiones son de una
-hora, los pasos 3 y 4 se realizan en una segunda sesión con el mismo
-grupo].
+se toman notas de campo. Si los encuentros son de 60 minutos, los
+pasos 1 y 2 se realizan en el primero y los pasos 3 a 5 en el
+segundo, con el mismo grupo; la línea base queda medida, en cualquier
+caso, antes de mostrar el diseño.
  
 \subsubsection{Muestra}
  
 La muestra es no probabilística y por conveniencia: los grupos que la
 academia de nutrición pone a disposición en las fechas acordadas. Se
-espera un total de [por confirmar: n] participantes en [por confirmar:
-k] sesiones. Yin (2018) sostiene que en un caso de estudio importa
+espera un total de entre 40 y 70 participantes en al menos tres
+sesiones: dos con estudiantes y una con docentes. Yin (2018) sostiene que en un caso de estudio importa
 menos cuántos casos se observan que qué permiten ver los observados.
 El tamaño no busca inferencia estadística sobre el gremio,
 sino evidencia de patrones que, contrastados con la literatura y con
@@ -2652,13 +2653,13 @@ correspondiente.
 El autor declara que, concluido el caso, el diseño podrá transferirse
 o licenciarse a un tercero para su implementación. Ninguna
 organización externa financió ni condicionó este trabajo, y ningún
-participante tiene relación con esa eventual transferencia. El
-consultor metodológico externo recibió honorarios por el diseño del
-instrumento, la conducción de las sesiones y el procesamiento de los
-datos; no participa en la interpretación de los resultados ni tiene
-interés en el diseño.
+elación con esa eventual », termina «interés en el diseño.»):
+participante tiene relación con esa eventual transferencia. Los
+expertos que revisan los instrumentos y el diseño lo hacen sin
+contraprestación, no participan en la interpretación de los
+resultados y no tienen interés en el diseño ni en su eventual
+transferencia.
  
-
 % ═══════════════════════════════════════════════════════════════════════════
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diseño de la Solución}
@@ -2844,7 +2845,7 @@ resuelve por puntos de enlace privados dentro de la VPC.
 
 \begin{figure}[H]
   \centering
-  \includesvg[width=\textwidth]{diagrama-aws.pdf}
+  \includegraphics[width=\textwidth]{diagrama-aws.pdf}
   \caption{Arquitectura de servicios AWS para NutriApp. Elaboración propia.}
   \label{fig:aws}
 \end{figure}
@@ -2857,8 +2858,7 @@ y Sistema. Los casos de uso se agrupan en cinco dominios: gestión clínica
 (expediente, consentimiento, plan de alimentación, seguimiento), derechos
 del titular (módulo ARCO), catálogo y citas (búsqueda, reserva y posiciones
 patrocinadas), comunidad (módulo social, reportes de contenido) y
-administración (moderación, instituciones, verificación de cédulas y
-gestión de cuentas).
+administración (moderación, instituciones y códigos de activación, y gestión de cuentas).
 
 \begin{figure}[H]
   \centering
@@ -2867,10 +2867,30 @@ gestión de cuentas).
   \label{fig:uml-cu}
 \end{figure}
 
+El diagrama se lee por actor. El paciente otorga su consentimiento y
+presenta las solicitudes ARCO; el nutriólogo las resuelve. Esa
+separación es la del responsable y el titular en la ley: el
+consentimiento lo da el titular (LFPDPPP, 2025, art.~8) y la respuesta
+la debe el responsable en el plazo del artículo~31. El actor Sistema
+representa las funciones programadas que actúan sin intervención
+humana: la secuencia de bloqueo y supresión de la sección~2.5.5, la
+notificación con folio al correo verificado y la sugerencia de
+alternativas cuando una cita vence sin respuesta. Las relaciones
+«include» marcan pasos que siempre acompañan al caso que los incluye,
+como la notificación que sigue a todo bloqueo; la relación «extend»
+marca un paso que solo ocurre bajo una condición, como las
+alternativas que se ofrecen si el nutriólogo no contesta. El
+estudiante usa el mismo caso de gestión de expediente que el
+nutriólogo, acotado a pacientes ficticios, y el docente solo consulta
+esos expedientes en modo de lectura. El administrador modera
+contenido y da de alta instituciones y códigos, pero ninguno de sus
+casos de uso toca un expediente clínico, en congruencia con el control
+de acceso por rol de la sección~2.5.2.
+
 La Figura~\ref{fig:uml-seq} presenta el diagrama de secuencia del flujo de
 reserva de cita, el que más componentes del sistema recorre: el paciente elige una franja horaria disponible del nutriólogo en
-\texttt{FindNutritionist}, inicia sesión con MFA en \texttt{Login}, completa
-la solicitud en \texttt{ConfirmAppointment} y el nutriólogo recibe una
+\texttt{FindNutritionist}, inicia sesión en \texttt{Login}, con segundo
+factor si lo tiene activado, completa la solicitud en \texttt{ConfirmAppointment} y el nutriólogo recibe una
 notificación en \texttt{AppointmentsManager} con un plazo de 48 horas para
 aceptar o rechazar. Si no responde en ese plazo, el sistema sugiere al
 paciente nutriólogos alternativos.
@@ -2878,10 +2898,25 @@ paciente nutriólogos alternativos.
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.95\textwidth]{uml-secuencia.pdf}
-  \caption{Diagrama de secuencia: flujo de reserva de cita con MFA y confirmación del
+  \caption{Diagrama de secuencia: flujo de reserva de cita y confirmación del
   nutriólogo. Elaboración propia.}
   \label{fig:uml-seq}
 \end{figure}
+
+La secuencia muestra dos decisiones de diseño. La primera es que el
+catálogo se consulta sin iniciar sesión: el paciente puede buscar y
+comparar fichas sin crear cuenta, y el inicio de sesión se pide hasta
+que elige una franja y va a reservar. El segundo factor es obligatorio
+para el nutriólogo (sección~2.5.2); para el paciente se aplica si lo
+tiene activado. La segunda es que la
+notificación de la cita viaja dentro de la aplicación y no por
+mensajería, conforme a la regla de canales de la sección~7.3; el
+nutriólogo la atiende en \texttt{AppointmentsManager}. El bloque
+alternativo cierra los dos desenlaces posibles: si el nutriólogo
+responde dentro de las 48 horas, el paciente recibe la confirmación o
+el rechazo en la aplicación; si el plazo vence, la solicitud se marca
+como vencida y el sistema ofrece al paciente otros nutriólogos, sin
+que la solicitud quede abierta de forma indefinida.
 
 \subsubsection{Diagrama entidad-relación}
 
@@ -2892,8 +2927,8 @@ datos de NutriApp. Las entidades principales son \texttt{nutriologo},
 \texttt{appointment\_request}, \texttt{post}, \texttt{moderation\_event} y
 \texttt{plan\_subscription}, más las que sostienen las cuentas de
 práctica y el catálogo descritos en el capítulo seis:
-\texttt{institution}, \texttt{activation\_code}, \texttt{teacher},
-\texttt{verification} y \texttt{featured\_listing}. El modelo es
+\texttt{institution}, \texttt{activation\_code}, \texttt{teacher} y
+\texttt{featured\_listing}. El modelo es
 relacional y se define en PostgreSQL sobre Amazon RDS, conforme a la
 capa de datos de la sección anterior; la entidad
 \texttt{plan\_subscription} guarda solo el identificador de suscripción
@@ -2905,6 +2940,33 @@ que devuelve el proveedor de pagos.
   \caption{Diagrama entidad-relación de NutriApp. Elaboración propia.}
   \label{fig:er}
 \end{figure}
+
+Las entidades se agrupan en cinco bloques. En el clínico, cada
+\texttt{paciente} pertenece a un nutriólogo, que es el responsable de
+sus datos, y tiene un único \texttt{expediente}. El expediente guarda
+los datos clínicos cifrados con su propia llave de datos
+(sección~2.5.3); el campo \texttt{fecha\_ultimo\_acto} marca el inicio
+de los cinco años de conservación de la NOM-004, y
+\texttt{bloqueado\_desde} registra cuándo una cancelación procedente
+lo pasó a bloqueo (sección~2.5.5). En el bloque de derechos y
+trazabilidad, \texttt{consentimiento} y \texttt{arco\_request} se
+identifican por folio (\texttt{DEC-} y \texttt{ARCO-}), el
+consentimiento registra el mecanismo con que se otorgó, la versión del
+aviso aceptado y si el titular aceptó los avisos por mensajería;
+\texttt{declaration\_log} conserva la copia inmutable de cada
+declaración, y \texttt{audit\_log} registra quién consultó,
+modificó o descargó cada expediente.
+ 
+Las cuentas de práctica no crean un tipo de usuario aparte: un
+estudiante es un \texttt{nutriologo} de tipo \textit{students},
+ligado a la \texttt{institution} y al \texttt{activation\_code} con
+que se activó, y sus pacientes llevan la marca \texttt{ficticio}.
+La cédula y la institución que expidió el título se guardan como datos
+declarados por el profesional, sin documento probatorio. El modelo
+tampoco guarda datos de tarjeta: \texttt{plan\_subscription} conserva
+solo el identificador que devuelve Mercado Pago, y
+\texttt{featured\_listing} no tiene relación alguna con pacientes,
+porque ningún dato de salud interviene en el orden del catálogo.
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Demostración del diseño: maquetas y prueba piloto}
@@ -3001,9 +3063,19 @@ El nutriólogo se registra en \texttt{NutritionistRegister} con su cédula
 profesional y la institución que expidió su título, firma una
 declaración bajo protesta que el \texttt{DeclarationLog} conserva con
 folio, y configura el segundo factor en \texttt{MFASetup} antes de poder
-entrar a cualquier expediente. La cédula pasa a una cola de verificación
-del administrador (\texttt{AdminVerification}); cuando se valida, el
-perfil recibe la insignia «Perfil verificado».
+entrar a cualquier expediente. La veracidad de la cédula y del título
+es responsabilidad del nutriólogo, que la asume en esa declaración;
+NutriApp no los verifica ni los certifica. Exhibir la institución que
+expidió el título y el número de cédula, también en la publicidad, es
+obligación de quien ejerce la profesión (LGS, 1984/2024, art.~83), y la
+plataforma se limita a hacerlo posible y a recordarlo: antes de
+publicar su ficha, una ventana emergente le indica al nutriólogo que
+los datos capturados deben coincidir con su registro en la consulta
+pública de cédulas profesionales de la Secretaría de Educación Pública
+(s.f.), que su veracidad es responsabilidad suya y que la ficha los
+mostrará tal como los declaró. La ficha se publica hasta que el
+nutriólogo confirma esa ventana, y la confirmación queda con fecha y
+hora en el \texttt{DeclarationLog}.
  
 El consentimiento del paciente es el flujo con más carga normativa del
 MVP y el que más cambió respecto del diseño inicial, en el que era el
@@ -3102,14 +3174,17 @@ especialidad. Los resultados se ordenan por disponibilidad, cercanía
 declarada y especialidad; ningún dato de salud del paciente interviene
 en el orden. Entre los cinco primeros resultados, a lo sumo dos llevan
 la etiqueta «Patrocinado», que corresponde al servicio de exposición
-descrito en la sección~8.3. Cada tarjeta muestra la insignia «Perfil
-verificado» cuando la cédula del profesional fue validada, y en todos
-los casos la institución que expidió el título y el número de cédula,
+descrito en la sección~8.3. Cada tarjeta muestra la institución que
+expidió el título y el número de cédula que el profesional declaró,
 como exige la publicidad de servicios de salud (Reglamento de la Ley
-General de Salud en Materia de Publicidad, 2000, art.~19). Un enlace al pie explica cómo
-se ordenan los resultados. La reserva sigue la secuencia de la
+General de Salud en Materia de Publicidad, 2000, art.~19). La
+transparencia sustituye a la verificación: junto a esos datos, la
+ficha indica que los declaró el profesional bajo su responsabilidad y
+enlaza a la consulta pública de cédulas de la Secretaría de Educación
+Pública (s.f.), para que el paciente pueda comprobarlos por su cuenta.
+Un enlace al pie explica cómo se ordenan los resultados. La reserva sigue la secuencia de la
 Figura~\ref{fig:uml-seq}: el paciente elige una franja horaria, inicia
-sesión con MFA, confirma en \texttt{ConfirmAppointment} y el nutriólogo
+sesión, confirma en \texttt{ConfirmAppointment} y el nutriólogo
 recibe la solicitud en \texttt{AppointmentsManager} con 48 horas para
 aceptarla; si no responde, el sistema sugiere alternativas. Las citas
 se notifican dentro de la aplicación, no por mensajería.
@@ -3809,18 +3884,18 @@ la información y la publicidad deben ser veraces, comprobables y claras
 dato de pacientes interviene en el orden de los resultados, ni en el
 patrocinado ni en el orgánico, en línea con el principio de
 proporcionalidad (LFPDPPP, 2025, art.~5). Tercera: el Destacado solo se
-activa con cédula profesional validada y perfil completo, y la ficha
-muestra la institución que expidió el título y el número de cédula,
+activa con el perfil completo, y la ficha muestra la institución que expidió el título y el número de cédula,
 como exige la publicidad de servicios de salud (Reglamento de la Ley
-General de Salud en Materia de Publicidad, 2000, art.~19); los servicios
+General de Salud en Materia de Publicidad, 2000, art.~19), datos que
+el nutriólogo captura bajo la declaración de la sección~6.2 y cuya
+veracidad le corresponde, lo que la propia ficha indica junto con el
+enlace a la consulta pública de cédulas; los servicios 
 que un profesional presta de forma individual no requieren permiso
 publicitario (Reglamento de la Ley General de Salud en Materia de
 Publicidad, 2000, art.~79, fracc.~I), pero la ficha no admite promesas de
-resultados ni afirmaciones sobre tratamientos. Cuarta: cuando varios
+etiquetados, cédula declarada por el profesional y reserva de cita.
 destacados coinciden en una búsqueda, rotan de forma equitativa; pagar
-más no compra un lugar fijo. La insignia «Perfil verificado» se otorga
-sin costo a todo nutriólogo con cédula validada, para que la verificación
-nunca se confunda con el patrocinio.
+más no compra un lugar fijo.
 
 \textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
 cierra el cálculo con los ingresos de los planes del MVP y los impuestos
@@ -4485,7 +4560,9 @@ revisan con un contador antes de operar.
 
   % Cap. 2 (secc. 2.1.3): art.~51~Bis~2° --- constancia en
   % expediente clínico del consentimiento informado del paciente
-  % (LGS, 1984/2024, art.~51~Bis~2°). Art.~77~Bis~37
+  % (LGS, 1984/2024, art.~51~Bis~2°). Art.~83: quien ejerce exhibe
+  % institución del título y cédula, también en su publicidad (cap. 6,
+  % secc. 6.2.1). Art.~77~Bis~37
   % (confidencialidad). Art.~103~Bis~3 (datos genéticos).
 \item Ley General de Transparencia y Acceso a la Información
   Pública. (2015, 4 de mayo). \textit{Diario Oficial de la
@@ -4632,7 +4709,7 @@ revisan con un contador antes de operar.
  
 \item NutriApp. (2026). \textit{Prototipo de NutriApp} [Maquetas
   navegables y código fuente]. Repositorio del proyecto.
-  \url{[por confirmar: URL del repositorio público del prototipo]}
+  \url{https://github.com/mezcalfighter/NutriApp-Wireframes}
  
   % Cap. 6 (secc. 6.2 y 6.4): maquetas navegables construidas en Figma
   % Make con React, TypeScript y Tailwind (NutriApp, 2026).
@@ -4799,6 +4876,14 @@ revisan con un contador antes de operar.
  
   % Cap. 2 (secc. 2.5.6): norma mexicana voluntaria que adopta
   % ISO/IEC 27701 (Secretaría de Economía, 2021).
+
+\item Secretaría de Educación Pública. (s.f.). \textit{Consulta de
+  cédulas profesionales}. Registro Nacional de Profesionistas.
+  \url{https://www.cedulaprofesional.sep.gob.mx/}
+ 
+  % Cap. 6 (secc. 6.2): la ficha enlaza a la consulta pública para que
+  % el paciente compruebe la cédula declarada; NutriApp no verifica
+  % (Secretaría de Educación Pública, s.f.).
 
 \item Stallings, W. (2017). \textit{Cryptography and network
   security: Principles and practice} (7a~ed.). Pearson.
