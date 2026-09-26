@@ -13,6 +13,7 @@
 \usepackage{longtable}
 \usepackage{xcolor}
 \usepackage{amssymb}
+\usepackage{svg}
 % Geometría e interlineado
 \usepackage{geometry}
 \usepackage{setspace}
@@ -64,7 +65,7 @@
 %  ── IMAGEN SIMPLE ─────────────────────────────────────────────────────────
 %  \begin{figure}[H]
 %    \centering
-%    \includegraphics[width=0.8\textwidth]{nombre-archivo.png}
+%    \includegraphics[width=0.8\textwidth]{nombre-archivo.pdf}
 %    \caption{Descripción de la figura.}
 %    \label{fig:etiqueta}
 %  \end{figure}
@@ -74,13 +75,13 @@
 %  \begin{figure}[H]
 %    \centering
 %    \begin{subfigure}[b]{0.48\textwidth}
-%      \includegraphics[width=\textwidth]{imagen-izq.png}
+%      \includegraphics[width=\textwidth]{imagen-izq.pdf}
 %      \caption{Pie izquierda.}
 %      \label{fig:izq}
 %    \end{subfigure}
 %    \hfill
 %    \begin{subfigure}[b]{0.48\textwidth}
-%      \includegraphics[width=\textwidth]{imagen-der.png}
+%      \includegraphics[width=\textwidth]{imagen-der.pdf}
 %      \caption{Pie derecha.}
 %      \label{fig:der}
 %    \end{subfigure}
@@ -145,7 +146,7 @@
 % ═══════════════════════════════════════════════════════════════════════════
 \title{
   \large Instituto Tecnológico y de Estudios Superiores de Occidente\\[1em]
-  \includegraphics[width=0.6\textwidth]{logo-iteso-fondoAzul.png}\\[1em]
+  \includegraphics[width=0.6\textwidth]{logo-iteso-fondoAzul.pdf}\\[1em]
   \rule{\linewidth}{0.5pt}\\[0.8em]
   \LARGE \textbf{Caso de Estudio}\\[0.4em]
   \Large Privacidad por Diseño en la Práctica Nutriológica:\\
@@ -2285,7 +2286,7 @@ normativo puede replicar por sí solo.
 % Sugerencia: imagen de gráfica exportada
 % \begin{figure}[H]
 %   \centering
-%   \includegraphics[width=0.75\textwidth]{grafica-encuesta1.png}
+%   \includegraphics[width=0.75\textwidth]{grafica-encuesta1.pdf}
 %   \caption{Resultados de la Encuesta 1: Diagnóstico de desconocimiento.}
 %   \label{fig:enc1}
 % \end{figure}
@@ -2843,7 +2844,7 @@ resuelve por puntos de enlace privados dentro de la VPC.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{diagrama-aws.png}
+  \includesvg[width=\textwidth]{diagrama-aws.pdf}
   \caption{Arquitectura de servicios AWS para NutriApp. Elaboración propia.}
   \label{fig:aws}
 \end{figure}
@@ -2861,7 +2862,7 @@ gestión de cuentas).
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uml-casos-uso.png}
+  \includegraphics[width=0.95\textwidth]{uml-casos-uso.pdf}
   \caption{Diagrama de casos de uso de NutriApp. Elaboración propia.}
   \label{fig:uml-cu}
 \end{figure}
@@ -2876,7 +2877,7 @@ paciente nutriólogos alternativos.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uml-secuencia.png}
+  \includegraphics[width=0.95\textwidth]{uml-secuencia.pdf}
   \caption{Diagrama de secuencia: flujo de reserva de cita con MFA y confirmación del
   nutriólogo. Elaboración propia.}
   \label{fig:uml-seq}
@@ -2900,7 +2901,7 @@ que devuelve el proveedor de pagos.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{diagrama-er.png}
+  \includegraphics[width=\textwidth]{diagrama-er.pdf}
   \caption{Diagrama entidad-relación de NutriApp. Elaboración propia.}
   \label{fig:er}
 \end{figure}
@@ -3030,7 +3031,7 @@ paciente completa el trámite.
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-consentimiento.png}
+  \includegraphics[width=0.95\textwidth]{maqueta-consentimiento.pdf}
   \caption{Maqueta del flujo de consentimiento del paciente: aviso de
   privacidad, casillas sin marcar, folio y estado del expediente.
   Elaboración propia.}
@@ -3054,7 +3055,7 @@ alimentación se asigna en \texttt{AssignDiet} a partir de
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-expediente.png}
+  \includegraphics[width=0.95\textwidth]{maqueta-expediente.pdf}
   \caption{Maqueta del alta de paciente y del expediente con registro
   de accesos. Elaboración propia.}
   \label{fig:maq-expediente}
@@ -3087,7 +3088,7 @@ de modo que la respuesta salga dentro del plazo del artículo~31.
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-arco.png}
+  \includegraphics[width=0.95\textwidth]{maqueta-arco.pdf}
   \caption{Maqueta del módulo ARCO: solicitud del paciente, diálogo de
   cancelación con bloqueo y plazo, y bandeja del nutriólogo.
   Elaboración propia.}
@@ -3115,7 +3116,7 @@ se notifican dentro de la aplicación, no por mensajería.
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-catalogo.png}
+  \includegraphics[width=0.95\textwidth]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo con resultados patrocinados
   etiquetados, insignia de perfil verificado y reserva de cita.
   Elaboración propia.}
@@ -3153,7 +3154,7 @@ módulo de inducción y el reporte semestral.
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-students.png}
+  \includegraphics[width=0.95\textwidth]{maqueta-students.pdf}
   \caption{Maqueta de la activación Students en tres pasos y del panel
   docente. Elaboración propia.}
   \label{fig:maq-students}
