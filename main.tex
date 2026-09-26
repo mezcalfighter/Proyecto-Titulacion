@@ -1855,9 +1855,10 @@ conocido: el borrado convencional marca el espacio como disponible
 y deja los datos recuperables (Garfinkel y Shelat, 2003). Cada
 paso deja un evento con folio en el registro de auditoría.
  
-El titular recibe una notificación de la resolución por SMS o
-WhatsApp con el folio y un enlace autenticado. El mensaje no
-contiene datos clínicos, y el proveedor de mensajería se contrata
+El titular recibe la notificación de la resolución en el correo
+verificado de su cuenta, con el folio y un enlace autenticado; si
+aceptó la casilla de avisos, también por SMS o WhatsApp. El mensaje
+no contiene datos clínicos, y el proveedor de mensajería se contrata
 como encargado con las obligaciones que el Reglamento le fija
 (RLFPDPPP, 2011, arts.~50 y~51).
  
@@ -2722,7 +2723,9 @@ forma en que el diseño aplica el principio de proporcionalidad (LFPDPPP,
 verificación de correo, la MFA obligatoria para el nutriólogo desde el
 registro, la emisión de tokens y el bloqueo tras intentos fallidos
 consecutivos, con AAL2 como nivel objetivo (sección~2.5.2). Los permisos
-se asignan por rol: nutriólogo, paciente y administrador.
+se asignan por rol: nutriólogo, paciente, docente y administrador;
+la cuenta Students es un nutriólogo con permisos acotados a pacientes
+ficticios (sección~6.2.5).
 
 \textbf{Datos y llaves.} Amazon RDS para PostgreSQL almacena
 expedientes, consentimientos, solicitudes ARCO y el
@@ -2746,7 +2749,8 @@ CloudWatch concentra métricas y dispara alarmas ante comportamientos
 anómalos.
 
 \textbf{Pagos y suscripción.} La suscripción del nutriólogo a los planes
-Basic y Pro se cobra a través de Mercado Pago con \textit{checkout}
+Basic y Pro, y en su caso el complemento de exposición en el catálogo
+(sección~8.3), se cobra a través de Mercado Pago con \textit{checkout}
 alojado: la tarjeta se captura en las páginas del proveedor y NutriApp
 recibe solo un identificador de suscripción y las notificaciones de
 cobro, cuya firma verifica antes de procesarlas (Mercado Pago, s.f.-a).
@@ -2763,9 +2767,10 @@ cancelación que el nutriólogo resuelve pasa el expediente a bloqueo. Al
 vencer la retención, la función destruye la llave de datos del
 expediente y borra los objetos. Los datos ajenos al expediente clínico
 se suprimen de inmediato. Cada evento queda con folio en el registro de
-auditoría y el titular recibe la notificación por SMS o WhatsApp con
-folio y enlace autenticado, sin contenido clínico; el proveedor de
-mensajería se contrata como encargado (RLFPDPPP, 2011, arts.~50 y~51).
+auditoría y el titular recibe la notificación en su correo verificado,
+con folio y enlace autenticado y sin contenido clínico; si aceptó la
+casilla de avisos, también por SMS o WhatsApp, cuyo proveedor se
+contrata como encargado (RLFPDPPP, 2011, arts.~50 y~51).
  
 La Tabla~\ref{tab:stack} sintetiza la correspondencia entre cada
 componente y la obligación que cubre.
@@ -2846,10 +2851,12 @@ resuelve por puntos de enlace privados dentro de la VPC.
 \subsubsection{Diagramas UML: casos de uso y secuencia}
 
 La Figura~\ref{fig:uml-cu} presenta el diagrama de casos de uso de NutriApp. Los actores del
-sistema son cuatro: Paciente, Nutriólogo, Administrador y Sistema. Los casos
-de uso se agrupan en cuatro dominios: gestión clínica (expediente, consentimiento,
-plan de dieta, seguimiento), derechos del titular (módulo ARCO), comunidad
-(módulo social, reportes de contenido) y administración (moderación,
+sistema son seis: Paciente, Nutriólogo, Docente, Estudiante, Administrador
+y Sistema. Los casos de uso se agrupan en cinco dominios: gestión clínica
+(expediente, consentimiento, plan de alimentación, seguimiento), derechos
+del titular (módulo ARCO), catálogo y citas (búsqueda, reserva y posiciones
+patrocinadas), comunidad (módulo social, reportes de contenido) y
+administración (moderación, instituciones, verificación de cédulas y
 gestión de cuentas).
 
 \begin{figure}[H]
@@ -2860,8 +2867,7 @@ gestión de cuentas).
 \end{figure}
 
 La Figura~\ref{fig:uml-seq} presenta el diagrama de secuencia del flujo de
-reserva de cita, el de mayor complejidad normativa del sistema: el paciente
-elige una franja horaria disponible del nutriólogo en
+reserva de cita, el que más componentes del sistema recorre: el paciente elige una franja horaria disponible del nutriólogo en
 \texttt{FindNutritionist}, inicia sesión con MFA en \texttt{Login}, completa
 la solicitud en \texttt{ConfirmAppointment} y el nutriólogo recibe una
 notificación en \texttt{AppointmentsManager} con un plazo de 48 horas para
@@ -2883,10 +2889,14 @@ datos de NutriApp. Las entidades principales son \texttt{nutriologo},
 \texttt{paciente}, \texttt{expediente}, \texttt{consentimiento},
 \texttt{arco\_request}, \texttt{declaration\_log}, \texttt{audit\_log},
 \texttt{appointment\_request}, \texttt{post}, \texttt{moderation\_event} y
-\texttt{plan\_subscription}. El modelo es relacional y se define en
-PostgreSQL sobre Amazon RDS, conforme a la capa de datos de la sección
-anterior; la entidad \texttt{plan\_subscription} guarda solo el
-identificador de suscripción que devuelve el proveedor de pagos.
+\texttt{plan\_subscription}, más las que sostienen las cuentas de
+práctica y el catálogo descritos en el capítulo seis:
+\texttt{institution}, \texttt{activation\_code}, \texttt{teacher},
+\texttt{verification} y \texttt{featured\_listing}. El modelo es
+relacional y se define en PostgreSQL sobre Amazon RDS, conforme a la
+capa de datos de la sección anterior; la entidad
+\texttt{plan\_subscription} guarda solo el identificador de suscripción
+que devuelve el proveedor de pagos.
 
 \begin{figure}[H]
   \centering
@@ -2906,10 +2916,10 @@ Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2}, representado
 en maquetas navegables construidas en Figma Make con React, TypeScript
 y Tailwind. Peffers et al. (2007) admiten como artefacto cualquier
 objeto diseñado en el que esté incorporada una contribución de
-investigación, y la maqueta es ese objeto en su forma evaluable: permite
+investigación. La maqueta es ese objeto en su forma evaluable. Permite
 que un revisor con perfil jurídico compruebe pantalla por pantalla si
 el flujo cumple lo que la ley pide, y que un grupo de estudiantes y
-docentes lo use como caso en la prueba piloto. Ninguna pantalla ha
+docentes la use como caso en la prueba piloto. Ninguna pantalla ha
 operado con datos de personas reales; lo que sigue es especificación
 de interfaz y de flujo, en el mismo sentido en que el capítulo cinco
 es especificación de arquitectura.
@@ -2950,12 +2960,17 @@ copia de los datos declarados en cada firma; y notificación al titular,
 con folio, ante el bloqueo y la supresión de sus datos.
  
 Dos obligaciones sanitarias quedan fuera del MVP y se declaran aquí
-para que el alcance sea explícito y no implícito. La NOM-004 fija las
-secciones que debe contener la nota clínica (numerales 5.2, 5.9 a 5.11
-y 6.1.1) y la NOM-024 exige firma electrónica avanzada del profesional
-en el expediente electrónico (numeral 6.6.2). El expediente de NutriApp
-guarda notas de nutrición como texto libre con autor, fecha y hora, y
-no incorpora la estructura de la nota ni la firma avanzada. Ambas se
+para que el alcance sea explícito y no implícito. La NOM-004 fija los
+datos generales de todo expediente (numeral 5.2), los requisitos
+comunes de las notas, que llevan identificación del paciente y fecha,
+hora, nombre y firma de quien las elabora (numerales 5.9 a 5.11), y
+los apartados de la historia clínica (numeral 6.1). La NOM-024 exige
+que el sistema permita el uso de la firma electrónica avanzada del
+profesional para la información que el prestador determine en su
+gestión de seguridad (numeral 6.6.2). El expediente de NutriApp guarda
+notas de nutrición como texto libre con autor, fecha y hora, lo que
+cubre esa parte del numeral 5.10, pero no incorpora la estructura de
+la historia clínica ni ofrece la firma electrónica avanzada. Ambas se
 documentan como siguiente paso en la sección~8.3; el criterio de
 completitud de la sección~6.4 se refiere, por tanto, a las obligaciones
 trazadas en las tablas del capítulo dos y no a la totalidad de las
@@ -2972,7 +2987,9 @@ profesional que exceden este caso.
 Las maquetas se presentan por flujo y no por pantalla, porque una
 obligación legal rara vez cabe en una sola pantalla. Cada flujo indica
 qué obligación demuestra y qué evidencia debe verse en la maqueta; esa
-evidencia es la que los casos de prueba de la sección~6.3 verifican. El
+evidencia es la que los casos de prueba de la sección~6.3 verifican;
+los tres primeros flujos corresponden, en ese orden, a los casos
+CP-01, CP-02 y CP-03 de la Tabla~\ref{tab:casos-prueba}. El
 Anexo~B reúne las capturas de todas las pantallas del prototipo y el
 repositorio del proyecto contiene las maquetas navegables y el código
 (NutriApp, 2026).
@@ -2999,17 +3016,17 @@ desde su dispositivo o, en el consultorio, sobre el dispositivo del
 nutriólogo autenticándose él mismo. La pantalla de consentimiento
 muestra el aviso de privacidad completo, con opción de descarga en PDF,
 y dos casillas sin marcar: la obligatoria para el tratamiento de datos
-de salud y una opcional para recibir avisos por WhatsApp o SMS, que
-según la sección~2.5.5 nunca llevan contenido clínico y cuyo proveedor
-actúa como encargado. Al confirmar, el sistema genera el folio
+de salud y una opcional para recibir avisos también por WhatsApp o
+SMS. Los avisos con efecto jurídico llegan siempre al correo
+verificado de la cuenta; ningún mensaje lleva contenido clínico y el
+proveedor de mensajería actúa como encargado (sección~2.5.5). Al confirmar, el sistema genera el folio
 \texttt{DEC-XXXXXXXX} y el \texttt{DeclarationLog} guarda la identidad
 del titular, el mecanismo de autenticación usado, la versión del aviso,
 la fecha y la hora, y una copia de lo consentido. El expediente
 permanece en estado «pendiente de consentimiento» hasta ese momento y
 no admite el registro de ningún dato de salud; el nutriólogo ve ese
 estado en \texttt{PatientList} y recibe un aviso emergente cuando el
-paciente completa el trámite. Este es el flujo del caso de prueba
-CP-01.
+paciente completa el trámite.
  
 \begin{figure}[H]
   \centering
@@ -3025,17 +3042,15 @@ CP-01.
 Con el consentimiento registrado, \texttt{AddPatient} y
 \texttt{PatientDetail} abren el expediente: datos de identificación,
 antecedentes, mediciones, notas de nutrición con autor, fecha y hora, y
-adjuntos. La API entrega a cada pantalla solo los campos que esa
-pantalla necesita, que es la forma en que el diseño aplica el principio
-de proporcionalidad (LFPDPPP, 2025, art.~5). Toda consulta,
+adjuntos. Cada pantalla recibe solo los campos que esa vista
+necesita, conforme a la regla de proporcionalidad fijada en la
+sección~5.1. Toda consulta,
 modificación, descarga e intento fallido de acceso queda en el registro
 de auditoría de la sección~2.5.4, y el paciente puede ver desde su
 \texttt{Dashboard} quién accedió a su expediente y cuándo. El plan de
 alimentación se asigna en \texttt{AssignDiet} a partir de
 \texttt{TemplateLibrary} y el paciente lo consulta en
-\texttt{CurrentDiet} y \texttt{ProgressTracking}. Este es el flujo del
-caso de prueba CP-02: la maqueta debe mostrar que el expediente no
-puede crearse sin consentimiento previo y que cada acceso deja rastro.
+\texttt{CurrentDiet} y \texttt{ProgressTracking}.
  
 \begin{figure}[H]
   \centering
@@ -3053,20 +3068,22 @@ acceso, rectificación, cancelación y oposición en lenguaje llano y
 generan una solicitud con folio. La cancelación es el caso que la
 maqueta debe explicar con más cuidado, porque no es inmediata ni
 irrevocable, como decía el diseño inicial. El diálogo de confirmación
-informa que la solicitud la resuelve el nutriólogo como responsable en
-un plazo de veinte días (LFPDPPP, 2025, art.~31); que, si procede, el
-expediente clínico pasa a estado de bloqueo y se conserva cifrado e
-inaccesible para la operación diaria durante los cinco años que fija la
-NOM-004 (LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012, 2012,
-numeral~5.4); que los datos ajenos al expediente, como la cuenta, los
-datos de contacto y las preferencias de notificación, se suprimen de
-inmediato; y que al vencer la retención el expediente se elimina por
-borrado criptográfico con notificación al titular (sección~2.5.5). Del
+lo explica por partes. La solicitud la resuelve el nutriólogo como
+responsable en un plazo de veinte días (LFPDPPP, 2025, art.~31). Si
+procede, el expediente clínico pasa a estado de bloqueo (LFPDPPP,
+2025, art.~24) y se conserva cifrado e inaccesible para la operación
+diaria, porque el responsable no está obligado a cancelarlo mientras
+corre la conservación mínima de cinco años contados desde el último
+acto médico (LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012,
+2012, numeral~5.4). Los datos ajenos al expediente, como la cuenta,
+los datos de contacto y las preferencias de notificación, se suprimen
+de inmediato. Al vencer la conservación, el expediente se elimina por
+borrado criptográfico y el titular recibe el aviso con folio en su
+correo verificado (sección~2.5.5). Del
 lado del nutriólogo, \texttt{PatientDetail} muestra las solicitudes
 activas con folio, tipo, fecha, días restantes y estado, y una alarma de
 CloudWatch le avisa cuando quedan cinco días o menos para responder,
-de modo que la respuesta salga dentro del plazo del artículo~31. Este es
-el flujo del caso de prueba CP-03.
+de modo que la respuesta salga dentro del plazo del artículo~31.
  
 \begin{figure}[H]
   \centering
@@ -3109,22 +3126,27 @@ se notifican dentro de la aplicación, no por mensajería.
  
 El MVP incluye cuentas de práctica para estudiantes de nutrición, que
 son la base de la prueba piloto y del Plan Universidad de la
-sección~8.3. La regla de diseño es que ningún estudiante crea una
-cuenta por su cuenta: primero el administrador da de alta a la
-institución y al programa académico en \texttt{AdminInstitutions}, con
-la lista de dominios de correo permitidos, la vigencia del semestre, el
-cupo y las cuentas docentes, y genera códigos de activación con usos
-máximos y fecha de vencimiento en \texttt{ActivationCodes}. El
+sección~8.3. La regla de diseño es que ningún estudiante se registra
+por sí mismo. Primero el administrador da de alta a la institución y
+al programa académico en \texttt{AdminInstitutions}, con la lista de
+dominios de correo permitidos, la vigencia del semestre, el cupo y las
+cuentas docentes, y genera en \texttt{ActivationCodes} códigos de
+activación con usos máximos y fecha de vencimiento. El
 estudiante se activa en \texttt{StudentsActivation} en tres pasos:
 introduce un código vigente, verifica un correo cuyo dominio está en la
 lista de su institución, y acepta el aviso de privacidad y los términos
 en casillas sin marcar, una de las cuales declara que la cuenta solo
 funciona con pacientes ficticios. Al crearse la cuenta, una función
-genera diez pacientes ficticios etiquetados como usuarios de prueba, de
-modo que no existe dato personal alguno en el sentido del artículo~2 de
-la ley y ninguna obligación de conservación aplica. La cuenta vence con
-el semestre de la institución, con aviso previo por correo; al vencer,
-el estudiante puede pasar a un plan Basic con descuento de egresado. El
+genera diez pacientes ficticios etiquetados como usuarios de prueba,
+de modo que los expedientes de práctica no contienen datos de ninguna
+persona identificada o identificable (LFPDPPP, 2025, art.~2,
+fracc.~V) y no les aplica la conservación de la NOM-004. Los datos del
+propio estudiante sí son datos personales, y se tratan conforme al
+aviso de privacidad que acepta al activar la cuenta. La cuenta vence
+con el semestre de la institución, con aviso previo por correo; al
+vencer, el estudiante puede pasar a un plan Basic, con el descuento de
+egresado cuando su institución contrató el paquete Integral
+(sección~8.3). El
 docente responsable ve en \texttt{TeacherDashboard} los expedientes
 ficticios de sus estudiantes en modo de solo lectura, el avance del
 módulo de inducción y el reporte semestral.
@@ -3163,8 +3185,8 @@ guía metodológica de este caso: la solución llevada a la práctica con
 usuarios, aunque sea sobre maquetas. Tiene tres piezas, alineadas con el
 procedimiento de sesión de la sección~4.3.3.
  
-La primera es un \textbf{video de inducción} de entre cinco y diez
-minutos que recorre las maquetas por obligación legal: qué exige la ley
+La prueba abre con un \textbf{video de inducción} de entre seis y
+ocho minutos que recorre las maquetas por obligación legal: qué exige la ley
 en cada punto (consentimiento, expediente, ARCO, seguridad, catálogo) y
 cómo lo resuelve la pantalla. Se proyecta en la sesión antes de que los
 participantes toquen la maqueta y queda disponible para las cuentas de
@@ -3172,13 +3194,13 @@ práctica como módulo de inducción a la LFPDPPP. Su guion sale de la
 sección~6.2 y de las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}.
  
-La segunda es la \textbf{sesión}: después del video, los participantes
+Después del video viene la \textbf{sesión}: los participantes
 recorren las maquetas con cuentas de práctica, discuten en el segundo
 bloque del grupo focal lo que vieron frente a lo que hacen hoy en su
 práctica, y los docentes contestan la rúbrica de revisión por flujo.
 Los instrumentos están en la sección~4.3.2 y en el Anexo~A.
  
-La tercera son los \textbf{casos de prueba de aceptación}, que la
+Cierran la prueba los \textbf{casos de prueba de aceptación}, que la
 sección~4.4.2 define y la Tabla~\ref{tab:casos-prueba} concreta. Cada
 uno fija la obligación, la precondición, los pasos, el resultado que la
 ley exige y la evidencia que debe verse en la maqueta; se ejecutan como
@@ -3197,7 +3219,7 @@ y el diseño, y el capítulo siete lo reporta como tal.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2 fracc.~IV, 8 y 15. Nutriólogo registrado con MFA; paciente invitado sin expediente. & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y 18; RLFPDPPP art.~48 fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto; el paciente consulta su plan; un tercero sin relación intenta abrir el expediente. & Sin consentimiento previo el alta no se completa; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica plazo de veinte días, bloqueo y retención de cinco años; folio de la solicitud; el expediente cambia a bloqueado y desaparece de la operación diaria; cuenta y contacto se suprimen; alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, el bloqueo y la conservación mínima de cinco años; folio de la solicitud; el expediente cambia a bloqueado y desaparece de la operación diaria; cuenta y contacto se suprimen; alarma visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -3215,7 +3237,7 @@ en la sección~6.1 no forman parte de ese criterio. El de
 \textit{viabilidad técnica} limita el MVP a lo que el diseño del
 capítulo cinco puede sostener con AWS y React, con proveedores
 contratados como encargados (Twilio) o responsables independientes
-(Mercado Pago) en los términos de la sección~2.5.1. El de
+(Mercado Pago) en los términos de la sección~5.1. El de
 \textit{prioridad de uso} incluye los módulos que un nutriólogo
 independiente usa a diario y que, por eso, son los que los grupos
 focales pueden juzgar con conocimiento de causa: gestión de
@@ -3499,7 +3521,7 @@ muestra aparte: \$67 al mes con el factor regional.
     \midrule
     R1 Carga & Los volúmenes salen del modelo de la Tabla~\ref{tab:carga}, no de multiplicadores fijos. La ruta crítica es el mes de mayor actividad plausible con los mismos usuarios: 1.5 veces las consultas, pico de cinco veces la hora media, el doble de pacientes nuevos y cuatro veces las solicitudes ARCO. No supone crecimiento de usuarios. \\
     R2 Región & Los precios de mx-central-1 se estiman como los de us-east-1 más 5~\%, diferencial observado en cómputo de propósito general entre ambas regiones (aws-pricing.com, 2026); se sustituye por la tarifa exacta de la calculadora de AWS al presupuestar. \\
-    R3 Mensajería & Twilio se usa solo para avisos con efecto jurídico (acuse de consentimiento, respuestas ARCO, bloqueo y supresión, incidentes), con dos mensajes por evento en la base y tres en la ruta crítica, al 60 / 90~\% de pacientes que aceptan la casilla de avisos. WhatsApp con plantillas de utilidad es el canal; el SMS cubre al 10 / 20~\% que no tiene WhatsApp. Las citas se notifican dentro de la aplicación. Ningún factor de autenticación viaja por SMS. \\
+    R3 Mensajería & El canal por defecto de todo aviso es el correo verificado de la cuenta (Amazon SES, costo marginal). Twilio se usa solo para avisos con efecto jurídico (acuse de consentimiento, respuestas ARCO, bloqueo y supresión, incidentes), con dos mensajes por evento en la base y tres en la ruta crítica, al 60 / 90~\% de pacientes que aceptan la casilla de avisos. WhatsApp con plantillas de utilidad es el canal; el SMS cubre al 10 / 20~\% que no tiene WhatsApp. Las citas se notifican dentro de la aplicación. Ningún factor de autenticación viaja por SMS. \\
     R4 Disponibilidad & Ambos escenarios usan RDS en una zona con respaldo continuo. Multi-AZ, NAT y punto de enlace en segunda zona son una opción de servicio que se cotiza aparte (\$67 al mes). \\
     R5 Salida a internet & Las funciones dentro de la VPC salen a Twilio y Mercado Pago por NAT Gateway; se estima que el 10~\% del tráfico de la API cruza el NAT. S3 se alcanza por punto de enlace de gateway (sin costo) y KMS por interfaz. \\
     R6 Auditoría & Database Activity Streams publica en un fragmento aprovisionado de Kinesis; CloudTrail registra un evento de datos por solicitud además del trail de administración gratuito. \\
@@ -3551,42 +3573,6 @@ baja a entre \$63,000 y \$148,000~MXN.
     \bottomrule
   \end{tabularx}
 \end{table}
- 
-\textbf{Destacado en el catálogo.} El catálogo de nutriólogos que el
-paciente consulta en \texttt{FindNutritionist} admite un servicio
-adicional de exposición: por \$99~MXN al mes, o \$990 al año, el
-nutriólogo aparece en una de las posiciones patrocinadas al inicio de los
-resultados de su ciudad y especialidad. El precio es deliberadamente
-bajo. Doctoralia, el directorio de referencia en México, cobra entre
-\$1,740 y \$2,970~MXN al mes por su perfil con agenda y visibilidad
-(Doctoralia, 2026); NutriApp no compite con ese producto sino que lo
-complementa desde el expediente, y el Destacado se vende como un
-complemento de alta adopción y costo marginal cero, no como fuente
-principal de ingreso. Con 20~\% de los 500 nutriólogos pagantes, aporta
-\$9,900~MXN al mes.
- 
-El servicio se diseña con cuatro reglas que evitan que la exposición
-pagada distorsione la confianza del paciente, porque la ley y el diseño
-de este trabajo lo exigen. Primera: las posiciones pagadas se marcan
-«Patrocinado», a lo sumo dos de los cinco primeros resultados, y el
-resto se ordena por disponibilidad, cercanía declarada y especialidad;
-la información y la publicidad deben ser veraces, comprobables y claras
-(Ley Federal de Protección al Consumidor, 1992/2024, art.~32). Segunda: ningún
-dato de pacientes interviene en el orden de los resultados, ni en el
-patrocinado ni en el orgánico, en línea con el principio de
-proporcionalidad (LFPDPPP, 2025, art.~5). Tercera: el Destacado solo se
-activa con cédula profesional validada y perfil completo, y la ficha
-muestra la institución que expidió el título y el número de cédula,
-como exige la publicidad de servicios de salud (Reglamento de la Ley
-General de Salud en Materia de Publicidad, 2000, art.~19); los servicios
-que un profesional presta de forma individual no requieren permiso
-publicitario (Reglamento de la Ley General de Salud en Materia de
-Publicidad, 2000, art.~79, fracc.~I), pero la ficha no admite promesas de
-resultados ni afirmaciones sobre tratamientos. Cuarta: cuando varios
-destacados coinciden en una búsqueda, rotan de forma equitativa; pagar
-más no compra un lugar fijo. La insignia «Perfil verificado» se otorga
-sin costo a todo nutriólogo con cédula validada, para que la verificación
-nunca se confunda con el patrocinio.
  
 \textbf{Valor esperado de las sanciones evitadas.} La LFPDPPP~2025 establece
 sanciones de hasta 320,000 veces la Unidad de Medida y Actualización (UMA) por
@@ -3656,9 +3642,10 @@ improbable pero desproporcionado.
 \mbox{}
 % Texto de limitaciones y siguientes pasos: se escribe después de los
 % grupos focales (octubre de 2026). Debe incluir, como siguientes pasos
-% del tercero que implemente: (1) estructura de la nota clínica
-% conforme a NOM-004 numerales 5.2, 5.9–5.11 y 6.1.1; (2) firma
-% electrónica avanzada del profesional, NOM-024 numeral 6.6.2;
+% del tercero que implemente: (1) estructura de la historia clínica y
+% de las notas conforme a NOM-004 numerales 5.2, 5.9–5.11 y 6.1;
+% (2) capacidad de firma electrónica avanzada del profesional,
+% NOM-024 numeral 6.6.2;
 % (3) verificación contra OWASP ASVS 5.0 nivel 2 antes de cualquier
 % despliegue; (4) análisis fiscal, laboral y sanitario de una operación
 % real (secc. 4.4.3).
@@ -3797,7 +3784,43 @@ del Trabajo y Previsión Social, s.f.), once programas en Jalisco.
     (Secretaría del Trabajo y Previsión Social, s.f.).
   \end{flushleft}
 \end{table}
- 
+
+\textbf{Destacado en el catálogo.} El catálogo de nutriólogos que el
+paciente consulta en \texttt{FindNutritionist} admite un servicio
+adicional de exposición: por \$99~MXN al mes, o \$990 al año, el
+nutriólogo aparece en una de las posiciones patrocinadas al inicio de los
+resultados de su ciudad y especialidad. El precio es deliberadamente
+bajo. Doctoralia, el directorio de referencia en México, cobra entre
+\$1,740 y \$2,970~MXN al mes por su perfil con agenda y visibilidad
+(Doctoralia, 2026); NutriApp no compite con ese producto sino que lo
+complementa desde el expediente, y el Destacado se vende como un
+complemento de alta adopción y costo marginal cero, no como fuente
+principal de ingreso. Con 20~\% de los 500 nutriólogos pagantes, aporta
+\$9,900~MXN al mes.
+
+El servicio se diseña con cuatro reglas que evitan que la exposición
+pagada distorsione la confianza del paciente, porque la ley y el diseño
+de este trabajo lo exigen. Primera: las posiciones pagadas se marcan
+«Patrocinado», a lo sumo dos de los cinco primeros resultados, y el
+resto se ordena por disponibilidad, cercanía declarada y especialidad;
+la información y la publicidad deben ser veraces, comprobables y claras
+(Ley Federal de Protección al Consumidor, 1992/2024, art.~32). Segunda: ningún
+dato de pacientes interviene en el orden de los resultados, ni en el
+patrocinado ni en el orgánico, en línea con el principio de
+proporcionalidad (LFPDPPP, 2025, art.~5). Tercera: el Destacado solo se
+activa con cédula profesional validada y perfil completo, y la ficha
+muestra la institución que expidió el título y el número de cédula,
+como exige la publicidad de servicios de salud (Reglamento de la Ley
+General de Salud en Materia de Publicidad, 2000, art.~19); los servicios
+que un profesional presta de forma individual no requieren permiso
+publicitario (Reglamento de la Ley General de Salud en Materia de
+Publicidad, 2000, art.~79, fracc.~I), pero la ficha no admite promesas de
+resultados ni afirmaciones sobre tratamientos. Cuarta: cuando varios
+destacados coinciden en una búsqueda, rotan de forma equitativa; pagar
+más no compra un lugar fijo. La insignia «Perfil verificado» se otorga
+sin costo a todo nutriólogo con cédula validada, para que la verificación
+nunca se confunda con el patrocinio.
+
 \textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
 cierra el cálculo con los ingresos de los planes del MVP y los impuestos
 que les aplican. Con 500 nutriólogos pagantes, 40~\% en plan Pro y la
@@ -3918,7 +3941,7 @@ revisan con un contador antes de operar.
   % Cap. 7 (secc. 7.3): precios de lista de los servicios de la
   % Tabla de costos (Amazon Web Services, s.f.-f).
  
-\item Amazon Web Services. (s.f.-g). \textit{AWS service quotas}. AWS General Reference.\url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
+\item Amazon Web Services. (s.f.-g). \textit{AWS service quotas}. AWS General Reference. \url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
  
   % Cap. 7 (secc. 7.3, modelo de carga): mil ejecuciones simultáneas
   % de Lambda por cuenta y 2,500 solicitudes por segundo en API
@@ -4686,7 +4709,7 @@ revisan con un contador antes de operar.
   % art.~61 (inventario, análisis de riesgos y análisis de brecha).
   
   \item Reglamento de la Ley General de Salud en Materia de Publicidad.
-  (2000, 4 de mayo; última reforma 2019). \textit{Diario Oficial de la
+  (2000, 4 de mayo; última reforma 2022). \textit{Diario Oficial de la
   Federación}.
   \url{https://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LGS_MP.pdf}
  
