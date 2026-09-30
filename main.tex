@@ -29,6 +29,8 @@
 \usepackage{graphicx}           % \includegraphics
 \usepackage{float}              % opción [H] para fijar figuras en su lugar
 \usepackage{caption}            % personalizar pies de figura/tabla
+\usepackage{subcaption}         % subfiguras lado a lado: \begin{subfigure}
+
 \usepackage{pdflscape}          % páginas apaisadas para las subfiguras anchas
 \graphicspath{{imagenes/}}      % carpeta donde guardar tus imágenes
 
@@ -1663,8 +1665,7 @@ capítulo~5. Por legibilidad, la tabla se presenta en dos partes.
     & LFPDPPP 2025, art.~19; RLFPDPPP 2011, arts.~64 y~65
       (momento y contenido mínimo del aviso)
     & Registro de incidentes con alerta al nutriólogo como
-      responsable y plantilla de aviso con el contenido mínimo del
-      artículo~65. La decisión de avisar y el envío corresponden
+      responsable. La decisión de avisar y el envío corresponden
       al nutriólogo; la plataforma registra fecha, alcance y
       acciones con folio. \\
   \\[4pt]
@@ -1788,8 +1789,8 @@ que usa NutriApp.
   \midrule
   Identidad y acceso
     & Servicio de identidades y su disponibilidad
-    & Políticas de acceso por rol, MFA obligatoria para el
-      nutriólogo, recuperación de cuenta
+    & Políticas de acceso por rol y MFA obligatoria para el
+      nutriólogo
     & Altas y bajas de sus pacientes; custodia de sus
       credenciales \\[4pt]
   Configuración de servicios
@@ -1852,8 +1853,7 @@ identidades se gestionan con Amazon Cognito, que admite
 2024) además de OAuth~2.0, y el control de acceso por rol limita
 lo que cada cuenta ve: el nutriólogo, solo a sus pacientes; el
 paciente, solo su expediente; el administrador, ningún contenido
-clínico. El nutriólogo no puede desactivar la MFA desde la
-configuración de su cuenta.
+clínico.
  
 \subsubsection{Cifrado y gestión de llaves}
  
@@ -1945,7 +1945,7 @@ inmediato.
  
 Al vencer la conservación mínima o el periodo de bloqueo, una
 función programada avisa al nutriólogo, que como responsable
-confirma la supresión o justifica una conservación mayor. Con su confirmación, la plataforma ejecuta
+confirma la supresión. Con su confirmación, la plataforma ejecuta
 la supresión por borrado criptográfico: destruye la llave de datos
 del expediente, lo que hace irrecuperable el contenido cifrado
 (NIST, 2025b), y después borra los objetos. El borrado
@@ -2807,9 +2807,14 @@ artículo~52 del Reglamento exige al proveedor de cómputo en la nube
 Framework (AWS, 2023c) documenta buenas prácticas publicadas para las
 decisiones de arquitectura de este capítulo. La región primaria es
 \texttt{mx-central-1} por decisión de diseño; la ley no exige
-localización. La continuidad depende de sus tres zonas de
-disponibilidad, y los servicios de entrega de contenido, mensajería y
-pagos pueden operar fuera de la región.
+localización. Cognito, el cómputo y los datos residen en esa región.
+El borde que muestra la Figura~\ref{fig:aws-a} (Route 53, CloudFront,
+WAF, Shield y el certificado de ACM) es global y opera fuera de ella;
+Amazon SES no está disponible en \texttt{mx-central-1}, por lo que los
+avisos por correo, sin contenido clínico, salen de la región de SES
+que se defina (Figura~\ref{fig:aws-b}), fuera del territorio
+nacional. Esos servicios se transparentan al nutriólogo como
+subcontrataciones del encargado (sección~2.5.1).
 
 Los componentes se describen por capas. La justificación normativa de
 cada control está en la sección~2.5 y en la Tabla~\ref{tab:stack}.
@@ -2854,8 +2859,9 @@ custodia las llaves con el esquema por envolvente de la
 sección~2.5.3. Los consentimientos y los contratos de suscripción se
 conservan como mensajes de datos íntegros e inalterables, con plazos
 distintos. El consentimiento se conserva mientras dura el
-tratamiento, porque la carga de probar que se obtuvo recae en el
-responsable (RLFPDPPP, 2011, art.~20). Los contratos y comprobantes
+tratamiento y, junto con el expediente, durante su conservación,
+porque la carga de probar que se obtuvo recae en el responsable
+(RLFPDPPP, 2011, art.~20). Los contratos y comprobantes
 de la operación mercantil se conservan al menos diez años (Código de
 Comercio, 1889/2025, arts.~38 y~49) y los comprobantes fiscales cinco
 (Código Fiscal de la Federación, 1981/2026, art.~30). La
@@ -2936,7 +2942,8 @@ obligación que atiende.
     llave por expediente. LFPDPPP~2025 art.~18; RLFPDPPP art.~57 \\[4pt]
   Almacenamiento & S3 + Object Lock & Expediente y adjuntos: cinco años
     desde el último acto médico (NOM-004-SSA3-2012 numeral~5.4);
-    consentimientos: mientras dura el tratamiento (RLFPDPPP art.~20);
+    consentimientos: mientras dura el tratamiento y la conservación del
+    expediente (RLFPDPPP art.~20);
     contratos y comprobantes: diez años (Código de Comercio arts.~38
     y~49), comprobantes fiscales cinco (Código Fiscal de la Federación
     art.~30); integridad de los mensajes de datos
@@ -2982,19 +2989,180 @@ resuelve por puntos de enlace privados dentro de la VPC.
 
 \subsubsection{Diagramas UML: casos de uso y secuencia}
 
-La Figura~\ref{fig:uml-cu} presenta el diagrama de casos de uso de NutriApp. Los actores del
-sistema son seis: Paciente, Nutriólogo, Docente, Estudiante, Administrador
-y Sistema. Los casos de uso se agrupan en cinco dominios: gestión clínica
-(expediente, consentimiento, plan de alimentación, seguimiento), derechos
-del titular (módulo ARCO), catálogo y citas (búsqueda, reserva y posiciones
-patrocinadas), comunidad (módulo social, reportes de contenido) y
-administración (moderación, instituciones y códigos de activación, y gestión de cuentas).
-
+Los casos de uso se reparten en las tres partes de la
+Figura~\ref{fig:uml-cu}. Los actores son seis: Paciente, Nutriólogo,
+Docente, Estudiante, Administrador y Sistema. La parte~(a) reúne la
+gestión clínica y los derechos del titular: el alta del paciente queda
+pendiente de consentimiento; el consentimiento es afirmativo, con
+folio DEC, y se revoca con registro equivalente; el expediente admite
+notas con autor, fecha y hora, plan de alimentación y seguimiento; el
+paciente consulta quién accedió a su expediente y presenta solicitudes
+ARCO, que el nutriólogo resuelve en veinte días (art.~31), con bloqueo
+del expediente cuando la cancelación procede (sección~2.5.5). Al
+vencer la conservación, el Sistema avisa, el nutriólogo confirma y solo
+entonces se suprime el expediente por borrado criptográfico, con
+notificación con folio al correo verificado. La parte~(b) cubre el
+catálogo y las citas: el nutriólogo se registra con declaración bajo
+protesta y MFA, define su disponibilidad y publica su ficha con la
+cédula y la institución declaradas, con la opción de contratar el
+destacado; el paciente busca, reserva con sesión iniciada y recibe la
+aceptación o el rechazo en 48 horas, o alternativas si el plazo vence.
+La parte~(c) cubre comunidad, administración y cuentas de práctica:
+publicación y consulta de contenido educativo, reporte de
+publicaciones, moderación con folio MOD y escala de estados, gestión
+de la suscripción, alta de instituciones y códigos, activación de la
+cuenta Students con código y correo institucional, consulta de
+expedientes ficticios en solo lectura y avance de inducción por el
+docente, y aviso de vencimiento de la cuenta Students por el Sistema.
+La exportación del expediente no aparece: quedó fuera del MVP
+(sección~8.3).
+ 
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uml-casos-uso.pdf}
-  \caption{Diagrama de casos de uso de NutriApp. Elaboración propia.}
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a.pdf}
+    \caption{Gestión clínica y derechos del titular.}
+    \label{fig:uml-cu-a}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp: (a) clínica y ARCO; (b) catálogo y
+  citas; (c) comunidad, administración y cuentas de práctica.
+  Elaboración propia.}
   \label{fig:uml-cu}
+\end{figure}
+\end{landscape}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-b.pdf}
+    \caption{Catálogo y citas.}
+    \label{fig:uml-cu-b}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-c.pdf}
+    \caption{Comunidad, administración y cuentas de práctica.}
+    \label{fig:uml-cu-c}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+% 9) [5.2.1 ARQUITECTURA (prosa y figura)] LÍNEAS 2968–2981 sustituir COMPLETAS por lo siguiente (empieza «La Figura~\ref{fig:aws} representa la arquite», termina «\end{figure}»):
+La arquitectura de servicios ocupa la Figura~\ref{fig:aws}, en cuatro
+partes. La parte~(a) es el borde y la entrada de tráfico. Route~53
+registra el dominio; CloudFront sirve la interfaz web desde sus
+ubicaciones de borde con el certificado de AWS Certificate Manager;
+AWS WAF aplica reglas administrativas y por tasa, y AWS Shield
+Standard mitiga la denegación de servicio. Esos servicios son globales
+y quedan fuera de \texttt{mx-central-1}. Dentro de la región están
+Amazon Cognito, que gestiona el registro, el correo verificado, la MFA
+del nutriólogo, el bloqueo por intentos fallidos y los roles; el sitio
+estático en S3; y Amazon API Gateway, que deja pasar sin token las
+rutas públicas del catálogo, valida el token en las privadas y recibe
+los webhooks de Mercado Pago. Todo el tráfico va por HTTPS con
+TLS~1.3.
+ 
+La parte~(b) es la red privada. API Gateway entra a la VPC por una
+integración privada (VPC Link) hacia un Application Load Balancer que
+reparte las llamadas entre funciones Lambda en Node.js, en subredes
+privadas de al menos dos zonas de disponibilidad; RDS para PostgreSQL
+opera en una zona, con Multi-AZ como opción. La salida a internet pasa
+por un NAT Gateway: los avisos con folio salen por Amazon SES, el
+canal por defecto, y los avisos opcionales por Twilio; de Mercado Pago
+llegan las notificaciones de cobro firmadas. La figura distingue a
+Twilio como subcontratación del encargado y a Mercado Pago como
+responsable independiente, y deja asentado que NutriApp opera la
+plataforma como encargado del nutriólogo.
+ 
+La parte~(c) es el almacenamiento y las llaves. RDS guarda
+expedientes, consentimientos, solicitudes ARCO, el
+\texttt{DeclarationLog} y las publicaciones, con respaldo continuo.
+Cuatro depósitos de S3 separan lo que se conserva con reglas
+distintas: los adjuntos clínicos, con versionado y Object Lock durante
+la conservación de la NOM-004 contada desde \texttt{fecha\_ultimo\_acto};
+los registros de auditoría (CloudTrail, Activity Streams y
+\texttt{DeclarationLog}), con Object Lock cinco años; los contratos y
+comprobantes, con Object Lock diez años y los comprobantes fiscales
+cinco (sección~5.1); y el contenido social, sin Object Lock. AWS KMS
+custodia la llave maestra por entorno y la llave de datos por
+expediente. Las constancias NOM-151 las emite un prestador de servicios
+de certificación externo. Lambda alcanza S3 por un punto de enlace de
+gateway y KMS por uno de interfaz, sin salir de la VPC.
+ 
+La parte~(d) es la operación y la trazabilidad. Amazon EventBridge
+programa la retención y la eliminación; Amazon CloudWatch concentra
+métricas y alarmas, entre ellas la de solicitudes ARCO a cinco días o
+menos del plazo; Database Activity Streams publica la actividad SQL en
+Kinesis Data Streams, cuyo consumidor queda por definir; AWS CloudTrail
+registra los eventos de administración y de datos y los exporta al
+depósito de registros de auditoría; y el inventario de datos
+clasificado por sensibilidad se mantiene junto a esos registros.
+ 
+\begin{landscape}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-a.pdf}
+    \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico.}
+    \label{fig:aws-a}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS: (a) borde y
+  entrada; (b) red privada y subcontrataciones; (c) almacenamiento y
+  llaves; (d) operación y trazabilidad. Elaboración propia.}
+  \label{fig:aws}
+\end{figure}
+\end{landscape}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
+    \caption{Red privada, cómputo, salida a internet y subcontrataciones.}
+    \label{fig:aws-b}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
+    \caption{Almacenamiento, retención y llaves.}
+    \label{fig:aws-c}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-d.pdf}
+    \caption{Operación, métricas y trazabilidad.}
+    \label{fig:aws-d}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
 
 El diagrama se lee por actor. El paciente otorga su consentimiento y
@@ -3007,8 +3175,8 @@ conservación o del bloqueo, la notificación con folio al correo
 verificado, el aviso previo al vencimiento de la cuenta Students y la
 sugerencia de alternativas cuando una cita vence sin respuesta. La
 supresión no es autónoma: el sistema avisa el vencimiento, el
-nutriólogo confirma la supresión o justifica una conservación mayor,
-y solo entonces se ejecuta el borrado criptográfico (sección~2.5.5).
+nutriólogo confirma la supresión y solo entonces se ejecuta el
+borrado criptográfico (sección~2.5.5).
 El bloqueo tampoco es una función programada, sino la consecuencia
 de una cancelación que el nutriólogo resuelve procedente. Las
 relaciones «include» marcan pasos que siempre acompañan al caso que
@@ -3023,8 +3191,8 @@ contenido y da de alta instituciones y códigos, pero ninguno de sus
 casos de uso toca un expediente clínico, en congruencia con el control
 de acceso por rol de la sección~2.5.2.
 
-La Figura~\ref{fig:uml-seq} presenta el diagrama de secuencia del flujo de
-reserva de cita, el que más componentes del sistema recorre: el paciente elige una franja horaria disponible del nutriólogo en
+El flujo de reserva de cita, el que más componentes recorre, se sigue
+en la Figura~\ref{fig:uml-seq}: el paciente elige una franja horaria disponible del nutriólogo en
 \texttt{FindNutritionist}, inicia sesión en \texttt{Login}, con segundo
 factor si lo tiene activado, completa la solicitud en \texttt{ConfirmAppointment} y el nutriólogo recibe una
 notificación en \texttt{AppointmentsManager} con un plazo de 48 horas para
@@ -3033,7 +3201,7 @@ paciente nutriólogos alternativos.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{uml-secuencia.pdf}
+  \includegraphics[width=\textwidth]{uml-seq.pdf}
   \caption{Diagrama de secuencia: flujo de reserva de cita y confirmación del
   nutriólogo. Elaboración propia.}
   \label{fig:uml-seq}
@@ -3056,42 +3224,112 @@ que la solicitud quede abierta de forma indefinida.
 
 \subsubsection{Diagrama entidad-relación}
 
-La Figura~\ref{fig:er} presenta el diagrama entidad-relación del modelo de
-datos de NutriApp. Las entidades principales son \texttt{nutriologo},
-\texttt{paciente}, \texttt{expediente}, \texttt{consentimiento},
-\texttt{arco\_request}, \texttt{declaration\_log}, \texttt{audit\_log},
-\texttt{appointment\_request}, \texttt{post}, \texttt{moderation\_event} y
-\texttt{plan\_subscription}, más las que sostienen las cuentas de
-práctica y el catálogo descritos en el capítulo seis:
-\texttt{institution}, \texttt{activation\_code}, \texttt{teacher} y
-\texttt{featured\_listing}. El modelo es
-relacional y se define en PostgreSQL sobre Amazon RDS, conforme a la
-capa de datos de la sección anterior; la entidad
-\texttt{plan\_subscription} guarda solo el identificador de suscripción
-que devuelve el proveedor de pagos.
-
+El modelo de datos se muestra en la Figura~\ref{fig:er}, en cuatro
+partes que corresponden a cuatro bloques de entidades. El bloque
+clínico~(a) contiene \texttt{nutriologo}, \texttt{paciente},
+\texttt{expediente}, \texttt{plantilla}, \texttt{disponibilidad} y
+\texttt{appointment\_request}, y dentro del expediente
+\texttt{plan\_alimentacion}, \texttt{medicion}, \texttt{adjunto} y
+\texttt{nota}. El de derechos y trazabilidad~(b) contiene el
+\texttt{consentimiento}, la solicitud \texttt{arco\_request}, el
+\texttt{incidente}, el \texttt{audit\_log} y el
+\texttt{declaration\_log}. El de cuentas de
+práctica y catálogo~(c) contiene \texttt{institution},
+\texttt{activation\_code}, \texttt{teacher}, \texttt{featured\_listing},
+\texttt{plan\_subscription}, \texttt{contrato\_suscripcion} y
+\texttt{pago}. El de comunidad y administración~(d) contiene
+\texttt{post}, \texttt{content\_report}, \texttt{moderation\_event} y
+\texttt{administrador}. El modelo es relacional y se define en
+PostgreSQL sobre Amazon RDS, conforme a la capa de datos de la
+sección anterior.
+ 
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{diagrama-er.pdf}
-  \caption{Diagrama entidad-relación de NutriApp. Elaboración propia.}
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-a.pdf}
+    \caption{Bloque clínico.}
+    \label{fig:er-a}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp: (a) clínico; (b) derechos
+  y trazabilidad; (c) cuentas de práctica y catálogo; (d) comunidad y
+  administración. Elaboración propia.}
   \label{fig:er}
 \end{figure}
-
-Las entidades se agrupan en cinco bloques. En el clínico, cada
-\texttt{paciente} pertenece a un nutriólogo, que es el responsable de
-sus datos, y tiene un único \texttt{expediente}. El expediente guarda
-los datos clínicos cifrados con su propia llave de datos
-(sección~2.5.3); el campo \texttt{fecha\_ultimo\_acto} marca el inicio
-de los cinco años de conservación de la NOM-004, y
-\texttt{bloqueado\_desde} registra cuándo una cancelación procedente
-lo pasó a bloqueo (sección~2.5.5). En el bloque de derechos y
-trazabilidad, \texttt{consentimiento} y \texttt{arco\_request} se
-identifican por folio (\texttt{DEC-} y \texttt{ARCO-}), el
-consentimiento registra el mecanismo con que se otorgó, la versión del
-aviso aceptado y si el titular aceptó los avisos por mensajería;
+\end{landscape}
+ 
+\begin{landscape}
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b.pdf}
+    \caption{Derechos del titular y trazabilidad.}
+    \label{fig:er-b}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+\end{landscape}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-c.pdf}
+    \caption{Cuentas de práctica, catálogo y suscripción.}
+    \label{fig:er-c}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-d.pdf}
+    \caption{Comunidad y administración.}
+    \label{fig:er-d}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+ 
+En el bloque clínico, cada \texttt{paciente} pertenece a un
+nutriólogo, que es el responsable de sus datos, y tiene un único
+\texttt{expediente}. El expediente guarda los datos clínicos cifrados
+con su propia llave de datos (sección~2.5.3) y un estado
+(\textit{pendiente}, \textit{activo} o \textit{bloqueado}); el campo
+\texttt{fecha\_ultimo\_acto} marca el inicio de los cinco años de
+conservación de la NOM-004, y \texttt{bloqueado\_desde} registra el
+inicio del bloqueo cuando una cancelación procede (sección~2.5.5). En
+el bloque de derechos y trazabilidad, \texttt{consentimiento} y
+\texttt{arco\_request} se identifican por folio (\texttt{DEC-} y
+\texttt{ARCO-}). El consentimiento registra el mecanismo con que se
+otorgó, la versión del aviso aceptado, si el titular aceptó los avisos
+por mensajería y, en su caso, la revocación. La solicitud ARCO registra
+el tipo, el estado, las fechas de presentación, resolución y ejecución
+y, si procede la cancelación, \texttt{bloqueo\_hasta}, el fin del
+bloqueo que el responsable fija conforme al plazo de prescripción
+(RLFPDPPP, 2011, art.~107, fracc.~I); \texttt{bloqueado\_desde} y
+\texttt{bloqueo\_hasta} son, por tanto, el inicio y el fin de ese
+periodo. La entidad \texttt{incidente} registra la vulneración
+detectada, su descripción y alcance, los expedientes afectados y la
+fecha en que la plataforma alertó al nutriólogo responsable
+(\texttt{alerta\_responsable\_en}); la fecha del aviso a los titulares
+(\texttt{aviso\_titulares\_en}) la asienta el responsable, porque la
+decisión de avisar y el envío son suyos (sección~2.4.2, Tabla~2).
 \texttt{declaration\_log} conserva la copia inmutable de cada
-declaración, y \texttt{audit\_log} registra quién consultó,
-modificó o descargó cada expediente.
+declaración, y \texttt{audit\_log} registra quién consultó, modificó o
+descargó cada expediente, junto con los intentos fallidos, el bloqueo,
+la supresión, la destrucción de la llave y las notificaciones; su
+referencia al expediente se anula tras la supresión, sin borrar el
+registro.
  
 Las cuentas de práctica no crean un tipo de usuario aparte: un
 estudiante es un \texttt{nutriologo} de tipo \textit{students},
@@ -3100,9 +3338,14 @@ que se activó, y sus pacientes llevan la marca \texttt{ficticio}.
 La cédula y la institución que expidió el título se guardan como datos
 declarados por el profesional, sin documento probatorio. El modelo
 tampoco guarda datos de tarjeta: \texttt{plan\_subscription} conserva
-solo el identificador que devuelve Mercado Pago, y
-\texttt{featured\_listing} no tiene relación alguna con pacientes,
-porque ningún dato de salud interviene en el orden del catálogo.
+el identificador de suscripción que devuelve Mercado Pago;
+\texttt{pago} registra el identificador de cada cobro, el monto, la
+fecha, el estado y el resultado de verificar la firma de la
+notificación (sección~5.1); \texttt{contrato\_suscripcion} guarda el
+folio, la versión de los términos aceptados, la fecha y la constancia
+NOM-151 del contrato. \texttt{featured\_listing} no tiene relación
+alguna con pacientes, porque ningún dato de salud interviene en el
+orden del catálogo.
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Demostración del diseño: maquetas y prueba piloto}
@@ -3293,8 +3536,7 @@ incluye ese periodo. Los datos ajenos al expediente, como la cuenta,
 los datos de contacto y las preferencias de notificación, se suprimen
 de inmediato. El aviso al nutriólogo al vencer la conservación o el
 bloqueo y el borrado criptográfico con su confirmación siguen la
-secuencia de la sección~2.5.5. Como el aviso al titular requiere un correo de contacto
-vigente, el diálogo le ofrece conservar solo ese dato para recibirlo.
+secuencia de la sección~2.5.5.
  
 Al nutriólogo, el expediente (\texttt{PatientDetail}) le muestra las
 solicitudes activas con folio, tipo, fecha, días restantes y estado;
@@ -3440,7 +3682,7 @@ parcialmente o no refleja el diseño.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2 fracc.~IV, 8 y 15. Nutriólogo registrado con MFA; paciente invitado sin expediente. & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y 18; RLFPDPPP art.~48 fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto; el paciente consulta su plan; un tercero sin relación intenta abrir el expediente. & El expediente admite los datos, la medición, la nota y el adjunto; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, la conservación mínima de cinco años y el bloqueo si la cancelación procede; folio de la solicitud; cuenta y contacto se suprimen; el expediente conserva el estado que fija la resolución del nutriólogo (en operación por la conservación mínima, o bloqueado y fuera de la operación diaria); alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, la conservación mínima y el bloqueo si la cancelación procede; folio de la solicitud; cuenta y contacto se suprimen; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
