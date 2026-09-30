@@ -29,7 +29,7 @@
 \usepackage{graphicx}           % \includegraphics
 \usepackage{float}              % opción [H] para fijar figuras en su lugar
 \usepackage{caption}            % personalizar pies de figura/tabla
-\usepackage{subcaption}         % subfiguras lado a lado: \begin{subfigure}
+\usepackage{pdflscape}          % páginas apaisadas para las subfiguras anchas
 \graphicspath{{imagenes/}}      % carpeta donde guardar tus imágenes
 
 % Tablas
@@ -324,9 +324,10 @@ El marco legal vigente se construyó en cinco momentos:
   que permiten rastrear a los datos personales durante su tratamiento''}
   (Reglamento de la Ley Federal de Protección de Datos Personales en
   Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X);
-este trabajo toma ese Reglamento como referencia en lo que no se
-opone a la ley de 2025, supuesto que se declara en la
-sección~4.2.3. El artículo~57 hizo exigibles esas medidas a todo
+el decreto de 2025 no lo abrogó y su adecuación no se había
+publicado al corte de este trabajo, por lo que se aplica como texto
+vigente en lo que es compatible con la ley de 2025, supuesto que se
+declara en la sección~4.2.3. El artículo~57 hizo exigibles esas medidas a todo
 responsable, sea cual sea el soporte en que trate los datos
 (RLFPDPPP, 2011, art.~57). Para este caso importa además el
   artículo~52 del mismo Reglamento, que permite expresamente el uso
@@ -537,16 +538,21 @@ rectores}
   sobre la atención del paciente (numeral 5.18) y obliga a
   conservarlo con confidencialidad durante un mínimo de cinco años
   (Norma Oficial Mexicana NOM-004-SSA3-2012, 2012, numeral 5.4).
-  La \textbf{NOM-024-SSA3-2012} se aplica cuando el prestador adopta
-  un sistema electrónico de registro para la salud (Norma Oficial
-  Mexicana NOM-024-SSA3-2012, 2012, numeral~1.2). Conforme a sus
-  numerales 6.6.3 y 6.6.4, cada usuario debe identificarse con
-  credenciales propias y los permisos dependen del perfil de quien
-  entra. El numeral 6.6.1 sitúa esas medidas dentro de un sistema de
-  gestión de seguridad con confidencialidad, integridad,
-  disponibilidad, trazabilidad y no repudio; el 6.6.5 limita el
-  cifrado al intercambio de información entre prestadores de
-  servicios de salud. Por último, la \textbf{NOM-008-SSA3-2017},
+  La \textbf{NOM-024-SSA3-2012} obliga a los establecimientos que
+  adoptan un sistema de información de registro electrónico para la
+  salud (SIRES) y también a las personas físicas o morales que tienen
+  la propiedad, el uso, la autoría, la distribución o la
+  comercialización de esos sistemas (Norma Oficial Mexicana
+  NOM-024-SSA3-2012, 2012, numeral~1.2). Conforme a sus numerales
+  6.6.3 y 6.6.4, cada usuario debe identificarse con credenciales
+  propias y los permisos dependen del perfil de quien entra. El
+  numeral 6.6.1 sitúa esas medidas dentro de un sistema de gestión de
+  seguridad con confidencialidad, integridad, disponibilidad,
+  trazabilidad y no repudio; el 6.6.5 limita el cifrado al
+  intercambio de información entre prestadores de servicios de
+  salud, y el 6.6.6 exige que el sistema permita exportar la
+  información del paciente conforme a la normativa de protección de
+  datos y que controle los consentimientos del titular. Por último, la \textbf{NOM-008-SSA3-2017},
   aplicable al tratamiento de sobrepeso y obesidad, obliga a llevar
   el expediente clínico conforme a la NOM-004 (Norma Oficial Mexicana
   NOM-008-SSA3-2017, 2018). Con ello, esas obligaciones técnicas
@@ -556,8 +562,10 @@ rectores}
  
 La NOM-004 y las medidas de seguridad del Reglamento obligan al
 consultorio cualquiera que sea el soporte de sus expedientes; la
-NOM-024 solo lo alcanza si adopta un sistema electrónico de registro
-formal.
+NOM-024 lo alcanza solo si adopta un SIRES, y alcanza también a quien
+desarrolla o comercializa ese sistema (numeral~1.2). Por eso las
+obligaciones de la NOM-024 que el diseño de NutriApp no cubre se
+listan como siguientes pasos en la sección~8.3.
  
 \subsubsection{Sanciones y mecanismos de denuncia: de la teoría a la
 realidad institucional}
@@ -612,12 +620,14 @@ realidad institucional}
   lugar entre todos los sectores, solo detrás de los servicios
   financieros (INAI, 2023b, p.~1).
  
-  \item A finales de 2017, el INAI impuso a un hospital dos multas
-  que sumaron \$4,600,000 pesos por no entregar a una paciente la
-  copia certificada del expediente clínico de su parto. La
-  institución no respondió la solicitud en los plazos legales, lo
-  que el INAI calificó como negligencia en el trámite de una
-  solicitud de acceso (INAI, 2017, párr.~1). El caso importa para
+  \item Según el comunicado INAI/444/17, a finales de 2017 el INAI
+  impuso a un hospital dos multas que sumaron \$4,600,000 pesos por
+  no entregar a una paciente la copia certificada del expediente
+  clínico de su parto. La institución no respondió la solicitud en
+  los plazos legales, lo que el Instituto calificó como negligencia
+  en el trámite de una solicitud de acceso (INAI, 2017, párr.~1). La
+  fuente es el comunicado de prensa; la resolución del Pleno no se
+  localizó en las fuentes revisadas. El caso importa para
   este estudio porque la conducta sancionada fue una omisión
   cotidiana, no responder una solicitud de acceso a datos. Omisiones
   de la misma clase, como no tener aviso de privacidad o no pedir
@@ -650,14 +660,21 @@ realidad institucional}
   sin justa causa y con perjuicio para alguien. No toda vulneración
   por descuido lo actualiza. La vía penal apunta al profesionista que
   difunde la información del paciente, y se suma a la multa
-  administrativa en lugar de sustituirla. A ello se añade la Ley
-  Reglamentaria del artículo~5° constitucional, cuyo artículo~36
-  obliga a todo profesionista a guardar secreto en los asuntos que le
-  confíen sus clientes (Ley Reglamentaria del Artículo~5°
+  administrativa en lugar de sustituirla. A ello se añade el secreto
+  profesional. La Ley Reglamentaria del artículo~5° constitucional,
+  que rige en la Ciudad de México y en materia federal, obliga en su
+  artículo~36 a todo profesionista a guardar secreto en los asuntos
+  que le confíen sus clientes (Ley Reglamentaria del Artículo~5°
   Constitucional, Relativo al Ejercicio de las Profesiones en la
-  Ciudad de México [Ley de Profesiones], 1945/2018, art.~36),
-  obligación que incluye a los nutriólogos con cédula profesional y
-  que existe con independencia de la LFPDPPP.
+  Ciudad de México [Ley de Profesiones], 1945/2018, art.~36). En
+  Jalisco, donde se sitúa este trabajo, la misma obligación está en
+  la ley local de profesiones (Ley para el Ejercicio de las
+  Actividades Profesionales del Estado de Jalisco, 2015/2023,
+  art.~12, fracc.~XVI), y revelar sin justa causa un secreto conocido
+  por la confianza depositada es delito en el fuero local (Código
+  Penal para el Estado Libre y Soberano de Jalisco, 1982/2023,
+  art.~143). La obligación incluye a los nutriólogos con cédula
+  profesional y existe con independencia de la LFPDPPP.
  
   \item El 21 de marzo de 2025 el INAI quedó extinto y sus funciones en
   materia de datos personales de particulares pasaron a la
@@ -1307,10 +1324,11 @@ protegidos.
   Alemania exige al proveedor de nube en salud la certificación C5
   sin importar quién sea su cliente (Digitalgesetz, 2024, SGB~V
   \S~393). En México, el responsable es el nutriólogo que contrata
-  el software; el desarrollador y el
-  proveedor de nube son encargados, y su relación con el responsable
-  se formaliza en un contrato sin contenido mínimo definido por la
-  ley (LFPDPPP, 2025, arts.~2 y~13; RLFPDPPP, 2011, art.~51). Si el
+ el software; quien opera la plataforma es su encargado, y el
+  proveedor de nube es una subcontratación de ese encargado. Ambas
+  relaciones se formalizan en contratos sin contenido mínimo definido
+  por la ley (LFPDPPP, 2025, arts.~2 y~13; RLFPDPPP, 2011, arts.~51
+  y~54). Si el
   desarrollador omite el cifrado, la autenticación o los registros
   de acceso, la sanción recae en el nutriólogo, que responde por
   controles que no maneja, mientras que el desarrollador no tiene
@@ -1729,8 +1747,9 @@ contrata la infraestructura y opera la plataforma por cuenta del
 nutriólogo, es su encargado, con una relación que debe constar en
 cláusulas contractuales u otro instrumento jurídico (RLFPDPPP,
 2011, arts.~50 y~51). El proveedor de nube y el de mensajería son
-subcontrataciones del encargado, que este debe transparentar al
-responsable (RLFPDPPP, 2011, art.~52). La responsabilidad ante una
+subcontrataciones del encargado: requieren la autorización del
+responsable y quedan sujetas a las mismas obligaciones (RLFPDPPP,
+2011, art.~54). La responsabilidad ante una
 sanción sigue a la conducta y al papel de cada uno: el nutriólogo
 responde por las decisiones del tratamiento y por las medidas a su
 cargo; NutriApp, por las instrucciones que recibe y por las
@@ -1894,29 +1913,39 @@ La NOM-004 obliga a conservar el expediente clínico al menos cinco
 años desde el último acto médico (NOM-004-SSA3-2012, 2012,
 numeral~5.4), mientras que la LFPDPPP da al titular el derecho de
 pedir en todo momento la cancelación de sus datos (LFPDPPP, 2025,
-art.~24). La propia ley concilia ambas obligaciones: la
-cancelación abre un periodo de bloqueo, durante el cual el
-responsable conserva los datos solo para las responsabilidades
-nacidas del tratamiento, y después procede la supresión (art.~24).
-Además, el responsable no está obligado a cancelar los datos que
-trata para la prevención o el diagnóstico médico o la gestión de
-servicios de salud, cuando lo hace un profesional sujeto a deber
-de secreto (LFPDPPP, 2025, art.~25, fracc.~VII).
+art.~24). Son dos instituciones distintas que la propia ley
+concilia. Por un lado, el responsable no está obligado a cancelar
+los datos que trata para la prevención o el diagnóstico médico o la
+gestión de servicios de salud, cuando lo hace un profesional sujeto
+a deber de secreto (LFPDPPP, 2025, art.~25, fracc.~VII): mientras
+corre la conservación mínima de la NOM-004, el nutriólogo puede
+negar la cancelación del expediente clínico. Por otro, cuando la
+cancelación sí procede, abre un periodo de bloqueo en el que el
+responsable conserva los datos solo para determinar
+responsabilidades nacidas del tratamiento, hasta el plazo de
+prescripción legal o contractual de esas responsabilidades, y
+después procede la supresión (LFPDPPP, 2025, art.~24; RLFPDPPP,
+2011, arts.~107, fracc.~I, y~108).
  
 En NutriApp, una solicitud de cancelación llega al nutriólogo, que
 la resuelve como responsable en un plazo de veinte días y la hace
 efectiva en los quince siguientes (LFPDPPP, 2025, art.~31). Si
-procede, el expediente pasa a estado de bloqueo: deja de ser
-accesible en la operación diaria, sigue cifrado en RDS sin
-operación de borrado disponible, y sus adjuntos siguen bajo la
-retención inmutable de Object Lock hasta que vence el plazo de
-conservación de la NOM-004. Los datos que no forman parte del
-expediente clínico, como la cuenta, los datos de contacto y las
-preferencias de notificación, se suprimen de inmediato.
+niega la cancelación del expediente por la conservación mínima, la
+respuesta lo indica con su fundamento y el expediente sigue en
+operación hasta que vence ese plazo. Si la cancelación procede, el
+expediente pasa a estado de bloqueo: deja de ser accesible en la
+operación diaria, sigue cifrado en RDS sin operación de borrado
+disponible y sus adjuntos siguen bajo la retención inmutable de
+Object Lock. El fin del bloqueo (\texttt{bloqueo\_hasta}) lo fija el
+nutriólogo conforme al plazo de prescripción aplicable, y la
+plantilla de respuesta al titular incluye ese periodo. Los datos que
+no forman parte del expediente clínico, como la cuenta, los datos de
+contacto y las preferencias de notificación, se suprimen de
+inmediato.
  
-Al vencer la retención, una función programada avisa al
-nutriólogo, que como responsable confirma la supresión o justifica
-una conservación mayor. Con su confirmación, la plataforma ejecuta
+Al vencer la conservación mínima o el periodo de bloqueo, una
+función programada avisa al nutriólogo, que como responsable
+confirma la supresión o justifica una conservación mayor. Con su confirmación, la plataforma ejecuta
 la supresión por borrado criptográfico: destruye la llave de datos
 del expediente, lo que hace irrecuperable el contenido cifrado
 (NIST, 2025b), y después borra los objetos. El borrado
@@ -1927,9 +1956,9 @@ genera un evento con folio en el registro de auditoría.
 El titular recibe la notificación de la resolución en el correo
 verificado de su cuenta, con el folio y un enlace autenticado; si
 aceptó la casilla de avisos, también por SMS o WhatsApp. El mensaje
-no contiene datos clínicos, y el proveedor de mensajería se contrata
-como encargado con las obligaciones que el Reglamento le fija
-(RLFPDPPP, 2011, arts.~50 y~51).
+no contiene datos clínicos, y el proveedor de mensajería es una
+subcontratación del encargado, autorizada por el responsable y sujeta
+a las mismas obligaciones (RLFPDPPP, 2011, art.~54).
  
 \subsubsection{Estándares de referencia}
  
@@ -2251,11 +2280,11 @@ el INAI, son las siguientes:
   \item \textbf{Preparación ante incidentes de seguridad (P11).}
   Se espera que menos del 15\% de los encuestados sepa con precisión
   qué hacer ante un incidente de seguridad que comprometa datos de
-  pacientes, incluyendo la obligación de notificar a la autoridad
-  reguladora. La ausencia de un protocolo de respuesta es uno de
-  los factores que más peso tiene en las resoluciones sancionadoras
-  del INAI, dado que la falta de notificación oportuna agrava la
-  infracción original.
+  pacientes, incluyendo la obligación de informar de inmediato al
+  titular cuando la vulneración afecte de forma significativa sus
+  derechos (LFPDPPP, 2025, art.~19); la ley no obliga a avisar a la
+  autoridad. Sin un protocolo de respuesta, el profesional no tiene
+  cómo cumplir ese deber a tiempo.
 
 \end{enumerate}
 
@@ -2485,10 +2514,15 @@ publican sus autoridades. Las ediciones de los estándares
 internacionales se tomaron como estaban vigentes al 31 de enero de
 2026, fecha de corte de este trabajo: las modificaciones normativas
 posteriores se mencionan cuando afectan al análisis, pero no se
-incorporan a él. Un supuesto se declara de forma expresa: la ley de
-2025 abrogó la de 2010, y este trabajo aplica el Reglamento de 2011 en
-lo que no se opone a la nueva ley, en tanto no se expida el reglamento
-que la desarrolle. Si ese reglamento cambia los artículos aquí citados
+incorporan a él. Un supuesto se declara de forma expresa. El decreto
+de 2025 abroga la ley de 2010 y otras cuatro disposiciones sin
+mencionar el Reglamento de 2011 (LFPDPPP, 2025, Transitorio Segundo),
+y ordena al Ejecutivo Federal adecuar los reglamentos en los noventa
+días naturales siguientes a su entrada en vigor (Transitorio Décimo
+Segundo). Al corte de este trabajo esa adecuación no se había
+publicado en el Diario Oficial, por lo que el Reglamento de 2011 se
+aplica como texto vigente en lo que es compatible con la nueva ley.
+Si la adecuación cambia los artículos aquí citados
 (48, 50 a 52, 57, 61, 64, 65 y 107), las tablas de trazabilidad
 deberán actualizarse. La fecha de corte fija el estado del derecho
 analizado.
@@ -2818,10 +2852,18 @@ plazo de conservación de la NOM-004 (sección~2.5.5); las reglas de
 ciclo de vida actúan después de ese plazo. AWS Key Management Service
 custodia las llaves con el esquema por envolvente de la
 sección~2.5.3. Los consentimientos y los contratos de suscripción se
-conservan como mensajes de datos íntegros e inalterables; la
-conformidad con la NOM-151-SCFI-2016 (Norma Oficial Mexicana
-NOM-151-SCFI-2016, 2017) requiere además constancias de un prestador
-de servicios de certificación (sección~7.3).
+conservan como mensajes de datos íntegros e inalterables, con plazos
+distintos. El consentimiento se conserva mientras dura el
+tratamiento, porque la carga de probar que se obtuvo recae en el
+responsable (RLFPDPPP, 2011, art.~20). Los contratos y comprobantes
+de la operación mercantil se conservan al menos diez años (Código de
+Comercio, 1889/2025, arts.~38 y~49) y los comprobantes fiscales cinco
+(Código Fiscal de la Federación, 1981/2026, art.~30). La
+NOM-151-SCFI-2016 no fija plazos: es la constancia de conservación de
+mensajes de datos que el Código de Comercio exige para los
+comprobantes electrónicos, y su conformidad requiere constancias de
+un prestador de servicios de certificación (Norma Oficial Mexicana
+NOM-151-SCFI-2016, 2017; sección~7.3).
 
 \textbf{Auditoría.} AWS CloudTrail registra los eventos de
 administración y, una vez activados, los eventos de datos de S3 y
@@ -2850,8 +2892,10 @@ Amazon EventBridge ejecuta los pasos automatizados de la secuencia de
 bloqueo, aviso y supresión de la sección~2.5.5. La decisión de
 suprimir o conservar el expediente sigue siendo del nutriólogo. Las
 notificaciones al titular salen por el correo verificado de su cuenta
-y, si aceptó la casilla de avisos, por SMS o WhatsApp, cuyo proveedor
-actúa como encargado (RLFPDPPP, 2011, arts.~50 y~51).
+(Amazon SES) y, si aceptó la casilla de avisos, por SMS o WhatsApp. El
+proveedor de mensajería es una subcontratación de NutriApp como
+encargado, autorizada por el nutriólogo en el contrato y sujeta a las
+mismas obligaciones (RLFPDPPP, 2011, art.~54).
  
 La Tabla~\ref{tab:stack} recoge, para cada capa, el servicio y la
 obligación que atiende.
@@ -2890,15 +2934,22 @@ obligación que atiende.
     NOM-024-SSA3-2012 numerales~6.6.3 y~6.6.4; LFPDPPP~2025 art.~18 \\[4pt]
   Datos y llaves & RDS PostgreSQL + KMS & Cifrado en reposo AES-256 con
     llave por expediente. LFPDPPP~2025 art.~18; RLFPDPPP art.~57 \\[4pt]
-  Almacenamiento & S3 + Object Lock & Conservación cinco años, íntegra e
-    inalterable. NOM-004-SSA3-2012 numeral~5.4; NOM-151-SCFI-2016 \\[4pt]
+  Almacenamiento & S3 + Object Lock & Expediente y adjuntos: cinco años
+    desde el último acto médico (NOM-004-SSA3-2012 numeral~5.4);
+    consentimientos: mientras dura el tratamiento (RLFPDPPP art.~20);
+    contratos y comprobantes: diez años (Código de Comercio arts.~38
+    y~49), comprobantes fiscales cinco (Código Fiscal de la Federación
+    art.~30); integridad de los mensajes de datos
+    conforme a NOM-151-SCFI-2016 \\[4pt]
   Auditoría & CloudTrail + Activity Streams + CloudWatch & Trazabilidad.
     RLFPDPPP art.~48 fracc.~X; NOM-024-SSA3-2012 numeral~6.6.1 \\[4pt]
   Pagos y suscripción & Mercado Pago (\textit{checkout} alojado) & Datos
     financieros con consentimiento expreso; sin datos de tarjeta en
     NutriApp. LFPDPPP~2025 arts.~7 y~36 \\[4pt]
-  Notificaciones & Twilio SMS + WhatsApp API & Aviso al titular sin
-    contenido clínico; proveedor como encargado. RLFPDPPP arts.~50 y~51 \\[4pt]
+  Notificaciones & Amazon SES; Twilio SMS + WhatsApp API & Correo
+    verificado por defecto; SMS o WhatsApp solo con la casilla aceptada;
+    sin contenido clínico; subcontratación del encargado. RLFPDPPP
+    art.~54 \\[4pt]
   Retención y eliminación & Lambda + KMS + EventBridge & Bloqueo y
     supresión. LFPDPPP~2025 arts.~24 y~25; NOM-004-SSA3-2012 \\[4pt]
   Módulo ARCO & RDS + Lambda + CloudWatch Alarms & Plazos de respuesta.
@@ -2951,12 +3002,18 @@ presenta las solicitudes ARCO; el nutriólogo las resuelve. Esa
 separación es la del responsable y el titular en la ley: el
 consentimiento lo da el titular (LFPDPPP, 2025, art.~8) y la respuesta
 la debe el responsable en el plazo del artículo~31. El actor Sistema
-representa las funciones programadas que actúan sin intervención
-humana: la secuencia de bloqueo y supresión de la sección~2.5.5, la
-notificación con folio al correo verificado y la sugerencia de
-alternativas cuando una cita vence sin respuesta. Las relaciones
-«include» marcan pasos que siempre acompañan al caso que los incluye,
-como la notificación que sigue a todo bloqueo; la relación «extend»
+representa las funciones programadas: el aviso de vencimiento de la
+conservación o del bloqueo, la notificación con folio al correo
+verificado, el aviso previo al vencimiento de la cuenta Students y la
+sugerencia de alternativas cuando una cita vence sin respuesta. La
+supresión no es autónoma: el sistema avisa el vencimiento, el
+nutriólogo confirma la supresión o justifica una conservación mayor,
+y solo entonces se ejecuta el borrado criptográfico (sección~2.5.5).
+El bloqueo tampoco es una función programada, sino la consecuencia
+de una cancelación que el nutriólogo resuelve procedente. Las
+relaciones «include» marcan pasos que siempre acompañan al caso que
+los incluye, como la notificación con folio que sigue a toda
+resolución y a toda supresión confirmada; la relación «extend»
 marca un paso que solo ocurre bajo una condición, como las
 alternativas que se ofrecen si el nutriólogo no contesta. El
 estudiante usa el mismo caso de gestión de expediente que el
@@ -3076,8 +3133,9 @@ numerales~6.6.1, 6.6.3 y~6.6.4; sección~2.5): los datos se cifran con
 AES-256 en reposo y con TLS~1.3 en tránsito. La autenticación
 multifactor es obligatoria para el nutriólogo, y el registro de
 auditoría abarca las tres capas descritas en el marco técnico. La
-eliminación procede por bloqueo y supresión, con destrucción de la
-llave de datos al vencer la retención.
+eliminación procede por bloqueo y supresión: al vencer la retención o
+el bloqueo, el sistema avisa al nutriólogo y, con su confirmación,
+destruye la llave de datos del expediente (sección~2.5.5).
  
 \textbf{Derechos del titular} (LFPDPPP 2025, arts.~8, 15 y 22--34): el
 consentimiento lo otorga el propio paciente, con acción afirmativa y
@@ -3222,17 +3280,20 @@ generan una solicitud con folio. La cancelación es el caso que la
 maqueta debe explicar con más cuidado, porque no es inmediata ni
 irrevocable, como decía el diseño inicial. El diálogo de confirmación
 lo explica por partes. La solicitud la resuelve el nutriólogo como
-responsable en un plazo de veinte días (LFPDPPP, 2025, art.~31). Si
-procede, el expediente clínico pasa a estado de bloqueo (LFPDPPP,
-2025, art.~24) y se conserva cifrado, fuera de la operación diaria.
-El responsable no está obligado a cancelarlo mientras corre la
-conservación mínima de cinco años contados desde el último acto
-médico (LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012, 2012,
-numeral~5.4). Los datos ajenos al expediente, como la cuenta, los
-datos de contacto y las preferencias de notificación, se suprimen de
-inmediato. El aviso al nutriólogo al vencer la conservación y el
-borrado criptográfico con su confirmación siguen la secuencia de la
-sección~2.5.5. Como el aviso al titular requiere un correo de contacto
+responsable en un plazo de veinte días (LFPDPPP, 2025, art.~31).
+Mientras corre la conservación mínima de cinco años contados desde el
+último acto médico, el responsable no está obligado a cancelar el
+expediente clínico (LFPDPPP, 2025, art.~25, fracc.~VII;
+NOM-004-SSA3-2012, 2012, numeral~5.4), y el diálogo se lo explica al
+paciente. Si la cancelación procede, el expediente pasa a estado de
+bloqueo (LFPDPPP, 2025, art.~24) y se conserva cifrado, fuera de la
+operación diaria, hasta el plazo de prescripción que fija el
+responsable (RLFPDPPP, 2011, art.~107, fracc.~I); la respuesta
+incluye ese periodo. Los datos ajenos al expediente, como la cuenta,
+los datos de contacto y las preferencias de notificación, se suprimen
+de inmediato. El aviso al nutriólogo al vencer la conservación o el
+bloqueo y el borrado criptográfico con su confirmación siguen la
+secuencia de la sección~2.5.5. Como el aviso al titular requiere un correo de contacto
 vigente, el diálogo le ofrece conservar solo ese dato para recibirlo.
  
 Al nutriólogo, el expediente (\texttt{PatientDetail}) le muestra las
@@ -3379,7 +3440,7 @@ parcialmente o no refleja el diseño.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2 fracc.~IV, 8 y 15. Nutriólogo registrado con MFA; paciente invitado sin expediente. & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y 18; RLFPDPPP art.~48 fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto; el paciente consulta su plan; un tercero sin relación intenta abrir el expediente. & El expediente admite los datos, la medición, la nota y el adjunto; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, el bloqueo y la conservación mínima de cinco años; folio de la solicitud; el expediente cambia a bloqueado y desaparece de la operación diaria; cuenta y contacto se suprimen; alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, la conservación mínima de cinco años y el bloqueo si la cancelación procede; folio de la solicitud; cuenta y contacto se suprimen; el expediente conserva el estado que fija la resolución del nutriólogo (en operación por la conservación mínima, o bloqueado y fuera de la operación diaria); alarma visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -3395,9 +3456,9 @@ y~\ref{tab:trazabilidad-2}: consentimiento, ARCO, cifrado, MFA,
 trazabilidad y eliminación; las obligaciones sanitarias ya declaradas
 fuera del MVP no forman parte de ese criterio. La \textit{viabilidad
 técnica} limita el MVP a lo que el diseño del capítulo cinco puede
-sostener con AWS y React, con proveedores contratados como encargados
-(Twilio) o responsables independientes (Mercado Pago) en los términos
-de la sección~5.1. La \textit{prioridad de uso} incluye los módulos
+sostener con AWS y React, con proveedores que son subcontrataciones
+del encargado (Amazon SES, Twilio) o responsables independientes
+(Mercado Pago) en los términos de la sección~5.1. La \textit{prioridad de uso} incluye los módulos
 que un nutriólogo independiente usa a diario y que, por eso, los
 grupos focales pueden juzgar con conocimiento de causa: gestión de
 expedientes, agenda de citas y planes de alimentación.
@@ -3524,8 +3585,9 @@ obligaciones principales identificadas:
     registros en S3 con Object Lock en modo de cumplimiento durante cinco
     años y reglas de ciclo de vida después.
   \item Eliminación segura al vencer el período de retención
-    (LFPDPPP~2025, arts.~24 y~25; NOM-004-SSA3-2012): Lambda con destrucción
-    criptográfica y notificación al titular.
+    (LFPDPPP~2025, arts.~24 y~25; NOM-004-SSA3-2012): aviso programado al
+    nutriólogo, confirmación del responsable y destrucción criptográfica
+    por Lambda, con notificación al titular.
 \end{enumerate}
 
 Las dos brechas identificadas en el análisis inicial ---ausencia de módulo ARCO
@@ -3638,7 +3700,7 @@ muestra aparte: \$67 al mes con el factor regional.
     Amazon Cognito & no & 5,500~MAU; Essentials, 10,000 gratuitos & \$0 & \$0 \\
     RDS PostgreSQL (db.t4g.small) & no & instancia en una zona; 20 / 40~GB & \$26 & \$30 \\
     Activity Streams (Kinesis) & parcial & 1 fragmento fijo; registros por solicitud & \$11 & \$11 \\
-    NAT Gateway & parcial & 1 zona; salida hacia Twilio y Mercado Pago & \$33 & \$33 \\
+    NAT Gateway & parcial & 1 zona; salida hacia Amazon SES, Twilio y Mercado Pago & \$33 & \$33 \\
     Puntos de enlace privados & no & S3 por gateway (sin costo); KMS por interfaz & \$8 & \$8 \\
     KMS + ACM & parcial & 1 / 2 llaves; una llamada por cada dos solicitudes & \$4 & \$9 \\
     S3 (adjuntos y registros) & sí & 50 / 150~GB acumulados; Object Lock sin cargo & \$3 & \$8 \\
@@ -3682,7 +3744,7 @@ muestra aparte: \$67 al mes con el factor regional.
     R2 Región & Los precios de mx-central-1 se estiman como los de us-east-1 más 5~\%, diferencial observado en cómputo de propósito general entre ambas regiones (aws-pricing.com, 2026); se sustituye por la tarifa exacta de la calculadora de AWS al presupuestar. \\
     R3 Mensajería & El canal por defecto de todo aviso es el correo verificado de la cuenta (Amazon SES, costo marginal). Twilio se usa solo para avisos con efecto jurídico (acuse de consentimiento, respuestas ARCO, bloqueo y supresión, incidentes), con dos mensajes por evento en la base y tres en la ruta crítica, al 60 / 90~\% de pacientes que aceptan la casilla de avisos. WhatsApp con plantillas de utilidad es el canal; el SMS cubre al 10 / 20~\% que no tiene WhatsApp. Las citas se notifican dentro de la aplicación. Ningún factor de autenticación viaja por SMS. \\
     R4 Disponibilidad & Ambos escenarios usan RDS en una zona con respaldo continuo. Multi-AZ, NAT y punto de enlace en segunda zona son una opción de servicio que se cotiza aparte (\$67 al mes). \\
-    R5 Salida a internet & Las funciones dentro de la VPC salen a Twilio y Mercado Pago por NAT Gateway; se estima que el 10~\% del tráfico de la API cruza el NAT. S3 se alcanza por punto de enlace de gateway (sin costo) y KMS por interfaz. \\
+    R5 Salida a internet & Las funciones dentro de la VPC salen a Amazon SES, Twilio y Mercado Pago por NAT Gateway; se estima que el 10~\% del tráfico de la API cruza el NAT. S3 se alcanza por punto de enlace de gateway (sin costo) y KMS por interfaz. \\
     R6 Auditoría & Database Activity Streams publica en un fragmento aprovisionado de Kinesis; CloudTrail registra un evento de datos por solicitud además del trail de administración gratuito. \\
     R7 Identidad & Cognito Essentials: 10,000 usuarios activos mensuales sin costo; el MVP no los alcanza en ningún escenario. \\
     R8 Dominio & .com en Route 53 en la base; .com y .mx en la ruta crítica. Precio anual, variable por registrador, prorrateado a doce meses. \\
@@ -3807,7 +3869,9 @@ improbable pero desproporcionado.
 % NOM-024 numeral 6.6.2;
 % (3) verificación contra OWASP ASVS 5.0 nivel 2 antes de cualquier
 % despliegue; (4) análisis fiscal, laboral y sanitario de una operación
-% real (secc. 4.4.3).
+% real (secc. 4.4.3); (5) portabilidad o exportación estructurada del
+% expediente (NOM-024 numeral 6.6.6; secc. 2.2.1 y 2.2.5): fuera del
+% MVP, queda como siguiente paso.
  
 \subsubsection{Transferencia del diseño: modelo de negocio propuesto}
  
@@ -4228,6 +4292,27 @@ revisan con un contador antes de operar.
   % collected, extends securely throughout the entire lifecycle of
   % the data involved'' (p.~4).
 
+\item Código de Comercio. (1889, 7 de octubre a 13 de diciembre;
+  última reforma 14 de noviembre de 2025). \textit{Diario Oficial de
+  la Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CCom.pdf}
+ 
+  % Cap. 5 (secc. 5.1): art.~38, conservar los comprobantes de las
+  % operaciones diez años, en medios electrónicos conforme a la NOM
+  % de conservación de mensajes de datos; art.~49, conservar diez
+  % años los documentos en que consten contratos (Código de
+  % Comercio, 1889/2025, arts.~38 y~49).
+ 
+\item Código Fiscal de la Federación. (1981, 31 de diciembre;
+  última reforma 9 de abril de 2026). \textit{Diario Oficial de la
+  Federación}.
+  \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
+ 
+  % Cap. 5 (secc. 5.1): art.~30, la contabilidad y la documentación
+  % comprobatoria se conservan cinco años (Código Fiscal de la
+  % Federación, 1981/2026, art.~30). Reforma posterior al corte;
+  % el plazo del art.~30 no cambió.
+
 \item Código Penal Federal. (1931, 14 de agosto; última reforma
   2024). \textit{Diario Oficial de la Federación}.
   \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CPF.pdf}
@@ -4239,6 +4324,20 @@ revisan con un contador antes de operar.
   % dos meses a un año cuando la revelación punible sea hecha por
   % persona que presta servicios profesionales o técnicos'' (CPF,
   % 1931/2024, art. 211).
+
+\item Código Penal para el Estado Libre y Soberano de Jalisco.
+  (1982, 2 de septiembre; última reforma 7 de junio de 2023).
+  \textit{Periódico Oficial El Estado de Jalisco}. Congreso del
+  Estado de Jalisco.
+  \url{https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/C%C3%B3digos/Documentos_PDF-C%C3%B3digos/C%C3%B3digo%20Penal%20para%20el%20Estado%20Libre%20y%20Soberano%20de%20Jalisco%20-070623.pdf}
+ 
+  % Cap. 2 (secc. 2.1.4): art.~143, dos meses a un año de prisión a
+  % quien ``sin justa causa, con perjuicio de alguien y sin
+  % consentimiento, revele algún secreto o comunicación reservada
+  % que conoce o ha recibido con motivo de la confianza en él
+  % depositada'' (Código Penal para el Estado Libre y Soberano de
+  % Jalisco, 1982/2023, art.~143).
+ 
 
 \item CIGE México. (2026). \textit{Curso de protección de datos
   personales (LFPDPPP)} [Ficha del curso]. Emagister.
@@ -4667,6 +4766,19 @@ revisan con un contador antes de operar.
   % Cap. 2 (secc. 2.1.2): ley general que acompañó la autonomía del
   % INAI y amplió los sujetos obligados (Ley General de
   % Transparencia y Acceso a la Información Pública, 2015).
+\item Ley para el Ejercicio de las Actividades Profesionales del
+  Estado de Jalisco. (2015, 1 de diciembre; última reforma 3 de
+  junio de 2023). \textit{Periódico Oficial El Estado de Jalisco}.
+  Congreso del Estado de Jalisco. \url{https://congresoweb.congresojal.gob.mx/bibliotecavirtual/legislacion/Leyes/Documentos_PDF-Leyes/Ley%20para%20el%20Ejercicio%20de%20las%20Actividades%20Profesionales%20del%20Estado%20de%20Jalisco-070623.pdf}
+
+  % Cap. 2 (secc. 2.1.4): art.~12, fracc.~XVI, obligación del
+  % profesionista de ``guardar el secreto profesional respecto a la
+  % información que maneje por tal motivo, salvo los informes
+  % legales que deban rendir ante las autoridades competentes'';
+  % fracc.~XVII, señalar en su publicidad nombre, profesión,
+  % institución de procedencia y número de cédula (Ley para el
+  % Ejercicio de las Actividades Profesionales del Estado de
+  % Jalisco, 2015/2023, art.~12).
   
 \item Ley Reglamentaria del Artículo~5° Constitucional, Relativo
   al Ejercicio de las Profesiones en la Ciudad de México.
