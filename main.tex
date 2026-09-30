@@ -2972,19 +2972,109 @@ obligación que atiende.
 
 \subsubsection{Diagrama de arquitectura de servicios}
 
-La Figura~\ref{fig:aws} representa la arquitectura de servicios de NutriApp.
-El tráfico parte del dispositivo del usuario por internet y llega a
-CloudFront y a API Gateway, que son los puntos de entrada públicos y están
-protegidos por WAF y Shield. A partir de API Gateway, las funciones Lambda,
-la base de datos y las llaves operan dentro de la red privada virtual (VPC)
-sin exposición directa a internet. El acceso de Lambda a RDS y a S3 se
-resuelve por puntos de enlace privados dentro de la VPC.
-
+La arquitectura de servicios ocupa la Figura~\ref{fig:aws}, en cuatro
+partes. La parte~(a) es el borde y la entrada de tráfico. Route~53
+registra el dominio; CloudFront sirve la interfaz web desde sus
+ubicaciones de borde con el certificado de AWS Certificate Manager;
+AWS WAF aplica reglas administrativas y por tasa, y AWS Shield
+Standard mitiga la denegación de servicio. Esos servicios son globales
+y quedan fuera de \texttt{mx-central-1}. Dentro de la región están
+Amazon Cognito, que gestiona el registro, el correo verificado, la MFA
+del nutriólogo, el bloqueo por intentos fallidos y los roles; el sitio
+estático en S3; y Amazon API Gateway, que deja pasar sin token las
+rutas públicas del catálogo, valida el token en las privadas y recibe
+los webhooks de Mercado Pago. Todo el tráfico va por HTTPS con
+TLS~1.3.
+ 
+La parte~(b) es la red privada. API Gateway entra a la VPC por una
+integración privada (VPC Link) hacia un Application Load Balancer que
+reparte las llamadas entre funciones Lambda en Node.js, en subredes
+privadas de al menos dos zonas de disponibilidad; RDS para PostgreSQL
+opera en una zona, con Multi-AZ como opción. La salida a internet pasa
+por un NAT Gateway: los avisos con folio salen por Amazon SES, el
+canal por defecto, y los avisos opcionales por Twilio; de Mercado Pago
+llegan las notificaciones de cobro firmadas. La figura distingue a
+Twilio como subcontratación del encargado y a Mercado Pago como
+responsable independiente, y deja asentado que NutriApp opera la
+plataforma como encargado del nutriólogo.
+ 
+La parte~(c) es el almacenamiento y las llaves. RDS guarda
+expedientes, consentimientos, solicitudes ARCO, el
+\texttt{DeclarationLog} y las publicaciones, con respaldo continuo.
+Cuatro depósitos de S3 separan lo que se conserva con reglas
+distintas: los adjuntos clínicos, con versionado y Object Lock durante
+la conservación de la NOM-004 contada desde \texttt{fecha\_ultimo\_acto};
+los registros de auditoría (CloudTrail, Activity Streams y
+\texttt{DeclarationLog}), con Object Lock cinco años; los contratos y
+comprobantes, con Object Lock diez años y los comprobantes fiscales
+cinco (sección~5.1); y el contenido social, sin Object Lock. AWS KMS
+custodia la llave maestra por entorno y la llave de datos por
+expediente. Las constancias NOM-151 las emite un prestador de servicios
+de certificación externo. Lambda alcanza S3 por un punto de enlace de
+gateway y KMS por uno de interfaz, sin salir de la VPC.
+ 
+La parte~(d) es la operación y la trazabilidad. Amazon EventBridge
+programa la retención y la eliminación; Amazon CloudWatch concentra
+métricas y alarmas, entre ellas la de solicitudes ARCO a cinco días o
+menos del plazo; Database Activity Streams publica la actividad SQL en
+Kinesis Data Streams, cuyo consumidor queda por definir; AWS CloudTrail
+registra los eventos de administración y de datos y los exporta al
+depósito de registros de auditoría; y el inventario de datos
+clasificado por sensibilidad se mantiene junto a esos registros.
+ 
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{diagrama-aws.pdf}
-  \caption{Arquitectura de servicios AWS para NutriApp. Elaboración propia.}
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-a.pdf}
+    \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico.}
+    \label{fig:aws-a}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS: (a) borde y
+  entrada; (b) red privada y subcontrataciones; (c) almacenamiento y
+  llaves; (d) operación y trazabilidad. Elaboración propia.}
   \label{fig:aws}
+\end{figure}
+\end{landscape}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
+    \caption{Red privada, cómputo, salida a internet y subcontrataciones.}
+    \label{fig:aws-b}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
+    \caption{Almacenamiento, retención y llaves.}
+    \label{fig:aws-c}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-d.pdf}
+    \caption{Operación, métricas y trazabilidad.}
+    \label{fig:aws-d}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
 
 \subsubsection{Diagramas UML: casos de uso y secuencia}
@@ -3059,7 +3149,6 @@ La exportación del expediente no aparece: quedó fuera del MVP
   \caption{Casos de uso de NutriApp (continuación).}
 \end{figure}
  
-% 9) [5.2.1 ARQUITECTURA (prosa y figura)] LÍNEAS 2968–2981 sustituir COMPLETAS por lo siguiente (empieza «La Figura~\ref{fig:aws} representa la arquite», termina «\end{figure}»):
 La arquitectura de servicios ocupa la Figura~\ref{fig:aws}, en cuatro
 partes. La parte~(a) es el borde y la entrada de tráfico. Route~53
 registra el dominio; CloudFront sirve la interfaz web desde sus
