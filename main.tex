@@ -47,6 +47,7 @@
 
 % Hipervínculos (siempre al final del preámbulo)
 \usepackage{hyperref}
+\usepackage{xurl}              % permite cortar URLs largas en la bibliografía
 \hypersetup{
   colorlinks = true,
   linkcolor  = black,
@@ -258,7 +259,10 @@ conocer y entender el marco legal sobre el que opera. Se analiza el
 contexto que llevó a México a construir esta normativa, su
 comparación con otros países y las implicaciones
 prácticas para cualquier profesional que maneje información clínica
-de pacientes.
+de pacientes. El análisis toma la legislación, los datos y las
+referencias institucionales como estaban al 31 de enero de 2026,
+fecha de corte de este trabajo (sección~4.2.3); cuando una cifra o
+un hecho corresponde a un periodo distinto, el texto lo indica.
 % ═══════════════════════════════════════════════════════════════════════════
 
 \subsection{La Ley Federal de Protección de Datos Personales (LFPDPPP)}
@@ -321,8 +325,10 @@ Cinco momentos explican el marco legal vigente:
   concretos. Se estableció que los responsables debían \textit{``establecer medidas para la trazabilidad de los datos personales, es decir, acciones, medidas y procedimientos técnicos 
   que permiten rastrear a los datos personales durante su tratamiento''} 
   (Reglamento de la Ley Federal de Protección de Datos Personales en 
-  Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X); 
-el artículo~57 añadió que las medidas de seguridad se exigen \textit{``con independencia del sistema de tratamiento''} (RLFPDPPP, 2011, art.~57). Para este caso de estudio, es particularmente 
+  Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X);
+este trabajo toma ese Reglamento como referencia en lo que no se
+opone a la ley de 2025, supuesto que se declara en la
+sección~4.2.3. El artículo~57 añadió que las medidas de seguridad se exigen \textit{``con independencia del sistema de tratamiento''} (RLFPDPPP, 2011, art.~57). Para este caso de estudio, es particularmente 
   relevante el artículo~52 del mismo Reglamento, que permite expresamente 
    el uso de servicios de cómputo en la nube siempre que el proveedor
   cumpla las condiciones que el propio artículo fija: políticas afines
@@ -334,11 +340,15 @@ el artículo~57 añadió que las medidas de seguridad se exigen \textit{``con in
   Ley Federal de Protección de Datos Personales en Posesión de los
   Particulares, que reemplazó formalmente a la de 2010 (LFPDPPP,
   2025, Transitorio Segundo). En términos generales, los principios
-  y los derechos ARCO se mantienen, pero hay ajustes importantes
-  para el sector salud. El artículo~9 precisa ahora que no es
-  necesario el consentimiento del paciente cuando sus datos se
-  requieren para brindarle atención médica y este no está en
-  condiciones de otorgarlo (LFPDPPP, 2025, art.~9). Las sanciones
+   y los derechos ARCO se mantienen, pero hay ajustes para el sector salud. La excepción al consentimiento por
+  atención médica no es nueva: la ley de 2010 ya eximía del
+  consentimiento el tratamiento indispensable para la atención
+  médica, el diagnóstico o la gestión de servicios de salud
+  mientras el titular no pudiera otorgarlo (LFPDPPP, 2010,
+  art.~10, fracc.~VI); la ley de 2025 conserva la excepción con
+  el mismo supuesto y la reubica en el artículo~9, fracción~VI,
+  con ajustes de redacción (LFPDPPP, 2025, art.~9, fracc.~VI). Lo
+  que cambió es la numeración, no el alcance. Las sanciones
   conservan los rangos de 2010, ahora expresados en Unidades de
   Medida y Actualización (UMA): pueden llegar hasta 320,000 veces
   ese valor, con posibilidad de duplicarse cuando se trata de datos
@@ -352,10 +362,13 @@ el artículo~57 añadió que las medidas de seguridad se exigen \textit{``con in
 
 \end{enumerate}
 
-En ningún momento del proceso legislativo se desarrolló una estrategia de
-comunicación dirigida a los profesionales de salud independientes,
-como lo son los nutriólogos de consulta privada. La ley se creó, se actualizó
-y finalmente se renovó, sin que en ese proceso se hablara del gremio. El desconocimiento que documenta este caso es consecuencia de esa omisión.
+En las fuentes revisadas con el método de la sección~4.2 no se
+identificó una estrategia de comunicación dirigida a los
+profesionales de salud independientes, como lo son los nutriólogos
+de consulta privada, en ninguna de las tres etapas legislativas. Esa
+ausencia es una de las explicaciones posibles del desconocimiento
+que este caso explora; el diagnóstico del capítulo tres es el que
+puede confirmarla o descartarla.
 
 \subsubsection{México y la protección de datos: entre compromisos
 internacionales y necesidades internas}
@@ -425,12 +438,13 @@ sin estar sujeto a presiones políticas (Decreto por el que se reforman y adicio
   cambio tiene una consecuencia práctica concreta: la autoridad ante
   la que deben responder si un paciente ejerce sus derechos ARCO o
   si enfrentan una revisión por incumplimiento ya no es el INAI sino
-  esta nueva dependencia, que al momento de redactar este documento
-  aún está consolidando sus procesos y criterios en la materia.
+  esta nueva dependencia, que al corte de esta investigación (31 de
+  enero de 2026) aún estaba consolidando sus procesos y criterios en
+  la materia.
 
 \end{enumerate}
 
-En las fuentes revisadas, el gremio de la nutrición no aparece en esas discusiones. Esa ausencia es parte del origen del problema que este caso de estudio busca documentar.
+En las fuentes revisadas, el gremio de la nutrición no aparece en esas discusiones.
 
 \subsubsection{Estructura de la ley, sujetos obligados y principios
 rectores}
@@ -670,17 +684,18 @@ realidad institucional}
   en el Sector Privado, auxiliada por tres direcciones especializadas
   en protección de derechos, atención a denuncias y procedimientos
   de sanciones (SABG, 2025b,
-  art.~30\mbox{-}F). Al momento de redactar este documento no hay
-  registro público de procedimientos concluidos ni de multas
-  impuestas por esa dependencia en materia de datos de
-  particulares. El propio sitio del INAI publicó un aviso señalando
+ art.~30\mbox{-}F). En la búsqueda realizada para este trabajo
+  (sección~4.2) no se localizaron, al 31 de enero de 2026,
+  resoluciones ni multas publicadas por esa dependencia en materia
+  de datos de particulares; esa ausencia de publicación no permite
+  afirmar que no existan procedimientos en curso. El propio sitio del INAI publicó un aviso señalando
   que \textit{``este sitio ya no está vigente''} y que los contenidos
   relevantes \textit{``se migrarán paulatinamente''} a las nuevas
     plataformas (INAI, 2025, párr.~1). La ley fija un plazo de
   cincuenta días para resolver un procedimiento de protección de
-  derechos (LFPDPPP, 2025, art.~42). Lo que no existe todavía es
-  registro público de cómo lo cumple la nueva autoridad ni con qué
-  criterios.
+  derechos (LFPDPPP, 2025, art.~42). Al corte de este trabajo no se
+  localizó registro público de cómo lo cumple la nueva autoridad ni
+  con qué criterios.
   El cambio de marzo de 2025 movió el nombre y la estructura de la
   autoridad. No tocó las infracciones, los montos de las multas ni
   los mecanismos de denuncia (LFPDPPP, 2025, arts.~58--64). Un
@@ -838,7 +853,8 @@ El cuadro siguiente compara nueve criterios en los cinco marcos
 analizados y muestra en cuáles México queda por debajo, a la par o
 por encima de cada uno.
 
-\begin{longtable}{>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.6cm}}
+\begingroup\small\setlength{\tabcolsep}{3pt}
+\begin{longtable}{>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.45cm}>{\raggedright\arraybackslash}p{2.45cm}>{\raggedright\arraybackslash}p{2.45cm}>{\raggedright\arraybackslash}p{2.45cm}>{\raggedright\arraybackslash}p{2.45cm}}
  
   \caption{Comparativo de marcos normativos de protección de datos
   en salud: México, Brasil, Uruguay, Estados Unidos y Alemania.}
@@ -1006,10 +1022,14 @@ por encima de cada uno.
       informa en lenguaje claro y sencillo, sin plazo
       numérico (Decreto~64/020, 2020, art.~4).
     & Sí. HIPAA Breach Notification Rule (45 CFR
-      \S~164.400--414). Plazo de 60~días para notificar a los
-      individuos afectados; al HHS en el mismo plazo si la brecha
-      afecta a 500 o más personas y en informe anual si son menos
-      (HHS, 2013, 45 CFR \S~164.404 y \S~164.408).
+      \S~164.400--414). A las personas afectadas: sin demora
+      injustificada y a más tardar 60~días naturales desde que se
+      descubre la vulneración (\S~164.404). A medios de
+      comunicación: si afecta a más de 500 residentes de un mismo
+      estado (\S~164.406). Al HHS: al mismo tiempo que a las
+      personas si son 500 o más; si son menos, en un registro
+      anual que se presenta dentro de los 60~días siguientes al
+      cierre de cada año calendario (\S~164.408) (HHS, 2013).
     & Sí. Art.~33 GDPR. Plazo de 72~horas para notificar
       a la autoridad supervisora competente desde que el
       responsable tiene conocimiento de la brecha (GDPR,
@@ -1021,8 +1041,8 @@ por encima de cada uno.
       derechos ARCO incluyen acceso y cancelación, pero no
       el derecho del paciente a llevarse su historial en
       formato transferible a otro profesional o sistema
-      (LFPDPPP, 2025, arts.~22 y 24). NutriApp la incorpora
-      por diseño aunque la ley no la exija.
+      (LFPDPPP, 2025, arts.~22 y 24). El diseño de NutriApp no
+      la incluye; queda como siguiente paso (sección~8.3).
     & Sí. Art.~18, inc.~V LGPD. El paciente tiene derecho
       a que su historial le sea entregado en formato
       transferible a otro proveedor mediante solicitud
@@ -1133,22 +1153,23 @@ por encima de cada uno.
       sus programas de cumplimiento (AWS, 2023b). \\
  
 \end{longtable}
+\endgroup
  
-México no ocupa el último lugar en todas las dimensiones. En marco
-técnico para software de salud, las NOM mexicanas son el instrumento
-más específico del comparativo: concentran en una sola norma
-requerimientos de cifrado, autenticación y trazabilidad. Lo que falta
-es la obligación de usarla. En portabilidad, México está por debajo de
-Brasil y Alemania; Uruguay, como México, se detiene en el derecho de
-acceso. En notificación de brechas con plazo definido, México está por
-debajo de Brasil, Uruguay y Alemania. En independencia de la autoridad
-reguladora, México retrocedió en 2025: pasó de un organismo autónomo a
-una secretaría del Ejecutivo. En la dimensión central de este caso de
-estudio, la responsabilidad del software de salud ante la ley, México
-carece de un mecanismo comparable al \textit{Business Associate
-Agreement} estadounidense o a la certificación de nube del SGB~V
-\S~393 alemán. NutriApp no puede cambiar el marco legal mexicano, pero
-puede adoptar por diseño los estándares que ese marco todavía no exige.
+El cuadro se lee por dimensión, sin un puntaje agregado. En marco
+técnico para software de salud, México cuenta con dos normas de
+detalle: la NOM-004, que fija el contenido y la conservación del
+expediente, y la NOM-024, que fija autenticación, perfiles de acceso
+y trazabilidad cuando el prestador adopta un sistema electrónico; la
+segunda solo obliga a quien adopta ese sistema. En portabilidad,
+Brasil y Alemania reconocen el derecho y México y Uruguay se detienen
+en el acceso. En notificación de vulneraciones, Brasil, Uruguay y
+Alemania fijan un plazo o un destinatario institucional y México
+solo exige informar al titular. En independencia de la autoridad,
+México pasó en 2025 de un organismo autónomo a una secretaría del
+Ejecutivo. En la responsabilidad del software de salud ante la ley,
+Estados Unidos y Alemania tienen mecanismos específicos (el
+\textit{Business Associate Agreement} y la certificación de nube del
+SGB~V \S~393) y México no.
 % ────────────────────────────────────────────────────────────────────────────
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Análisis crítico de la ley mexicana}
@@ -1163,14 +1184,14 @@ puede adoptar por diseño los estándares que ese marco todavía no exige.
 % ------------------------------------------------------------
 \begin{enumerate}[label=\Roman*.]
  
-  \item Ningún país del comparativo reúne en un solo instrumento
-  obligatorio el contenido del expediente clínico y los requisitos
-  técnicos del sistema que lo gestiona. En México lo hacen la
-  NOM-004-SSA3-2012, que fija qué debe contener el expediente, cómo
-  se conserva y por cuánto tiempo, y la NOM-024-SSA3-2012, que fija
-  la autenticación, los perfiles de acceso y la trazabilidad del
-  sistema electrónico (NOM-004-SSA3-2012, 2012; NOM-024-SSA3-2012,
-  2012). Brasil regula por resoluciones del CFM según el tipo de
+ \item México cuenta con dos normas técnicas de detalle para el
+  expediente: la NOM-004-SSA3-2012, obligatoria para todo prestador,
+  fija qué debe contener el expediente, cómo se conserva y por cuánto
+  tiempo; la NOM-024-SSA3-2012 fija la autenticación, los perfiles de
+  acceso y la trazabilidad del sistema electrónico, y obliga cuando
+  el prestador adopta uno (NOM-004-SSA3-2012, 2012;
+  NOM-024-SSA3-2012, 2012). Entre los países del comparativo, ese
+  nivel de detalle sobre el sistema es poco frecuente. Brasil regula por resoluciones del CFM según el tipo de
   servicio (CFM, 2022). Uruguay obliga a llevar la historia clínica
   electrónica, pero sin ese nivel de detalle técnico
   (Decreto~242/017, 2017; MSP Uruguay, 2017). La HIPAA Security Rule
@@ -1184,12 +1205,16 @@ puede adoptar por diseño los estándares que ese marco todavía no exige.
   garantías (CPEUM, 1917/2024, arts.~6° y~16). Ese anclaje protege
   el derecho frente a cambios de ley ordinaria. Uruguay lo regula
   por ley ordinaria (Ley~18.331, 2008); Brasil lo elevó a derecho
-  fundamental en 2022 (Emenda Constitucional n°~115, 2022); en la
-  Unión Europea el fundamento es un reglamento comunitario de
-  aplicación directa, no las constituciones nacionales (GDPR,
-  2016).
+  fundamental en 2022 (Emenda Constitucional n°~115, 2022). En la
+  Unión Europea el derecho está reconocido en el artículo~8 de la
+  Carta de los Derechos Fundamentales, con rango de tratado, y el
+  GDPR regula su ejercicio (Carta de los Derechos Fundamentales de
+  la Unión Europea [CDFUE], 2012, art.~8; GDPR, 2016). El anclaje
+  de rango superior no es, por tanto, exclusivo de México; lo que
+  sí es propio del caso mexicano es su antigüedad y su formulación
+  como derechos ARCO en el texto constitucional.
  
-   \item El consentimiento tiene dos fuentes distintas en México. La
+  \item El consentimiento tiene dos fuentes distintas en México. La
   LFPDPPP exige consentimiento expreso y por escrito para tratar
   datos sensibles (LFPDPPP, 2025, art.~8). La Ley General de Salud
   reconoce al paciente el derecho a decidir libremente sobre los
@@ -1258,16 +1283,22 @@ paciente que quiere saber si sus datos están protegidos.
  
   \item El artículo~19 de la LFPDPPP obliga a informar al titular de
   forma inmediata cuando una vulneración afecta de forma significativa
-  sus derechos (LFPDPPP, 2025, art.~19). La ley no dice qué significa
-  inmediata ni obliga a avisar a la autoridad. Los plazos de Brasil,
-  Uruguay, Estados Unidos y Alemania se resumen en la
-  Tabla~\ref{tab:comparativo-normativo}. La ausencia de aviso al
-  regulador pesa más que la falta de un número de horas: sin ese
-  aviso, la autoridad no se entera de las vulneraciones ni puede
-  vigilar cómo se atienden. Para el nutriólogo que pierde un equipo
-  con expedientes sin cifrar, la ley tampoco fija cuándo ni cómo debe
-  actuar. El paciente, por su parte, no tiene garantía de ser
-  informado en un tiempo definido.
+  sus derechos (LFPDPPP, 2025, art.~19). Leída con el Reglamento, la
+  obligación tiene destinatario, momento y contenido: el
+  destinatario es el titular; el momento es \textit{``sin dilación
+  alguna''}, entendida como la que se realiza tan pronto se confirma
+  la vulneración y se inician las acciones para determinar su alcance
+  (RLFPDPPP, 2011, art.~64); el contenido mínimo comprende la
+  naturaleza del incidente, los datos comprometidos, las
+  recomendaciones al titular, las acciones correctivas y los medios
+  para obtener más información (RLFPDPPP, 2011, art.~65). Lo que
+  queda ambiguo después de leer ambas disposiciones es distinto de lo
+  que suele afirmarse: no falta el procedimiento, sino un plazo en
+  días y el aviso a la autoridad. Los plazos de Brasil, Uruguay,
+  Estados Unidos y Alemania se resumen en la
+  Tabla~\ref{tab:comparativo-normativo}. Sin aviso al regulador, la
+  autoridad no se entera de las vulneraciones ni puede vigilar cómo
+  se atienden, y el titular no tiene un plazo numérico exigible.
  
   \item Entre 2014 y 2025 México tuvo en el INAI un organismo
   constitucional autónomo. En marzo de 2025 sus funciones pasaron a
@@ -1286,18 +1317,16 @@ paciente que quiere saber si sus datos están protegidos.
   ante la que responde una queja depende ahora del Ejecutivo
   Federal.
  
-  \item La NOM-024-SSA3-2012 fija requisitos de autenticación,
-  control de acceso y trazabilidad que ningún otro país del
-  comparativo reúne en un instrumento obligatorio. Su límite es que
-  solo aplica si el profesional decide usar un sistema electrónico.
+  \item La NOM-024-SSA3-2012, descrita entre las fortalezas, tiene
+  un límite: solo aplica si el profesional decide usar un sistema
+  electrónico.
   Un nutriólogo puede llevar sus expedientes en papel o en una hoja
   de cálculo sin incumplir la NOM-024 (NOM-024-SSA3-2012, 2012).
   Uruguay cerró esa brecha en 2017 al hacer obligatoria la historia
   clínica electrónica para todos los prestadores (Decreto~242/017,
-  2017, art.~3°). México tiene la norma técnica más detallada de
-  la región y no la obligación de usarla. Ese es el vacío que
-  NutriApp ocupa: ofrecer desde el diseño el estándar que la ley
-  todavía no exige.
+  2017, art.~3°). En México, la adopción de un sistema electrónico,
+  y con ella la NOM-024, sigue siendo voluntaria.
+
  
   \item El desarrollador estadounidense que procesa datos de salud
   responde directamente ante la autoridad como \textit{business
@@ -1324,28 +1353,39 @@ paciente que quiere saber si sus datos están protegidos.
   pequeño porte, que
   deben ofrecer en su lugar un canal de comunicación con el titular
   (LGPD, 2018, art.~41; Resolução CD/ANPD n°~2, 2022, art.~11). La
-  LFPDPPP no prevé una figura equivalente. Las tareas de supervisar
-  el cumplimiento, atender solicitudes ARCO, gestionar incidentes y
-  mantener el inventario de datos (RLFPDPPP, 2011, art.~61) recaen en
-  el nutriólogo, sin una función interna que las sostenga. La
-  consecuencia para el diseño de NutriApp es que el sistema debe
-  asumir parte de ese trabajo, empezando por los plazos de las
-  solicitudes ARCO.
+  LFPDPPP sí prevé una función interna: todo responsable debe
+  designar a una persona o departamento de datos personales para
+  procesar las solicitudes de los titulares (LFPDPPP, 2025, art.~29;
+  la ley de 2010 lo preveía en su artículo~30). La diferencia con el
+  delegado europeo está en las funciones, no en la existencia de la
+  figura: la mexicana se limita a tramitar solicitudes, mientras que
+  el delegado asesora, supervisa el cumplimiento y sirve de enlace
+  con la autoridad (GDPR, 2016, art.~39); la ley mexicana tampoco
+  le exige independencia ni formación acreditada. En un consultorio
+  independiente, esa persona es el propio nutriólogo, de modo que
+  supervisar el cumplimiento, atender solicitudes ARCO, gestionar
+  incidentes y mantener el inventario de datos (RLFPDPPP, 2011,
+  art.~61) recaen en él. Para el diseño, la consecuencia es que
+  NutriApp debe darle al nutriólogo los medios para ejercer esa
+  función, empezando por el control de los plazos de las solicitudes
+  ARCO, sin sustituirlo en las decisiones.
  
 \end{enumerate}
 
-Ninguna de estas debilidades requiere una reforma constitucional 
-para resolverse: la portabilidad puede incorporarse en un decreto 
-o reglamento; el plazo de notificación de brechas puede establecerse
-en una circular de la SABG; la figura del encargado de cumplimiento
-puede promoverse sin necesidad de reforma legal. 
-Lo que sí requieren es voluntad institucional y una autoridad 
-con la independencia y la capacidad técnica para
-impulsarlas. Mientras esas condiciones no estén presentes, la
-brecha entre el estándar que las NOMs establecen en papel y la
-práctica cotidiana de miles de consultorios en México seguirá
-siendo el problema que este caso de estudio documenta y que
-NutriApp busca atender desde el diseño.
+Cada una de estas debilidades tiene una vía jurídica distinta, y no
+todas están al alcance del mismo órgano. Devolver la independencia
+al regulador exigiría una reforma constitucional, porque fue una
+reforma de ese rango la que extinguió al INAI. La portabilidad es un
+derecho nuevo y solo puede crearlo el legislador mediante una
+reforma a la LFPDPPP; un reglamento no puede establecer derechos que
+la ley no prevé. El plazo para avisar una vulneración podría
+precisarse en disposiciones reglamentarias dentro de lo que la ley
+ya ordena, sin crear una obligación nueva. Hacer obligatorio el
+sistema electrónico corresponde a la autoridad sanitaria por la vía
+de una norma oficial mexicana. Ninguna de esas vías depende del
+diseño de un sistema, y el diseño tampoco las sustituye: lo que
+puede hacer es atender, dentro del consultorio, las obligaciones que
+ya existen.
 
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Traducción de la ley a requerimientos de software:
@@ -1354,7 +1394,7 @@ El marco anterior deja obligaciones concretas: qué debe pedirse
 al paciente, qué debe protegerse y durante cuánto tiempo, y ante
 quién se responde. Privacy by Design es el enfoque de ingeniería
 que convierte esas obligaciones en decisiones de diseño. La tabla
-de trazabilidad de 2.4.2 recaba esa conversión obligación por
+de trazabilidad de 2.4.2 recoge esa conversión obligación por
 obligación.
 % ────────────────────────────────────────────────────────────────────────────
 
@@ -1367,9 +1407,10 @@ la LFPDPPP}
 \begin{enumerate}[label=\Roman*.]
  
   \item Cavoukian (2009) formuló siete principios para Privacy by
-  Design. Cada uno tiene una obligación correspondiente en la
-  LFPDPPP, en su Reglamento o en las NOM, de modo que la ley
-  mexicana pide el enfoque aunque no lo nombre.
+  Design. La ley mexicana no nombra el enfoque ni lo exige como
+  método; lo que sigue es una lectura de compatibilidad, principio
+  por principio, que señala también dónde la correspondencia es
+  parcial.
  
   \begin{itemize}
     \item El principio \textit{proactivo, no reactivo} pide
@@ -1385,22 +1426,28 @@ la LFPDPPP}
     la finalidad declarada (LFPDPPP, 2025, art.~5).
  
     \item \textit{Privacidad integrada en el diseño} supone que la
-    protección forma parte de la arquitectura desde el inicio. El
-    Reglamento lo recoge al exigir medidas de seguridad con
-    independencia del sistema de tratamiento (RLFPDPPP, 2011,
-    art.~57).
+    protección forma parte de la arquitectura desde el inicio. La
+    correspondencia es parcial: el Reglamento exige medidas de
+    seguridad con independencia del sistema de tratamiento
+    (RLFPDPPP, 2011, art.~57), es decir, pide el resultado sin
+    ordenar en qué momento del desarrollo se incorpora.
  
     \item \textit{Funcionalidad completa} descarta el intercambio
-    entre privacidad y utilidad: ambas se alcanzan a la vez.
-    Corresponde al principio de calidad, que pide datos exactos,
-    completos y actualizados para su finalidad (LFPDPPP, 2025,
-    art.~5).
+    entre privacidad y utilidad: ambas se alcanzan a la vez. Es el
+    principio con menos correspondencia en la ley mexicana, que no
+    se pronuncia sobre la utilidad del sistema; lo más cercano es el
+    principio de calidad, que pide datos exactos, completos y
+    actualizados para su finalidad (LFPDPPP, 2025, art.~5), y que
+    se refiere a los datos, no a la funcionalidad.
  
     \item \textit{Seguridad extremo a extremo} cubre el dato desde
-    que se recolecta hasta que se elimina. La NOM-004 lo traduce
-    en la conservación del expediente con confidencialidad
-    durante al menos cinco años (NOM-004-SSA3-2012, 2012,
-    numeral~5.4).
+    que se recolecta hasta que se elimina. La ley pide medidas de
+    seguridad durante todo el tratamiento (LFPDPPP, 2025, art.~18)
+    y la NOM-004 fija la conservación del expediente con
+    confidencialidad durante al menos cinco años
+    (NOM-004-SSA3-2012, 2012, numeral~5.4); ninguna de las dos
+    describe un ciclo de vida completo, así que el principio va más
+    lejos que la norma en el tramo de la eliminación.
  
     \item \textit{Visibilidad y transparencia} exige que el sistema
     opere como se le prometió al titular y que eso pueda
@@ -1421,13 +1468,15 @@ la LFPDPPP}
   que tiene y las que le corresponden (RLFPDPPP, 2011, art.~61).
   Esos tres pasos son compatibles con el ciclo de Privacy by
   Design, que también parte de saber qué datos se tienen y qué
-  riesgos corren antes de diseñar. La norma no nombra el enfoque
-  ni lo exige como método; pide el resultado. Un nutriólogo
-  independiente no ha sido formado para levantar un inventario de
-  datos ni para analizar riesgos, y tampoco tiene con qué hacerlo.
-  NutriApp traslada esos pasos al diseño: el inventario está en el
-  modelo de datos y los riesgos se atienden con controles de la
-  plataforma. El profesional no tiene que ejecutarlos.
+  riesgos corren antes de diseñar. Si los nutriólogos
+  independientes cuentan con formación y herramientas para
+  levantar ese inventario es una de las preguntas que el
+  diagnóstico del capítulo tres explora. NutriApp documenta el
+  inventario y el análisis de riesgos de los datos que se tratan
+  dentro de la plataforma y se los entrega al nutriólogo como
+  insumo; la obligación del artículo~61 sigue siendo suya y abarca
+  también los soportes ajenos a la plataforma, como el papel o la
+  mensajería.
  
   \item Una hoja de cálculo, con o sin contraseña, no puede cumplir
   estos principios ni las obligaciones técnicas del marco mexicano,
@@ -1437,8 +1486,7 @@ la LFPDPPP}
   la NOM-024 (NOM-024-SSA3-2012, 2012, numeral~6.6.3). Tampoco
   queda registro de quién abrió qué expediente y cuándo, que es la
   trazabilidad del artículo~48 del Reglamento (RLFPDPPP, 2011,
-  art.~48, fracc.~X). El cifrado exige herramientas externas que rompen el
-  flujo de la consulta. Las solicitudes ARCO no tienen dónde
+  art.~48, fracc.~X). Las solicitudes ARCO no tienen dónde
   registrarse con un plazo verificable, y los datos no pueden
   separarse por sensibilidad ni conservarse con reglas distintas.
   Una versión más nueva del programa no resuelve nada de esto: la
@@ -1517,11 +1565,13 @@ se presenta en dos partes.
   Aviso de privacidad previo al tratamiento
     & LFPDPPP 2025, arts.~14 y~15 (deber de informar y contenido
       mínimo del aviso)
-    & Aviso de privacidad generado automáticamente al crear
-      cada expediente, con registro de que fue presentado
-      al titular antes del primer tratamiento de datos.
-      Versión vigente del aviso siempre accesible desde
-      el perfil del paciente. \\
+    & Plantilla de aviso de privacidad que el nutriólogo completa
+      y valida como responsable; se presenta al paciente en la
+      invitación, antes de capturar cualquier dato, y queda
+      registro de la versión aceptada, la identidad del titular,
+      la finalidad, la fecha, la hora y el mecanismo de aceptación.
+      Versión vigente del aviso siempre accesible desde el perfil
+      del paciente. \\
   \\[4pt]
 
   Medidas de seguridad técnicas y administrativas
@@ -1603,20 +1653,30 @@ se presenta en dos partes.
     & Catálogo de datos estructurado en AWS con clasificación
       por nivel de sensibilidad. Evaluación de impacto a la
       privacidad (Privacy Impact Assessment) documentada antes
-      del despliegue en producción. Revisión semestral del
-      análisis de brecha con registro de hallazgos y acciones
+      del despliegue en producción. Revisión periódica del
+      análisis de brecha, con la frecuencia que fije el
+      responsable, y registro de hallazgos y acciones
       correctivas. \\
   \\[4pt]
 
   Gestión de derechos ARCO en plazo legal
     & LFPDPPP 2025, arts.~22--34; plazo máximo de respuesta de
       veinte días (art.~31)
-    & Módulo ARCO con flujo de solicitud, asignación, resolución
-      y notificación automatizado. Registro de fecha de
+        & Módulo ARCO con flujo de solicitud, asignación y
+      notificación; la resolución la emite el nutriólogo como
+      responsable. Registro de fecha de
       recepción, fecha de resolución y respuesta emitida.
       Alertas automáticas al nutriólogo cuando el plazo de
       respuesta está próximo a vencer. Historial de solicitudes
       accesible para auditoría. \\
+      Aviso al titular ante vulneraciones de seguridad
+    & LFPDPPP 2025, art.~19; RLFPDPPP 2011, arts.~64 y~65
+      (momento y contenido mínimo del aviso)
+    & Registro de incidentes con alerta al nutriólogo como
+      responsable y plantilla de aviso con el contenido mínimo del
+      artículo~65. La decisión de avisar y el envío corresponden
+      al nutriólogo; la plataforma registra fecha, alcance y
+      acciones con folio. \\
   \\[4pt]
 
   Confidencialidad y conservación del expediente clínico
@@ -1641,20 +1701,17 @@ se presenta en dos partes.
     & NOM-024-SSA3-2012 (requerimientos funcionales obligatorios
       para todo sistema de ECE que adopte un establecimiento
       de salud)
-    & Los tres requerimientos funcionales de la NOM-024 se
-      cumplen de forma integrada en la arquitectura AWS. El
-      expediente se almacena cifrado con llaves gestionadas en
-      AWS Key Management Service (KMS) bajo el control
-      administrativo exclusivo del responsable del tratamiento:
-      las políticas de la llave definen quién puede usarla y
-      cada uso queda registrado. El equipo de desarrollo de
-      NutriApp no accede al contenido sin una autorización
-      registrada en esas políticas. La autenticación se gestiona
-      con Amazon Cognito y MFA; la trazabilidad, con AWS
-      CloudTrail y registros inmutables. Ninguno de los tres
-      requiere configuración por parte del nutriólogo: son
-      condiciones de operación predeterminadas de la
-      plataforma. \\
+       & Los requerimientos de la NOM-024 (credenciales propias por
+      usuario, perfiles de acceso y trazabilidad) se atienden en el
+      diseño con Amazon Cognito, control de acceso por rol y los
+      registros de auditoría de la sección~2.5.4. La autenticación
+      multifactor y el cifrado del expediente con llaves en AWS Key
+      Management Service (KMS) son decisiones de diseño que exceden
+      lo que la norma pide: las políticas de la llave definen quién
+      puede usarla y cada uso queda registrado, y NutriApp, como
+      encargado, las administra sin acceder al contenido salvo
+      autorización registrada. Ninguno de los tres requiere
+      configuración por parte del nutriólogo. \\
   \\[4pt]
 
   Uso de proveedor de cómputo en la nube
@@ -1673,8 +1730,10 @@ se presenta en dos partes.
 \subsection{Marco técnico de referencia}
 % ------------------------------------------------------------
  
-Las obligaciones anteriores se cumplen con controles técnicos que
-tienen nombre, fuente y límites conocidos. Esta sección reúne los
+Las obligaciones anteriores se atienden, en su parte técnica, con
+controles que tienen nombre, fuente y límites conocidos; todos son
+propuestas de diseño, no controles verificados en operación
+(sección~4.4.3). Esta sección reúne los
 que el diseño de NutriApp utiliza: el reparto de responsabilidades
 con el proveedor de nube, la gestión de identidad, el cifrado y las
 llaves, la auditoría, el ciclo de vida del dato y los estándares que
@@ -1691,11 +1750,18 @@ nube, que abarca la configuración de los servicios, el control de
 acceso, el cifrado y la gestión de identidades (Amazon Web Services
 [AWS], 2023a). ISO/IEC~27017 formaliza el mismo reparto como
 controles asignados al proveedor, al cliente o a ambos
-(International Organization for Standardization [ISO], 2015). Para la LFPDPPP ese reparto tiene una traducción jurídica. El
-nutriólogo o su organización es el responsable del tratamiento y
-el proveedor de nube actúa como encargado, con una relación que
-debe constar en cláusulas contractuales u otro instrumento jurídico
-(RLFPDPPP, 2011, art.~51). El artículo~52 fija lo que el proveedor
+(International Organization for Standardization [ISO], 2015). Para la LFPDPPP ese reparto involucra a tres actores. El
+nutriólogo o su organización es el responsable del tratamiento.
+NutriApp, que contrata la infraestructura y opera la plataforma por
+cuenta del nutriólogo, es su encargado, con una relación que debe
+constar en cláusulas contractuales u otro instrumento jurídico
+(RLFPDPPP, 2011, arts.~50 y~51). El proveedor de nube y el de
+mensajería son subcontrataciones del encargado, que este debe
+transparentar al responsable (RLFPDPPP, 2011, art.~52). La
+responsabilidad ante una sanción sigue a la conducta y al papel de
+cada uno: el nutriólogo responde por las decisiones del tratamiento
+y por las medidas a su cargo; NutriApp, por las instrucciones que
+recibe y por las medidas que opera como encargado. El artículo~52 fija lo que el proveedor
 de cómputo en la nube debe cumplir: políticas de protección de
 datos afines a los principios y deberes de la ley, transparencia
 sobre las subcontrataciones, no asumir la titularidad de la
@@ -1705,53 +1771,71 @@ concluir el servicio e impedir accesos no autorizados (RLFPDPPP,
 2011, art.~52). Las medidas de seguridad que la ley pide al
 responsable (LFPDPPP, 2025, art.~18) quedan así en dos listas: las
 que el proveedor acredita con sus certificaciones y las que el
-responsable debe configurar, operar y poder demostrar. La
-Tabla~\ref{tab:responsabilidad} recoge ese reparto para los
-controles que usa NutriApp.
+responsable debe configurar, operar y poder demostrar, y de las
+segundas una parte la opera NutriApp como encargado. La
+Tabla~\ref{tab:responsabilidad} recoge ese reparto entre los tres
+actores para los controles que usa NutriApp.
  
 \begin{table}[H]
   \centering
-  \caption{Reparto de responsabilidades entre el proveedor de nube
-  y el responsable del tratamiento en los controles de NutriApp.}
+    \caption{Reparto de responsabilidades entre el proveedor de nube,
+  NutriApp como encargado y el nutriólogo como responsable del
+  tratamiento en los controles de NutriApp.}
   \label{tab:responsabilidad}
   \small
-  \begin{tabular}{>{\raggedright\arraybackslash}p{2.9cm}
-    >{\raggedright\arraybackslash}p{5.3cm}
-    >{\raggedright\arraybackslash}p{5.8cm}}
+  \begin{tabular}{>{\raggedright\arraybackslash}p{2.4cm}
+    >{\raggedright\arraybackslash}p{3.9cm}
+    >{\raggedright\arraybackslash}p{4.1cm}
+    >{\raggedright\arraybackslash}p{3.9cm}}
   \toprule
-  \textbf{Control} & \textbf{AWS (encargado)}
-    & \textbf{Responsable del tratamiento} \\
+  \textbf{Control} & \textbf{AWS (subcontratado)}
+    & \textbf{NutriApp (encargado)}
+    & \textbf{Nutriólogo (responsable)} \\
   \midrule
   Identidad y acceso
     & Servicio de identidades y su disponibilidad
-    & Políticas de acceso por rol, MFA obligatoria, altas y bajas
-      de usuarios \\[4pt]
+    & Políticas de acceso por rol, MFA obligatoria para el
+      nutriólogo, recuperación de cuenta
+    & Altas y bajas de sus pacientes; custodia de sus
+      credenciales \\[4pt]
   Configuración de servicios
     & Valores seguros por defecto y documentación de cada servicio
     & Cifrado activado, retención inmutable, políticas de llaves,
-      separación de entornos \\[4pt]
+      separación de entornos
+    & Ninguna configuración técnica \\[4pt]
   Monitoreo y auditoría
     & Generación y resguardo de los registros de la plataforma
-    & Activar los eventos de datos, revisar los registros y
-      conservarlos cinco años \\[4pt]
+    & Activar los eventos de datos, conservar los registros y
+      entregarlos al responsable
+    & Revisar el historial de accesos de sus expedientes \\[4pt]
   Segregación de datos
     & Aislamiento lógico entre clientes de la nube
     & Aislamiento entre nutriólogos y entre pacientes dentro de la
-      aplicación \\[4pt]
+      aplicación
+    & Usar solo sus propios expedientes \\[4pt]
   Operación y actualizaciones
     & Infraestructura física, red, hipervisor y servicios
       administrados
-    & Código de la aplicación, dependencias y versiones \\[4pt]
+    & Código de la aplicación, dependencias y versiones
+    & Ninguna \\[4pt]
+  Decisiones del tratamiento
+    & Ninguna
+    & Alertas de plazo, plantillas y registro con folio
+    & Aviso de privacidad, resolución de solicitudes ARCO,
+      respuesta a incidentes, análisis de riesgos (art.~61) \\[4pt]
   Terminación del servicio
     & Supresión de los datos al concluir el contrato
-    & Exportar los expedientes y verificar la supresión \\
+    & Entregar los expedientes al responsable y verificar la
+      supresión
+    & Recibir los expedientes y conservarlos el plazo que le
+      corresponde \\
   \bottomrule
   \end{tabular}
  
   \vspace{4pt}
   \parbox{14cm}{\small\textit{Nota.} MFA = Multi-Factor
   Authentication. Elaboración propia con base en AWS (2023a),
-  ISO (2015) y RLFPDPPP (2011, arts.~51 y 52).}
+  ISO (2015) y RLFPDPPP (2011, arts.~50, 51 y 52).}
 \end{table}
 \subsubsection{Identidad y acceso}
 
@@ -1793,7 +1877,7 @@ consecuencia para la eliminación: una llave maestra no se borra en
 el acto, su eliminación se programa con una espera de siete a
 treinta días (AWS, s.f.-b), así que destruir un expediente
 significa destruir su llave de datos y no la llave del entorno. Con
-esto el diseño cubre el deber de proteger los datos contra acceso o
+esto el diseño atiende el deber de proteger los datos contra acceso o
 tratamiento no autorizado (LFPDPPP, 2025, art.~18) con
 independencia del sistema de tratamiento (RLFPDPPP, 2011,
 art.~57).
@@ -1847,7 +1931,9 @@ siguen bajo la retención inmutable de Object Lock, hasta cumplir los
 cinco años de la NOM-004. Los datos que no forman parte
 del expediente clínico, como la cuenta, los datos de contacto y las
 preferencias de notificación, se suprimen de inmediato. Al vencer
-la retención, una función programada ejecuta la supresión por
+la retención, una función programada avisa al nutriólogo, que como
+responsable confirma la supresión o justifica una conservación
+mayor; con su confirmación, la plataforma ejecuta la supresión por
 borrado criptográfico: destruye la llave de datos del expediente,
 lo que hace irrecuperable el contenido cifrado (NIST, 2025b), y
 después borra los objetos. Esta técnica responde a un problema
@@ -2415,9 +2501,14 @@ publican sus autoridades. Las
 ediciones de los estándares internacionales se tomaron como estaban
 vigentes al 31 de enero de 2026, que es la fecha de corte de este
 trabajo: las modificaciones normativas posteriores se mencionan cuando
-son relevantes, pero no se incorporan al análisis. La decisión evita un
-ciclo de revisión sin fin en un marco que cambia con frecuencia, y
-ubica al lector en un estado del derecho identificable.
+son relevantes, pero no se incorporan al análisis. Un supuesto se
+declara de forma expresa: la ley de 2025 abrogó la de 2010, y este
+trabajo aplica el Reglamento de 2011 en lo que no se opone a la
+nueva ley, en tanto no se expida el reglamento que la desarrolle;
+si ese reglamento cambia los artículos aquí citados (48, 50 a 52,
+57, 61, 64, 65 y 107), las tablas de trazabilidad deberán
+actualizarse. La fecha de corte fija el estado del derecho
+analizado.
  
 % ------------------------------------------------------------
 \subsection{Investigación de campo: grupos focales}
@@ -3149,9 +3240,11 @@ corre la conservación mínima de cinco años contados desde el último
 acto médico (LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012,
 2012, numeral~5.4). Los datos ajenos al expediente, como la cuenta,
 los datos de contacto y las preferencias de notificación, se suprimen
-de inmediato. Al vencer la conservación, el expediente se elimina por
-borrado criptográfico y el titular recibe el aviso con folio en su
-correo verificado (sección~2.5.5). Del
+de inmediato. Al vencer la conservación, la plataforma avisa al
+nutriólogo y, con su confirmación, el expediente se elimina por
+borrado criptográfico (sección~2.5.5); el aviso con folio al titular
+requiere un correo de contacto vigente, por lo que el diálogo le
+ofrece conservar solo ese dato para recibirlo. Del
 lado del nutriólogo, \texttt{PatientDetail} muestra las solicitudes
 activas con folio, tipo, fecha, días restantes y estado, y una alarma de
 CloudWatch le avisa cuando quedan cinco días o menos para responder,
@@ -3448,9 +3541,9 @@ Las dos brechas identificadas en el análisis inicial ---ausencia de módulo ARC
 como componente técnico explícito y ausencia de eliminación segura verificable---
 quedan cubiertas por el diseño propuesto. La tercera brecha identificada ---la
 ausencia de portabilidad de datos como derecho explícito en la LFPDPPP---
-no puede resolverse por diseño técnico; requiere reforma legal. NutriApp anticipa
-esa reforma implementando por diseño la exportación estructurada del expediente
-en formato transferible, aunque la ley aún no lo exija.
+no puede resolverse por diseño técnico; requiere reforma legal. La exportación
+estructurada del expediente en formato transferible queda fuera del MVP y se
+propone como siguiente paso en la sección~8.3.
 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Costo de operar el diseño y relación costo-beneficio}
@@ -4118,6 +4211,15 @@ revisan con un contador antes de operar.
   % HIPAA (California Consumer Privacy Act [CCPA], Cal. Civ. Code
   % § 1798.100 et seq., 2018).
 
+\item Carta de los Derechos Fundamentales de la Unión Europea.
+  (2012, 26 de octubre). \textit{Diario Oficial de la Unión
+  Europea}, C~326, 391--407.
+  \url{https://eur-lex.europa.eu/legal-content/ES/TXT/?uri=CELEX:12012P/TXT}
+ 
+  % Cap. 2 (secc. 2.3.1): reconocimiento del derecho a la protección
+  % de datos en la UE (CDFUE, 2012, art.~8); el GDPR regula su
+  % ejercicio.
+
 \item Cavoukian, A. (2009). \textit{Privacy by design: The 7
   foundational principles}. Information and Privacy Commissioner
   of Ontario.
@@ -4520,7 +4622,10 @@ revisan con un contador antes de operar.
 
   % Cap. 2 (secc. 2.1.1): referencia histórica; el art.~9 exigía
   % ``consentimiento expreso y por escrito del titular para su
-  % tratamiento'' de datos sensibles (LFPDPPP, 2010, art.~9).
+  % tratamiento'' de datos sensibles (LFPDPPP, 2010, art.~9);
+  % art.~10, fracc.~VI: excepción por atención médica, antecedente
+  % del art.~9, fracc.~VI, de 2025; art.~30: persona o departamento
+  % de datos personales, antecedente del art.~29 de 2025. 
 
 \item Ley Federal de Protección de Datos Personales en Posesión
   de los Particulares. (2025, 20 de marzo; última reforma 14 de
