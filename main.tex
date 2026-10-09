@@ -1491,7 +1491,9 @@ la LFPDPPP}
 de trazabilidad normativa}
 % NOTA: Tabla dividida en dos partes por extensión. Tabla 1:
 % requerimientos LFPDPPP y Reglamento (filas 1-5). Tabla 2:
-% requerimientos Reglamento, NOMs y nube (filas 6-10).
+% requerimientos Reglamento, NOMs y nube (filas 6-11: inventario y
+% análisis de riesgos, ARCO, aviso ante vulneraciones, conservación
+% del expediente, NOM-024 y nube).
 
 Las tablas siguientes ligan cada obligación legal identificada en
 este capítulo con el requerimiento técnico que la atiende en
@@ -1742,15 +1744,19 @@ acceso, el cifrado y la gestión de identidades (Amazon Web Services
 controles asignados al proveedor, al cliente o a ambos
 (International Organization for Standardization [ISO], 2015).
  
-En términos de la LFPDPPP intervienen tres actores. El nutriólogo
-o su organización es el responsable del tratamiento. NutriApp, que
+En el tratamiento del expediente intervienen tres papeles de la
+LFPDPPP: responsable, encargado y subcontrataciones del encargado. El
+nutriólogo o su organización es el responsable del tratamiento. NutriApp, que
 contrata la infraestructura y opera la plataforma por cuenta del
 nutriólogo, es su encargado, con una relación que debe constar en
 cláusulas contractuales u otro instrumento jurídico (RLFPDPPP,
 2011, arts.~50 y~51). El proveedor de nube y el de mensajería son
 subcontrataciones del encargado: requieren la autorización del
 responsable y quedan sujetas a las mismas obligaciones (RLFPDPPP,
-2011, art.~54). La responsabilidad ante una
+2011, art.~54). El proveedor de pagos no interviene en ese
+tratamiento: es responsable independiente de los datos financieros
+del nutriólogo, un tratamiento distinto (sección~5.1). La
+responsabilidad ante una
 sanción sigue a la conducta y al papel de cada uno: el nutriólogo
 responde por las decisiones del tratamiento y por las medidas a su
 cargo; NutriApp, por las instrucciones que recibe y por las
@@ -2405,7 +2411,7 @@ normativo puede replicar por sí solo.
 \section{Metodología}
 % ═══════════════════════════════════════════════════════════════════════════
  
-La evidencia de este caso se produjo con un procedimiento que otro
+La evidencia de este caso se produce con un procedimiento que otro
 investigador pueda repetir con los mismos materiales y llegar a
 conclusiones comparables. Las secciones que siguen precisan el tipo de
 estudio, las fuentes documentales, los instrumentos de campo, la forma
@@ -2542,33 +2548,36 @@ de campo es la forma en que los participantes manejan los datos de sus
 pacientes y lo que entienden por cumplir con la ley; la discusión en
 grupo recoge esa información mejor que un cuestionario cerrado.
  
-La población son estudiantes de la Licenciatura en Nutrición del ITESO
-con exposición a pacientes, en práctica supervisada o en consulta
-propia, y docentes de la misma licenciatura con ejercicio clínico. Se
-incluyen participantes mayores de edad que acepten participar por
-escrito; se excluyen quienes no han atendido pacientes, porque las
-preguntas se refieren a su experiencia clínica. Los estudiantes aportan
-la formación reciente y la experiencia inicial; los docentes aportan la
-experiencia consolidada y la revisión experta de la propuesta.
+La población son estudiantes de los últimos semestres de la
+Licenciatura en Nutrición del ITESO que ya han atendido pacientes, en
+práctica supervisada, servicio social o consulta propia, y docentes de
+la misma licenciatura, de preferencia con ejercicio clínico, que
+acompañan las sesiones. Se incluyen participantes mayores de edad que
+aceptan participar y ser grabados en la casilla correspondiente del
+pre-registro anónimo; se excluyen quienes no han atendido pacientes,
+porque las preguntas se refieren a su experiencia clínica. Los
+estudiantes aportan la formación reciente y la experiencia inicial;
+los docentes aportan la experiencia consolidada durante la discusión y
+la revisión experta de la propuesta con la rúbrica.
  
 Las sesiones se realizan en octubre de 2026, en instalaciones del
 ITESO y en las fechas que la academia de nutrición asigne, con grupos
-de no más de 35 participantes y una duración prevista de 120 minutos.
-Si la disponibilidad de los grupos solo permite encuentros de 60
-minutos, el procedimiento se divide en dos encuentros con el mismo
-grupo, como se precisa más adelante. El diseño de los instrumentos se
-fundamenta en la metodología de grupos focales y de construcción de
-instrumentos de la investigación en ciencias sociales
-(Hernández-Sampieri et al., 2014) y se somete a revisión de expertos
-antes de su aplicación. La conducción de las sesiones, el
-procesamiento de los datos y la interpretación de los resultados en
-relación con el marco normativo están a cargo del autor.
+de hasta 40 participantes y una duración de 60 minutos cada una. El
+diseño de los instrumentos se fundamenta en la metodología de grupos
+focales y de construcción de instrumentos de la investigación en
+ciencias sociales (Hernández-Sampieri et al., 2014) y se somete a
+revisión de expertos antes de su aplicación. La conducción de las
+sesiones está a cargo de un facilitador externo con experiencia en
+grupos focales, que recibe la guía de discusión con anticipación y
+entrega al autor un informe de consensos por sesión; el procesamiento
+de los datos y la interpretación de los resultados en relación con el
+marco normativo están a cargo del autor.
  
 \subsubsection{Instrumentos}
  
 Los materiales del estudio de campo, incluidos en los anexos, son cinco
 y se aplican en el orden de la sesión. Antes de ella, cada participante
-contesta en línea el \textit{cuestionario de pre-registro}. Este
+abre con la aceptación de participación y de grabación en audio y
 recoge su perfil (semestre o antigüedad docente, exposición a
 pacientes, número de pacientes atendidos) y su práctica actual con
 datos de pacientes: en qué herramienta lleva el expediente, si entrega aviso de
@@ -2578,13 +2587,20 @@ además las tres preguntas cerradas que se repiten al cierre de la
 sesión. Sus respuestas forman la línea base del capítulo tres y se
 recogen antes de que el participante conozca NutriApp.
  
-La \textit{guía de discusión} organiza la sesión en los tres temas que
-estructuran el diagnóstico del capítulo tres: el aviso de privacidad,
-el consentimiento por escrito para datos de salud, y los derechos ARCO
-junto con las medidas de seguridad. Cada tema abre con una situación
-de consultorio y sigue con preguntas de práctica antes que de
-conocimiento, para que el participante describa lo que hace en
-consulta.
+La \textit{guía de discusión} organiza la sesión en dos bloques,
+recorridos ambos por los tres temas que estructuran el diagnóstico del
+capítulo tres: el aviso de privacidad, el consentimiento por escrito
+para datos de salud, y los derechos ARCO junto con las medidas de
+seguridad. El primer bloque trata el flujo de trabajo actual con datos
+de pacientes: cómo registran y dan seguimiento a la información
+durante sus prácticas y qué herramientas necesitarían, sin mención del
+diseño. El segundo, después de la inducción, trata lo que entienden de
+cada flujo de las maquetas, qué falta y qué no usarían. Cada tema abre
+con una situación de consultorio y sigue con preguntas de práctica
+antes que de conocimiento, para que el participante describa lo que
+hace en consulta. A los docentes presentes se les pregunta de manera
+directa, en ambos bloques, sobre los puntos clave de la práctica y de
+la aplicación.
  
 Después del primer bloque de discusión se proyecta el \textit{video de
 inducción}, de entre seis y ocho minutos, que recorre las maquetas de
@@ -2594,13 +2610,13 @@ de diseño, el video sustituye la capacitación breve que la guía de
 casos de estudio prevé para la fase de implementación.
  
 Solo los docentes contestan la \textit{rúbrica de revisión del
-diseño}: valoran en escala de cuatro puntos la claridad de cada flujo
-normativo de las maquetas, su correspondencia con la práctica del
-consultorio y la carga que impondría al profesional. Con ella se hace
-la revisión de expertos.
+diseño}, al final de la sesión que acompañan: valoran en escala de
+cuatro puntos la claridad de cada flujo normativo de las maquetas, su
+correspondencia con la práctica del consultorio y la carga que
+impondría al profesional. Con ella se hace la revisión de expertos.
  
-Al final de la sesión se aplican los \textit{reactivos de cierre}:
-tres preguntas cerradas sobre el plazo de respuesta a una solicitud
+Al final de la sesión se aplican en línea los \textit{reactivos de
+cierre}: tres preguntas cerradas sobre el plazo de respuesta a una solicitud
 ARCO, sobre quién otorga el consentimiento y sobre qué hacer ante un
 incidente. Las respuestas se comparan con las de las mismas preguntas
 en el pre-registro. Como el video presenta esas respuestas antes del
@@ -2615,34 +2631,37 @@ misma sesión.
  
 \subsubsection{Procedimiento de sesión}
  
-Todas las sesiones siguen el mismo orden, y la línea base se mide
-antes de mostrar cualquier material de NutriApp, para que la maqueta
-no condicione las respuestas sobre la práctica actual.
+Todas las sesiones siguen el mismo orden en 60 minutos, y la línea
+base se mide antes de mostrar cualquier material de NutriApp, para que
+la maqueta no condicione las respuestas sobre la práctica actual.
  
 \begin{enumerate}
-  \item Bienvenida, explicación del proyecto, consentimiento de
-    participación y de grabación, y verificación de que el
-    pre-registro esté contestado.
-  \item Primer bloque de discusión: práctica actual con datos de
-    pacientes, sin mención del diseño.
+  \item Bienvenida, explicación del proyecto y verificación de que el
+    pre-registro, con la aceptación de participación y de grabación,
+    esté contestado.
+  \item Primer bloque de discusión: flujo de trabajo actual con datos
+    de pacientes, sin mención del diseño.
   \item Video de inducción y navegación de las maquetas en pantalla.
   \item Segundo bloque de discusión: qué se entiende de cada flujo,
-    qué falta, qué no se usaría. Con docentes, rúbrica de revisión
-    del diseño.
-  \item Reactivos de cierre.
+    qué falta, qué no se usaría; los docentes contestan además la
+    rúbrica de revisión del diseño.
+  \item Reactivos de cierre, en línea.
 \end{enumerate}
+% Reparto orientativo de los 60 minutos, a ajustar con el facilitador:
+% paso uno 5 min; paso dos 15 min; paso tres 15 min (video de 6-8 min
+% más maquetas); paso cuatro 20 min; paso cinco 5 min.
  
-Las sesiones se graban en audio con autorización de los participantes y
-se toman notas de campo. Si los encuentros son de 60 minutos, los
-pasos 1 y 2 se realizan en el primero y los pasos 3 a 5 en el
-segundo, con el mismo grupo.
+Las sesiones se graban en audio, sin video, con la autorización
+registrada en el pre-registro, y se toman notas de campo.
  
 \subsubsection{Muestra}
  
 Los grupos que la academia de nutrición pone a disposición en las
 fechas acordadas forman una muestra no probabilística y por
-conveniencia. Se espera un total de entre 40 y 70 participantes en al
-menos tres sesiones, dos con estudiantes y una con docentes. El caso es
+conveniencia. Se solicitaron a la academia tres sesiones de hasta 40
+estudiantes, con al menos tres docentes en total distribuidos entre
+ellas; el número final de sesiones y de participantes depende de los
+grupos que la academia confirme. El caso es
 único y los participantes son fuentes de evidencia dentro de él, en el
 sentido de Yin (2018); el tamaño de la muestra no busca inferencia
 estadística sobre el gremio. Los patrones que emerjan, contrastados con
@@ -2657,9 +2676,10 @@ perfil, y comparación de las respuestas de cierre contra las de
 pre-registro en las tres preguntas comunes. La discusión se transcribe
 y se codifica por los tres temas de la guía; dentro de cada tema se
 agrupan las prácticas reportadas, las razones que los participantes
-dan para ellas y los obstáculos que identifican. La rúbrica de los
-docentes se resume por flujo con la mediana y la dispersión de cada
-criterio, más los comentarios abiertos.
+dan para ellas y los obstáculos que identifican, y el informe de
+consensos del facilitador se contrasta con esa codificación. La
+rúbrica de los docentes se resume por flujo con la mediana y la
+dispersión de cada criterio, más los comentarios abiertos.
  
 La triangulación se hace en tres niveles. El primero contrasta lo que
 los participantes declaran en el pre-registro con lo que describen en
@@ -2748,11 +2768,14 @@ representado solo a través de los docentes.
 Los principios éticos del ITESO para investigación con seres humanos
 rigen el estudio de campo. La participación es voluntaria y puede
 abandonarse en cualquier momento sin consecuencia; cada participante
-firma un consentimiento de participación y de grabación antes de la
-sesión. El pre-registro y los reactivos de cierre no recogen nombre ni
-dato de contacto: se vinculan por un código de sesión. Las
-transcripciones se anonimizan antes del análisis y los resultados se
-reportan en forma agregada o con citas sin atribución.
+acepta la participación y la grabación en audio en una casilla del
+pre-registro, antes de la sesión, y declara ser mayor de edad. No se
+recoge nombre, matrícula, correo ni otro dato personal: el
+pre-registro y los reactivos de cierre se vinculan por un código de
+sesión. Las transcripciones se anonimizan antes del análisis; los
+resultados se reportan en forma agregada o con citas sin atribución,
+y el documento incluye un resumen ejecutivo por sesión, no las
+transcripciones literales.
  
 El uso de las maquetas de NutriApp en las sesiones es demostrativo.
 Ningún dato real de pacientes se captura en ellas: todos los perfiles
@@ -2940,7 +2963,8 @@ obligación que atiende.
     NOM-024-SSA3-2012 numerales~6.6.3 y~6.6.4; LFPDPPP~2025 art.~18 \\[4pt]
   Datos y llaves & RDS PostgreSQL + KMS & Cifrado en reposo AES-256 con
     llave por expediente. LFPDPPP~2025 art.~18; RLFPDPPP art.~57 \\[4pt]
-  Almacenamiento & S3 + Object Lock & Expediente y adjuntos: cinco años
+  Almacenamiento & S3 + Object Lock & Adjuntos y registros (el
+    expediente estructurado, en RDS, sigue el mismo plazo): cinco años
     desde el último acto médico (NOM-004-SSA3-2012 numeral~5.4);
     consentimientos: mientras dura el tratamiento y la conservación del
     expediente (RLFPDPPP art.~20);
@@ -3087,8 +3111,9 @@ pendiente de consentimiento; el consentimiento es afirmativo, con
 folio DEC, y se revoca con registro equivalente; el expediente admite
 notas con autor, fecha y hora, plan de alimentación y seguimiento; el
 paciente consulta quién accedió a su expediente y presenta solicitudes
-ARCO, que el nutriólogo resuelve en veinte días (art.~31), con bloqueo
-del expediente cuando la cancelación procede (sección~2.5.5). Al
+ARCO, que el nutriólogo resuelve en veinte días y ejecuta en los
+quince siguientes (art.~31), con bloqueo del expediente cuando la
+cancelación procede (sección~2.5.5). Al
 vencer la conservación, el Sistema avisa, el nutriólogo confirma y solo
 entonces se suprime el expediente por borrado criptográfico, con
 notificación con folio al correo verificado. La parte~(b) cubre el
@@ -3378,9 +3403,9 @@ y~61): el inventario de datos se clasifica por sensibilidad. Las
 declaraciones profesionales se registran en el \texttt{DeclarationLog}
 con folio único y copia de los datos declarados en cada firma. El
 titular recibe notificación ante el bloqueo y la supresión de sus
-datos.
+interno y no tiene maqueta en la prueba piloto.
  
-Dos obligaciones sanitarias quedan fuera del MVP y se declaran aquí
+Tres obligaciones sanitarias quedan fuera del MVP y se declaran aquí
 para delimitar el alcance. La NOM-004 fija los datos generales de todo
 expediente (numeral 5.2), los requisitos comunes de las notas, que
 llevan identificación del paciente y fecha, hora, nombre y firma de
@@ -3388,11 +3413,13 @@ quien las elabora (numerales 5.9 a 5.11), y los apartados de la
 historia clínica (numeral 6.1). La NOM-024 exige que el sistema
 permita el uso de la firma electrónica avanzada del profesional para
 la información que el prestador determine en su gestión de seguridad
-(numeral 6.6.2). El expediente de NutriApp guarda notas de nutrición
-como texto libre con autor, fecha y hora, lo que corresponde a esa
-parte del numeral 5.10, pero no incorpora la estructura de la historia
-clínica ni ofrece la firma electrónica avanzada. Ambas se documentan
-como siguiente paso en la sección~8.3.
+(numeral 6.6.2), y que permita exportar la información del paciente
+conforme a la normativa de protección de datos (numeral 6.6.6). El
+expediente de NutriApp guarda notas de nutrición como texto libre con
+autor, fecha y hora, lo que corresponde a esa parte del numeral 5.10,
+pero no incorpora la estructura de la historia clínica, ni ofrece la
+firma electrónica avanzada, ni la exportación estructurada. Las tres
+se documentan como siguiente paso en la sección~8.3.
  
 El criterio de completitud que aplica la sección~6.4 se refiere, por
 tanto, a las obligaciones de las Tablas~\ref{tab:trazabilidad-1}
@@ -3491,13 +3518,15 @@ de la biblioteca de plantillas (\texttt{TemplateLibrary}); el paciente
 lo consulta en su dieta actual (\texttt{CurrentDiet}) y en el
 seguimiento de avances (\texttt{ProgressTracking}).
  
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-expediente.pdf}
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-expediente.pdf}
   \caption{Maqueta del alta de paciente y del expediente con registro
   de accesos. Elaboración propia.}
   \label{fig:maq-expediente}
 \end{figure}
+\end{landscape}
  
 \subsubsection{Derechos ARCO y cancelación}
  
@@ -3508,7 +3537,8 @@ generan una solicitud con folio. La cancelación es el caso que la
 maqueta debe explicar con más cuidado, porque no es inmediata ni
 irrevocable, como decía el diseño inicial. El diálogo de confirmación
 lo explica por partes. La solicitud la resuelve el nutriólogo como
-responsable en un plazo de veinte días (LFPDPPP, 2025, art.~31).
+responsable en un plazo de veinte días y, si procede, la ejecuta en
+los quince siguientes (LFPDPPP, 2025, art.~31).
 Mientras corre la conservación mínima de cinco años contados desde el
 último acto médico, el responsable no está obligado a cancelar el
 expediente clínico (LFPDPPP, 2025, art.~25, fracc.~VII;
@@ -3528,14 +3558,16 @@ solicitudes activas con folio, tipo, fecha, días restantes y estado;
 una alarma de CloudWatch le avisa cuando quedan cinco días o menos del
 plazo del artículo~31.
  
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-arco.pdf}
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
   \caption{Maqueta del módulo ARCO: solicitud del paciente, diálogo de
   cancelación con bloqueo y plazo, y bandeja del nutriólogo.
   Elaboración propia.}
   \label{fig:maq-arco}
 \end{figure}
+\end{landscape}
  
 \subsubsection{Catálogo y reserva de cita}
  
@@ -3563,14 +3595,16 @@ recibe la solicitud en su gestor de citas
 responde, el sistema sugiere alternativas. Las citas se notifican
 únicamente dentro de la aplicación.
  
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-catalogo.pdf}
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo con resultados patrocinados
   etiquetados, cédula declarada por el profesional y reserva de cita.
   Elaboración propia.}
   \label{fig:maq-catalogo}
 \end{figure}
+\end{landscape}
  
 \subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
  
@@ -3605,13 +3639,15 @@ paquete Integral (sección~8.3). El docente responsable ve en su panel
 estudiantes en modo de solo lectura, el avance del módulo de inducción
 y el reporte semestral.
  
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-students.pdf}
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-students.pdf}
   \caption{Maqueta de la activación Students en tres pasos y del panel
   docente. Elaboración propia.}
   \label{fig:maq-students}
 \end{figure}
+\end{landscape}
  
 \subsubsection{Comunidad y moderación}
  
@@ -3667,7 +3703,7 @@ parcialmente o no refleja el diseño.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2 fracc.~IV, 8 y 15. Nutriólogo registrado con MFA; paciente invitado sin expediente. & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y 18; RLFPDPPP art.~48 fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto; el paciente consulta su plan; un tercero sin relación intenta abrir el expediente. & El expediente admite los datos, la medición, la nota y el adjunto; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica el plazo de veinte días, la conservación mínima y el bloqueo si la cancelación procede; folio de la solicitud; cuenta y contacto se suprimen; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25 fracc.~VII y 31; NOM-004 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica veinte días para resolver y quince para ejecutar (art.~31), la conservación mínima y el bloqueo si procede; folio de la solicitud; cuenta y contacto se suprimen; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -3679,8 +3715,9 @@ parcialmente o no refleja el diseño.
 El alcance del MVP se definió con tres criterios. Por
 \textit{completitud normativa}, deben estar presentes los módulos que
 atienden las obligaciones de las Tablas~\ref{tab:trazabilidad-1}
-y~\ref{tab:trazabilidad-2}: consentimiento, ARCO, cifrado, MFA,
-trazabilidad y eliminación; las obligaciones sanitarias ya declaradas
+y~\ref{tab:trazabilidad-2}: consentimiento, ARCO, registro de
+incidentes, cifrado, MFA, trazabilidad y eliminación; las obligaciones
+sanitarias ya declaradas
 fuera del MVP no forman parte de ese criterio. La \textit{viabilidad
 técnica} limita el MVP a lo que el diseño del capítulo cinco puede
 sostener con AWS y React, con proveedores que son subcontrataciones
@@ -3780,49 +3817,75 @@ La validación normativa del diseño de NutriApp opera mediante la verificación
 de que cada obligación legal identificada en las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2} tiene un componente técnico correspondiente en la
 arquitectura del capítulo cinco. La Tabla~\ref{tab:stack} sintetiza esa
-correspondencia. El criterio de validez
-es la completitud: no puede haber ninguna obligación de la LFPDPPP~2025, su
-Reglamento o la NOM-004-SSA3-2012 que quede sin respuesta técnica en el diseño.
-
-El análisis de trazabilidad confirma que el diseño satisface las nueve
-obligaciones principales identificadas:
-
+correspondencia. El criterio de validez es la completitud respecto de
+las obligaciones de esas dos tablas, con las exclusiones sanitarias que
+declara la sección~6.4; no se afirma completitud sobre la totalidad de
+la LFPDPPP~2025, su Reglamento o la NOM-004-SSA3-2012.
+ 
+El análisis de trazabilidad recorre las once obligaciones de las
+tablas, con sus mismos rótulos y en su mismo orden, y encuentra para
+cada una el componente que la atiende:
+ 
 \begin{enumerate}[label=\Roman*.]
-  \item Consentimiento expreso por escrito para datos sensibles
-    (LFPDPPP~2025, art.~8; LGS, art.~51~Bis~2°): cubierto por
-    \texttt{ConsentForm.tsx} con folio y timestamp inmutables.
-  \item Aviso de privacidad previo al tratamiento (LFPDPPP~2025, art.~15):
-    accesible desde cualquier pantalla y generado automáticamente al crear
-    cada expediente.
+  \item Consentimiento expreso por escrito para datos de salud
+    (LFPDPPP~2025, art.~8; LGS, art.~51~Bis~2°): pantalla de
+    consentimiento del paciente (sección~6.2.1, caso CP-01) con folio
+    \texttt{DEC-} y fecha y hora inmutables en el \texttt{DeclarationLog}.
+  \item Aviso de privacidad previo al tratamiento (LFPDPPP~2025,
+    arts.~14 y~15): plantilla que el nutriólogo completa y valida como
+    responsable, presentada al paciente antes de capturar cualquier dato,
+    con registro de la versión aceptada; accesible desde cualquier
+    pantalla.
   \item Medidas de seguridad técnicas y administrativas (LFPDPPP~2025,
-    art.~18; RLFPDPPP, art.~57): cifrado AES-256, MFA, audit log y sistema
-    de moderación con folios.
-  \item Autenticación de usuarios (NOM-024-SSA3-2012): Amazon Cognito
-    con MFA obligatoria para nutriólogos.
-  \item Trazabilidad de accesos y modificaciones (RLFPDPPP, art.~48,
-    fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1): CloudTrail, Database
-    Activity Streams y \texttt{DeclarationLog}, exportados a S3 con Object
-    Lock y conservados cinco años.
-  \item Inventario de datos y análisis de riesgos (RLFPDPPP, art.~61):
-    catálogo de datos en AWS clasificado por nivel de sensibilidad.
+    art.~18; RLFPDPPP, art.~57): cifrado AES-256 en reposo y TLS~1.3 en
+    tránsito, MFA, control de acceso por rol, registros de auditoría y
+    separación de entornos.
+  \item Autenticación verificable de usuarios (NOM-024-SSA3-2012,
+    numeral~6.6.3): Amazon Cognito con MFA obligatoria para el
+    nutriólogo y opcional para el paciente.
+  \item Trazabilidad de consultas, accesos y modificaciones (RLFPDPPP,
+    art.~48, fracc.~X): CloudTrail, Database Activity Streams y
+    \texttt{DeclarationLog}, exportados a S3 con Object Lock y
+    conservados cinco años.
+  \item Inventario de datos, análisis de riesgos y análisis de brecha
+    (RLFPDPPP, art.~61): catálogo de datos en AWS clasificado por nivel
+    de sensibilidad, entregado al nutriólogo como insumo de su propio
+    análisis.
   \item Gestión de derechos ARCO en plazo legal (LFPDPPP~2025,
-    art.~31): módulo ARCO con alertas automáticas de vencimiento.
- \item Conservación del expediente clínico (NOM-004-SSA3-2012): expediente
-    en RDS sin operación de borrado durante la retención; adjuntos y
-    registros en S3 con Object Lock en modo de cumplimiento durante cinco
-    años y reglas de ciclo de vida después.
-  \item Eliminación segura al vencer el período de retención
-    (LFPDPPP~2025, arts.~24 y~25; NOM-004-SSA3-2012): aviso programado al
-    nutriólogo, confirmación del responsable y destrucción criptográfica
-    por Lambda, con notificación al titular.
+    art.~31): módulo ARCO con alertas automáticas de vencimiento; la
+    resolución la emite el nutriólogo.
+  \item Aviso al titular ante vulneraciones de seguridad (LFPDPPP~2025,
+    art.~19; RLFPDPPP, arts.~64 y~65): registro de incidentes con alerta
+    al nutriólogo, que decide y envía el aviso; la plataforma asienta
+    fecha, alcance y acciones con folio.
+  \item Confidencialidad y conservación del expediente clínico
+    (NOM-004-SSA3-2012, numeral~5.4; LFPDPPP~2025, arts.~24 y~25):
+    expediente en RDS sin operación de borrado durante la retención;
+    adjuntos y registros en S3 con Object Lock; al vencer la retención o
+    el bloqueo, aviso programado al nutriólogo, confirmación del
+    responsable y destrucción criptográfica por Lambda, con notificación
+    al titular.
+  \item Cifrado, autenticación y trazabilidad en el sistema de
+    expediente clínico electrónico (NOM-024-SSA3-2012, numerales~6.6.1,
+    6.6.3 y~6.6.4): atendidos con Cognito, control por rol y las tres
+    capas de auditoría; la MFA y el cifrado con llaves en KMS exceden lo
+    que la norma pide. El numeral~6.6.5 no se actualiza porque el MVP no
+    intercambia información entre prestadores; la firma electrónica
+    avanzada (numeral~6.6.2) y la exportación (numeral~6.6.6) quedan
+    fuera del MVP (sección~6.4).
+  \item Uso de proveedor de cómputo en la nube (RLFPDPPP, arts.~51,
+    52 y~54): NutriApp como encargado bajo contrato con el nutriólogo;
+    AWS, SES y Twilio como subcontrataciones autorizadas y
+    transparentadas.
 \end{enumerate}
-
+ 
 Las dos brechas identificadas en el análisis inicial ---ausencia de módulo ARCO
 como componente técnico explícito y ausencia de eliminación segura verificable---
 quedan cubiertas por el diseño propuesto. La tercera brecha identificada ---la
 ausencia de portabilidad de datos como derecho explícito en la LFPDPPP---
 no puede resolverse por diseño técnico; requiere reforma legal. La exportación
-estructurada del expediente en formato transferible queda fuera del MVP y se
+estructurada del expediente en formato transferible, que la NOM-024 prevé
+para el sistema (numeral~6.6.6), es otra cosa: queda fuera del MVP y se
 propone como siguiente paso en la sección~8.3.
 
 % ─────────────────────────────────────────────────────────────────────────
@@ -4087,25 +4150,39 @@ improbable pero desproporcionado.
 % Texto aquí
 
 \subsection{Limitaciones, siguientes pasos y transferencia del diseño}
-\mbox{}
-% Texto de limitaciones y siguientes pasos: se escribe después de los
-% grupos focales (octubre de 2026). Debe incluir, como siguientes pasos
-% del tercero que implemente: (1) estructura de la historia clínica y
-% de las notas conforme a NOM-004 numerales 5.2, 5.9–5.11 y 6.1;
-% (2) capacidad de firma electrónica avanzada del profesional,
-% NOM-024 numeral 6.6.2;
-% (3) verificación contra OWASP ASVS 5.0 nivel 2 antes de cualquier
-% despliegue; (4) análisis fiscal, laboral y sanitario de una operación
-% real (secc. 4.4.3); (5) portabilidad o exportación estructurada del
-% expediente (NOM-024 numeral 6.6.6; secc. 2.2.1 y 2.2.5): fuera del
-% MVP, queda como siguiente paso.
+El caso se limita al diseño y a su demostración: el análisis normativo
+del capítulo dos, el diagnóstico del capítulo tres, el paquete de
+diseño del capítulo cinco y las maquetas con su prueba piloto del
+capítulo seis. No incluye la implementación productiva de NutriApp, su
+salida al mercado ni la operación real de un responsable o de un
+encargado del tratamiento; ninguna cifra de costo o de ingreso de la
+sección~\ref{sec:costos} ni del modelo de negocio que sigue se ha
+observado en operación. Las limitaciones que dependen del campo se
+escriben después de la prueba piloto.
  
-\subsubsection{Transferencia del diseño: modelo de negocio propuesto}
+Los siguientes pasos para quien implemente el diseño no dependen de
+ese resultado y quedan enunciados desde ahora. Son cinco: la estructura de
+la historia clínica y de las notas conforme a la NOM-004
+(NOM-004-SSA3-2012, 2012, numerales~5.2, 5.9 a~5.11 y~6.1); la firma
+electrónica avanzada del profesional que la NOM-024 prevé para el
+sistema (NOM-024-SSA3-2012, 2012, numeral~6.6.2); la verificación de
+la aplicación contra el estándar OWASP ASVS antes de cualquier
+despliegue (OWASP Foundation, 2025); el análisis fiscal, laboral y
+sanitario de una operación real (sección~4.4.3); y la portabilidad o
+exportación estructurada del expediente, prevista en la NOM-024
+(numeral~6.6.6) y reconocida en Brasil y Alemania (secciones~2.2.1
+y~2.2.5), que este trabajo dejó fuera del MVP.
+% Limitaciones de campo: se completan después de los grupos focales
+% (octubre de 2026).
  
-El caso termina en el diseño y en su prueba piloto; lo que sigue es lo
-que necesitaría quien decida llevarlo al mercado. Se documenta aquí, y
-no como resultado, porque ninguna de estas cifras se ha observado: es
-la propuesta de precios, canales y economía con la que el diseño podría
+\subsubsection{Trabajo posterior: comercialización y formación institucional}
+ 
+El caso termina en el diseño y en su prueba piloto. Lo que sigue no
+forma parte del desarrollo entregado: son líneas de trabajo posterior,
+con un horizonte orientativo de doce a dieciocho meses, para quien
+decida llevar el diseño al mercado. Se documentan aquí, y no como
+resultado, porque ninguna de estas cifras se ha observado: son la
+propuesta de precios, canales y economía con la que el diseño podría
 sostenerse, construida sobre los costos de operación de la
 sección~\ref{sec:costos} y sobre los precios publicados de los
 productos con los que competiría.
@@ -4168,17 +4245,19 @@ el sistema.
 regala el producto al estudiante (Avena, Nutrium, NutriAdmin) y vende a
 la institución, cuando vende, cuentas de administración (Nutrimind).
 NutriApp separa el uso de la plataforma, que cuesta poco servir, de lo
-que este trabajo demuestra en los grupos focales y que ninguna
-plataforma ofrece: que el cumplimiento de la LFPDPPP se enseña con
-práctica. La oferta a la universidad se arma con tres paquetes por
-semestre (Tabla~\ref{tab:universidad}). El paquete \textit{Aula} da
-cuentas Students a todos los alumnos del programa, tres cuentas docentes
-con supervisión sobre los expedientes ficticios y un reporte semestral
-de uso. El paquete \textit{Formación} añade cinco simposios de dos horas
-por semestre sobre protección de datos en la práctica nutricional:
-consentimiento y expediente, derechos ARCO, seguridad y encargados,
-incidentes y sanciones, y ética profesional con la maqueta como caso,
-cada uno con constancia de participación. El paquete \textit{Integral}
+que la prueba piloto explora y ninguna plataforma ofrece: que el
+cumplimiento de la LFPDPPP se enseña con práctica. Si el producto
+saliera al mercado, se propone ofrecer a la universidad un convenio con
+tres paquetes por semestre (Tabla~\ref{tab:universidad}). El paquete
+\textit{Aula} da cuentas Students a todos los alumnos del programa,
+tres cuentas docentes con supervisión sobre los expedientes ficticios y
+un reporte semestral de uso. El paquete \textit{Formación} añade cinco
+simposios de dos horas por semestre sobre protección de datos en la
+práctica nutricional: consentimiento y expediente, derechos ARCO,
+seguridad y encargados, incidentes y sanciones, y ética profesional con
+la maqueta como caso, cada uno con constancia de participación; es la
+capacitación que el convenio ofrecería a alumnos y docentes, no un
+servicio prestado en este trabajo. El paquete \textit{Integral}
 suma dos talleres para docentes, el reporte de evidencia para
 acreditación y la vinculación con egresados: descuento del 50~\% en
 Basic durante el primer año de ejercicio y presencia de NutriApp en las
@@ -5160,7 +5239,14 @@ revisan con un contador antes de operar.
   \url{https://www.oecd.org/sti/ieconomy/oecdguidelinesontheprotectionofprivacyandtransfersonalpersonaldataflows.htm}
 
   % Cap. 2 (secc. 2.1.2): principios mínimos de privacidad para
-  % países miembros de la OCDE (OCDE, 1980).
+  \item OWASP Foundation. (2025). \textit{Application Security
+  Verification Standard} (versión 5.0.0). OWASP.
+  \url{https://github.com/OWASP/ASVS/tree/v5.0.0}
+ 
+  % Cap. 8 (secc. 8.3): verificación de la aplicación contra el
+  % estándar antes del despliegue, como siguiente paso del tercero
+  % que implemente (OWASP Foundation, 2025).
+
 
 
 % ── P ────────────────────────────────────────────────────────
@@ -5418,7 +5504,6 @@ revisan con un contador antes de operar.
 % ═══════════════════════════════════════════════════════════════════════════
 \appendix
 \section{Instrumento de diagnóstico: Encuesta 1}
-\addcontentsline{toc}{section}{Anexo A: Instrumento de diagnóstico}
 \label{anexo:encuesta1}
 
 Esta encuesta fue diseñada como el primer instrumento de campo del
@@ -5751,6 +5836,85 @@ independiente o institucional, y docentes del área.
 \end{longtable}
 % ═══════════════════════════════════════════════════════════════════════════
 
-% Texto, imágenes o tablas de anexos aquí
+\section{Capturas del prototipo y video de inducción}
+\label{anexo:capturas}
+\mbox{}
+% Pendiente (tras las maquetas v4 y la producción del video): capturas
+% de las pantallas del prototipo referidas en 6.2 y 6.4, y guion y
+% duración del video de inducción (cap. 4 y 6.3). Las secciones 6.2 y
+% 6.4 ya remiten a este anexo como «Anexo B»; no cambiar su posición.
+ 
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Uso ético de la inteligencia artificial}
+\label{anexo:ia}
+ 
+Este anexo documenta el uso de herramientas de inteligencia artificial
+en la elaboración del trabajo: qué tareas se apoyaron en ellas, con qué
+instrucciones y cómo se conservó la dirección del autor en cada paso.
+ 
+\subsubsection*{Propósito y alcance}
+ 
+Las herramientas se usaron como apoyo a la redacción, a la revisión de
+consistencia entre capítulos, a la verificación de citas y a la
+generación de diagramas y maquetas a partir del texto del propio
+documento. No sustituyeron el análisis normativo, el diseño del
+artefacto ni las decisiones metodológicas, que son del autor. Las citas
+y cifras que las herramientas propusieron se verificaron contra la
+fuente oficial antes de integrarse; las que no pudieron verificarse se
+retiraron del texto.
+ 
+\subsubsection*{Herramientas y tareas}
+ 
+\begin{itemize}
+  \item Claude (Anthropic): redacción asistida y reescritura de
+    párrafos bajo instrucciones del autor; revisión de consistencia
+    entre capítulos, tablas y figuras; preparación de los cambios al
+    archivo \LaTeX{} como listas de pasos que el autor aplicó y revisó
+    uno por uno; verificación de citas contra las fuentes oficiales.
+  \item Grok (xAI): revisión cruzada de los cambios propuestos por la
+    herramienta anterior y auditoría de inconsistencias contra el
+    manuscrito; generación de los diagramas de ingeniería del capítulo
+    cinco y de las maquetas compuestas del capítulo seis a partir de
+    especificaciones derivadas del texto.
+    % CONFIRMAR (Emanuel): alcance exacto de Grok en diagramas y maquetas.
+  \item Figma Make: construcción de las maquetas navegables descritas
+    en los capítulos cuatro y seis a partir de los requerimientos del
+    capítulo seis.
+  \item Gemini (Google): notas de alineación entre el estudio de
+    mercado y el documento.
+    % CONFIRMAR (Emanuel): conservar o quitar; ajustar versiones y
+    % fechas de uso si la institución lo pide.
+\end{itemize}
+ 
+Las dos primeras herramientas se usaron en contraste: cada cambio
+generado por una se sometió a la revisión de la otra, y las
+discrepancias se resolvieron consultando la fuente oficial o el propio
+manuscrito.
+ 
+\subsubsection*{Compendio de instrucciones}
+ 
+Las instrucciones dadas a las herramientas fueron de cuatro tipos:
+(1)~redacción o reescritura de un apartado bajo criterios indicados por
+el autor o por el asesor; (2)~revisión de un capítulo o de un cambio
+contra el resto del manuscrito y contra las fuentes citadas, con
+indicación de línea y de fuente para cada observación; (3)~traducción
+de decisiones del autor a cambios concretos en el archivo \LaTeX{}; y
+(4)~generación de figuras a partir de una especificación escrita. El
+registro completo de instrucciones y respuestas se conserva en el
+archivo de trabajo del autor.
+% CONFIRMAR (Emanuel): si se añade una muestra de 10–15 instrucciones
+% literales, va aquí como lista; si no, basta la síntesis por tipo.
+ 
+\subsubsection*{Dirección humana y evidencia}
+ 
+El flujo de trabajo fue el mismo durante todo el proyecto. El autor
+publica una versión del manuscrito en el repositorio del proyecto; la
+herramienta lee esa versión y devuelve observaciones; el autor decide
+cuáles atender y aplica los cambios; antes de compartir un capítulo con
+el asesor, el autor lo lee completo y ajusta lo que no corresponde a su
+criterio o a la dirección del trabajo. Ningún cambio llegó al documento
+sin pasar por esa lectura. El historial del repositorio conserva cada
+versión integrada, y las observaciones del asesor se atienden en un
+control de cambios propio.
 
 \end{document}
