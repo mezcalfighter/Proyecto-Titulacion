@@ -2577,6 +2577,7 @@ marco normativo están a cargo del autor.
  
 Los materiales del estudio de campo, incluidos en los anexos, son cinco
 y se aplican en el orden de la sesión. Antes de ella, cada participante
+contesta en línea el \textit{cuestionario de pre-registro}. Este
 abre con la aceptación de participación y de grabación en audio y
 recoge su perfil (semestre o antigüedad docente, exposición a
 pacientes, número de pacientes atendidos) y su práctica actual con
@@ -3403,6 +3404,9 @@ y~61): el inventario de datos se clasifica por sensibilidad. Las
 declaraciones profesionales se registran en el \texttt{DeclarationLog}
 con folio único y copia de los datos declarados en cada firma. El
 titular recibe notificación ante el bloqueo y la supresión de sus
+datos. Ante una vulneración, la plataforma registra el incidente y
+alerta al nutriólogo, que decide y envía el aviso al titular (LFPDPPP
+2025, art.~19; Tabla~\ref{tab:trazabilidad-2}); ese registro es
 interno y no tiene maqueta en la prueba piloto.
  
 Tres obligaciones sanitarias quedan fuera del MVP y se declaran aquí
@@ -3490,14 +3494,16 @@ ningún dato de salud. El nutriólogo ve ese estado en su lista de
 pacientes (\texttt{PatientList}) y recibe un aviso emergente cuando el
 paciente completa el trámite.
  
+\begin{landscape}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.95\textwidth]{maqueta-consentimiento.pdf}
+  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-consentimiento.pdf}
   \caption{Maqueta del flujo de consentimiento del paciente: aviso de
   privacidad, casillas sin marcar, folio y estado del expediente.
   Elaboración propia.}
   \label{fig:maq-consentimiento}
 \end{figure}
+\end{landscape}
  
 \subsubsection{Alta de paciente y expediente}
  
@@ -5239,7 +5245,7 @@ revisan con un contador antes de operar.
   \url{https://www.oecd.org/sti/ieconomy/oecdguidelinesontheprotectionofprivacyandtransfersonalpersonaldataflows.htm}
 
   % Cap. 2 (secc. 2.1.2): principios mínimos de privacidad para
-  \item OWASP Foundation. (2025). \textit{Application Security
+\item OWASP Foundation. (2025). \textit{Application Security
   Verification Standard} (versión 5.0.0). OWASP.
   \url{https://github.com/OWASP/ASVS/tree/v5.0.0}
  
