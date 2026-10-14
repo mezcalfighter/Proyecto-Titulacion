@@ -1592,7 +1592,7 @@ capítulo~5. Por legibilidad, la tabla se presenta en dos partes.
       cada consulta, modificación, descarga e intento de acceso
       fallido al expediente, con identificación del usuario,
       fecha, hora y acción realizada, en tres capas: AWS
-      CloudTrail, Database Activity Streams de RDS y el
+      CloudTrail, los registros de pgAudit de RDS en Amazon CloudWatch Logs y el
       \texttt{DeclarationLog} de la aplicación. Los tres se
       exportan a S3 con Object Lock y se conservan cinco años
       (sección~2.5.4). \\
@@ -1899,7 +1899,7 @@ los eventos de datos, como las lecturas y escrituras de objetos en
 S3 y las invocaciones de funciones, no se registran por defecto,
 de modo que la configuración los activa (AWS, s.f.-d). La
 actividad SQL de la base de datos, que CloudTrail no registra, se
-audita con Database Activity Streams de Amazon RDS (AWS, s.f.-e).
+audita con la extensión pgAudit de RDS para PostgreSQL, cuyos registros se publican en Amazon CloudWatch Logs (AWS, s.f.-e).
 En la capa de aplicación, el registro \texttt{DeclarationLog}
 conserva cada consentimiento, solicitud ARCO y declaración
 profesional con folio, fecha y una copia de los datos declarados.
@@ -2010,18 +2010,15 @@ como criterio de evaluación.
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diagnóstico: Situación Actual del Sector}
 % ═══════════════════════════════════════════════════════════════════════════
-
-El análisis normativo del capítulo anterior establece con precisión
-qué exige la ley. Lo que este capítulo busca establecer es qué
-ocurre en la práctica: cómo manejan realmente sus datos los
-nutriólogos en México, qué herramientas usan, qué obligaciones
-desconocen y qué tan dispuestos están a adoptar una solución que
-cierre esa brecha. Para responder esas preguntas se diseñaron dos
-instrumentos de campo aplicados en momentos distintos del caso de
-estudio. El primero diagnostica el problema. El segundo valida la
-solución propuesta. Este capítulo presenta el diseño de ambos
-instrumentos, los resultados del primero y el análisis que conecta
-esos resultados con el diseño de NutriApp.
+El análisis normativo del capítulo anterior establece qué exige la
+ley. Este capítulo busca establecer qué ocurre en la práctica: cómo
+manejan sus datos los nutriólogos en México, qué herramientas usan,
+qué obligaciones desconocen y qué necesitarían para cumplirlas. Para
+responder esas preguntas, el caso reúne a un grupo de seis a ocho
+nutriólogos con práctica clínica en una sesión de grupo focal
+(sección~4.3). El capítulo presenta el contexto del sector, el diseño
+del diagnóstico y sus resultados; la valoración que los mismos
+participantes hacen del diseño se reporta en el capítulo siete.
 
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Hábitos digitales del nutriólogo en México}
@@ -2065,347 +2062,98 @@ hacerlo: la incumple porque nadie le explicó que la ley le aplicaba,
 qué significa cumplirla en su práctica cotidiana y qué consecuencias
 tiene no hacerlo.
 
-El instrumento de diagnóstico diseñado para este caso de estudio
-parte de ese supuesto: si el desconocimiento es el problema central,
-la encuesta no puede preguntar directamente si se conoce la ley,
-porque eso produce respuestas defensivas y poco representativas de
-la práctica real. En su lugar, pregunta qué se hace: qué herramienta
-se usa, si se entrega aviso de privacidad, si se pide consentimiento
-firmado, qué se haría ante un incidente de seguridad. Las respuestas
-a esas preguntas revelan el nivel de cumplimiento con mucha más
-fidelidad que cualquier pregunta de conocimiento declarativo, y lo
-hacen desde la voz del propio profesionista, en un instrumento
-anónimo que elimina el incentivo de responder lo que se cree correcto
-en lugar de lo que realmente se hace.
-
+El diagnóstico parte de ese supuesto. Si el desconocimiento es el
+problema central, preguntar a un nutriólogo si conoce la ley produce
+respuestas defensivas y poco representativas de su práctica. Por eso
+los instrumentos preguntan qué se hace: qué herramienta se usa, si se
+entrega aviso de privacidad, si se pide consentimiento firmado, qué se
+haría ante un incidente de seguridad. El pre-registro, anónimo y
+contestado antes de la sesión, recoge esa práctica sin la presión del
+grupo; la discusión entre colegas permite después contrastar lo que
+cada participante declara con lo que describe de su consulta.
+ 
 % ────────────────────────────────────────────────────────────────────────────
-\subsubsection{Diseño de encuesta a nutriólogos}
+\subsubsection{Diseño del diagnóstico}
 % ────────────────────────────────────────────────────────────────────────────
-
-La estrategia de campo de este caso de estudio utiliza dos
-instrumentos de encuesta aplicados en momentos distintos y con
-propósitos complementarios. El primero ---denominado Encuesta~1---
-se aplica antes de que los encuestados conozcan NutriApp y tiene
-como objetivo documentar el estado actual del problema. El segundo
----denominado Encuesta~2--- se aplica después de que los encuestados
-han interactuado con una demostración o prototipo funcional de la
-plataforma y tiene como objetivo validar si la solución propuesta
-responde al problema documentado y qué funcionalidades adicionales
-identifican como necesarias para una versión posterior.
-
-\paragraph{Encuesta 1: Diagnóstico de hábitos digitales y cumplimiento
-normativo}
-
-La Encuesta~1 está compuesta por 20 preguntas organizadas en seis
-secciones. Las tres primeras preguntas establecen el perfil del
-encuestado: su situación académica o profesional actual, su
-experiencia directa con pacientes y el volumen aproximado de
-expedientes que maneja o ha manejado. Este perfil permite cruzar
-las respuestas posteriores por segmento de audiencia ---estudiante,
-profesionista independiente, profesionista institucional o docente---
-y determinar si el desconocimiento es homogéneo o si se concentra
-en algún perfil específico.
-
-Las preguntas cuatro a once abordan la práctica real del encuestado
-como profesionista. No preguntan si conoce la ley ni si cree que la
-cumple: preguntan qué herramienta usa para registrar datos, si
-entrega aviso de privacidad, si obtiene consentimiento firmado, si
-su archivo tiene protección de acceso, si lo comparte con terceros
-y cómo respondería ante un incidente de seguridad o una solicitud
-de derechos ARCO. Este bloque está diseñado para que el encuestado
-se describa a sí mismo antes de saber que sus respuestas serán
-evaluadas contra el estándar legal, lo que reduce el sesgo de
-deseabilidad social y produce datos más representativos de la
-práctica cotidiana.
-
-Las preguntas doce a quince invierten el rol: el encuestado responde
-ahora desde su experiencia como paciente. ¿Le han entregado alguna
-vez un aviso de privacidad en una consulta médica? ¿Le han pedido
-que firme un documento específico para autorizar el uso de sus datos?
-¿Sabe dónde están guardados sus datos de salud de los últimos dos
-años? Este bloque tiene un propósito narrativo deliberado: el mismo
-profesionista que acaba de admitir que nunca entrega aviso de
-privacidad a sus propios pacientes, descubre que tampoco él lo ha
-recibido nunca como paciente. Ese espejo genera, al momento de
-responder la pregunta de cierre, una conclusión que el propio
-encuestado construye sin que el investigador se la imponga.
-
-Las preguntas dieciséis y diecisiete miden la formación recibida
-y la percepción de riesgo. La pregunta dieciséis indaga si la
-carrera o el posgrado incluyeron capacitación formal sobre
-protección de datos ---con una opción específica para docentes que
-admite que tampoco lo enseñan en sus clases, lo que convierte esa
-respuesta en evidencia de la omisión sistémica en los planes de
-estudio. La pregunta diecisiete mide en escala Likert qué tan
-probable considera el encuestado que sea sancionado económicamente
-por incumplir la ley, dato que se contrasta más adelante con el
-hecho documentado de que el sector salud fue el segundo más multado
-en México durante el primer semestre de 2023.
-
-Las preguntas dieciocho y diecinueve introducen la solución sin
-nombrarla: piden al encuestado que seleccione las funcionalidades
-que le parecerían más útiles en una plataforma para nutriólogos que
-cumpla automáticamente con la ley, y que indique su disposición de
-pago mensual. Las respuestas a estas dos preguntas informan
-directamente el alcance del Producto Mínimo Viable descrito en el
-capítulo~6 y el análisis costo-beneficio del capítulo~7.
-
-La pregunta veinte cierra el instrumento con una pregunta de
-percepción agregada: considerando todo lo que acaba de responder
-sobre su práctica y su experiencia como paciente, ¿cree que el
-sector de la nutrición en México cumple con sus obligaciones legales
-de protección de datos? Esta pregunta no tiene una respuesta correcta
-en términos normativos, pero sí tiene una respuesta predecible dado
-el recorrido que el encuestado acaba de hacer: la mayoría responderá
-que no se cumple, y esa respuesta en boca del propio profesionista
-tiene más peso argumentativo para la tesis que cualquier afirmación
-del investigador. El instrumento completo, con todas las opciones de
-respuesta para cada pregunta, se encuentra en el Anexo~A
-(véase cuadro~\ref{tab:encuesta1}).
-
-\paragraph{Encuesta 2: Validación del MVP y levantamiento de
-requerimientos para versión siguiente}
-
-La Encuesta~2 se aplica a los mismos perfiles de audiencia después
-de que han tenido acceso a una demostración funcional o a los
-wireframes de NutriApp. Su propósito es doble. Por un lado, valida
-si la solución propuesta efectivamente responde al problema
-documentado por la Encuesta~1: ¿la plataforma es percibida como
-útil? ¿Resuelve las preocupaciones legales que el encuestado
-identificó en el primer instrumento? ¿La curva de aprendizaje es
-manejable para un profesionista independiente sin formación técnica
-especializada? Por otro lado, levanta los requerimientos que los
-encuestados identifican como necesarios pero ausentes en la versión
-demostrada. Esos requerimientos no forman parte del alcance del MVP
-definido en este caso de estudio, pero constituyen la hoja de ruta
-de la siguiente versión de la plataforma y son documentados como
-parte de las recomendaciones de trabajo futuro del capítulo~8.
-El diseño detallado de la Encuesta~2, sus resultados y el análisis
-de validación se presentan en la sección~3.1.3 de este documento,
-una vez que se han establecido las métricas base del problema en la
-sección siguiente.
-
-\subsubsection{Resultados y métricas base del problema}
-% NOTA: Esta sección documenta el marco de métricas definido antes
-% de la aplicación del instrumento. Los valores reales se sustituyen
-% una vez recolectadas las respuestas. Las hipótesis se formulan con
-% base en el análisis normativo del capítulo 2 y en los casos
-% documentados por el INAI entre 2017 y 2023.
-
-Los resultados de la Encuesta~1 se analizan a través de un conjunto
-de métricas definidas con anterioridad a la recolección de datos,
-con el propósito de garantizar que el análisis no sea construido
-a partir de los resultados sino contrastado contra hipótesis
-formuladas desde el marco normativo. Cada métrica tiene un valor
-esperado derivado del análisis del capítulo~2 y de los patrones
-documentados por el INAI en sus informes de sanciones de 2022 y
-el primer semestre de 2023. Cuando los resultados reales estén
-disponibles, los valores esperados se sustituyen por los observados
-y se analiza la distancia entre ambos como indicador de la magnitud
-del problema.
-
-\paragraph{Métricas de perfil}
-
-El primer grupo de métricas establece el contexto de la muestra.
-Se registra la distribución de encuestados por perfil ---estudiante
-de últimos semestres, profesionista egresado en ejercicio
-independiente, profesionista en institución o clínica, y docente---
-así como el porcentaje que tiene o ha tenido exposición directa a
-pacientes. Esta última métrica es crítica para la validez del
-instrumento: solo los encuestados con exposición real a pacientes
-tienen práctica concreta sobre la que responder en las secciones
-siguientes. Adicionalmente, se registra el volumen promedio de
-pacientes manejados simultáneamente, que permite dimensionar la
-escala del problema: un nutriólogo con treinta pacientes activos
-en una hoja de cálculo sin protección representa un volumen de datos
-sensibles cualitativamente diferente al de un estudiante con tres
-casos de práctica supervisada.
-
-\paragraph{Métricas de práctica real e índice de cumplimiento}
-
-El segundo grupo de métricas es el más relevante para el argumento
-central de la tesis. Se mide el porcentaje de encuestados que
-incumple cada obligación legal identificada en el capítulo~2,
-utilizando las respuestas de las preguntas cuatro a once de la
-Encuesta~1. Las hipótesis de partida, formuladas con base en el
-análisis normativo y en los patrones de los casos sancionados por
-el INAI, son las siguientes:
-
-\begin{enumerate}[label=\Roman*.]
-
-  \item \textbf{Herramienta principal de registro (P4).} Se espera
-  que más del 60\% de los encuestados con experiencia en pacientes
-  identifique la hoja de cálculo o el documento de texto como su
-  herramienta principal de registro. Ninguna de esas herramientas
-  cumple los requerimientos técnicos de cifrado, autenticación y
-  trazabilidad establecidos por la NOM-024-SSA3-2012.
-
-  \item \textbf{Entrega de aviso de privacidad (P5).} Se espera que
-  más del 70\% de los encuestados admita que nunca entrega un aviso
-  de privacidad por escrito a sus pacientes o que lo hace de forma
-  inconsistente. El aviso de privacidad es la primera obligación de
-  la LFPDPPP y la más ignorada en el sector salud independiente,
-  según los casos documentados por el INAI entre 2017 y 2023.
-
-  \item \textbf{Obtención de consentimiento firmado (P6).} Se espera
-  que más del 65\% de los encuestados no obtenga un consentimiento
-  escrito y firmado específico para el tratamiento de datos de salud,
-  o que confunda ese documento con el consentimiento clínico general.
-  La distinción entre ambos documentos es una de las fuentes más
-  frecuentes de incumplimiento en el sector, dado que la obligación
-  de la LFPDPPP y la de la Ley General de Salud son independientes
-  y tienen fundamentos distintos.
-
-  \item \textbf{Protección de acceso al archivo (P7).} Se espera
-  que menos del 20\% de los encuestados cuente con una protección
-  de acceso específica para su archivo de pacientes, separada de
-  la contraseña general del dispositivo. La contraseña del
-  dispositivo no constituye una medida de seguridad suficiente bajo
-  el artículo~57 del Reglamento de la LFPDPPP ni bajo los
-  requerimientos de autenticación de la NOM-024-SSA3-2012.
-
-  \item \textbf{Transferencia no controlada de datos (P8).} Se
-  espera que más del 40\% de los encuestados haya compartido su
-  archivo de pacientes por WhatsApp, correo electrónico o carpeta
-  compartida en la nube sin restricciones de acceso. Cualquiera de
-  esos mecanismos constituye una transferencia de datos sensibles
-  sin las garantías que exige el artículo~57 del Reglamento.
-
-  \item \textbf{Conocimiento de derechos ARCO (P9 y P10).} Se
-  espera que más del 60\% de los encuestados no sepa cómo atender
-  una solicitud de acceso o eliminación de datos dentro del plazo
-    de veinte días que establece la LFPDPPP (2025, art.~31), y que una proporción  significativa desconozca la tensión entre el derecho de cancelación
-  del paciente y la obligación de conservar el expediente clínico
-  durante al menos cinco años que impone la NOM-004-SSA3-2012.
-  Esa tensión no es un conflicto normativo irresoluble: NutriApp
-  la resuelve por diseño mediante políticas de retención diferenciadas
-  por tipo de dato, pero su existencia ilustra por qué el cumplimiento
-  requiere una solución técnica y no solo buena voluntad del
-  profesionista.
-
-  \item \textbf{Preparación ante incidentes de seguridad (P11).}
-  Se espera que menos del 15\% de los encuestados sepa con precisión
-  qué hacer ante un incidente de seguridad que comprometa datos de
-  pacientes, incluyendo la obligación de informar de inmediato al
-  titular cuando la vulneración afecte de forma significativa sus
-  derechos (LFPDPPP, 2025, art.~19); la ley no obliga a avisar a la
-  autoridad. Sin un protocolo de respuesta, el profesional no tiene
-  cómo cumplir ese deber a tiempo.
-
-\end{enumerate}
-
-A partir de las respuestas a estas siete preguntas se construye un
-\textbf{índice de cumplimiento estimado} para cada encuestado,
-calculado como el porcentaje de obligaciones legales que cumple
-sobre el total de siete evaluadas. Un encuestado que entrega aviso
-de privacidad, obtiene consentimiento firmado, protege su archivo,
-no comparte datos sin control, sabe atender solicitudes ARCO y tiene
-un protocolo ante incidentes obtiene un índice del 100\%. El nutriólogo promedio satisface menos de dos de las siete
-obligaciones legales evaluadas. Este umbral se deriva de los patrones
-documentados por el INAI en los casos sancionados al sector salud entre
-2017 y 2023 (INAI, 2021; INAI, 2023a; INAI, 2023b): las conductas más
-frecuentemente sancionadas ausencia de aviso de privacidad, falta de
-consentimiento escrito y negativa a responder solicitudes ARCO coinciden
-con exactamente las dimensiones que el instrumento evalúa.
-
-\paragraph{Métricas de experiencia como paciente y brecha espejo}
-
-El tercer grupo de métricas contrasta la práctica del encuestado
-como profesionista con su experiencia como paciente. La métrica
-central de este bloque es la \textbf{brecha espejo}: la diferencia
-entre el porcentaje de encuestados que admite no entregar aviso de
-privacidad a sus pacientes (P5) y el porcentaje que admite no haber
-recibido nunca uno en sus propias consultas (P12). Si ambos
-porcentajes son altos y similares, la evidencia indica que el
-incumplimiento no es una excepción individual sino un patrón
-sistémico que se reproduce en todos los niveles del sector. Esta
-métrica tiene un valor narrativo particular para la tesis: demuestra
-que el problema no puede atribuirse a la mala fe de ningún actor
-específico, sino a la ausencia de herramientas que hagan el
-cumplimiento operativamente viable en el contexto de la práctica
-independiente.
-
-Adicionalmente se registra el porcentaje de encuestados que
-desconoce sus propios derechos como paciente (P15), que no sabe
-dónde están guardados sus datos de salud (P14) y que nunca ha
-recibido un consentimiento específico para datos en una consulta
-(P13). Estos indicadores complementan el cuadro de incumplimiento
-generalizado y refuerzan el argumento de que la brecha no es solo
-de conocimiento sino de práctica institucionalizada.
-
-\paragraph{Métricas de percepción y brecha de riesgo}
-
-El cuarto grupo de métricas mide la distancia entre el riesgo real
-y el riesgo percibido. Se registra el porcentaje de encuestados sin
-capacitación formal en protección de datos (P16), con atención
-especial a la proporción de docentes que admite no incluir el tema
-en sus clases, dado que ese dato evidencia la omisión en el origen
-mismo de la formación del gremio. Se registra también el promedio
-de la escala Likert de percepción de riesgo (P17), para el que se
-espera un valor entre 1.5 y 2.5 sobre 5, indicando una percepción
-de riesgo baja o muy baja.
-
-La \textbf{brecha de percepción} se calcula como la diferencia entre
-ese promedio observado y el riesgo documentado en el capítulo~2:
-el sector salud fue el segundo sector más multado del país durante
-el primer semestre de 2023, con multas que representaron el 35.28\%
-del total impuesto por el INAI en ese período (INAI, 2023b, p.~1).
-Cuanto mayor sea la brecha entre la percepción del encuestado y ese
-dato real, más sólido es el argumento de que el desconocimiento no
-es solo de las obligaciones legales sino también de las consecuencias
-reales de incumplirlas.
-
-\paragraph{Métricas de interés en la solución}
-
-El quinto grupo de métricas informa directamente el diseño de
-NutriApp. A partir de las respuestas a la pregunta~18 se construye
-un \textbf{ranking de funcionalidades} ordenado por frecuencia de
-selección, que determina qué características deben incluirse en el
-Producto Mínimo Viable y cuáles quedan para versiones posteriores.
-A partir de la pregunta~19 se calcula el \textbf{precio modal} ---el
-rango de precio mensual más seleccionado--- y el porcentaje de
-encuestados dispuesto a pagar cualquier monto mayor a cero por la
-solución. Este último indicador, combinado con el costo estimado de
-operación de NutriApp en AWS, es el insumo principal del análisis
-costo-beneficio del capítulo~7.
-
-\paragraph{Métrica de cierre: percepción agregada del sector}
-
-La pregunta~20 produce una métrica de cierre que sintetiza el efecto
-acumulado del instrumento. Se espera que más del 60\% de los
-encuestados responda que el sector de la nutrición en México no
-cumple con sus obligaciones legales de protección de datos, después
-de haber admitido a lo largo del instrumento que ellos mismos no
-cumplen con la mayoría de esas obligaciones y que tampoco las han
-recibido como pacientes. Si esa proporción se confirma, la conclusión
-del instrumento no es una afirmación del investigador: es una
-conclusión que la propia muestra construye desde su experiencia
-directa, lo que le otorga un peso argumentativo que ningún análisis
-normativo puede replicar por sí solo.
-
-\paragraph{Resultados 1: Diagnóstico de desconocimiento de la LFPDPPP}
+ 
+El diagnóstico usa la primera mitad del grupo focal descrito en la
+sección~4.3: el cuestionario de pre-registro y el primer bloque de la
+guía de discusión, ambos antes de que los participantes conozcan
+NutriApp. La segunda mitad de la sesión, con el video de inducción,
+las maquetas y la rúbrica, evalúa el diseño y se reporta en el
+capítulo siete. Separar los dos momentos evita que la maqueta
+condicione lo que los participantes dicen de su práctica actual.
+ 
+El pre-registro da las métricas base. Además del perfil del
+participante (años de ejercicio, tipo de consulta y número aproximado
+de pacientes al mes), registra en qué herramienta lleva el expediente
+y si su acceso está protegido, si entrega aviso de privacidad, si
+obtiene consentimiento por escrito para datos de salud, si ha recibido
+solicitudes de acceso o eliminación y si tiene un procedimiento ante
+un incidente de seguridad. Cada pregunta corresponde a una
+obligación de las Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}. Con seis a ocho participantes, los
+resultados se reportan como conteos, es decir, cuántos de ellos
+cumplen cada obligación, y no como porcentajes ni promedios
+generalizables.
+ 
+El primer bloque de la guía recorre tres temas. El primero es el aviso
+de privacidad, que el responsable pone a disposición del titular antes
+del tratamiento (LFPDPPP, 2025, arts.~14 y~15). El segundo es el
+consentimiento expreso y por escrito para datos de salud (LFPDPPP,
+2025, art.~8), que en la práctica suele confundirse con el
+consentimiento del paciente para los procedimientos clínicos (LGS,
+1984/2024, art.~51~Bis~2°), aunque son obligaciones distintas. El
+tercero reúne los derechos ARCO, con el plazo de veinte días para
+responder (LFPDPPP, 2025, art.~31) y la tensión entre la cancelación y
+la conservación del expediente durante cinco años
+(NOM-004-SSA3-2012, 2012, numeral~5.4), y las medidas de seguridad,
+incluido el aviso al titular cuando una vulneración afecta de forma
+significativa sus derechos (LFPDPPP, 2025, art.~19). En cada tema se
+recoge la práctica reportada, las razones que los participantes dan
+para ella y los obstáculos que encuentran para cumplir.
+ 
+El análisis sigue el procedimiento de la sección~4.3.5: los conteos del
+pre-registro se contrastan con lo que los participantes describen en
+la discusión, y ambos se cruzan con las obligaciones de las tablas de
+trazabilidad. El resultado es la lista de obligaciones presentes y
+ausentes en la práctica reportada, con las razones y los obstáculos
+que la explican. Esa lista es la línea base contra la que el capítulo
+siete valora el diseño.
+ 
+\subsubsection{Resultados del diagnóstico}
+% NOTA: se completa tras la sesión del grupo focal (octubre de 2026)
+% con el pre-registro (conteos), la transcripción codificada y el
+% informe de consensos del facilitador. Sin porcentajes: n = 6 a 8.
+% Orden: el de los temas de la guía y de las tablas de trazabilidad.
+ 
+\paragraph{Perfil de los participantes}
 \mbox{}
-% Texto aquí
-% Sugerencia: imagen de gráfica exportada
-% \begin{figure}[H]
-%   \centering
-%   \includegraphics[width=0.75\textwidth]{grafica-encuesta1.pdf}
-%   \caption{Resultados de la Encuesta 1: Diagnóstico de desconocimiento.}
-%   \label{fig:enc1}
-% \end{figure}
-
-\paragraph{Resultados 2: Levantamiento de requerimientos para el MVP}
+% Años de ejercicio, tipo de consulta y pacientes al mes (conteos).
+ 
+\paragraph{Herramientas y práctica actual}
 \mbox{}
-% Texto aquí
-
-\paragraph{Resultados 3: Validación de propuesta mediante wireframes/demo}
+% Herramienta del expediente y protección de acceso; con quién y por
+% qué medio se comparten datos de pacientes.
+ 
+\paragraph{Aviso de privacidad}
 \mbox{}
-% Texto aquí
+ 
+\paragraph{Consentimiento por escrito para datos de salud}
+\mbox{}
+ 
+\paragraph{Derechos ARCO y medidas de seguridad}
+\mbox{}
+ 
+\paragraph{Obligaciones presentes y ausentes en la práctica reportada}
+\mbox{}
+% Tabla: obligación (Tablas de trazabilidad) | participantes que la
+% cumplen según el pre-registro | lo que describen en la discusión.
+ 
 % ============================================================
-% CAPÍTULO 4 — METODOLOGÍA (versión con grupos focales, 25-sep-2026)
-% Parámetros de campo cerrados con valores propios: octubre 2026,
-% 120 min (o dos encuentros de 60), 40–70 participantes, tres
-% sesiones. Ajustar solo si la academia asigna algo distinto.
+% CAPÍTULO 4 — METODOLOGÍA (grupo focal con expertos, 13-oct-2026)
+% Parámetros de campo: una sesión presencial de 60 min con 6 a 8
+% nutriólogos con consulta, octubre de 2026, facilitador externo.
 % Sin entradas bibliográficas nuevas.
 % ============================================================
 \section{Metodología}
@@ -2440,10 +2188,10 @@ definición de objetivos ocupan los capítulos uno y tres; el capítulo
 cinco desarrolla el artefacto. La demostración, que en Peffers et al.
 consiste en mostrar que el artefacto resuelve una instancia del
 problema, se hace en el capítulo seis con maquetas navegables de la
-interfaz, un video de inducción y una prueba piloto con los grupos
-focales. El capítulo siete evalúa por tres vías: casos de prueba de
+interfaz, un video de inducción y una prueba piloto con el grupo
+focal. El capítulo siete evalúa por tres vías: casos de prueba de
 aceptación ejecutados sobre las maquetas, revisión de la propuesta por
-docentes de nutrición y contraste entre las prácticas reportadas por
+nutriólogos con práctica clínica y contraste entre las prácticas reportadas por
 los participantes y la cobertura de obligaciones del artefacto. Este
 documento constituye la comunicación. El ciclo no incluye la
 implementación del sistema ni su evaluación en operación, porque el
@@ -2469,8 +2217,8 @@ técnico del capítulo dos, la matriz de trazabilidad entre obligaciones
 y requerimientos, la arquitectura de servicios, los diagramas de
 ingeniería, el modelo de datos, los requerimientos del producto mínimo
 viable, los casos de prueba de aceptación y las maquetas navegables de
-interfaz. El paquete se evalúa por revisión de expertos y por los
-grupos focales, y se documenta con el detalle necesario para que un
+interfaz. El paquete se evalúa con casos de prueba y con la revisión
+de expertos del grupo focal, y se documenta con el detalle necesario para que un
 tercero lo implemente. Las maquetas son representaciones de pantalla
 sin lógica de negocio ni datos reales; ninguna decisión de arquitectura
 fue desplegada ni probada.
@@ -2534,74 +2282,67 @@ deberán actualizarse. La fecha de corte fija el estado del derecho
 analizado.
  
 % ------------------------------------------------------------
-\subsection{Investigación de campo: grupos focales}
+\subsection{Investigación de campo: grupo focal con expertos}
 % ------------------------------------------------------------
  
 \subsubsection{Diseño del estudio de campo y población}
  
-La investigación de campo usa grupos focales. La decisión se tomó con
-el asesor por razones de acceso y de tipo de evidencia. La academia de
-nutrición del ITESO facilita grupos completos en horario de clase, lo
-que da un número de participantes que una encuesta autoadministrada
-difícilmente reuniría en el mismo plazo. Además, el objeto del estudio
-de campo es la forma en que los participantes manejan los datos de sus
-pacientes y lo que entienden por cumplir con la ley; la discusión en
-grupo recoge esa información mejor que un cuestionario cerrado.
+La investigación de campo usa un grupo focal con expertos. La decisión
+se tomó con el asesor por el tipo de evidencia que el caso necesita:
+el objeto del estudio de campo es la forma en que los nutriólogos
+manejan los datos de sus pacientes y lo que entienden por cumplir con
+la ley, y la discusión entre profesionales que atienden pacientes
+recoge esa información mejor que un cuestionario cerrado. Participan
+nutriólogos en ejercicio porque esa práctica de consultorio solo la
+puede describir quien ya atiende pacientes.
  
-La población son estudiantes de los últimos semestres de la
-Licenciatura en Nutrición del ITESO que ya han atendido pacientes, en
-práctica supervisada, servicio social o consulta propia, y docentes de
-la misma licenciatura, de preferencia con ejercicio clínico, que
-acompañan las sesiones. Se incluyen participantes mayores de edad que
-aceptan participar y ser grabados en la casilla correspondiente del
-pre-registro anónimo; se excluyen quienes no han atendido pacientes,
-porque las preguntas se refieren a su experiencia clínica. Los
-estudiantes aportan la formación reciente y la experiencia inicial;
-los docentes aportan la experiencia consolidada durante la discusión y
-la revisión experta de la propuesta con la rúbrica.
+La población son nutriólogos con práctica clínica activa, en consulta
+privada o institucional; la docencia no es requisito. Se incluyen
+participantes mayores de edad que atienden pacientes al momento del
+estudio y que aceptan participar y ser grabados en la casilla
+correspondiente del pre-registro anónimo; se excluyen quienes no
+atienden pacientes, porque las preguntas se refieren a su experiencia
+clínica.
  
-Las sesiones se realizan en octubre de 2026, en instalaciones del
-ITESO y en las fechas que la academia de nutrición asigne, con grupos
-de hasta 40 participantes y una duración de 60 minutos cada una. El
-diseño de los instrumentos se fundamenta en la metodología de grupos
-focales y de construcción de instrumentos de la investigación en
-ciencias sociales (Hernández-Sampieri et al., 2014) y se somete a
-revisión de expertos antes de su aplicación. La conducción de las
-sesiones está a cargo de un facilitador externo con experiencia en
+La sesión se realiza de forma presencial en octubre de 2026 y dura 60
+minutos. El diseño de los instrumentos se fundamenta en la metodología
+de grupos focales y de construcción de instrumentos de la
+investigación en ciencias sociales (Hernández-Sampieri et al., 2014)
+y se somete a revisión de expertos antes de su aplicación. La
+conducción está a cargo de un facilitador externo con experiencia en
 grupos focales, que recibe la guía de discusión con anticipación y
-entrega al autor un informe de consensos por sesión; el procesamiento
-de los datos y la interpretación de los resultados en relación con el
-marco normativo están a cargo del autor.
+entrega al autor un informe de consensos de la sesión; el
+procesamiento de los datos y la interpretación de los resultados en
+relación con el marco normativo están a cargo del autor.
  
 \subsubsection{Instrumentos}
  
-Los materiales del estudio de campo, incluidos en los anexos, son cinco
-y se aplican en el orden de la sesión. Antes de ella, cada participante
-contesta en línea el \textit{cuestionario de pre-registro}. Este
-abre con la aceptación de participación y de grabación en audio y
-recoge su perfil (semestre o antigüedad docente, exposición a
-pacientes, número de pacientes atendidos) y su práctica actual con
-datos de pacientes: en qué herramienta lleva el expediente, si entrega aviso de
-privacidad, si obtiene consentimiento por escrito y si ha recibido
-alguna solicitud de acceso o eliminación. El cuestionario incluye
-además las tres preguntas cerradas que se repiten al cierre de la
-sesión. Sus respuestas forman la línea base del capítulo tres y se
-recogen antes de que el participante conozca NutriApp.
+Los materiales del estudio de campo, incluidos en los anexos, son
+cuatro y se aplican en el orden de la sesión. Antes de ella, cada
+participante contesta en línea el \textit{cuestionario de
+pre-registro}. Este abre con la aceptación de participación y de
+grabación en audio y recoge su perfil (años de ejercicio, tipo de
+consulta y número aproximado de pacientes al mes) y su práctica actual
+con datos de pacientes: en qué herramienta lleva el expediente y si su
+acceso está protegido, si entrega aviso de privacidad, si obtiene
+consentimiento por escrito, si ha recibido alguna solicitud de acceso o
+eliminación y si tiene un procedimiento ante un incidente de
+seguridad. Sus respuestas
+forman la línea base del capítulo tres y se recogen antes de que el
+participante conozca NutriApp.
  
 La \textit{guía de discusión} organiza la sesión en dos bloques,
 recorridos ambos por los tres temas que estructuran el diagnóstico del
 capítulo tres: el aviso de privacidad, el consentimiento por escrito
 para datos de salud, y los derechos ARCO junto con las medidas de
 seguridad. El primer bloque trata el flujo de trabajo actual con datos
-de pacientes: cómo registran y dan seguimiento a la información
-durante sus prácticas y qué herramientas necesitarían, sin mención del
-diseño. El segundo, después de la inducción, trata lo que entienden de
-cada flujo de las maquetas, qué falta y qué no usarían. Cada tema abre
-con una situación de consultorio y sigue con preguntas de práctica
-antes que de conocimiento, para que el participante describa lo que
-hace en consulta. A los docentes presentes se les pregunta de manera
-directa, en ambos bloques, sobre los puntos clave de la práctica y de
-la aplicación.
+de pacientes: cómo registran y dan seguimiento a la información en
+consulta y qué herramientas necesitarían, sin mención del diseño. El
+segundo, después de la inducción, trata lo que entienden de cada flujo
+de las maquetas, qué falta y qué no usarían. Cada tema abre con una
+situación de consultorio y sigue con preguntas de práctica antes que
+de conocimiento, para que el participante describa lo que hace en
+consulta.
  
 Después del primer bloque de discusión se proyecta el \textit{video de
 inducción}, de entre seis y ocho minutos, que recorre las maquetas de
@@ -2610,31 +2351,23 @@ práctica se atiende y en qué pantalla se muestra. Dentro del alcance
 de diseño, el video sustituye la capacitación breve que la guía de
 casos de estudio prevé para la fase de implementación.
  
-Solo los docentes contestan la \textit{rúbrica de revisión del
-diseño}, al final de la sesión que acompañan: valoran en escala de
-cuatro puntos la claridad de cada flujo normativo de las maquetas, su
-correspondencia con la práctica del consultorio y la carga que
-impondría al profesional. Con ella se hace la revisión de expertos.
- 
-Al final de la sesión se aplican en línea los \textit{reactivos de
-cierre}: tres preguntas cerradas sobre el plazo de respuesta a una solicitud
-ARCO, sobre quién otorga el consentimiento y sobre qué hacer ante un
-incidente. Las respuestas se comparan con las de las mismas preguntas
-en el pre-registro. Como el video presenta esas respuestas antes del
-cierre, la comparación mide la comprensión inmediata tras la inducción
-y no permite atribuir un efecto al diseño ni a la práctica.
+Todos los participantes contestan la \textit{rúbrica de revisión del
+diseño} al final de la sesión: valoran en escala de cuatro puntos la
+claridad de cada flujo normativo de las maquetas, su correspondencia
+con la práctica del consultorio y la carga que impondría al
+profesional. Con ella se hace la revisión de expertos.
  
 Los grupos focales se emplean como técnica de recolección cualitativa
 reconocida en la metodología de la investigación (Hernández-Sampieri
-et al., 2014); el pre-registro y los reactivos de cierre agregan una
-medición cerrada que permite comparar antes y después dentro de la
-misma sesión.
+et al., 2014). El pre-registro y la rúbrica agregan dos registros
+cerrados: el primero describe la práctica antes de conocer el diseño y
+el segundo valora el diseño después de recorrerlo.
  
 \subsubsection{Procedimiento de sesión}
  
-Todas las sesiones siguen el mismo orden en 60 minutos, y la línea
-base se mide antes de mostrar cualquier material de NutriApp, para que
-la maqueta no condicione las respuestas sobre la práctica actual.
+La sesión sigue este orden en 60 minutos. La línea base se mide antes
+de mostrar cualquier material de NutriApp, para que la maqueta no
+condicione las respuestas sobre la práctica actual.
  
 \begin{enumerate}
   \item Bienvenida, explicación del proyecto y verificación de que el
@@ -2644,43 +2377,44 @@ la maqueta no condicione las respuestas sobre la práctica actual.
     de pacientes, sin mención del diseño.
   \item Video de inducción y navegación de las maquetas en pantalla.
   \item Segundo bloque de discusión: qué se entiende de cada flujo,
-    qué falta, qué no se usaría; los docentes contestan además la
-    rúbrica de revisión del diseño.
-  \item Reactivos de cierre, en línea.
+    qué falta, qué no se usaría.
+  \item Rúbrica de revisión del diseño.
 \end{enumerate}
 % Reparto orientativo de los 60 minutos, a ajustar con el facilitador:
-% paso uno 5 min; paso dos 15 min; paso tres 15 min (video de 6-8 min
-% más maquetas); paso cuatro 20 min; paso cinco 5 min.
+% paso uno 5 min; paso dos 15 min; paso tres 12 min (video de 6-8 min
+% más maquetas); paso cuatro 20 min; paso cinco 8 min.
  
-Las sesiones se graban en audio, sin video, con la autorización
-registrada en el pre-registro, y se toman notas de campo.
+La sesión se graba en audio, sin video, con la autorización registrada
+en el pre-registro, y se toman notas de campo.
  
 \subsubsection{Muestra}
  
-Los grupos que la academia de nutrición pone a disposición en las
-fechas acordadas forman una muestra no probabilística y por
-conveniencia. Se solicitaron a la academia tres sesiones de hasta 40
-estudiantes, con al menos tres docentes en total distribuidos entre
-ellas; el número final de sesiones y de participantes depende de los
-grupos que la academia confirme. El caso es
-único y los participantes son fuentes de evidencia dentro de él, en el
-sentido de Yin (2018); el tamaño de la muestra no busca inferencia
-estadística sobre el gremio. Los patrones que emerjan, contrastados con
-la literatura y con el marco normativo, se presentan como evidencia
-exploratoria del grupo estudiado.
+La muestra es no probabilística y dirigida: de seis a ocho nutriólogos
+con práctica clínica, elegidos por su ejercicio profesional y no por
+su representatividad estadística. El tamaño cae en el rango de seis a
+diez participantes que se recomienda para grupos de enfoque sobre
+asuntos de la práctica cotidiana (Creswell, 2005, como se citó en
+Hernández-Sampieri et al., 2014, p.~409) y permite que todos
+intervengan en una sesión de 60 minutos.
+% CONFIRMAR (Emanuel): canal por el que se convoca a los participantes.
+% VERIFICAR: página 409 en el impreso de la 6a ed. (cita de Creswell).
+El caso es único y los participantes son fuentes de evidencia dentro
+de él, en el sentido de Yin (2018); el tamaño de la muestra no busca
+inferencia estadística sobre el gremio. Los patrones que emerjan,
+contrastados con la literatura y con el marco normativo, se presentan
+como evidencia exploratoria del grupo estudiado.
  
 \subsubsection{Análisis y triangulación}
  
-El pre-registro y los reactivos de cierre se procesan con estadística
-descriptiva: frecuencias absolutas y relativas por reactivo y por
-perfil, y comparación de las respuestas de cierre contra las de
-pre-registro en las tres preguntas comunes. La discusión se transcribe
-y se codifica por los tres temas de la guía; dentro de cada tema se
-agrupan las prácticas reportadas, las razones que los participantes
-dan para ellas y los obstáculos que identifican, y el informe de
-consensos del facilitador se contrasta con esa codificación. La
-rúbrica de los docentes se resume por flujo con la mediana y la
-dispersión de cada criterio, más los comentarios abiertos.
+El pre-registro se procesa con estadística descriptiva: frecuencias
+absolutas por reactivo y por perfil. Con seis a ocho participantes no
+se calculan porcentajes ni se generalizan proporciones. La discusión
+se transcribe y se codifica por los tres temas de la guía; dentro de
+cada tema se agrupan las prácticas reportadas, las razones que los
+participantes dan para ellas y los obstáculos que identifican, y el
+informe de consensos del facilitador se contrasta con esa
+codificación. La rúbrica se resume por flujo con la mediana y el rango
+de cada criterio, más los comentarios abiertos.
  
 La triangulación se hace en tres niveles. El primero contrasta lo que
 los participantes declaran en el pre-registro con lo que describen en
@@ -2720,7 +2454,7 @@ capítulo cinco.
 Las maquetas navegables, construidas en Figma Make a partir de los
 requerimientos del capítulo seis, demuestran el artefacto junto con un
 video de inducción que las recorre por obligación legal y con la
-prueba piloto de las sesiones de los grupos focales. La evaluación
+prueba piloto en la sesión del grupo focal. La evaluación
 combina tres métodos: pruebas y observación en un caso, dos de los
 métodos reconocidos para artefactos de diseño (Hevner et al., 2004), y
 revisión por expertos.
@@ -2737,10 +2471,10 @@ capítulo siete reporta su resultado. Un resultado de «no refleja» se
 reporta como hallazgo y señala la distancia entre la maqueta y el
 diseño.
  
-Los docentes hacen la \textit{revisión por expertos} con la rúbrica de
-cada flujo normativo. La \textit{observación en el caso} recoge lo que
-los participantes dicen y hacen frente a las maquetas durante el
-segundo bloque de discusión, más los reactivos de cierre.
+Los nutriólogos del grupo focal hacen la \textit{revisión por
+expertos} con la rúbrica de cada flujo normativo. La
+\textit{observación en el caso} recoge lo que dicen y hacen frente a
+las maquetas durante el segundo bloque de discusión.
  
 \subsubsection{Alcance y limitaciones}
  
@@ -2756,11 +2490,13 @@ El análisis normativo se centra en la LFPDPPP, su Reglamento, la
 NOM-004 y la NOM-024. Una implementación requeriría análisis
 adicionales en materia fiscal, laboral y sanitaria.
  
-Los participantes son estudiantes y docentes de una sola universidad,
-seleccionados por conveniencia. Los resultados describen a ese grupo y
-constituyen evidencia exploratoria, sin inferencia sobre el gremio; el
-nutriólogo independiente con años de consulta privada está
-representado solo a través de los docentes.
+Los participantes son de seis a ocho nutriólogos con práctica clínica,
+reunidos en una sola sesión y seleccionados de forma dirigida. Los
+resultados describen a ese grupo y constituyen evidencia exploratoria,
+sin inferencia sobre el gremio. Quienes aceptan participar en un
+estudio sobre protección de datos pueden tener más interés en el tema
+que el promedio de sus colegas, y la perspectiva del paciente, titular
+de los datos, no está representada en el estudio de campo.
  
 % ------------------------------------------------------------
 \subsection{Consideraciones éticas y confidencialidad}
@@ -2771,12 +2507,13 @@ rigen el estudio de campo. La participación es voluntaria y puede
 abandonarse en cualquier momento sin consecuencia; cada participante
 acepta la participación y la grabación en audio en una casilla del
 pre-registro, antes de la sesión, y declara ser mayor de edad. No se
-recoge nombre, matrícula, correo ni otro dato personal: el
-pre-registro y los reactivos de cierre se vinculan por un código de
-sesión. Las transcripciones se anonimizan antes del análisis; los
-resultados se reportan en forma agregada o con citas sin atribución,
-y el documento incluye un resumen ejecutivo por sesión, no las
-transcripciones literales.
+recoge nombre, cédula profesional, correo ni otro dato que identifique
+al participante: el pre-registro y la rúbrica se vinculan por un
+código que cada participante recibe con la invitación. Las
+transcripciones se anonimizan antes del análisis; los resultados se
+reportan en forma agregada o con citas sin atribución, y el documento
+incluye un resumen ejecutivo de la sesión, no la transcripción
+literal.
  
 El uso de las maquetas de NutriApp en las sesiones es demostrativo.
 Ningún dato real de pacientes se captura en ellas: todos los perfiles
@@ -2793,6 +2530,8 @@ ningún participante tiene relación con esa eventual transferencia. Los
 expertos que revisan los instrumentos y la propuesta lo hacen sin
 contraprestación, no participan en la interpretación de los
 resultados y no tienen interés en NutriApp ni en su transferencia.
+% CONFIRMAR (Emanuel): si los nutriólogos del grupo focal reciben algo
+% por participar (constancia, incentivo), declararlo aquí.
  
 % ═══════════════════════════════════════════════════════════════════════════
 % ═══════════════════════════════════════════════════════════════════════════
@@ -2817,8 +2556,8 @@ y el módulo social.
 % ─────────────────────────────────────────────────────────────────────────
 
 NutriApp se diseña sobre Amazon Web Services bajo el modelo de
-responsabilidad compartida de la sección~2.5.1 (Amazon Web Services
-[AWS], 2023a). AWS responde por la seguridad de la infraestructura
+responsabilidad compartida de la sección~2.5.1 (AWS, 2023a). AWS
+responde por la seguridad de la infraestructura
 física y de red, y el cliente por la configuración de los servicios,
 el control de acceso y el cifrado. La elección
 del proveedor obedece a criterios de diseño. La región AWS Mexico
@@ -2833,7 +2572,9 @@ decisiones de arquitectura de este capítulo. La región primaria es
 \texttt{mx-central-1} por decisión de diseño; la ley no exige
 localización. Cognito, el cómputo y los datos residen en esa región.
 El borde que muestra la Figura~\ref{fig:aws-a} (Route 53, CloudFront,
-WAF, Shield y el certificado de ACM) es global y opera fuera de ella;
+la ACL web global de WAF, Shield y el certificado de ACM) es global y
+opera fuera de ella, salvo la ACL web regional de WAF que protege a API
+Gateway;
 Amazon SES no está disponible en \texttt{mx-central-1}, por lo que los
 avisos por correo, sin contenido clínico, salen de la región de SES
 que se defina (Figura~\ref{fig:aws-b}), fuera del territorio
@@ -2854,11 +2595,12 @@ con reglas administradas contra inyección SQL, secuencias de comandos
 entre sitios y patrones de ataque conocidos, y aplica una regla basada
 en tasa que limita las solicitudes por dirección IP en una ventana
 definida. AWS Shield Standard mitiga los ataques de denegación de
-servicio distribuido. El Application Load Balancer solo distribuye y
-enruta el tráfico hacia la capa de aplicación.
+servicio distribuido.
 
 \textbf{Lógica de aplicación.} Amazon API Gateway expone los servicios
-REST y valida en cada llamada los tokens emitidos por Amazon Cognito.
+REST, valida en cada llamada los tokens emitidos por Amazon Cognito e
+invoca las funciones Lambda mediante integración Lambda proxy (AWS,
+s.f.-j).
 Las funciones AWS Lambda (Node.js) ejecutan la lógica de negocio con
 límites de concurrencia que acotan las ejecuciones simultáneas. La API
 recibe y devuelve solo los campos que cada pantalla necesita, en
@@ -2897,8 +2639,10 @@ NOM-151-SCFI-2016, 2017; sección~7.3).
 
 \textbf{Auditoría.} AWS CloudTrail registra los eventos de
 administración y, una vez activados, los eventos de datos de S3 y
-Lambda. Database Activity Streams de Amazon RDS audita la actividad
-SQL, y el \texttt{DeclarationLog} registra consentimientos, solicitudes
+Lambda. La extensión pgAudit de RDS para PostgreSQL audita las
+lecturas, las escrituras y los cambios de esquema sin registrar los
+parámetros de las sentencias (AWS, s.f.-e), y el
+\texttt{DeclarationLog} registra consentimientos, solicitudes
 y declaraciones en la capa de aplicación. Los tres registros se
 conservan con el esquema de retención de la sección~2.5.4. Amazon
 CloudWatch concentra métricas y dispara alarmas ante comportamientos
@@ -2956,7 +2700,7 @@ obligación que atiende.
 
   Entrega de contenido & CloudFront + S3 + ACM & Cifrado en tránsito
     TLS~1.3. LFPDPPP~2025 art.~18; RLFPDPPP art.~57 \\[4pt]
-  Protección perimetral & WAF + Shield + ALB & Medidas técnicas de
+  Protección perimetral & WAF + Shield & Medidas técnicas de
     seguridad. LFPDPPP~2025 art.~18 \\[4pt]
   Lógica de aplicación & API Gateway + Lambda & Proporcionalidad.
     LFPDPPP~2025 art.~5 \\[4pt]
@@ -2973,7 +2717,7 @@ obligación que atiende.
     y~49), comprobantes fiscales cinco (Código Fiscal de la Federación
     art.~30); integridad de los mensajes de datos
     conforme a NOM-151-SCFI-2016 \\[4pt]
-  Auditoría & CloudTrail + Activity Streams + CloudWatch & Trazabilidad.
+  Auditoría & CloudTrail + pgAudit + CloudWatch & Trazabilidad.
     RLFPDPPP art.~48 fracc.~X; NOM-024-SSA3-2012 numeral~6.6.1 \\[4pt]
   Pagos y suscripción & Mercado Pago (\textit{checkout} alojado) & Datos
     financieros con consentimiento expreso; sin datos de tarjeta en
@@ -3001,9 +2745,10 @@ La arquitectura de servicios ocupa la Figura~\ref{fig:aws}, en cuatro
 partes. La parte~(a) es el borde y la entrada de tráfico. Route~53
 registra el dominio; CloudFront sirve la interfaz web desde sus
 ubicaciones de borde con el certificado de AWS Certificate Manager;
-AWS WAF aplica reglas administrativas y por tasa, y AWS Shield
+AWS WAF aplica reglas administradas y por tasa, y AWS Shield
 Standard mitiga la denegación de servicio. Esos servicios son globales
-y quedan fuera de \texttt{mx-central-1}. Dentro de la región están
+y quedan fuera de \texttt{mx-central-1}, salvo la ACL web regional de
+WAF que protege a API Gateway. Dentro de la región están
 Amazon Cognito, que gestiona el registro, el correo verificado, la MFA
 del nutriólogo, el bloqueo por intentos fallidos y los roles; el sitio
 estático en S3; y Amazon API Gateway, que deja pasar sin token las
@@ -3011,10 +2756,10 @@ rutas públicas del catálogo, valida el token en las privadas y recibe
 los webhooks de Mercado Pago. Todo el tráfico va por HTTPS con
 TLS~1.3.
  
-La parte~(b) es la red privada. API Gateway entra a la VPC por una
-integración privada (VPC Link) hacia un Application Load Balancer que
-reparte las llamadas entre funciones Lambda en Node.js, en subredes
-privadas de al menos dos zonas de disponibilidad; RDS para PostgreSQL
+La parte~(b) es la red privada. API Gateway invoca directamente las
+funciones Lambda en Node.js mediante integración Lambda proxy (AWS,
+s.f.-j); las funciones se conectan a subredes privadas de al menos dos
+zonas de disponibilidad; RDS para PostgreSQL
 opera en una zona, con Multi-AZ como opción. La salida a internet pasa
 por un NAT Gateway: los avisos con folio salen por Amazon SES, el
 canal por defecto, y los avisos opcionales por Twilio; de Mercado Pago
@@ -3039,13 +2784,19 @@ de certificación externo. Lambda alcanza S3 por un punto de enlace de
 gateway y KMS por uno de interfaz, sin salir de la VPC.
  
 La parte~(d) es la operación y la trazabilidad. Amazon EventBridge
-programa la retención y la eliminación; Amazon CloudWatch concentra
+programa los avisos de vencimiento, y la supresión solo se ejecuta
+tras la confirmación del nutriólogo; Amazon CloudWatch concentra
 métricas y alarmas, entre ellas la de solicitudes ARCO a cinco días o
-menos del plazo; Database Activity Streams publica la actividad SQL en
-Kinesis Data Streams, cuyo consumidor queda por definir; AWS CloudTrail
-registra los eventos de administración y de datos y los exporta al
-depósito de registros de auditoría; y el inventario de datos
-clasificado por sensibilidad se mantiene junto a esos registros.
+menos del plazo; pgAudit registra la actividad SQL en Amazon CloudWatch
+Logs, desde donde una exportación periódica (\texttt{CreateExportTask})
+la copia al depósito de registros de auditoría con Object Lock (AWS,
+s.f.-i); AWS CloudTrail registra los eventos de administración y de
+datos y los exporta al mismo depósito; y el inventario de datos
+clasificado por sensibilidad se mantiene junto a esos registros. La
+exportación desde CloudWatch Logs es por tareas: cada cuenta admite una
+sola tarea activa, los datos pueden tardar hasta 12 horas en estar
+disponibles y AWS no la recomienda como archivo continuo, para lo cual
+sugiere suscripciones (AWS, s.f.-i). Queda como limitación del diseño.
  
 \begin{landscape}
 \begin{figure}[H]
@@ -3235,24 +2986,27 @@ que la solicitud quede abierta de forma indefinida.
 
 \subsubsection{Diagrama entidad-relación}
 
+\begin{sloppypar}
 El modelo de datos se muestra en la Figura~\ref{fig:er}, en cuatro
 partes que corresponden a cuatro bloques de entidades. El bloque
-clínico~(a) contiene \texttt{nutriologo}, \texttt{paciente},
-\texttt{expediente}, \texttt{plantilla}, \texttt{disponibilidad} y
-\texttt{appointment\_request}, y dentro del expediente
+clínico~(a) contiene \texttt{paciente}, \texttt{expediente},
+\texttt{plantilla} y \texttt{appointment\_request}, y dentro del expediente
 \texttt{plan\_alimentacion}, \texttt{medicion}, \texttt{adjunto} y
 \texttt{nota}. El de derechos y trazabilidad~(b) contiene el
 \texttt{consentimiento}, la solicitud \texttt{arco\_request}, el
-\texttt{incidente}, el \texttt{audit\_log} y el
+\texttt{incidente} con su tabla asociativa
+\texttt{incidente\_expediente}, el \texttt{audit\_log} y el
 \texttt{declaration\_log}. El de cuentas de
-práctica y catálogo~(c) contiene \texttt{institution},
+práctica y catálogo~(c) contiene \texttt{nutriologo},
+\texttt{disponibilidad}, \texttt{institution},
 \texttt{activation\_code}, \texttt{teacher}, \texttt{featured\_listing},
 \texttt{plan\_subscription}, \texttt{contrato\_suscripcion} y
 \texttt{pago}. El de comunidad y administración~(d) contiene
 \texttt{post}, \texttt{content\_report}, \texttt{moderation\_event} y
 \texttt{administrador}. El modelo es relacional y se define en
 PostgreSQL sobre Amazon RDS, conforme a la capa de datos de la
-sección anterior.
+sección anterior. 
+\end{sloppypar}
  
 \begin{landscape}
 \begin{figure}[H]
@@ -3311,9 +3065,10 @@ sección anterior.
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
  
-En el bloque clínico, cada \texttt{paciente} pertenece a un
-nutriólogo, que es el responsable de sus datos, y tiene un único
-\texttt{expediente}. El expediente guarda los datos clínicos cifrados
+En el bloque clínico, cada \texttt{paciente} tiene un
+\texttt{expediente} por cada nutriólogo que lo atiende, y ese
+nutriólogo es el responsable de sus datos. El expediente guarda los
+datos clínicos cifrados
 con su propia llave de datos (sección~2.5.3) y un estado
 (\textit{pendiente}, \textit{activo} o \textit{bloqueado}); el campo
 \texttt{fecha\_ultimo\_acto} marca el inicio de los cinco años de
@@ -3324,7 +3079,8 @@ el bloque de derechos y trazabilidad, \texttt{consentimiento} y
 \texttt{ARCO-}). El consentimiento registra el mecanismo con que se
 otorgó, la versión del aviso aceptado, si el titular aceptó los avisos
 por mensajería y, en su caso, la revocación. La solicitud ARCO registra
-el tipo, el estado, las fechas de presentación, resolución y ejecución
+el nutriólogo que la resuelve, el tipo, el estado, las fechas de
+presentación, resolución y ejecución
 y, si procede la cancelación, \texttt{bloqueo\_hasta}, el fin del
 bloqueo que el responsable fija conforme al plazo de prescripción
 (RLFPDPPP, 2011, art.~107, fracc.~I); \texttt{bloqueado\_desde} y
@@ -3334,7 +3090,8 @@ detectada, su descripción y alcance, los expedientes afectados y la
 fecha en que la plataforma alertó al nutriólogo responsable
 (\texttt{alerta\_responsable\_en}); la fecha del aviso a los titulares
 (\texttt{aviso\_titulares\_en}) la asienta el responsable, porque la
-decisión de avisar y el envío son suyos (sección~2.4.2, Tabla~2).
+decisión de avisar y el envío son suyos (sección~2.4.2,
+Tabla~\ref{tab:trazabilidad-2}).
 \texttt{declaration\_log} conserva la copia inmutable de cada
 declaración, y \texttt{audit\_log} registra quién consultó, modificó o
 descargó cada expediente, junto con los intentos fallidos, el bloqueo,
@@ -3358,6 +3115,33 @@ NOM-151 del contrato. \texttt{featured\_listing} no tiene relación
 alguna con pacientes, porque ningún dato de salud interviene en el
 orden del catálogo.
 
+\subsubsection{Diagrama de estados del expediente}
+ 
+La Figura~\ref{fig:uml-estados} sigue al expediente a lo largo de su
+vida con los valores del campo \texttt{estado} y el estado final de
+supresión. El alta en \texttt{AddPatient} lo crea \textit{pendiente de
+consentimiento}: no admite datos de salud hasta que el paciente marca
+la casilla obligatoria y el sistema registra el folio \texttt{DEC-}
+(LFPDPPP, 2025, art.~8). Con el consentimiento pasa a \textit{activo}.
+Una solicitud de cancelación tiene dos salidas. Si el nutriólogo la
+niega porque corre la conservación mínima, el expediente sigue activo
+(LFPDPPP, 2025, art.~25, fracc.~VII; NOM-004-SSA3-2012, 2012,
+numeral~5.4). Si procede, la resuelve y la ejecuta en los plazos del
+artículo~31, y el expediente pasa a \textit{bloqueado} hasta el plazo
+de prescripción (LFPDPPP, 2025, art.~24; RLFPDPPP, 2011, art.~107,
+fracc.~I). A \textit{suprimido} se llega por dos caminos: al vencer la
+conservación mínima de un expediente activo o al vencer el periodo de
+bloqueo. En los dos, un aviso programado llega al nutriólogo y el
+borrado criptográfico solo se ejecuta con su confirmación
+(sección~2.5.5).
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \caption{Diagrama de estados del expediente clínico. Elaboración propia.}
+  \label{fig:uml-estados}
+\end{figure}
+
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Demostración del diseño: maquetas y prueba piloto}
 % ═══════════════════════════════════════════════════════════════════════════
@@ -3372,7 +3156,8 @@ React, TypeScript y Tailwind. Siguiendo el criterio de Peffers et al.
 del artefacto; ninguna pantalla ha operado con datos de personas
 reales. Sobre ella, un revisor con conocimiento del marco normativo
 puede comprobar pantalla por pantalla si el flujo muestra lo que la
-ley exige, y el grupo de estudiantes y docentes la usa como caso en la
+ley exige, y el grupo focal de nutriólogos con práctica clínica la usa
+como caso en la
 prueba piloto. El capítulo sigue el orden de uso del sistema:
 requerimientos, maquetas por flujo, prueba piloto y alcance.
  
@@ -3443,7 +3228,7 @@ vez cabe en una sola pantalla. En cada flujo se indica qué obligación
 demuestra y qué evidencia debe verse en la maqueta. Los tres primeros
 corresponden, en ese orden, a los casos CP-01, CP-02 y CP-03 de la
 Tabla~\ref{tab:casos-prueba}, que verifican esa evidencia. El
-Anexo~B reúne las capturas de todas las pantallas del prototipo y el
+Anexo~B reúne las capturas de las pantallas principales del prototipo y el
 repositorio del proyecto contiene las maquetas navegables y el código
 (NutriApp, 2026).
  
@@ -3582,7 +3367,8 @@ El paciente busca nutriólogo por ciudad y especialidad en el buscador
 disponibilidad, cercanía declarada y especialidad; ningún dato de
 salud del paciente interviene en el orden. Entre los cinco primeros
 resultados, a lo sumo dos llevan la etiqueta «Patrocinado», que
-corresponde al servicio de exposición descrito en la sección~8.3. La
+corresponde al servicio de exposición cuyas condiciones comerciales se
+proponen como trabajo posterior (sección~8.3.1). La
 tarjeta de cada profesional muestra la institución que expidió su
 título y el número de cédula que declaró, como exige la publicidad de
 servicios de salud (Reglamento de la Ley General de Salud en Materia
@@ -3590,8 +3376,8 @@ de Publicidad, 2000, art.~19). La transparencia sustituye a la
 verificación: junto a esos datos, la ficha indica que los declaró el
 profesional bajo su responsabilidad y enlaza a la consulta pública de
 cédulas de la Secretaría de Educación Pública (s.f.), para que el
-paciente pueda comprobarlos por su cuenta. Un enlace al pie explica
-cómo se ordenan los resultados.
+paciente pueda comprobarlos por su cuenta. Un enlace junto al criterio
+de orden explica cómo se ordenan los resultados.
  
 La reserva sigue la secuencia de la Figura~\ref{fig:uml-seq}: el
 paciente elige una franja horaria, inicia sesión y confirma en la
@@ -3614,8 +3400,7 @@ responde, el sistema sugiere alternativas. Las citas se notifican
  
 \subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
  
-El MVP incluye cuentas de práctica para estudiantes de nutrición, base
-de la prueba piloto y del Plan Universidad de la sección~8.3. Por
+El MVP incluye cuentas de práctica para estudiantes de nutrición. Por
 regla de diseño, ningún estudiante se registra por sí mismo. Primero
 el administrador da de alta a la institución y al programa académico
 en el panel de instituciones (\texttt{AdminInstitutions}), con la
@@ -3638,9 +3423,9 @@ el tratamiento queda sujeto a la LFPDPPP y los términos de uso lo
 prohíben. Los datos del propio estudiante sí son datos personales, y
 se tratan conforme al aviso de privacidad que acepta al activar la
 cuenta. La cuenta vence con el semestre de la institución, con aviso
-previo por correo; al vencer, el estudiante puede pasar a un plan
-Basic, con el descuento de egresado cuando su institución contrató el
-paquete Integral (sección~8.3). El docente responsable ve en su panel
+previo por correo. Al egresar, quien quiera seguir usando NutriApp se
+registra como nutriólogo titular en un plan de pago. El docente
+responsable ve en su panel
 (\texttt{TeacherDashboard}) los expedientes ficticios de sus
 estudiantes en modo de solo lectura, el avance del módulo de inducción
 y el reporte semestral.
@@ -3689,9 +3474,10 @@ y~\ref{tab:trazabilidad-2}: qué exige la ley en cada punto
 muestra la pantalla.
  
 En la \textbf{sesión}, los participantes recorren las maquetas con
-cuentas de práctica y discuten en el segundo bloque del grupo focal
-lo que vieron frente a su práctica actual; los docentes contestan
-además la rúbrica de revisión por flujo (sección~4.3.2 y Anexo~A).
+perfiles de pacientes ficticios y discuten en el segundo bloque del
+grupo focal lo que vieron frente a su práctica actual; al cierre,
+todos contestan la rúbrica de revisión por flujo (sección~4.3.2 y
+Anexo~A).
  
 Los \textbf{casos de prueba de aceptación} siguen el formato de la
 sección~4.4.2; la Tabla~\ref{tab:casos-prueba} los concreta para los
@@ -3730,7 +3516,7 @@ sostener con AWS y React, con proveedores que son subcontrataciones
 del encargado (Amazon SES, Twilio) o responsables independientes
 (Mercado Pago) en los términos de la sección~5.1. La \textit{prioridad de uso} incluye los módulos
 que un nutriólogo independiente usa a diario y que, por eso, los
-grupos focales pueden juzgar con conocimiento de causa: gestión de
+participantes del grupo focal pueden juzgar con conocimiento de causa: gestión de
 expedientes, agenda de citas y planes de alimentación.
  
 Las maquetas navegables y el código del prototipo están en el
@@ -3745,75 +3531,32 @@ sección~8.3.
 % ═══════════════════════════════════════════════════════════════════════════
 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Resultados de encuestas: evidencia del desconocimiento}
+\subsection{Evaluación del diseño con el grupo focal}
 % ─────────────────────────────────────────────────────────────────────────
-
-% \todo[inline]{Pendiente: incorporar resultados de la Encuesta de Diagnóstico
-% (Instrumento 1) al retorno de Alemania. Esta sección presenta el marco de
-% análisis y las hipótesis de partida; los valores observados sustituirán
-% los esperados una vez aplicado el instrumento.}
-
-La Encuesta de Diagnóstico (Instrumento~1, Anexo~A) evalúa siete dimensiones
-de cumplimiento de la LFPDPPP entre nutriólogos en ejercicio. Las hipótesis de
-partida ---formuladas con base en los patrones de los casos sancionados por el
-INAI entre 2017 y 2023 (INAI, 2023a; INAI, 2023b)--- establecen que el índice
-de cumplimiento promedio de la muestra se ubicará por debajo del 20~\%, es
-decir, que el nutriólogo promedio cumple menos de dos de las siete obligaciones
-evaluadas.
-
-Las siete dimensiones y sus hipótesis son:
-
-\begin{enumerate}[label=\Roman*.]
-
-  \item \textbf{Herramienta de registro (P4).} Se espera que más del 60~\% de
-  los encuestados utilice hoja de cálculo o documento de texto como herramienta
-  principal. Ninguna de esas herramientas cumple los requerimientos técnicos de
-  cifrado, autenticación y trazabilidad de la NOM-024-SSA3-2012
-  (NOM-024-SSA3-2012, 2012).
-
-  \item \textbf{Entrega de aviso de privacidad (P5).} Se espera que más del
-  70~\% de los encuestados no entregue aviso de privacidad por escrito, la
-  primera obligación de la LFPDPPP (LFPDPPP, 2025, art.~15) y la más
-  frecuentemente incumplida según los casos documentados por el INAI
-  (INAI, 2021, párr.~4).
-
-  \item \textbf{Consentimiento firmado (P6).} Se espera que más del 65~\% no
-  obtenga consentimiento escrito y firmado específico para el tratamiento de
-  datos de salud. La LFPDPPP~2025 exige consentimiento expreso y por escrito
-  para datos sensibles (LFPDPPP, 2025, art.~8), entendido como ``manifestación
-  de la voluntad libre, específica e informada'' (LFPDPPP, 2025, art.~2,
-  fracc.~IV), obligación que concurre con el artículo~51~Bis~2° de la
-  Ley General de Salud (LGS, 1984/2024, art.~51~Bis~2°).
-
-  \item \textbf{Protección de acceso (P7).} Se espera que menos del 20~\% cuente
-  con protección de acceso específica para su archivo de pacientes, separada de
-  la contraseña general del dispositivo. La contraseña del dispositivo no
-  constituye medida de seguridad suficiente bajo el artículo~57 del Reglamento
-  (RLFPDPPP, 2011, art.~57) ni bajo los requerimientos de autenticación de la
-  NOM-024-SSA3-2012.
-
-  \item \textbf{Transferencia no controlada (P8).} Se espera que más del 40~\%
-  haya compartido su archivo de pacientes por WhatsApp, correo electrónico o
-  carpeta compartida sin restricciones de acceso, constituyendo una transferencia
-  de datos sensibles sin las garantías del artículo~57 del Reglamento
-  (RLFPDPPP, 2011, art.~57).
-
-  \item \textbf{Conocimiento de derechos ARCO (P9 y P10).} Se espera que más
-  del 60~\% desconozca cómo atender una solicitud ARCO dentro del plazo legal
-  de veinte días (LFPDPPP, 2025, art.~31).
-
-  \item \textbf{Preparación ante incidentes (P11).} Se espera que menos del
-  15~\% tenga un protocolo definido de respuesta ante un incidente de seguridad, incluyendo la obligación de informar al titular de forma inmediata prevista en el artículo~19 de la LFPDPPP~2025 (LFPDPPP, 2025, art.~19).
-
-\end{enumerate}
-
-La \textbf{brecha de percepción} se calcula como la diferencia entre el promedio
-observado en la escala Likert de la pregunta~17 (percepción de riesgo de
-sanción, esperada entre 1.5 y 2.5 sobre 5) y el riesgo documentado: el sector
-salud fue el segundo más sancionado del país en el primer semestre de 2023, con
-el 35.28~\% del total de multas impuestas por el INAI (INAI, 2023b, p.~1). La
-magnitud de esa brecha es la evidencia cuantitativa más directa del problema
-que este caso de estudio documenta.
+% NOTA: se completa después de la sesión (octubre de 2026).
+ 
+La evaluación sigue los tres métodos de la sección~4.4.2. Sus
+resultados se leen contra la línea base del capítulo tres: lo que el
+diagnóstico muestra ausente en la práctica reportada es lo que el
+diseño debe resolver, y la rúbrica de los participantes indica si las
+maquetas lo hacen de forma clara, apegada a la práctica y con una carga
+razonable para el profesional.
+ 
+\paragraph{Casos de prueba de aceptación}
+\mbox{}
+% Resultado de CP-01, CP-02 y CP-03 (refleja / refleja parcialmente /
+% no refleja), con la captura que sirve de evidencia en cada uno.
+ 
+\paragraph{Revisión por expertos: rúbrica por flujo}
+\mbox{}
+% Mediana y rango de claridad, correspondencia con la práctica y carga
+% por flujo; comentarios abiertos.
+ 
+\paragraph{Observación en el caso}
+\mbox{}
+% Lo que los participantes dicen y hacen frente a las maquetas en el
+% segundo bloque: qué entienden, qué falta, qué no usarían.
+ 
 
 % ─────────────────────────────────────────────────────────────────────────
 \subsection{Validación normativa del diseño propuesto}
@@ -3850,7 +3593,7 @@ cada una el componente que la atiende:
     numeral~6.6.3): Amazon Cognito con MFA obligatoria para el
     nutriólogo y opcional para el paciente.
   \item Trazabilidad de consultas, accesos y modificaciones (RLFPDPPP,
-    art.~48, fracc.~X): CloudTrail, Database Activity Streams y
+    art.~48, fracc.~X): CloudTrail, pgAudit y
     \texttt{DeclarationLog}, exportados a S3 con Object Lock y
     conservados cinco años.
   \item Inventario de datos, análisis de riesgos y análisis de brecha
@@ -3955,20 +3698,20 @@ dispara por capacidad sino por los componentes que cobran por mensaje.
 \textbf{Costo operativo en dos escenarios.} La Tabla~\ref{tab:costos}
 estima el costo mensual con ese modelo de carga y con las reglas de la
 Tabla~\ref{tab:costos-reglas}. La columna «varía» dice si el componente
-crece con la carga: los que cobran por hora (balanceador, instancia de
-base de datos, NAT Gateway, fragmento de Kinesis, punto de enlace) cuestan
+crece con la carga: los que cobran por hora (instancia de base de
+datos, NAT Gateway, punto de enlace) cuestan
 lo mismo con dos o con once ejecuciones simultáneas; los que cobran por
 solicitud o por mensaje (API Gateway, CloudTrail, WhatsApp, SMS) son los
 que forman la ruta crítica. Los precios son de lista, consultados en
-septiembre de 2026 (Amazon Web Services, s.f.-f; Twilio, 2026; Meta,
-2025; Mercado Pago, s.f.-b); AWS no publica en texto plano las tarifas de
-mx-central-1, así que se usan las de us-east-1 con un factor regional del
-5~\% (regla R2).
+septiembre de 2026 (AWS, s.f.-f; Twilio, 2026; Meta, 2025; Mercado
+Pago, s.f.-b); las tarifas de mx-central-1, publicadas en los archivos de
+la Price List de AWS (AWS, s.f.-k), se aproximan con las de us-east-1 y
+un factor regional del 5~\% (regla R2).
  
-El escenario base cuesta \$164~USD al mes (\$1,960 al año; \$0.33 por
-nutriólogo activo) y la ruta crítica \$318 (\$3,820 al año; \$0.64). La
-diferencia, \$154, se explica casi toda por dos filas: el SMS de
-respaldo (\$88 más) y API Gateway con CloudTrail (\$21 más). El SMS en
+El escenario base cuesta \$141~USD al mes (\$1,690 al año; \$0.28 por
+nutriólogo activo) y la ruta crítica \$298 (\$3,570 al año; \$0.60). La
+diferencia, \$157, se explica casi toda por dos filas: el SMS de
+respaldo (\$88 más) y API Gateway con CloudTrail (\$24 más). El SMS en
 México cuesta \$0.1819~USD por mensaje (Twilio, 2026) frente a \$0.013 del
 mensaje de utilidad de WhatsApp, por lo que el diseño lo reserva para el
 paciente sin WhatsApp y solo para avisos con efecto jurídico (regla R3);
@@ -3990,29 +3733,28 @@ muestra aparte: \$67 al mes con el factor regional.
     \textbf{Componente} & \textbf{Varía} & \textbf{Base de cálculo (base / ruta crítica)} & \textbf{Base} & \textbf{Crít.} \\
     \midrule
     CloudFront + S3 (sitio) & sí & 21 / 65~GB, capa gratuita permanente & \$1 & \$1 \\
-    WAF + Shield Standard & parcial & 1 ACL y 4 reglas fijas; 2.2 / 4.6~M solicitudes & \$10 & \$12 \\
+    WAF + Shield Standard & parcial & 2 ACL y 4 reglas fijas cada una; 2.2 / 4.6~M solicitudes & \$19 & \$21 \\
     Application Load Balancer & no & 730~h y 1 LCU en ambos & \$22 & \$22 \\
     API Gateway + Lambda & sí & 2.2 / 4.6~M solicitudes; Lambda dentro / fuera de capa gratuita & \$8 & \$21 \\
     Amazon Cognito & no & 5,500~MAU; Essentials, 10,000 gratuitos & \$0 & \$0 \\
     RDS PostgreSQL (db.t4g.small) & no & instancia en una zona; 20 / 40~GB & \$26 & \$30 \\
-    Activity Streams (Kinesis) & parcial & 1 fragmento fijo; registros por solicitud & \$11 & \$11 \\
     NAT Gateway & parcial & 1 zona; salida hacia Amazon SES, Twilio y Mercado Pago & \$33 & \$33 \\
     Puntos de enlace privados & no & S3 por gateway (sin costo); KMS por interfaz & \$8 & \$8 \\
     KMS + ACM & parcial & 1 / 2 llaves; una llamada por cada dos solicitudes & \$4 & \$9 \\
     S3 (adjuntos y registros) & sí & 50 / 150~GB acumulados; Object Lock sin cargo & \$3 & \$8 \\
-    CloudTrail + CloudWatch & sí & un evento de datos por solicitud; 5 / 15~GB de logs & \$5 & \$13 \\
+    CloudTrail + CloudWatch & sí & un evento de datos por solicitud; 5 / 15~GB de logs y 4.4 / 9.2~GB de pgAudit (R6) & \$7 & \$18 \\
     EventBridge + Lambda eliminación & no & capa gratuita permanente & \$0 & \$0 \\
     Route 53 & parcial & zona fija + consultas & \$1 & \$2 \\
     \midrule
-    \textit{Subtotal AWS (us-east-1)} & & & \$133 & \$171 \\
-    Factor regional (R2) & no & 5~\% sobre el subtotal AWS & \$7 & \$9 \\
+    \textit{Subtotal AWS (us-east-1)} & & & \$111 & \$152 \\
+    Factor regional (R2) & no & 5~\% sobre el subtotal AWS & \$6 & \$8 \\
     Dominio (anual prorrateado) & no & .com / .com y .mx & \$1 & \$7 \\
     Twilio: WhatsApp (R3) & sí & 486 / 2,160 mensajes de utilidad a \$0.013 & \$6 & \$28 \\
     Twilio: SMS de respaldo (R3) & sí & 54 / 540 mensajes a \$0.1819 + número local & \$16 & \$105 \\
     \midrule
-    \textbf{Total mensual} & & & \textbf{\$164} & \textbf{\$318} \\
-    \textbf{Total anual} & & & \textbf{\$1,960} & \textbf{\$3,820} \\
-    \textbf{Por nutriólogo activo al mes} & & & \textbf{\$0.33} & \textbf{\$0.64} \\
+    \textbf{Total mensual} & & & \textbf{\$141} & \textbf{\$298} \\
+    \textbf{Total anual} & & & \textbf{\$1,690} & \textbf{\$3,570} \\
+    \textbf{Por nutriólogo activo al mes} & & & \textbf{\$0.28} & \textbf{\$0.60} \\
     \midrule
     \textit{Opción: alta disponibilidad (no incluida)} & opción & RDS Multi-AZ, NAT y punto de enlace en 2ª zona, con factor regional & \$67 & \$67 \\
     \bottomrule
@@ -4041,7 +3783,7 @@ muestra aparte: \$67 al mes con el factor regional.
     R3 Mensajería & El canal por defecto de todo aviso es el correo verificado de la cuenta (Amazon SES, costo marginal). Twilio se usa solo para avisos con efecto jurídico (acuse de consentimiento, respuestas ARCO, bloqueo y supresión, incidentes), con dos mensajes por evento en la base y tres en la ruta crítica, al 60 / 90~\% de pacientes que aceptan la casilla de avisos. WhatsApp con plantillas de utilidad es el canal; el SMS cubre al 10 / 20~\% que no tiene WhatsApp. Las citas se notifican dentro de la aplicación. Ningún factor de autenticación viaja por SMS. \\
     R4 Disponibilidad & Ambos escenarios usan RDS en una zona con respaldo continuo. Multi-AZ, NAT y punto de enlace en segunda zona son una opción de servicio que se cotiza aparte (\$67 al mes). \\
     R5 Salida a internet & Las funciones dentro de la VPC salen a Amazon SES, Twilio y Mercado Pago por NAT Gateway; se estima que el 10~\% del tráfico de la API cruza el NAT. S3 se alcanza por punto de enlace de gateway (sin costo) y KMS por interfaz. \\
-    R6 Auditoría & Database Activity Streams publica en un fragmento aprovisionado de Kinesis; CloudTrail registra un evento de datos por solicitud además del trail de administración gratuito. \\
+    R6 Auditoría & pgAudit (\texttt{pgaudit.log = 'read, write, ddl'}, sin registrar parámetros) publica en CloudWatch Logs 2~KB por solicitud a la API, y una tarea periódica lo exporta a S3; CloudTrail registra un evento de datos por solicitud además del trail de administración gratuito. \\
     R7 Identidad & Cognito Essentials: 10,000 usuarios activos mensuales sin costo; el MVP no los alcanza en ningún escenario. \\
     R8 Dominio & .com en Route 53 en la base; .com y .mx en la ruta crítica. Precio anual, variable por registrador, prorrateado a doce meses. \\
     R9 Cobros & La comisión de Mercado Pago es costo variable sobre el ingreso (Tabla~\ref{tab:ingresos}), no infraestructura. \\
@@ -4147,7 +3889,7 @@ improbable pero desproporcionado.
 \section{Conclusiones}
 % ═══════════════════════════════════════════════════════════════════════════
 
-\subsection{Comprobación de hipótesis}
+\subsection{Hallazgos frente a las preguntas guía}
 \mbox{}
 % Texto aquí
 
@@ -4178,7 +3920,7 @@ sanitario de una operación real (sección~4.4.3); y la portabilidad o
 exportación estructurada del expediente, prevista en la NOM-024
 (numeral~6.6.6) y reconocida en Brasil y Alemania (secciones~2.2.1
 y~2.2.5), que este trabajo dejó fuera del MVP.
-% Limitaciones de campo: se completan después de los grupos focales
+% Limitaciones de campo: se completan después del grupo focal
 % (octubre de 2026).
  
 \subsubsection{Trabajo posterior: comercialización y formación institucional}
@@ -4251,8 +3993,8 @@ el sistema.
 regala el producto al estudiante (Avena, Nutrium, NutriAdmin) y vende a
 la institución, cuando vende, cuentas de administración (Nutrimind).
 NutriApp separa el uso de la plataforma, que cuesta poco servir, de lo
-que la prueba piloto explora y ninguna plataforma ofrece: que el
-cumplimiento de la LFPDPPP se enseña con práctica. Si el producto
+que ninguna plataforma ofrece: enseñar el cumplimiento de la LFPDPPP
+con práctica sobre expedientes ficticios. Si el producto
 saliera al mercado, se propone ofrecer a la universidad un convenio con
 tres paquetes por semestre (Tabla~\ref{tab:universidad}). El paquete
 \textit{Aula} da cuentas Students a todos los alumnos del programa,
@@ -4333,7 +4075,7 @@ complemento de alta adopción y costo marginal cero, no como fuente
 principal de ingreso. Con 20~\% de los 500 nutriólogos pagantes, aporta
 \$9,900~MXN al mes.
 
-El servicio se diseña con cuatro reglas que evitan que la exposición
+El servicio se diseña con tres reglas que evitan que la exposición
 pagada distorsione la confianza del paciente, porque la ley y el diseño
 de este trabajo lo exigen. Primera: las posiciones pagadas se marcan
 «Patrocinado», a lo sumo dos de los cinco primeros resultados, y el
@@ -4352,9 +4094,7 @@ enlace a la consulta pública de cédulas; los servicios
 que un profesional presta de forma individual no requieren permiso
 publicitario (Reglamento de la Ley General de Salud en Materia de
 Publicidad, 2000, art.~79, fracc.~I), pero la ficha no admite promesas de
-resultados ni afirmaciones sobre tratamientos. Cuarta: cuando varios 
-destacados coinciden en una búsqueda, rotan de forma equitativa; pagar
-más no compra un lugar fijo.
+resultados ni afirmaciones sobre tratamientos.
 
 \textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
 cierra el cálculo con los ingresos de los planes del MVP y los impuestos
@@ -4376,8 +4116,8 @@ ingreso neto del MVP, unos \$111,000~MXN al mes, la tasa aplicable es
 2.0~\%.
 La tabla muestra los dos regímenes en los dos escenarios: RESICO en la
 base y persona moral con alta disponibilidad en la ruta crítica. El IVA
-que AWS factura desde 2026 a través de su entidad mexicana (Amazon Web
-Services, s.f.-h) y el de Mercado Pago son acreditables contra el IVA
+que AWS factura desde 2026 a través de su entidad mexicana (AWS,
+s.f.-h) y el de Mercado Pago son acreditables contra el IVA
 trasladado. No hay participación de utilidades porque el MVP no tiene
 empleados. Estos cálculos son una estimación para dimensionar el caso,
 no asesoría fiscal; los supuestos están en la hoja de cálculo y se
@@ -4399,16 +4139,16 @@ revisan con un contador antes de operar.
     IVA trasladado (16~\%, incluido en el precio) & (\$986) & (\$986) \\
     Ingreso neto de IVA & \$6,159 & \$6,159 \\
     Comisión de Mercado Pago & (\$360) & (\$360) \\
-    Infraestructura y mensajería (Tabla~\ref{tab:costos}) & (\$164) & (\$318) \\
+    Infraestructura y mensajería (Tabla~\ref{tab:costos}) & (\$141) & (\$298) \\
     Alta disponibilidad (opción) & --- & (\$67) \\
-    Utilidad operativa (sin sueldos) & \$5,635 & \$5,414 \\
+    Utilidad operativa (sin sueldos) & \$5,658 & \$5,434 \\
     Amortización de la inversión inicial a 36 meses (mín. / máx.) & (\$468) & (\$846) \\
-    Utilidad antes de ISR & \$5,167 & \$4,568 \\
-    ISR (RESICO 2.0~\% del ingreso / persona moral 30~\% de la utilidad) & (\$123) & (\$1,370) \\
-    \textbf{Utilidad neta mensual} & \textbf{\$5,044} & \textbf{\$3,198} \\
-    Utilidad neta anual & \$60,530 & \$38,370 \\
+    Utilidad antes de ISR & \$5,190 & \$4,588 \\
+    ISR (RESICO 2.0~\% del ingreso / persona moral 30~\% de la utilidad) & (\$123) & (\$1,376) \\
+    \textbf{Utilidad neta mensual} & \textbf{\$5,067} & \textbf{\$3,212} \\
+    Utilidad neta anual & \$60,800 & \$38,540 \\
     Margen neto sobre ingreso bruto & 71~\% & 45~\% \\
-    Meses para recuperar la inversión inicial (sin amortizar) & 3.1 & 7.5 \\
+    Meses para recuperar la inversión inicial (sin amortizar) & 3.0 & 7.5 \\
     \bottomrule
   \end{tabularx}
   \begin{flushleft}
@@ -4462,33 +4202,54 @@ revisan con un contador antes de operar.
   % Cap. 2 (secc. 2.5.4): los eventos de datos no se registran por
   % defecto; deben configurarse (AWS, s.f.-d).
  
-\item Amazon Web Services. (s.f.-e). \textit{Monitoring Amazon RDS
-  with Database Activity Streams}. Amazon Relational Database
-  Service User Guide.
-  \url{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/DBActivityStreams.html}
+\item Amazon Web Services. (s.f.-e). \textit{Using pgAudit to log
+  database activity}. Amazon Relational Database Service User Guide.
+  \url{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pgaudit.html}
  
-  % Cap. 2 (secc. 2.5.4): auditoría de la actividad SQL de la base
-  % de datos (AWS, s.f.-e).
+  % Cap. 2 (secc. 2.5.4) y cap. 5: auditoría de la actividad SQL con
+  % pgAudit (AWS, s.f.-e).
 
 \item Amazon Web Services. (s.f.-f). \textit{AWS Pricing}. Amazon Web
   Services. \url{https://aws.amazon.com/pricing/}
  
   % Cap. 7 (secc. 7.3): precios de lista de los servicios de la
-  % Tabla de costos (Amazon Web Services, s.f.-f).
+   % Tabla de costos (AWS, s.f.-f).
  
 \item Amazon Web Services. (s.f.-g). \textit{AWS service quotas}. AWS General Reference. \url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
  
   % Cap. 7 (secc. 7.3, modelo de carga): mil ejecuciones simultáneas
   % de Lambda por cuenta y 2,500 solicitudes por segundo en API
   % Gateway para mx-central-1; conexiones de RDS según la clase de
-  % instancia (Amazon Web Services, s.f.-g).
+   % instancia (AWS, s.f.-g).
  
 \item Amazon Web Services. (s.f.-h). \textit{Tax help: Mexico}. Amazon
   Web Services. \url{https://aws.amazon.com/tax-help/mexico/}
  
   % Cap. 7 (secc. 7.3): AWS factura a clientes en México a través de
-  % Amazon Web Services México y traslada el IVA desde 2026 (Amazon
-  % Web Services, s.f.-h).
+   % Amazon Web Services México y traslada el IVA desde 2026 (AWS,
+  % s.f.-h).
+ 
+\item Amazon Web Services. (s.f.-i). \textit{Exporting log data to
+  Amazon S3}. Amazon CloudWatch Logs User Guide.
+  \url{https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3Export.html}
+
+  % Cap. 5 (secc. 5.2, parte d): exportación por tareas de CloudWatch
+  % Logs a S3 con Object Lock y sus limitaciones (AWS, s.f.-i).
+ 
+\item Amazon Web Services. (s.f.-j). \textit{Lambda proxy integrations
+  in API Gateway}. Amazon API Gateway Developer Guide.
+  \url{https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html}
+ 
+  % Cap. 5 (secc. 5.1 y 5.2, parte b): API Gateway invoca Lambda con
+  % integración proxy, sin balanceador intermedio (AWS, s.f.-j).
+ 
+\item Amazon Web Services. (s.f.-k). \textit{Calling AWS services and
+  prices using the AWS Price List}. AWS Billing and Cost Management
+  User Guide.
+  \url{https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-changes.html}
+ 
+  % Cap. 7 (secc. 7.3): archivos de precios en JSON y CSV por servicio
+  % y región, incluida mx-central-1 (AWS, s.f.-k).
 
 \item Amazon Web Services. (2023a). \textit{Shared responsibility
   model}. Amazon Web Services.
@@ -4826,10 +4587,9 @@ revisan con un contador antes de operar.
   Baptista-Lucio, P. (2014). \textit{Metodología de la
   investigación} (6a~ed.). McGraw-Hill.
 
-  % Cap. 5: recomendaciones para encuestas de actitudes y
-  % conocimientos: preguntas cerradas de opción múltiple para
-  % variables categóricas y escala Likert de cinco puntos para
-  % variables de actitud (p.~217).
+   % Cap. 4 (secc. 4.3): grupos de enfoque como técnica cualitativa;
+  % de seis a diez participantes en temas cotidianos, según Creswell
+  % (2005), citado en la p.~409 (verificar la página en el impreso).
 
 \item Hevner, A. R., March, S. T., Park, J., y Ram, S. (2004).
   Design science in information systems research.
@@ -5881,15 +5641,11 @@ retiraron del texto.
     herramienta anterior y auditoría de inconsistencias contra el
     manuscrito; generación de los diagramas de ingeniería del capítulo
     cinco y de las maquetas compuestas del capítulo seis a partir de
-    especificaciones derivadas del texto.
-    % CONFIRMAR (Emanuel): alcance exacto de Grok en diagramas y maquetas.
-  \item Figma Make: construcción de las maquetas navegables descritas
-    en los capítulos cuatro y seis a partir de los requerimientos del
-    capítulo seis.
-  \item Gemini (Google): notas de alineación entre el estudio de
-    mercado y el documento.
-    % CONFIRMAR (Emanuel): conservar o quitar; ajustar versiones y
-    % fechas de uso si la institución lo pide.
+    especificaciones derivadas del texto manuscrito; generación del código de dibujo de los diagramas de
+    ingeniería del capítulo cinco y de la maquetación de las maquetas
+    compuestas del capítulo seis, a partir de especificaciones derivadas
+    del texto. El diseño, el contenido y la validación de los diagramas y
+    las maquetas son del autor, que revisó cada versión.
 \end{itemize}
  
 Las dos primeras herramientas se usaron en contraste: cada cambio
