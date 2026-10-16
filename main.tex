@@ -1943,11 +1943,13 @@ expediente pasa a estado de bloqueo: deja de ser accesible en la
 operación diaria, sigue cifrado en RDS sin operación de borrado
 disponible y sus adjuntos siguen bajo la retención inmutable de
 Object Lock. El fin del bloqueo (\texttt{bloqueo\_hasta}) lo fija el
-nutriólogo conforme al plazo de prescripción aplicable, y la
-plantilla de respuesta al titular incluye ese periodo. Los datos que
-no forman parte del expediente clínico, como la cuenta, los datos de
-contacto y las preferencias de notificación, se suprimen de
-inmediato.
+nutriólogo conforme al plazo de prescripción aplicable. La respuesta
+al titular llega con folio e incluye ese periodo y la fecha prevista
+de supresión. Una vez enviada, se suprimen los datos que no forman
+parte del expediente clínico, como la cuenta, los datos de contacto
+y las preferencias de notificación, salvo que el titular tenga otro
+expediente activo en la plataforma; en ese caso solo se le desvincula
+del nutriólogo que resolvió.
  
 Al vencer la conservación mínima o el periodo de bloqueo, una
 función programada avisa al nutriólogo, que como responsable
@@ -2024,8 +2026,9 @@ participantes hacen del diseño se reporta en el capítulo siete.
 \subsection{Hábitos digitales del nutriólogo en México}
 % ────────────────────────────────────────────────────────────────────────────
 
-La práctica de la nutrición en México es, en su mayoría, una
-actividad independiente y poco supervisada desde el punto de vista
+Este caso parte de una premisa que el grupo focal contrasta: buena parte
+de la práctica de la nutrición en México es una actividad independiente
+y poco supervisada desde el punto de vista
 tecnológico. A diferencia de los hospitales y clínicas institucionales,
 que operan con sistemas de información médica sujetos a protocolos
 internos, el nutriólogo de consulta privada toma sus propias
@@ -2033,98 +2036,166 @@ decisiones sobre cómo registra, almacena y comparte la información
 de sus pacientes. Esas decisiones rara vez están informadas por el
 marco legal que las regula.
 
-El resultado es un ecosistema heterogéneo de herramientas que va
+El resultado esperable es un ecosistema heterogéneo de herramientas que va
 desde hojas de cálculo sin contraseña hasta aplicaciones móviles
 de uso general, pasando por notas en papel y archivos compartidos
-por WhatsApp. Ninguna  de estas opciones  está diseñada para satisfacer los tres requerimientos técnicos que la NOM-024-SSA3-2012 establece para cualquier
-sistema de expediente clínico electrónico: cifrado de la información,
-autenticación de usuarios mediante credenciales verificables, y trazabilidad
-de todos los accesos y modificaciones al expediente
-(NOM-024-SSA3-2012, 2012). Tampoco cumplen la obligación de trazabilidad
-del artículo~57 del Reglamento de la LFPDPPP (RLFPDPPP, 2011, art.~57).
+por WhatsApp. Ninguna de estas opciones ofrece lo que la
+NOM-024-SSA3-2012 pide cuando el profesional adopta un sistema de
+registro electrónico: credenciales propias por usuario, permisos por
+perfil y trazabilidad de accesos y modificaciones (NOM-024-SSA3-2012,
+2012, numerales~6.6.1, 6.6.3 y~6.6.4). Tampoco dejan registro de quién
+consultó qué expediente y cuándo, una medida de trazabilidad que el
+Reglamento prevé para el responsable (RLFPDPPP, 2011, art.~48,
+fracc.~X), cuyas medidas de seguridad se exigen con independencia del
+sistema de tratamiento (RLFPDPPP, 2011, art.~57).
 Y sin embargo, en ellas reposa la información más sensible que un
 paciente puede confiar a un profesionista: su peso, su historial
 clínico, sus diagnósticos, sus hábitos alimenticios y, en muchos
 casos, condiciones de salud que no comparte con nadie más.
 
-Este patrón no es producto de negligencia individual. Es el resultado
-predecible de una combinación de factores que este caso de estudio
-busca documentar con evidencia: planes de estudio que no incluyen
-formación jurídica ni tecnológica obligatoria, una ley que establece
+Este patrón resulta de una combinación de factores que este caso de
+estudio busca documentar con evidencia: planes de estudio a los que
+ninguna norma de educación superior obliga a incluir la protección de
+datos personales, una ley que establece
 obligaciones sin traducirlas en requerimientos operativos para el
-gremio, y una autoridad reguladora cuyos procedimientos
-sancionadores se concentraron históricamente en los sectores
-financiero y de telecomunicaciones: el sector salud alcanzó el
-segundo lugar en multas recién en el primer semestre de 2023, con
-el 35.28\,\% del total impuesto en ese período (INAI, 2023b,
-p.~1). El nutriólogo promedio no incumple la ley porque decida
-hacerlo: la incumple porque nadie le explicó que la ley le aplicaba,
+gremio, y una autoridad, el INAI, hoy extinto, cuyas multas de 2022 se
+concentraron en otros sectores y que solo en el primer semestre de 2023
+impuso a los servicios de salud y asistencia social el 35.28\% de su
+monto, segundo lugar detrás de los servicios financieros (INAI, 2023a,
+2023b, p.~1). El nutriólogo promedio no incumple la ley porque
+decida hacerlo: el supuesto de este caso es que nadie le explicó que la
+ley le aplicaba,
 qué significa cumplirla en su práctica cotidiana y qué consecuencias
 tiene no hacerlo.
+ 
+Las normas que regulan la formación del nutriólogo piden conocer el
+marco legal en términos generales. Las universidades autónomas
+determinan sus propios planes y programas (Ley General de Educación
+Superior [LGES], 2021, art.~2). Para reconocer la validez oficial de
+los estudios de una institución particular, la Secretaría de Educación
+Pública exige que el plan presente su estructura, como el perfil de
+egreso, el mapa curricular y el contenido temático de cada asignatura,
+sin prescribir qué temas debe incluir (Acuerdo número 17/11/17,
+2017/2024, arts.~8 y~9). En el área de la salud pide además la opinión
+técnico-académica favorable de la comisión interinstitucional que
+coordina la formación de recursos humanos para la salud (Acuerdo número
+17/11/17, 2017/2024, art.~23, fracc.~V). La guía con que esa comisión
+evalúa la Licenciatura en Nutrición pide que el egresado se comporte
+«conforme al marco legal que regula el área de la nutrición» y actúe
+conforme al código ético del nutriólogo; los datos personales solo
+aparecen en el aviso de privacidad de la propia institución para la
+modalidad en línea (Comisión Interinstitucional para la Formación de
+Recursos Humanos para la Salud [CIFRHS], 2024, criterios~2.15 y~2.16 y
+numeral~5.38.11). La Ley General de Educación sí
+incluye la protección de datos personales entre los contenidos de los
+planes, pero «de acuerdo al tipo y nivel educativo» (Ley General de
+Educación [LGE], 2019/2026, art.~30, fracc.~XV), y ninguna norma de
+educación superior la convierte en contenido obligatorio de la
+licenciatura. Cuánto de ese marco legal llega al aula lo decide cada
+institución.
+ 
+Una muestra de ocho planes públicos de licenciatura en nutrición
+permite ver qué deciden las instituciones dentro de ese margen
+(Figura~\ref{fig:planes-nutricion}). La protección de datos personales
+consta como tema de sílabo en uno de los ocho, el de la UNAM, en el
+programa de Ética Profesional (Universidad Nacional Autónoma de México
+[UNAM], 2021, p.~232). Cinco incluyen una unidad de aprendizaje
+obligatoria de TIC y tres tienen una asignatura con «Legislación» en el
+nombre; ninguno cuenta con una unidad de aprendizaje dedicada al
+expediente electrónico o a la salud digital ni menciona la LFPDPPP o la
+NOM-024 en forma literal. Aun donde el tema aparece, como en la UNAM,
+responde a una decisión del propio plan y no a un requisito de la SEP o
+de la CIFRHS.
+ 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{planes-nutricion.pdf}
+  \caption[Presencia documental de los ejes legal-privacidad y TIC en salud
+  en ocho licenciaturas públicas en nutrición]{Presencia documental de los
+  ejes legal-privacidad y TIC en salud en ocho licenciaturas públicas en
+  nutrición, según sus planes y mapas curriculares oficiales (Instituto
+  Politécnico Nacional [IPN], 2025; Universidad Autónoma de Baja
+  California [UABC], 2017; Universidad Autónoma de Nuevo León [UANL],
+  s.f.; Universidad Autónoma del Estado de Morelos [UAEM], 2024;
+  Universidad Autónoma Metropolitana [UAM], s.f.; Universidad de
+  Guadalajara [UdeG], 2014; Universidad Juárez Autónoma de Tabasco
+  [UJAT], 2018; UNAM, 2021),
+  consultados el 30 de septiembre de 2026; los de la UNAM y el IPN se
+  recotejaron el 8 de octubre de 2026. UA: unidad de aprendizaje
+  (asignatura). «No consta» significa que el tema no aparece en el
+  documento revisado; el contenido impartido en el aula no se revisó. En
+  el IPN se revisó el mapa curricular oficial del plan 2025, que no
+  incluye una UA de TIC. La muestra tiene fines ilustrativos.}
+  \label{fig:planes-nutricion}
+\end{figure}
 
 El diagnóstico parte de ese supuesto. Si el desconocimiento es el
 problema central, preguntar a un nutriólogo si conoce la ley produce
 respuestas defensivas y poco representativas de su práctica. Por eso
 los instrumentos preguntan qué se hace: qué herramienta se usa, si se
 entrega aviso de privacidad, si se pide consentimiento firmado, qué se
-haría ante un incidente de seguridad. El pre-registro, anónimo y
-contestado antes de la sesión, recoge esa práctica sin la presión del
-grupo; la discusión entre colegas permite después contrastar lo que
-cada participante declara con lo que describe de su consulta.
+haría ante un incidente de seguridad. El cuestionario previo, contestado
+antes de la sesión, recoge esa práctica sin la presión del grupo, y sus
+respuestas se manejan de forma confidencial (sección~4.5). La discusión
+entre colegas permite después contrastar lo que cada participante
+declara con lo que describe de su consulta.
  
 % ────────────────────────────────────────────────────────────────────────────
-\subsubsection{Diseño del diagnóstico}
+\subsection{Diseño del diagnóstico}
 % ────────────────────────────────────────────────────────────────────────────
  
-El diagnóstico usa la primera mitad del grupo focal descrito en la
-sección~4.3: el cuestionario de pre-registro y el primer bloque de la
-guía de discusión, ambos antes de que los participantes conozcan
-NutriApp. La segunda mitad de la sesión, con el video de inducción,
-las maquetas y la rúbrica, evalúa el diseño y se reporta en el
-capítulo siete. Separar los dos momentos evita que la maqueta
+El diagnóstico usa dos piezas del grupo focal descrito en la
+sección~4.3: el cuestionario previo, que se contesta en línea
+antes de la sesión, y los cuatro primeros bloques de la guía de discusión; las dos
+ocurren antes de que los participantes conozcan NutriApp. El resto de
+la sesión, con la presentación de las maquetas y el quinto bloque, evalúa
+el diseño y se reporta en el capítulo siete. Separar los dos momentos evita que la maqueta
 condicione lo que los participantes dicen de su práctica actual.
  
-El pre-registro da las métricas base. Además del perfil del
-participante (años de ejercicio, tipo de consulta y número aproximado
-de pacientes al mes), registra en qué herramienta lleva el expediente
-y si su acceso está protegido, si entrega aviso de privacidad, si
-obtiene consentimiento por escrito para datos de salud, si ha recibido
-solicitudes de acceso o eliminación y si tiene un procedimiento ante
-un incidente de seguridad. Cada pregunta corresponde a una
-obligación de las Tablas~\ref{tab:trazabilidad-1}
+El cuestionario previo da las métricas base. Además del perfil del
+participante (ámbito de ejercicio, años de práctica con pacientes, tipo
+de consulta y número aproximado de pacientes al mes), registra la
+herramienta principal del expediente, si sabe qué datos de sus pacientes
+guarda y en qué lugares, si entrega algún aviso sobre el
+uso de los datos, el medio por el que comparte información de pacientes
+y si ha recibido solicitudes para ver, corregir o borrar sus datos.
+Cada pregunta sobre la práctica corresponde a una
+obligación de las Tablas ~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}. Con seis a ocho participantes, los
 resultados se reportan como conteos, es decir, cuántos de ellos
 cumplen cada obligación, y no como porcentajes ni promedios
 generalizables.
  
-El primer bloque de la guía recorre tres temas. El primero es el aviso
-de privacidad, que el responsable pone a disposición del titular antes
-del tratamiento (LFPDPPP, 2025, arts.~14 y~15). El segundo es el
-consentimiento expreso y por escrito para datos de salud (LFPDPPP,
-2025, art.~8), que en la práctica suele confundirse con el
-consentimiento del paciente para los procedimientos clínicos (LGS,
-1984/2024, art.~51~Bis~2°), aunque son obligaciones distintas. El
-tercero reúne los derechos ARCO, con el plazo de veinte días para
+cómo se registra y se organiza la información del paciente en el
+expediente clínico y cuánto tiempo se conserva; el aviso de privacidad,
+que el responsable pone a disposición del titular antes del tratamiento
+(LFPDPPP, 2025, arts.~14 y~15), y el consentimiento expreso y por
+escrito para datos de salud (LFPDPPP, 2025, art.~8), que en la práctica
+suele confundirse con el consentimiento del paciente para los
+procedimientos clínicos (LGS, 1984/2026, art.~51~Bis~2°), aunque son
+obligaciones distintas; cómo se almacenan y se comparten los datos de
+salud, ligados a las medidas de seguridad, incluido el aviso al titular
+cuando una vulneración afecta de forma significativa sus derechos
+(LFPDPPP, 2025, art.~19), y las solicitudes de los pacientes sobre sus
+datos, es decir, los derechos ARCO, con el plazo de veinte días para
 responder (LFPDPPP, 2025, art.~31) y la tensión entre la cancelación y
 la conservación del expediente durante cinco años
-(NOM-004-SSA3-2012, 2012, numeral~5.4), y las medidas de seguridad,
-incluido el aviso al titular cuando una vulneración afecta de forma
-significativa sus derechos (LFPDPPP, 2025, art.~19). En cada tema se
-recoge la práctica reportada, las razones que los participantes dan
-para ella y los obstáculos que encuentran para cumplir.
+(NOM-004-SSA3-2012, 2012, numeral~5.4). En cada bloque se recogen la
+práctica reportada, las razones que los participantes dan para ella y
+los obstáculos que encuentran para cumplir.
  
 El análisis sigue el procedimiento de la sección~4.3.5: los conteos del
-pre-registro se contrastan con lo que los participantes describen en
+cuestionario previo se contrastan con lo que los participantes describen en
 la discusión, y ambos se cruzan con las obligaciones de las tablas de
 trazabilidad. El resultado es la lista de obligaciones presentes y
 ausentes en la práctica reportada, con las razones y los obstáculos
 que la explican. Esa lista es la línea base contra la que el capítulo
 siete valora el diseño.
  
-\subsubsection{Resultados del diagnóstico}
-% NOTA: se completa tras la sesión del grupo focal (octubre de 2026)
-% con el pre-registro (conteos), la transcripción codificada y el
-% informe de consensos del facilitador. Sin porcentajes: n = 6 a 8.
+\subsection{Resultados del diagnóstico}
+% NOTA: se completa tras la sesión del grupo focal (23-oct-2026, en línea)
+% con el cuestionario previo (conteos), la transcripción anonimizada y el
+% resumen ejecutivo del facilitador externo. Sin porcentajes: n = 6 a 8.
 % Orden: el de los temas de la guía y de las tablas de trazabilidad.
  
 \paragraph{Perfil de los participantes}
@@ -2148,12 +2219,12 @@ siete valora el diseño.
 \paragraph{Obligaciones presentes y ausentes en la práctica reportada}
 \mbox{}
 % Tabla: obligación (Tablas de trazabilidad) | participantes que la
-% cumplen según el pre-registro | lo que describen en la discusión.
+% cumplen según el cuestionario previo | lo que describen en la discusión.
  
 % ============================================================
-% CAPÍTULO 4 — METODOLOGÍA (grupo focal con expertos, 13-oct-2026)
-% Parámetros de campo: una sesión presencial de 60 min con 6 a 8
-% nutriólogos con consulta, octubre de 2026, facilitador externo.
+% CAPÍTULO 4 — METODOLOGÍA (grupo focal con expertos)
+% Parámetros de campo: una sesión en línea de 60 min con 6 a 8
+% nutriólogos con consulta, 23-oct-2026, facilitador externo.
 % Sin entradas bibliográficas nuevas.
 % ============================================================
 \section{Metodología}
@@ -2184,19 +2255,19 @@ effectively and efficiently accomplished'' (p.~76).
  
 El proceso sigue las seis actividades que Peffers et al. (2007) proponen
 para este tipo de investigación. La identificación del problema y la
-definición de objetivos ocupan los capítulos uno y tres; el capítulo
+definición de objetivos ocupan los capítulos uno a tres; el capítulo
 cinco desarrolla el artefacto. La demostración, que en Peffers et al.
 consiste en mostrar que el artefacto resuelve una instancia del
 problema, se hace en el capítulo seis con maquetas navegables de la
-interfaz, un video de inducción y una prueba piloto con el grupo
-focal. El capítulo siete evalúa por tres vías: casos de prueba de
-aceptación ejecutados sobre las maquetas, revisión de la propuesta por
-nutriólogos con práctica clínica y contraste entre las prácticas reportadas por
-los participantes y la cobertura de obligaciones del artefacto. Este
+interfaz y una prueba piloto con el grupo
+focal. El capítulo siete evalúa con los tres métodos de la
+sección~4.4.2: casos de prueba de aceptación ejecutados sobre las
+maquetas, revisión por expertos en el quinto bloque de la guía de discusión y observación de lo que
+los participantes dicen y hacen frente a ellas. Este
 documento constituye la comunicación. El ciclo no incluye la
 implementación del sistema ni su evaluación en operación, porque el
 alcance termina en el diseño; el capítulo ocho propone la ruta para
-quien la continúe.
+quien continúe el trabajo.
  
 La estrategia de caso de estudio se adopta porque el contexto es
 relevante para el fenómeno y los límites entre uno y otro no son
@@ -2230,8 +2301,8 @@ fue desplegada ni probada.
 \subsubsection{Criterios de selección del marco legal}
  
 El marco normativo del capítulo dos se construyó con fuentes primarias
-(la LFPDPPP de 2025 y su Reglamento, los lineamientos del INAI, la
-NOM-004-SSA3-2012 y la NOM-024-SSA3-2012) y con fuentes secundarias:
+(la LFPDPPP de 2025, el Reglamento de 2011, la Ley General de Salud,
+la NOM-004-SSA3-2012 y la NOM-024-SSA3-2012) y con fuentes secundarias:
 literatura académica y documentación técnica de los estándares
 internacionales. Las jurisdicciones comparadas se seleccionaron con
 cuatro criterios: relevancia regional, madurez normativa, contraste
