@@ -147,21 +147,28 @@
 %  PORTADA
 % ═══════════════════════════════════════════════════════════════════════════
 \title{
-  \large Instituto Tecnológico y de Estudios Superiores de Occidente\\[1em]
+  \large Instituto Tecnológico y de Estudios Superiores de Occidente\\[0.3em]
+  \footnotesize Reconocimiento de validez oficial de estudios de nivel
+  superior según acuerdo secretarial 15018, publicado en el Diario
+  Oficial de la Federación el 29 de noviembre de 1976.\\[1em]
   \includegraphics[width=0.6\textwidth]{logo-iteso-fondoAzul.png}\\[1em]
+  \normalsize Departamento de Electrónica, Sistemas e Informática\\[0.2em]
+  Maestría en Informática Aplicada\\[0.8em]
   \rule{\linewidth}{0.5pt}\\[0.8em]
   \LARGE \textbf{Caso de Estudio}\\[0.4em]
   \Large Privacidad por Diseño en la Práctica Nutriológica:\\
   Análisis Normativo y Arquitectura para el Cumplimiento de la LFPDPPP\\[0.8em]
-  \rule{\linewidth}{0.5pt}
+  \rule{\linewidth}{0.5pt}\\[0.8em]
+  \normalsize Caso de estudio. Trabajo recepcional para obtener el grado de\\[0.2em]
+  \textbf{Maestro en Informática Aplicada}
 }
 \author{
-  \textbf{Alumno:} Cristian Emanuel Ortega Camarena \\[0.5em]
-  \textbf{Matrícula:} 0000000 \\[0.5em]
-  \textbf{Tutor:} NOMBRE \\[0.5em]
-  \textbf{Coordinador:} NOMBRE
+  \textbf{Alumno:} Ing. Cristian Emanuel Ortega Camarena \\[0.5em]
+  \textbf{Matrícula:} 743622 \\[0.5em]
+  \textbf{Tutor:} Dr. Carlos Alberto Franco Reboreda  \\[0.5em]
+  \textbf{Coordinador:} Dr. Humberto Perez Ortiz
 }
-\date{Enero 2026}
+\date{San Pedro Tlaquepaque, Jalisco. Noviembre de 2026}
 
 % ═══════════════════════════════════════════════════════════════════════════
 \begin{document}
@@ -169,6 +176,28 @@
 
 \maketitle
 \thispagestyle{empty}
+\newpage
+ 
+\section*{Declaración de originalidad}
+\thispagestyle{empty}
+ 
+Declaro que este caso de estudio es producto de mi trabajo y que no lo
+he presentado antes para obtener un grado académico. Las ideas, los
+datos y los textos de otros autores se citan en el cuerpo del documento
+y se incluyen en las referencias conforme al estilo APA, 7.ª edición.
+El análisis normativo, el diseño de NutriApp, las decisiones
+metodológicas y la interpretación de los resultados son de mi autoría.
+El uso de herramientas de inteligencia artificial como apoyo en la
+redacción, la revisión y la elaboración de figuras, y la forma en que
+conservé la dirección del trabajo, se describen en el
+Anexo~\ref{anexo:ia}.
+ 
+\vspace{2.5cm}
+\begin{center}
+  \rule{7cm}{0.4pt}\\[0.3em]
+  Ing. Cristian Emanuel Ortega Camarena\\[0.2em]
+  San Pedro Tlaquepaque, Jalisco, noviembre de 2026
+\end{center}
 \newpage
 
 \tableofcontents
@@ -369,9 +398,10 @@ obligaciones que la ley asigna al profesional como responsable.
     práctica clínica, qué obligaciones están presentes y cuáles
     ausentes en su práctica reportada, y las razones y los obstáculos
     que la explican.
-  \item Diseñar la arquitectura de servicios en AWS, los diagramas de
-    ingeniería y el modelo de datos de NutriApp, y demostrar el
-    producto mínimo viable con maquetas navegables.
+  \item Diseñar la arquitectura de servicios en Amazon Web Services
+    (AWS), los diagramas de ingeniería y el modelo de datos de
+    NutriApp, y demostrar el producto mínimo viable con maquetas
+    navegables.
   \item Evaluar el diseño con casos de prueba de aceptación, la
     revisión por expertos de los participantes del grupo focal y la
     observación en el caso, y verificar que cada obligación de la
@@ -564,7 +594,7 @@ internacionales y necesidades internas}
 \begin{enumerate}[label=\Roman*.]
  
   \item \textbf{1994:} México ingresó a la Organización para la
-  Cooperación y el Desarrollo Económicos el 18 de mayo (Decreto de
+  Cooperación y el Desarrollo Económicos (OCDE) el 18 de mayo (Decreto de
   Promulgación de la Declaración del Gobierno de los Estados Unidos
   Mexicanos sobre la aceptación de sus obligaciones como Miembro de la
   Organización de Cooperación y Desarrollo Económicos, 1994). Desde
@@ -651,10 +681,10 @@ rectores}
   obligado desde que anota el primer dato. Existe además un segundo
   ordenamiento, la Ley General de Protección de Datos Personales en
   Posesión de Sujetos Obligados (LGPDPPSO, 2025), que solo se aplica
-  al sector gubernamental. Los organismos estatales de
-  transparencia, como el ITEI en Jalisco, vigilan el acceso a
-  información pública; el manejo de datos por profesionistas
-  privados queda fuera de su competencia.
+  al sector gubernamental. Las autoridades estatales en materia de
+  transparencia y datos personales vigilan al sector público de su
+  entidad; el manejo de datos por profesionistas privados queda
+  fuera de su competencia.
  
   \item La ley distingue entre datos personales ordinarios y datos
   personales sensibles. Los primeros son \textit{``cualquier
@@ -1333,8 +1363,8 @@ por encima de cada uno.
       (business associates) (HITECH Act, 2009, \S~13401). La
       propuesta NPRM 2025 plantea eliminar la distinción entre
       controles exigidos y direccionables, con lo que el
-      cifrado y la MFA pasarían a ser obligatorios (HHS,
-      2025).
+      cifrado y la autenticación multifactor pasarían a ser
+      obligatorios (HHS, 2025).
     & PDSG + SGB~V \S~393 (Digitalgesetz 2024). Datos de
       salud en nube solo en UE/EEE o país con decisión de
       adecuación. Atestación (\textit{Testat}) C5~BSI para
@@ -2138,8 +2168,8 @@ niega la cancelación del expediente por la conservación mínima, la
 respuesta lo indica con su fundamento y el expediente sigue en
 operación hasta que vence ese plazo. Si la cancelación procede, el
 expediente pasa a estado de bloqueo: deja de ser accesible en la
-operación diaria, sigue cifrado en RDS sin operación de borrado
-disponible y sus adjuntos siguen bajo la retención inmutable de
+que tiene o algo que es. El National Institute of Standards and
+Technology (NIST) de Estados Unidos define el nivel de aseguramiento disponible y sus adjuntos siguen bajo la retención inmutable de
 Object Lock. El fin del bloqueo (\texttt{bloqueo\_hasta}) lo fija el
 nutriólogo conforme al plazo de prescripción aplicable. La respuesta
 al titular llega con folio e incluye ese periodo y la fecha prevista
@@ -2271,7 +2301,7 @@ marco legal en términos generales. Las universidades autónomas
 determinan sus propios planes y programas (Ley General de Educación
 Superior [LGES], 2021, art.~2). Para reconocer la validez oficial de
 los estudios de una institución particular, la Secretaría de Educación
-Pública exige que el plan presente su estructura, como el perfil de
+Pública (SEP) exige que el plan presente su estructura, como el perfil de
 egreso, el mapa curricular y el contenido temático de cada asignatura,
 sin prescribir qué temas debe incluir (Acuerdo número 17/11/17,
 2017/2024, arts.~8 y~9). En el área de la salud pide además la opinión
@@ -2298,8 +2328,8 @@ permite ver qué deciden las instituciones dentro de ese margen
 consta como tema de sílabo en uno de los ocho, el de la UNAM, en el
 programa de Ética Profesional (Universidad Nacional Autónoma de México
 [UNAM], 2021, p.~232). Cinco incluyen una unidad de aprendizaje
-obligatoria de TIC y tres tienen una asignatura con «Legislación» en el
-nombre; ninguno cuenta con una unidad de aprendizaje dedicada al
+obligatoria de tecnologías de la información y la comunicación (TIC) y
+tres tienen una asignatura con «Legislación» en el nombre; ninguno cuenta con una unidad de aprendizaje dedicada al
 expediente electrónico o a la salud digital ni menciona la LFPDPPP o la
 NOM-024 en forma literal. Aun donde el tema aparece, como en la UNAM,
 responde a una decisión del propio plan y no a un requisito de la SEP o
@@ -2596,7 +2626,7 @@ están a cargo del autor.
  
 Los materiales del estudio de campo son tres y se aplican en este
 orden: el consentimiento informado, el cuestionario previo y la guía de
-discusión. El \textit{consentimiento informado} se recaba antes de la
+discusión. Los tres se reproducen en el Anexo~\ref{anexo:grupo-focal}. El \textit{consentimiento informado} se recaba antes de la
 sesión; con su aceptación, cada participante autoriza su intervención y
 la transcripción automática de la sesión.
  
@@ -2781,8 +2811,8 @@ pago no depende de sus respuestas. La sesión es
 confidencial; la transcripción automática se anonimiza antes de
 elaborar el resumen ejecutivo, que no identifica a los participantes;
 el audio no se graba ni se conserva. Los resultados se reportan en
-forma agregada o con citas sin atribución, y el documento incluye como
-anexo el resumen ejecutivo de la sesión.
+forma agregada o con citas sin atribución, y el
+Anexo~\ref{anexo:grupo-focal} incluye el resumen ejecutivo de la sesión.
  
 El uso de las maquetas de NutriApp en la sesión es demostrativo.
 Ningún dato real de pacientes se captura en ellas: todos los perfiles
@@ -4109,9 +4139,9 @@ existe. La Tabla~\ref{tab:inversion} estima lo que cuesta llevar el
 diseño de este trabajo a un producto en operación, sin mercadotecnia. Dos
 rubros son tarifas oficiales: la constitución de una Sociedad por
 Acciones Simplificada, que es gratuita en línea (Secretaría de Economía,
-s.f.), y el estudio de la solicitud de registro de marca ante el IMPI,
-\$2,695.18 pesos más IVA (Instituto Mexicano de la Propiedad
-Industrial, 2023). El resto son
+s.f.), y el estudio de la solicitud de registro de marca, que cuesta
+\$2,695.18 pesos más el impuesto al valor agregado, o IVA (Instituto
+Mexicano de la Propiedad Industrial [IMPI], 2023). El resto son
 estimaciones del autor con rango, y el desarrollo domina: ochocientas
 horas para convertir las maquetas en el sistema descrito en los
 capítulos cinco y seis, a tarifas de mercado de entre \$300 y \$500 pesos
@@ -4222,8 +4252,9 @@ la historia clínica y de las notas conforme a la NOM-004
 (NOM-004-SSA3-2012, 2012, numerales~5.2, 5.9 a~5.11 y~6.1); la firma
 electrónica avanzada del profesional que la NOM-024 prevé para el
 sistema (NOM-024-SSA3-2012, 2012, numeral~6.6.2); la verificación de
-la aplicación contra el estándar OWASP ASVS antes de cualquier
-despliegue (OWASP Foundation, 2025); el análisis fiscal, laboral y
+la aplicación contra el Application Security Verification Standard
+(ASVS) de OWASP antes de cualquier despliegue (OWASP Foundation,
+2025); el análisis fiscal, laboral y
 sanitario de una operación real (sección~4.4.3); y la portabilidad o
 exportación estructurada del expediente, prevista en la NOM-024
 (numeral~6.6.6) y reconocida en Brasil y Alemania (secciones~2.2.1
@@ -4755,7 +4786,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item Consejo de Europa. (1981, 28 de enero). \textit{Convenio para
   la protección de las personas con respecto al tratamiento
   automatizado de datos de carácter personal} (STE n°~108).
-  Consejo de Europa. \url{https://www.coe.int/en/web/conventions/full-list?module=treaty-detail&treatynum=108}
+  \url{https://www.coe.int/en/web/conventions/full-list?module=treaty-detail&treatynum=108}
 
   % Cap. 2 (secc. 2.2.5, tabla): instrumento del que derivó el
   % GDPR; base de la Ley 18.331 uruguaya (Consejo de Europa, 1981).
@@ -4962,7 +4993,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item Instituto Nacional de Transparencia, Acceso a la Información
   y Protección de Datos Personales. (2017, 31 de diciembre).
   \textit{Comunicado INAI/444/17: INAI impone sanción económica a
-  hospital por uso indebido de datos personales}. INAI. \url{https://inicio.inai.org.mx/Comunicados/Comunicado%20INAI-444-17.pdf}
+  hospital por uso indebido de datos personales}. \url{https://inicio.inai.org.mx/Comunicados/Comunicado%20INAI-444-17.pdf}
  
   % Cap. 2 (secc. 2.1.4): dos multas que suman 4.6 millones de pesos
   % a un hospital por negligencia al tramitar una solicitud de acceso
@@ -4971,7 +5002,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item Instituto Nacional de Transparencia, Acceso a la Información
   y Protección de Datos Personales. (2021, 17 de abril).
   \textit{Comunicado INAI/032/21: IMSS debe entregar gratuitamente
-  a titular expedientes e inconformidades en hospitales}. INAI.
+  a titular expedientes e inconformidades en hospitales}.
   \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Nota%20INAI-032-21.pdf}
 
   % Cap. 2 (secc. 2.1.4): el expediente clínico ``constituye un dato
@@ -4983,7 +5014,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
   y Protección de Datos Personales. (2023a, 8 de enero).
   \textit{Comunicado INAI/008/23: Multas impuestas en 2022 por
   infringir Ley Federal de Protección de Datos Personales en Posesión
-  de los Particulares suman más de 60 MDP: INAI}. INAI.
+  de los Particulares suman más de 60 MDP: INAI}.
   \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-008-23.pdf}
 
   % Cap. 2 (secc. 2.1.4): en 2022, multas por \$60,078,958 pesos;
@@ -4994,7 +5025,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
   y Protección de Datos Personales. (2023b, 6 de agosto).
   \textit{Comunicado INAI/230/23: Impone INAI multas por más de
   11 MDP por infringir Ley Federal de Protección de Datos Personales
-  en Posesión de los Particulares}. INAI.
+  en Posesión de los Particulares}.
   \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-230-23.pdf}
 
   % Cap. 2 (secc. 2.1.4): primer semestre 2023: multas de
@@ -5006,7 +5037,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
   y Protección de Datos Personales. (2024, 7 de enero).
   \textit{Comunicado INAI/007/24: Multas impuestas en 2023 por
   infringir Ley Federal de Protección de Datos Personales suman más
-  de 46 MDP: INAI}. INAI.
+  de 46 MDP: INAI}.
   \url{https://home.inai.org.mx/wp-content/documentos/SalaDePrensa/Comunicados/Comunicado%20INAI-007-24.pdf}
  
   % Cap. 7 (costo-beneficio): en 2023, multas por \$46,849,777 pesos;
@@ -5019,7 +5050,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
  
 \item Instituto Nacional de Transparencia, Acceso a la Información
   y Protección de Datos Personales. (2025).
-  \textit{Aviso de cierre del sitio institucional del INAI}. INAI.
+  \textit{Aviso de cierre del sitio institucional del INAI}.
   \url{https://home.inai.org.mx}
 
   % Cap. 2 (secc. 2.1.4): aviso de que el sitio ya no está vigente
@@ -5034,7 +5065,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item International Organization for Standardization. (2015).
   \textit{ISO/IEC 27017:2015 --- Information technology --- Security
   techniques --- Code of practice for information security controls
-  based on ISO/IEC 27002 for cloud services}. ISO.
+  based on ISO/IEC 27002 for cloud services}.
   \url{https://www.iso.org/standard/43757.html}
  
   % Cap. 2 (secc. 2.5.1): controles de seguridad asignados al
@@ -5052,7 +5083,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 
 \item International Organization for Standardization. (2025a).
   \textit{ISO 27799:2025 --- Health informatics --- Information
-  security controls in health based on ISO/IEC 27002}. ISO.
+  security controls in health based on ISO/IEC 27002}.
   \url{https://www.iso.org/standard/84647.html}
  
   % Cap. 2 (secc. 2.5.6): controles de ISO/IEC 27002 adaptados a
@@ -5062,7 +5093,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
   \textit{ISO/IEC 27018:2025 --- Information security, cybersecurity
   and privacy protection --- Guidelines for protection of personally
   identifiable information (PII) in public clouds acting as PII
-  processors} (3.ª ed.). ISO.
+  processors} (3.ª ed.).
   \url{https://www.iso.org/standard/88150.html}
  
   % Cap. 2 (secc. 2.5.6): sustituye a la edición 2019, retirada
@@ -5071,7 +5102,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item International Organization for Standardization. (2025c).
   \textit{ISO/IEC 27701:2025 --- Information security, cybersecurity
   and privacy protection --- Privacy information management
-  systems --- Requirements and guidance}. ISO.
+  systems --- Requirements and guidance}.
   \url{https://www.iso.org/standard/85819}
  
   % Cap. 2 (secc. 2.5.6): sistema de gestión de información de
@@ -5548,7 +5579,7 @@ Laboral. \url{https://www.observatoriolaboral.gob.mx/static/preparate-empleo/Art
   
 \item U.S. Department of Health and Human Services. (2013).
   \textit{HIPAA administrative simplification: Regulation text
-  (45 CFR Parts 160, 162 and 164)}. HHS. \url{https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/administrative/combined/hipaa-simplification-201303.pdf}
+  (45 CFR Parts 160, 162 and 164)}. \url{https://www.hhs.gov/sites/default/files/ocr/privacy/hipaa/administrative/combined/hipaa-simplification-201303.pdf}
 
   % Cap. 2 (secc. 2.2.3): HIPAA prevalece sobre normas estatales
   % que ofrezcan menor protección (HHS, 2013, 45 CFR § 160.203).
@@ -5682,346 +5713,36 @@ Laboral. \url{https://www.observatoriolaboral.gob.mx/static/preparate-empleo/Art
 % ============================================================
 % ═══════════════════════════════════════════════════════════════════════════
 \appendix
-\section{Instrumento de diagnóstico: Encuesta 1}
-\label{anexo:encuesta1}
+\section{Instrumentos y resumen del grupo focal}
+\label{anexo:grupo-focal}
 
-Esta encuesta fue diseñada como el primer instrumento de campo del
-caso de estudio. Su propósito es triple: documentar los hábitos
-digitales reales con los que los profesionistas de nutrición manejan
-datos de pacientes, evidenciar el desconocimiento de las obligaciones
-que establece la LFPDPPP desde la práctica cotidiana y no desde el
-conocimiento declarativo, y contrastar esa experiencia con la vivida
-por los mismos encuestados en su rol como pacientes. La encuesta es
-anónima, no contiene preguntas de identificación personal y fue
-diseñada para aplicarse a estudiantes de últimos semestres de la
-licenciatura en nutrición, profesionistas egresados en ejercicio
-independiente o institucional, y docentes del área.
-
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.5cm}>{\raggedright\arraybackslash}p{5.5cm}>{\raggedright\arraybackslash}p{8.5cm}}
-
-  \caption{Encuesta 1: Diagnóstico de hábitos digitales y cumplimiento
-  normativo en el sector de nutrición.}
-  \label{tab:encuesta1}\\
-
-  \toprule
-  \textbf{N°} & \textbf{Pregunta} & \textbf{Opciones de respuesta} \\
-  \midrule
-  \endfirsthead
-
-  \multicolumn{3}{l}{\small\textit{(Continúa de la página anterior)}} \\
-  \toprule
-  \textbf{N°} & \textbf{Pregunta} & \textbf{Opciones de respuesta} \\
-  \midrule
-  \endhead
-
-  \midrule
-  \multicolumn{3}{r}{\small\textit{(Continúa en la página siguiente)}} \\
-  \endfoot
-
-  \bottomrule
-  \multicolumn{3}{l}{%
-    \parbox{14.5cm}{\small\textit{Nota.} Las preguntas de opción
-    múltiple aceptan una sola respuesta. Las de selección múltiple
-    aceptan una o más. Las de escala Likert van del 1 (mínimo) al 5
-    (máximo).}}\\
-  \endlastfoot
-
-  % ── SECCIÓN: PERFIL ───────────────────────────────────────────────
-  \multicolumn{3}{l}{\textit{Sección 1: Perfil}} \\
-  \midrule
-
-  1
-    & Esta encuesta es completamente anónima. ¿Cuál describe mejor
-      tu situación actual? \newline \small\textit{(Opción múltiple)}
-    & Estudiante de nutrición (7mo--9no semestre) $\square$ \newline
-      Estudiante de nutrición (10mo semestre o servicio social) $\square$ \newline
-      Nutriólogo(a) egresado(a) en ejercicio independiente $\square$ \newline
-      Nutriólogo(a) egresado(a) en institución o clínica $\square$ \newline
-      Docente de nutrición (con o sin práctica clínica activa) $\square$ \newline
-      Otra $\square$ \\
-  \\[2pt]
-
-  2
-    & ¿Actualmente atiendes o has atendido pacientes de forma directa?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, tengo pacientes activos en este momento $\square$ \newline
-      Sí, los tuve durante prácticas o servicio social $\square$ \newline
-      Sí, en institución o clínica con supervisión $\square$ \newline
-      No, pero lo haré pronto $\square$ \newline
-      No, mi rol es principalmente docente $\square$ \newline
-      No, aún no he tenido pacientes $\square$ \\
-  \\[2pt]
-
-  3
-    & ¿Cuántos pacientes manejas o manejaste aproximadamente de forma
-      simultánea en tu punto de mayor actividad?
-      \newline \small\textit{(Opción múltiple)}
-    & Nunca he tenido pacientes $\square$ \newline
-      1 a 5 $\square$ \newline
-      6 a 15 $\square$ \newline
-      16 a 30 $\square$ \newline
-      Más de 30 $\square$ \\
-
-  % ── SECCIÓN: COMO PROFESIONISTA ───────────────────────────────────
-  \\[4pt]
-  \multicolumn{3}{l}{\textit{Sección 2: Como profesionista --- práctica real}} \\
-  \midrule
-
-  4
-    & Cuando registras datos de un paciente (nombre, edad, peso,
-      diagnóstico, historial), ¿qué herramienta usas?
-      \newline \small\textit{(Selección múltiple)}
-    & Hoja de cálculo (Excel o Google Sheets) $\square$ \newline
-      Documento de Word o Google Docs $\square$ \newline
-      Aplicación específica de nutrición (NutriSoft, Dietmaster, etc.) $\square$ \newline
-      Sistema institucional del hospital o clínica $\square$ \newline
-      Notas en papel sin respaldo digital $\square$ \newline
-      Notas del celular (iPhone Notes, Google Keep, etc.) $\square$ \newline
-      No registro nada de forma sistemática $\square$ \newline
-      Otra $\square$ \\
-  \\[2pt]
-
-  5
-    & Al iniciar con un nuevo paciente, ¿le entregas algún documento
-      donde le expliques qué datos vas a guardar de él y para qué
-      los usarás? \newline \small\textit{(Opción múltiple)}
-    & Sí, siempre entrego un aviso de privacidad por escrito $\square$ \newline
-      A veces, cuando recuerdo o el paciente lo pide $\square$ \newline
-      No, solo se lo explico verbalmente si me preguntan $\square$ \newline
-      No, nunca lo he hecho $\square$ \newline
-      No sabía que debía entregar algo así $\square$ \\
-  \\[2pt]
-
-  6
-    & ¿Pides a tus pacientes que firmen o confirmen de alguna forma
-      que aceptan que guardes y uses sus datos de salud?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, siempre tengo un documento o formato firmado específico
-      para esto $\square$ \newline
-      Sí, pero es parte del consentimiento clínico general, no uno
-      específico para datos $\square$ \newline
-      A veces, solo si el paciente lo solicita $\square$ \newline
-      No, nunca les pido que firmen nada para esto $\square$ \newline
-      No sabía que era necesario pedírselo $\square$ \\
-  \\[2pt]
-
-  7
-    & El archivo o sistema donde guardas datos de pacientes, ¿tiene
-      alguna protección de acceso específica?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, tiene contraseña o autenticación propia, separada del
-      dispositivo $\square$ \newline
-      Solo la contraseña del dispositivo (laptop o celular) $\square$ \newline
-      Está en la nube (Drive, Dropbox) con enlace compartido o
-      acceso abierto $\square$ \newline
-      No tiene ninguna protección $\square$ \newline
-      No sé si tiene o no $\square$ \newline
-      No aplica, no guardo datos digitalmente $\square$ \\
-  \\[2pt]
-
-  8
-    & ¿Compartes o has compartido ese archivo con alguien más?
-      \newline \small\textit{(Selección múltiple)}
-    & Sí, con compañeros de práctica o residentes $\square$ \newline
-      Sí, con mi tutor o supervisor $\square$ \newline
-      Sí, por WhatsApp o correo para trabajar desde otro
-      dispositivo $\square$ \newline
-      Sí, está en una carpeta compartida en la nube $\square$ \newline
-      No, solo yo tengo acceso $\square$ \newline
-      No aplica $\square$ \\
-  \\[2pt]
-
-  9
-    & Si un paciente te pidiera ver todos los datos que tienes de
-      él, ¿se los entregarías y en cuánto tiempo?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, de inmediato o al día siguiente $\square$ \newline
-      Sí, pero me tomaría varios días organizarlos $\square$ \newline
-      Se los daría solo si insiste mucho $\square$ \newline
-      Probablemente le diría que no tengo forma de dárselos
-      organizados $\square$ \newline
-      Nunca me ha pasado y no sé qué haría $\square$ \newline
-      No sabía que el paciente tenía ese derecho $\square$ \\
-  \\[2pt]
-
-  10
-    & Si un paciente te pidiera que eliminaras todos sus datos,
-      ¿lo harías? \newline \small\textit{(Opción múltiple)}
-    & Sí, los eliminaría completamente y le confirmaría por
-      escrito $\square$ \newline
-      Sí, los eliminaría pero sin ningún registro del proceso $\square$ \newline
-      Probablemente sí, aunque no sé si puedo por el expediente
-      clínico $\square$ \newline
-      No, necesito conservar el expediente por temas clínicos $\square$ \newline
-      No sabía que el paciente podía pedirme eso $\square$ \\
-  \\[2pt]
-
-  11
-    & Si mañana te robaran el dispositivo donde tienes datos de
-      pacientes o alguien accediera sin permiso a tu archivo,
-      ¿qué harías? \newline \small\textit{(Selección múltiple)}
-    & Notificaría a cada paciente afectado $\square$ \newline
-      Lo reportaría a la autoridad reguladora correspondiente $\square$ \newline
-      Cambiaría contraseñas y bloquearía accesos $\square$ \newline
-      Nada, los datos están suficientemente protegidos $\square$ \newline
-      No sabría qué hacer ni a quién reportarlo $\square$ \newline
-      No aplica, no guardo datos en dispositivos personales $\square$ \\
-
-  % ── SECCIÓN: COMO PACIENTE ────────────────────────────────────────
-  \\[4pt]
-  \multicolumn{3}{l}{\textit{Sección 3: Como paciente}} \\
-  \midrule
-
-  12
-    & Piensa en la última vez que fuiste a consulta con cualquier
-      profesionista de salud. ¿Te entregaron algún documento
-      explicando qué datos iban a guardar de ti y para qué?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, recibí un aviso de privacidad por escrito $\square$ \newline
-      Me dijeron algo verbalmente pero no me dieron nada
-      firmado $\square$ \newline
-      No, no me entregaron ni explicaron nada de eso $\square$ \newline
-      No recuerdo haber recibido algo así $\square$ \newline
-      Sí, pero era solo un formato genérico que nunca leí $\square$ \\
-  \\[2pt]
-
-  13
-    & ¿Alguna vez un profesionista de salud te pidió que firmaras
-      un documento específico para autorizar que guardara y usara
-      tus datos personales, diferente al consentimiento clínico?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, recuerdo haber firmado algo específico para eso $\square$ \newline
-      Tal vez, pero no recuerdo que fuera diferente al
-      consentimiento general $\square$ \newline
-      No, nunca me han pedido que firme algo específico para
-      mis datos $\square$ \newline
-      No, y ahora que lo pienso, me parece importante que
-      debería haberlo hecho $\square$ \\
-  \\[2pt]
-
-  14
-    & ¿Sabes dónde están guardados tus datos de salud de los
-      últimos dos años y quién tiene acceso a ellos?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, sé exactamente dónde están y quién los puede ver $\square$ \newline
-      Más o menos, imagino que en el sistema del consultorio
-      o hospital $\square$ \newline
-      No tengo idea de dónde están ni quién puede verlos $\square$ \newline
-      Nunca me lo dijeron y nunca pregunté $\square$ \newline
-      No me había puesto a pensar en eso hasta ahora $\square$ \\
-  \\[2pt]
-
-  15
-    & ¿Alguna vez has ejercido tu derecho a pedir que te muestren,
-      corrijan o eliminen datos que algún consultorio o clínica
-      tiene de ti? \newline \small\textit{(Opción múltiple)}
-    & Sí, lo hice y fue fácil $\square$ \newline
-      Sí, lo intenté pero no supe cómo o no obtuve respuesta $\square$ \newline
-      No, no sabía que tenía ese derecho $\square$ \newline
-      No, sé que tengo ese derecho pero nunca lo he
-      necesitado $\square$ \newline
-      No, y ahora que lo sé tampoco creo que lo haría $\square$ \\
-
-  % ── SECCIÓN: PERCEPCIÓN Y CONOCIMIENTO ───────────────────────────
-  \\[4pt]
-  \multicolumn{3}{l}{\textit{Sección 4: Percepción y conocimiento}} \\
-  \midrule
-
-  16
-    & ¿En tu formación académica recibiste alguna capacitación
-      formal sobre tus obligaciones legales en materia de
-      protección de datos de pacientes?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, tuve una materia obligatoria sobre esto $\square$ \newline
-      Sí, en un taller o conferencia optativa $\square$ \newline
-      El tema se mencionó brevemente en otra materia pero sin
-      profundidad $\square$ \newline
-      No, nunca se tocó en mi formación $\square$ \newline
-      Soy docente y tampoco lo incluyo en mis clases
-      actualmente $\square$ \\
-  \\[2pt]
-
-  17
-    & ¿Qué tan probable crees que es que tú, como nutriólogo(a),
-      seas sancionado(a) económicamente por no cumplir con la ley
-      de protección de datos de tus pacientes?
-      \newline \small\textit{(Escala Likert 1--5)}
-    & 1 --- Muy improbable, nadie fiscaliza eso en nutrición \newline
-      2 --- Poco probable en la práctica \newline
-      3 --- No lo sé, podría pasar \newline
-      4 --- Bastante probable si un paciente se queja
-      formalmente \newline
-      5 --- Muy probable, ya hay casos documentados en el
-      sector salud \\
-
-  % ── SECCIÓN: INTERÉS EN SOLUCIÓN ─────────────────────────────────
-  \\[4pt]
-  \multicolumn{3}{l}{\textit{Sección 5: Interés en solución}} \\
-  \midrule
-
-  18
-    & ¿Cuáles de las siguientes funcionalidades te parecerían más
-      útiles en una plataforma diseñada para nutriólogos que cumpla
-      automáticamente con la ley?
-      \newline \small\textit{(Selección múltiple)}
-    & Consentimiento digital que el paciente firma desde su
-      celular, sin papel $\square$ \newline
-      Expediente con cifrado automático --- solo tú puedes
-      acceder $\square$ \newline
-      Módulo para atender solicitudes de pacientes de ver o
-      eliminar sus datos $\square$ \newline
-      Alertas cuando estás cerca de vencer un plazo legal $\square$ \newline
-      Exportación del expediente en formato que el paciente
-      pueda llevar a otro nutriólogo $\square$ \newline
-      Panel que muestre si estás cumpliendo con la ley en
-      tiempo real $\square$ \newline
-      Guía integrada que explique en lenguaje simple qué hacer
-      en cada situación legal $\square$ \newline
-      Acceso seguro desde celular con huella o código $\square$ \\
-  \\[2pt]
-
-  19
-    & ¿Cuánto estarías dispuesto(a) a pagar mensualmente por una
-      herramienta que gestione expedientes cumpliendo con la ley
-      y que te proteja de sanciones?
-      \newline \small\textit{(Opción múltiple)}
-    & Nada, debería ser gratuita $\square$ \newline
-      Hasta \$99 pesos al mes $\square$ \newline
-      Entre \$100 y \$249 pesos al mes $\square$ \newline
-      Entre \$250 y \$499 pesos al mes $\square$ \newline
-      Más de \$500 pesos al mes $\square$ \newline
-      Dependería del número de pacientes que maneje $\square$ \\
-
-  % ── SECCIÓN: CIERRE ───────────────────────────────────────────────
-  \\[4pt]
-  \multicolumn{3}{l}{\textit{Sección 6: Cierre}} \\
-  \midrule
+\subsection{Consentimiento informado}
+\mbox{}
+% Texto que aceptaron los participantes antes de la sesión (sección
+% 4.3.2), tal como se envió.
  
-20
-    & Considerando todo lo que acabas de responder sobre cómo
-      manejas los datos de tus pacientes y cómo te han tratado
-      a ti como paciente, ¿crees que en general el sector de la
-      nutrición en México cumple con las obligaciones legales de
-      protección de datos de sus pacientes?
-      \newline \small\textit{(Opción múltiple)}
-    & Sí, creo que en general sí se cumple $\square$ \newline
-      En parte, algunos lo hacen bien pero es inconsistente $\square$ \newline
-      No, creo que en general no se cumple $\square$ \newline
-      No lo sé, no tengo información suficiente para
-      saberlo $\square$ \newline
-      Nunca me lo había planteado hasta responder esta
-      encuesta $\square$ \\
-
-\end{longtable}
+\subsection{Cuestionario previo}
+\mbox{}
+% Preguntas y opciones del formulario de Google Forms, en el orden en
+% que se aplicaron: perfil y práctica actual (sección 4.3.2).
+ 
+\subsection{Guía de discusión}
+\mbox{}
+% Los cinco bloques y sus preguntas, como los recibió el facilitador
+% (secciones 4.3.2 y 4.3.3).
+ 
+\subsection{Resumen ejecutivo de la sesión}
+\mbox{}
+% Tras el 23-oct: resumen del facilitador externo, sin transcripción
+% literal ni datos que identifiquen a los participantes (sección 4.5).
 % ═══════════════════════════════════════════════════════════════════════════
 
-\section{Capturas del prototipo y video de inducción}
+\section{Capturas del prototipo}
 \label{anexo:capturas}
 \mbox{}
-% Pendiente (tras las maquetas v4 y la producción del video): capturas
-% de las pantallas del prototipo referidas en 6.2 y 6.4, y guion y
-% duración del video de inducción (cap. 4 y 6.3). Las secciones 6.2 y
-% 6.4 ya remiten a este anexo como «Anexo B»; no cambiar su posición.
+% Pendiente (tras las maquetas v4): capturas de las pantallas del
+% prototipo referidas en 6.2 y 6.4. Las secciones 6.2 y 6.4 ya remiten
+% a este anexo como «Anexo B»; no cambiar su posición.
  
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Uso ético de la inteligencia artificial}
@@ -6062,8 +5783,6 @@ retiraron del texto.
     capítulo seis.
   \item Gemini (Google): notas de alineación entre el estudio de
     mercado y el documento.
-    % CONFIRMAR (Emanuel): conservar o quitar; ajustar versiones y
-    % fechas de uso si la institución lo pide.
 \end{itemize}
  
 Las dos primeras herramientas se usaron en contraste: cada cambio
@@ -6082,8 +5801,6 @@ de decisiones del autor a cambios concretos en el archivo \LaTeX{}; y
 (4)~generación de figuras a partir de una especificación escrita. El
 registro completo de instrucciones y respuestas se conserva en el
 archivo de trabajo del autor.
-% CONFIRMAR (Emanuel): si se añade una muestra de 10–15 instrucciones
-% literales, va aquí como lista; si no, basta la síntesis por tipo.
  
 \subsubsection*{Dirección humana y evidencia}
  
