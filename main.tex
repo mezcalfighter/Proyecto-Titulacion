@@ -175,83 +175,267 @@
 \newpage
 
 % ═══════════════════════════════════════════════════════════════════════════
-\section*{Resumen Ejecutivo  - en construcción}
+\section*{Resumen Ejecutivo}
 \addcontentsline{toc}{section}{Resumen Ejecutivo}
 % ═══════════════════════════════════════════════════════════════════════════
-
-El sector de la nutrición en México presenta un desconocimiento
-generalizado de la Ley Federal de Protección de Datos Personales en
-Posesión de los Particulares (LFPDPPP). En términos generales, la
-LFPDPPP es el marco jurídico que regula cómo debe tratarse la
-información de clientes y pacientes. Su objetivo principal es garantizar
-que cada persona tenga el poder de decidir quién posee sus datos, para
-qué se utilizan y quién puede consultarlos.
-
-Dentro de la práctica clínica cotidiana se observa que una gran cantidad
-de nutriólogos gestionan la información de sus pacientes ---clasificada
-por la ley como datos personales sensibles--- a través de herramientas de
-ofimática como hojas de cálculo. Estas herramientas generalmente carecen
-de protocolos de seguridad, cifrado y trazabilidad, por lo que no
-permiten cumplir las obligaciones técnicas y administrativas dictadas
-por la normativa vigente, exponiendo tanto al profesional como a los
-pacientes a riesgos legales y de privacidad.
-
-La LFPDPPP solicita ``medidas de seguridad'' sin especificar cuáles,
-lo que permite que un nutriólogo agregue simplemente una contraseña al
-archivo donde lleva seguimiento de sus pacientes, cuando en contraste,
-en otros países esa misma acción sería considerada una negligencia grave.
-
-En cuanto a la autorregulación, en México se asume que el licenciado en
-nutrición conoce la ley, pero no existe ninguna certificación que lo
-acredite ni ningún requisito obligatorio para las herramientas que usa
-en su día a día. En contraste, en países como Estados Unidos, si un
-software no es \textit{HIPAA Compliant}, el profesional simplemente no
-puede utilizarlo sin arriesgar su licencia.
-
-Los derechos ARCO son la vía por la cual el paciente ejerce soberanía
-sobre su información. En México, el nutriólogo tiene la obligación de
-responder estas solicitudes en no más de veinte días; sin embargo,
-los requerimientos limitados y ambiguos de la ley dificultan la
-elaboración de reportes completos y generan inconsistencias cuando la
-solicitud implica la eliminación del historial clínico.
+ 
+El nutriólogo de consulta privada trata datos personales sensibles desde
+la primera consulta, y la Ley Federal de Protección de Datos Personales
+en Posesión de los Particulares (LFPDPPP) le exige por ello un aviso de
+privacidad, el consentimiento expreso y por escrito del paciente,
+medidas de seguridad y la respuesta a los derechos ARCO en veinte días.
+La ley no precisa qué medidas bastan. Su Reglamento pide trazabilidad y
+la exige en cualquier soporte, una condición que una hoja de cálculo,
+aun con contraseña, no puede cumplir. Las multas pueden llegar a
+72.4~millones de pesos cuando hay datos de salud,
+la autoridad pasó en 2025 del INAI a la Secretaría Anticorrupción y Buen
+Gobierno, y ninguna norma de educación superior obliga a incluir la
+protección de datos en la formación del nutriólogo.
+ 
+El caso aplica la investigación de diseño (\textit{design science
+research}) con estrategia de caso de estudio. Se analizó el marco
+mexicano frente a los de Brasil, Uruguay, Estados Unidos y Alemania, se
+tradujeron once obligaciones legales a requerimientos técnicos
+verificables y se diseñó NutriApp, una plataforma en la nube con región
+primaria en México. El diseño integra el consentimiento del paciente con
+folio, cifrado AES-256 y TLS~1.3, autenticación multifactor para el
+nutriólogo, un registro de auditoría en tres capas y un módulo ARCO con
+bloqueo y supresión que solo se ejecuta cuando el profesional la
+confirma. NutriApp opera como encargado, de modo que las decisiones y
+las obligaciones del tratamiento siguen siendo del nutriólogo. El
+diseño se demuestra con maquetas navegables y tres casos de prueba, y un
+grupo focal con seis a ocho nutriólogos con práctica clínica aporta el
+diagnóstico de la práctica actual y la revisión del diseño por expertos.
+ 
+Cada una de las once obligaciones tiene un componente que la atiende.
+Operar el diseño para 500 nutriólogos y 5,000 pacientes costaría entre
+141 y 299 dólares al mes, de 0.28 a 0.60 dólares por nutriólogo, y la
+multa promedio que impuso el INAI en 2023 equivale a 181 suscripciones
+anuales del plan Pro. Quedan fuera del producto mínimo viable la firma
+electrónica avanzada, la exportación estructurada del expediente y la
+estructura completa de la historia clínica.
+% PENDIENTE tras el grupo focal (23-oct): una o dos oraciones con el
+% diagnóstico (sección 3.3): qué obligaciones faltan en la práctica
+% reportada y por qué. Una oración con la evaluación de expertos (7.1).
+ 
+El caso concluye que el cumplimiento en la consulta privada es
+alcanzable cuando la ley se traduce en funciones concretas que dejan
+las decisiones en manos del nutriólogo. Otros vacíos, como la
+portabilidad, el plazo para avisar una vulneración o la obligatoriedad
+del expediente electrónico, no se resuelven con un sistema: requieren
+cambios en la ley, en su reglamento o en las normas sanitarias.
+ 
+\noindent\textbf{Palabras clave:} protección de datos personales,
+LFPDPPP, nutrición, expediente clínico electrónico, privacidad desde el
+diseño, investigación de diseño.
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Introducción}
 % ═══════════════════════════════════════════════════════════════════════════
 
 \subsection{Contexto del sector de nutrición en México}
-\mbox{}
-% NOTA: Escribir sobre el trabajo de los nutriólogos y sus estudios,
-% cómo los planes de estudios están desactualizados en México.
-% El brindar materias con conocimiento jurídico y tecnológico para
-% desempeñar sus actividades de mejor forma pasan a ser materias
-% opcionales.
+El caso estudia el consultorio de nutrición de práctica privada en
+México, con Jalisco como referencia para el marco estatal. En ese
+consultorio el nutriólogo atiende al paciente y decide también cómo se
+registra su información, dónde se guarda y con quién se comparte. La
+NOM-004-SSA3-2012 rige el expediente clínico en todo establecimiento de
+atención médica, sea público, social o privado. Incluye las notas de
+nutrición entre los documentos que pueden integrarlo y obliga a
+conservarlo con confidencialidad durante al menos cinco años (Norma
+Oficial Mexicana NOM-004-SSA3-2012, 2012, numerales~5.4 y~5.18).
+ 
+Lo que guarda ese expediente, como el peso, los diagnósticos o los
+hábitos de alimentación, es información sobre el estado de salud del
+paciente. La Ley Federal de Protección de Datos Personales en Posesión
+de los Particulares (LFPDPPP) la clasifica como dato personal sensible
+(LFPDPPP, 2025, art.~2, fracc.~VI). La ley obliga a cualquier persona
+física o moral de carácter privado que trate datos personales
+(LFPDPPP, 2025, art.~2, fracc.~XVI). El nutriólogo que atiende por su
+cuenta queda obligado como responsable desde que anota el primer dato.
+ 
+El marco cambió en 2025. El 21 de marzo entró en vigor una nueva
+LFPDPPP, que abrogó la de 2010 (LFPDPPP, 2025, Transitorios Primero y
+Segundo). Ese día se extinguió el Instituto Nacional de Transparencia,
+Acceso a la Información y Protección de Datos Personales (INAI), y sus
+funciones en materia de datos personales de particulares pasaron a la
+Secretaría Anticorrupción y Buen Gobierno (LFPDPPP, 2025, Transitorio
+Cuarto). El decreto no abrogó el Reglamento de 2011. Al 31 de enero de
+2026, fecha de corte de este trabajo, su adecuación a la nueva ley no
+se había publicado.
+ 
+Cuánto de ese marco se enseña en la licenciatura lo decide cada
+institución. La guía de criterios para evaluar los planes de la
+Licenciatura en Nutrición pide que el egresado se comporte «conforme
+al marco legal que regula el área de la nutrición» y no menciona el expediente clínico, la NOM-004 ni la
+LFPDPPP (Comisión Interinstitucional para la Formación de Recursos
+Humanos para la Salud [CIFRHS], 2024, criterio~2.15). En la muestra de
+ocho planes públicos de licenciatura que revisa este trabajo, la
+protección de datos personales consta como tema de sílabo solo en el
+de la Universidad Nacional Autónoma de México (UNAM, 2021, p.~232). Las
+obligaciones de la ley, en cambio, le son exigibles al nutriólogo desde
+su primera consulta.
+ 
+El caso tiene relevancia académica para la informática aplicada. La
+LFPDPPP fija resultados, como proteger los datos contra el acceso no
+autorizado o responder una solicitud del paciente en veinte días, y
+deja al responsable la elección de los medios. Convertir esas
+obligaciones en requerimientos que puedan comprobarse, y estos en
+componentes de una arquitectura, es un problema de diseño de sistemas
+de información. La investigación de diseño lo estudia mediante la
+construcción y la evaluación de un artefacto (Hevner et al., 2004).
+ 
+La relevancia profesional es doble. Al nutriólogo, el caso le muestra
+qué le exige la ley en su consultorio y qué parte de esas exigencias
+puede apoyar un sistema sin quitarle las decisiones que le
+corresponden. A quien desarrolla software de salud le ofrece una
+referencia de requisitos, porque la NOM-024-SSA3-2012 obliga también a
+quien desarrolla o comercializa un sistema de registro electrónico para
+la salud (Norma Oficial Mexicana NOM-024-SSA3-2012, 2012,
+numeral~1.2).
 
 \subsection{Planteamiento del problema}
-\mbox{}
-% NOTA: Comenzar a hablar de cómo esta falta puede llevar a una mala
-% práctica y deficiencia en el cuidado y manejo de datos.
+Como responsable, el nutriólogo tiene obligaciones concretas frente a
+cada paciente. Debe poner a su disposición un aviso de privacidad antes
+del tratamiento (LFPDPPP, 2025, arts.~14 y~15) y obtener su
+consentimiento expreso y por escrito para tratar sus datos de salud
+(LFPDPPP, 2025, art.~8). Debe adoptar medidas de seguridad
+administrativas, técnicas y físicas contra el acceso no autorizado
+(LFPDPPP, 2025, art.~18) y avisarle cuando una vulneración afecte de
+forma significativa sus derechos (LFPDPPP, 2025, art.~19). Si el
+paciente ejerce sus derechos de acceso, rectificación, cancelación u
+oposición (ARCO), el nutriólogo tiene veinte días para responderle
+(LFPDPPP, 2025, art.~31).
+ 
+La ley establece qué debe lograrse, pero no con qué medios. No precisa
+qué medidas de seguridad bastan en un consultorio. El Reglamento pide
+medidas que permitan rastrear los datos durante su tratamiento
+(Reglamento de la Ley Federal de Protección de Datos Personales en
+Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X) y
+las exige a todo responsable, cualquiera que sea el soporte en que
+trate los datos (RLFPDPPP, 2011, art.~57). La NOM-024 sí detalla
+credenciales propias por usuario, permisos por perfil y trazabilidad de
+accesos y modificaciones. Solo obliga, sin embargo, al consultorio que
+adopta un sistema de registro electrónico para la salud
+(NOM-024-SSA3-2012, 2012, numerales~1.2, 6.6.1, 6.6.3 y~6.6.4).
+ 
+Este caso parte de la premisa de que una parte de la consulta privada
+lleva el expediente en herramientas de uso general, como hojas de
+cálculo, notas en papel o archivos compartidos por mensajería. Una hoja
+de cálculo, aun protegida con contraseña, no identifica a cada usuario
+ni registra quién abrió qué expediente y cuándo. Tampoco lleva la
+cuenta del plazo de una solicitud ARCO. Con esas herramientas no queda
+el registro que pide el Reglamento para rastrear los datos.
+ 
+El incumplimiento tiene un costo. La LFPDPPP prevé multas de hasta
+320,000 veces la Unidad de Medida y Actualización (UMA), que pueden
+duplicarse cuando se trata de datos sensibles (LFPDPPP, 2025,
+art.~59). Según el INAI, en el primer semestre de 2023 los servicios de
+salud y asistencia social reunieron el 35.28\% del total de multas
+impuestas, segundo lugar detrás de los servicios financieros (INAI,
+2023b, p.~1).
+ 
+El problema que atiende este caso es la distancia entre lo que el marco
+de protección de datos exige al nutriólogo de consulta privada y los
+medios con que cuenta para cumplirlo. Esa distancia tiene tres
+componentes: una ley que fija resultados sin traducirlos a
+requerimientos operativos, herramientas de uso general que no dejan
+registro de quién accede a los datos y planes de estudio en los que la
+protección de datos personales depende de cada institución. Si
+esa distancia se refleja en la práctica, y por qué, es lo que el
+diagnóstico contrasta con nutriólogos en ejercicio. La distancia se
+observa en cuántos participantes cumplen cada obligación según la
+práctica que reportan, y en las razones y los obstáculos que ellos
+mismos describen.
 
 \subsection{Objetivos general y específicos}
-\mbox{}
-% NOTA: Formalizar lo que se va a estar trabajando en la tesis de
-% forma general y específica.
-%
-% Sugerencia de formato:
-% \textbf{Objetivo general:} ...
-%
-% \textbf{Objetivos específicos:}
-% \begin{enumerate}
-%   \item ...
-% \end{enumerate}
+\textbf{Objetivo general:} diseñar NutriApp, una plataforma para el
+nutriólogo de consulta privada que traduzca a requerimientos técnicos
+verificables las obligaciones de la LFPDPPP, su Reglamento, la
+NOM-004-SSA3-2012 y la NOM-024-SSA3-2012 sobre los datos de sus
+pacientes, sin trasladar a la plataforma las decisiones ni las
+obligaciones que la ley asigna al profesional como responsable.
+ 
+\textbf{Objetivos específicos:}
+ 
+\begin{enumerate}
+  \item Identificar las obligaciones de protección de datos que el
+    marco mexicano impone al nutriólogo de consulta privada y
+    compararlas con las de Brasil, Uruguay, Estados Unidos y Alemania
+    en nueve criterios.
+  \item Traducir esas obligaciones en requerimientos técnicos
+    comprobables y ligar cada uno con el componente que lo atiende en
+    una matriz de trazabilidad.
+  \item Documentar, con un grupo focal de seis a ocho nutriólogos con
+    práctica clínica, qué obligaciones están presentes y cuáles
+    ausentes en su práctica reportada, y las razones y los obstáculos
+    que la explican.
+  \item Diseñar la arquitectura de servicios en AWS, los diagramas de
+    ingeniería y el modelo de datos de NutriApp, y demostrar el
+    producto mínimo viable con maquetas navegables.
+  \item Evaluar el diseño con casos de prueba de aceptación, la
+    revisión por expertos de los participantes del grupo focal y la
+    observación en el caso, y verificar que cada obligación de la
+    matriz tenga un componente que la atienda.
+  \item Estimar el costo de operar el diseño y compararlo con las
+    sanciones que prevé la LFPDPPP.
+\end{enumerate}
 
 \subsection{Alcance (qué incluye y qué excluye)}
-\mbox{}
-% NOTA: Hablar de los entregables y con qué cierra el proyecto.
+El caso abarca el diseño de NutriApp y su demostración. Los
+entregables forman un paquete de diseño: el marco normativo y técnico,
+la matriz de trazabilidad entre obligaciones y requerimientos, la
+arquitectura de servicios, los diagramas de ingeniería, el modelo de
+datos, los requerimientos del producto mínimo viable (MVP), tres casos
+de prueba de aceptación y las maquetas navegables de la interfaz. El
+trabajo de campo es una sola sesión de grupo focal en línea con
+nutriólogos en ejercicio, que sirve de diagnóstico y de prueba piloto
+de las maquetas. El análisis normativo toma el derecho vigente al 31
+de enero de 2026. Los precios de los servicios de nube, mensajería y
+pagos se tomaron el 24 de septiembre de 2026.
+ 
+En el diseño, el nutriólogo conserva el papel de responsable y NutriApp
+actúa como su encargado. La plataforma aporta los medios; las
+decisiones que la ley asigna al profesional siguen siendo suyas.
+ 
+Quedan fuera la implementación del sistema, su despliegue y su
+operación, y con ellos cualquier dato real de pacientes. Las maquetas
+son representaciones de pantalla sin lógica de negocio, y ninguna
+decisión de arquitectura se desplegó ni se probó. El MVP no incorpora
+la estructura de la historia clínica que fija la NOM-004
+(NOM-004-SSA3-2012, 2012, numeral~6.1), ni la firma electrónica
+avanzada ni la exportación estructurada del expediente que la NOM-024
+prevé para el sistema (NOM-024-SSA3-2012, 2012, numerales~6.6.2
+y~6.6.6). Tampoco incluye módulos de inteligencia artificial,
+integración con laboratorios, telemedicina ni la segunda versión del
+módulo social.
+ 
+El análisis deja fuera tres ámbitos más. El primero son las
+obligaciones fiscales, laborales y sanitarias de una operación real. El
+segundo es el sector gubernamental, que se rige por la Ley General de
+Protección de Datos Personales en Posesión de Sujetos Obligados
+(LGPDPPSO, 2025). El tercero es la perspectiva del paciente, titular de
+los datos, que no participa en el estudio de campo. El caso cierra con
+el paquete de diseño documentado con el detalle necesario para que un
+tercero lo implemente.
 
 \subsection{Preguntas guía}
-\mbox{}
-% NOTA: Preguntas que funcionen como hilo conductor del documento.
+Cinco preguntas sirven de hilo conductor al documento:
+ 
+\begin{enumerate}
+  \item ¿Qué obligaciones de protección de datos impone el marco
+    mexicano al nutriólogo de consulta privada, y qué deja sin precisar
+    frente a los marcos de Brasil, Uruguay, Estados Unidos y Alemania?
+  \item ¿Qué obligaciones están presentes y cuáles ausentes en la
+    práctica que reportan nutriólogos en ejercicio, y qué razones y
+    obstáculos lo explican?
+  \item ¿Puede un diseño de software convertir esas obligaciones en
+    funciones verificables sin asumir las decisiones que la ley reserva
+    al profesional?
+  \item ¿Cómo valoran esas funciones nutriólogos con práctica clínica,
+    frente a la forma en que hoy trabajan?
+  \item ¿Cuánto costaría operar el diseño frente a las sanciones que
+    prevé la ley?
+\end{enumerate}
 % ═══════════════════════════════════════════════════════════════════════════
 
 \section{Marco Normativo: Protección de Datos Personales}
@@ -1607,7 +1791,6 @@ capítulo~5. Por legibilidad, la tabla se presenta en dos partes.
       fecha, hora y acción realizada, en tres capas: AWS
        CloudTrail, los registros de pgAudit de RDS en Amazon CloudWatch Logs y la
       capa de aplicación (\texttt{DeclarationLog} y \texttt{audit\_log}). Las tres se
-      \texttt{DeclarationLog} de la aplicación. Los tres se
       exportan a S3 con Object Lock y se conservan cinco años
       (sección~2.5.4). \\
 
