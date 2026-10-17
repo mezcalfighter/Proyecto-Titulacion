@@ -159,14 +159,14 @@
   \Large Privacidad por Diseño en la Práctica Nutriológica:\\
   Análisis Normativo y Arquitectura para el Cumplimiento de la LFPDPPP\\[0.8em]
   \rule{\linewidth}{0.5pt}\\[0.8em]
-  \normalsize Caso de estudio. Trabajo recepcional para obtener el grado de\\[0.2em]
+  \normalsize Trabajo recepcional para obtener el grado de\\[0.2em]
   \textbf{Maestro en Informática Aplicada}
 }
 \author{
   \textbf{Alumno:} Ing. Cristian Emanuel Ortega Camarena \\[0.5em]
   \textbf{Matrícula:} 743622 \\[0.5em]
   \textbf{Tutor:} Dr. Carlos Alberto Franco Reboreda  \\[0.5em]
-  \textbf{Coordinador:} Dr. Humberto Perez Ortiz
+  \textbf{Coordinador:} Dr. Humberto Pérez Ortiz
 }
 \date{San Pedro Tlaquepaque, Jalisco. Noviembre de 2026}
 
@@ -2068,7 +2068,8 @@ que usa NutriApp.
  
 NutriApp requiere del nutriólogo autenticación multifactor, es
 decir, dos factores de categorías distintas: algo que sabe, algo
-que tiene o algo que es. El NIST define el nivel de aseguramiento
+que tiene o algo que es. El National Institute of Standards and
+Technology (NIST) de Estados Unidos define el nivel de aseguramiento
 AAL2 como el que da confianza alta en que quien inicia sesión
 controla los autenticadores ligados a su cuenta, y lo condiciona a
 la posesión y el control de dos factores distintos (NIST, 2025a).
@@ -2168,8 +2169,8 @@ niega la cancelación del expediente por la conservación mínima, la
 respuesta lo indica con su fundamento y el expediente sigue en
 operación hasta que vence ese plazo. Si la cancelación procede, el
 expediente pasa a estado de bloqueo: deja de ser accesible en la
-que tiene o algo que es. El National Institute of Standards and
-Technology (NIST) de Estados Unidos define el nivel de aseguramiento disponible y sus adjuntos siguen bajo la retención inmutable de
+operación diaria, sigue cifrado en RDS sin operación de borrado
+disponible y sus adjuntos siguen bajo la retención inmutable de
 Object Lock. El fin del bloqueo (\texttt{bloqueo\_hasta}) lo fija el
 nutriólogo conforme al plazo de prescripción aplicable. La respuesta
 al titular llega con folio e incluye ese periodo y la fecha prevista
@@ -3801,13 +3802,6 @@ operación. La sesión sigue el procedimiento de la
 sección~4.3.3; los casos de prueba se ejecutan aparte, como recorrido
 sobre las maquetas (sección~4.4.2).
  
-Fuera de la sesión, el video de inducción queda disponible para las
-cuentas de práctica como módulo de inducción a la LFPDPPP. Su guion
-recorre las maquetas en el orden de las Tablas~\ref{tab:trazabilidad-1}
-y~\ref{tab:trazabilidad-2}: qué exige la ley en cada punto
-(consentimiento, expediente, ARCO, seguridad, catálogo) y cómo lo
-muestra la pantalla.
- 
 En la sesión, las maquetas se presentan brevemente en pantalla con
 perfiles de pacientes ficticios y los participantes opinan sobre ellas
 frente a su práctica actual en el quinto bloque de la guía de discusión
@@ -5074,7 +5068,7 @@ Federación}. \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/CFF.pdf}
 \item International Organization for Standardization. (2022).
   \textit{ISO/IEC 27001:2022 --- Information security, cybersecurity
   and privacy protection --- Information security management systems
-  --- Requirements}. ISO.
+  --- Requirements}.
 
   % Cap. 4: ``help organizations make information assets they hold
   % more secure'' mediante la identificación de riesgos, la
