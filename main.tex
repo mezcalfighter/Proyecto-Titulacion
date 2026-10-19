@@ -2301,7 +2301,7 @@ evalúa la Licenciatura en Nutrición pide que el egresado se comporte
 \textit{``conforme al marco legal que regula el área de la nutrición''} y actúe
 conforme al código ético del nutriólogo; los datos personales solo
 aparecen en el aviso de privacidad de la propia institución para la
-modalidad mixta, en línea o virtual (Comisión Interinstitucional para la Formación de
+modalidad mixta en línea o virtual (Comisión Interinstitucional para la Formación de
 Recursos Humanos para la Salud [CIFRHS], 2024, criterios~2.15 y~2.16,
 p.~11, y numeral~5.38.11, p.~35). La Ley General de Educación sí
 incluye la protección de datos personales entre los contenidos de los
@@ -2729,7 +2729,7 @@ requerimiento técnico como una capacidad que pueda comprobarse: qué
 debe hacer el sistema, no cómo. Por último se selecciona el componente
 que satisface ese requerimiento con el menor nivel de complejidad
 suficiente, respaldado por el pilar de seguridad del AWS
-Well-Architected Framework (AWS, 2024b) o por los estándares de la
+Well-Architected Framework (Amazon Web Services [AWS], 2024b) o por los estándares de la
 sección~2.5.6. El resultado se
 documenta en las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2} y se materializa en la arquitectura del
@@ -2840,7 +2840,7 @@ y el módulo social.
 \subsection{Infraestructura AWS: KMS, Cognito, Lambda, RDS}
 % ─────────────────────────────────────────────────────────────────────────
 
-NutriApp se diseña sobre Amazon Web Services bajo el modelo de
+NutriApp se diseña sobre Amazon Web Services (AWS) bajo el modelo de
 responsabilidad compartida de la sección~2.5.1 (AWS, 2023a). AWS
 responde por la seguridad de la infraestructura
 física y de red, y el cliente por la configuración de los servicios,
@@ -2889,7 +2889,7 @@ s.f.-j).
 Las funciones AWS Lambda (Node.js) ejecutan la lógica de negocio con
 límites de concurrencia que acotan las ejecuciones simultáneas. La API
 recibe y devuelve solo los campos que cada pantalla necesita, en
-atención al principio de proporcionalidad (LFPDPPP, 2025, art.~5).
+atención al principio de proporcionalidad (Ley Federal de Protección de Datos Personales en Posesión de los Particulares [LFPDPPP], 2025, art.~5).
 
 \textbf{Identidad y acceso.} Amazon Cognito gestiona el registro, la
 confirmación del correo, la autenticación multifactor (MFA), obligatoria para el nutriólogo desde
@@ -3479,7 +3479,7 @@ justificación del alcance.
  
 Los requerimientos del MVP se organizan en tres grupos.
  
-\textbf{Seguridad técnica} (LFPDPPP, 2025, art.~18; NOM-024-SSA3-2012,
+\textbf{Seguridad técnica} (Ley Federal de Protección de Datos Personales en Posesión de los Particulares [LFPDPPP], 2025, art.~18; NOM-024-SSA3-2012,
 2012, numerales~6.6.1, 6.6.3 y~6.6.4; sección~2.5): los datos se cifran con
 AES-256 en reposo y con TLS~1.3 en tránsito. La autenticación
 multifactor es obligatoria para el nutriólogo, y el registro de
@@ -4335,7 +4335,7 @@ adquisición de usuarios del producto, y por eso conviene incluirla.
  
 Los precios se anclan en el mercado de capacitación: un curso abierto de
 ocho horas sobre la LFPDPPP cuesta \$3,500 pesos más IVA por persona (CIGE
-México, 2026), mientras que los cursos que ofrecía el extinto INAI eran gratuitos pero generales, no
+México, 2026), mientras que los cursos que ofrecía el extinto Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI) eran gratuitos pero generales, no
 sectoriales (Instituto Nacional de Transparencia, Acceso a la
 Información y Protección de Datos Personales, s.f.). Un simposio de dos
 horas para una cohorte completa, específico de nutrición, se cotiza en
@@ -4426,7 +4426,7 @@ de cambio de referencia, y el Destacado añade \$550 dólares más: \$7,145 dól
 Como los precios incluyen IVA, \$986 dólares son impuesto trasladado (Ley del
 Impuesto al Valor Agregado, 1978/2021, art.~1) y el ingreso neto queda en \$6,159 dólares. De ahí salen la comisión de Mercado Pago
 (3.49\% más \$4 pesos por cobro, más IVA acreditable; Mercado Pago,
-s.f.-b), que equivale a cerca del 5\% del ingreso bruto, y la
+s.f.-b), que equivale a cerca del 4\% del ingreso bruto, y la
 infraestructura de la Tabla~\ref{tab:costos}. El impuesto sobre la renta
 depende del régimen: una persona moral paga 30\% sobre la utilidad
 fiscal (Ley del Impuesto sobre la Renta, 2013/2024, art.~9); una persona física en
@@ -4459,17 +4459,17 @@ revisan con un contador antes de operar.
     Ingreso bruto & \$7,145 & \$7,145 \\
     IVA trasladado (16\%, incluido en el precio) & (\$986) & (\$986) \\
     Ingreso neto de IVA & \$6,159 & \$6,159 \\
-    Comisión de Mercado Pago & (\$360) & (\$360) \\
+    Comisión de Mercado Pago & (\$310) & (\$310) \\
     Infraestructura y mensajería (Tabla~\ref{tab:costos}) & (\$141) & (\$299) \\
     Alta disponibilidad (opción) & --- & (\$67) \\
-    Utilidad operativa (sin sueldos) & \$5,658 & \$5,433 \\
+    Utilidad operativa (sin sueldos) & \$5,708 & \$5,483 \\
     Amortización de la inversión inicial a 36 meses (mín. / máx.) & (\$468) & (\$846) \\
-    Utilidad antes de ISR & \$5,190 & \$4,587 \\
-    ISR (RESICO 2.0\% del ingreso / persona moral 30\% de la utilidad) & (\$123) & (\$1,376) \\
-    \textbf{Utilidad neta mensual} & \textbf{\$5,067} & \textbf{\$3,211} \\
-    Utilidad neta anual & \$60,804 & \$38,532 \\
-    Margen neto sobre ingreso bruto & 71\% & 45\% \\
-    Meses para recuperar la inversión inicial (sin amortizar) & 3.0 & 7.5 \\
+    Utilidad antes de ISR & \$5,240 & \$4,637 \\
+    ISR (RESICO 2.0\% del ingreso / persona moral 30\% de la utilidad) & (\$123) & (\$1,391) \\
+    \textbf{Utilidad neta mensual} & \textbf{\$5,117} & \textbf{\$3,246} \\
+    Utilidad neta anual & \$61,404 & \$38,952 \\
+    Margen neto sobre ingreso bruto & 72\% & 45\% \\
+    Meses para recuperar la inversión inicial (sin amortizar) & 3.0 & 7.4 \\
     \bottomrule
   \end{tabularx}
   \begin{flushleft}
@@ -4736,12 +4736,12 @@ Federación}. Recuperado el 18 de octubre de 2026, de \url{https://www.diputados
  
   % Cap. 3 (secc. 3.1): criterio~2.15, ``Se comporta conforme al marco
   % legal que regula el área de la nutrición, para la toma de
-  % decisiones'' (p.~12); numeral~5.38.11 (anexo de modalidad mixta, en
+  % decisiones'' (p.~11); numeral~5.38.11 (anexo de modalidad mixta en
   % línea o virtual), ``La institución presenta su aviso de privacidad
-  % para el manejo de protección de datos personales'' (p.~36). Sin
+  % para el manejo de protección de datos personales'' (p.~35). Sin
   % menciones de expediente clínico, NOM-004 ni LFPDPPP (CIFRHS, 2024).
   % Criterio~2.16, ``Actúa de conformidad al Código ético del
-  % Nutriólogo'' (p.~12).
+  % Nutriólogo'' (p.~11).
  
 \item Congreso del Estado de Jalisco. (1982, 2 de septiembre; última
   reforma 25 de noviembre de 2025). \textit{Código Penal para el Estado
