@@ -250,7 +250,8 @@ estructura completa de la historia clínica.
  
 El caso muestra que las obligaciones de la consulta privada pueden
 traducirse en funciones concretas que dejan
-las decisiones en manos del nutriólogo. Otros vacíos, como la
+las decisiones en manos del nutriólogo, y entrega ese diseño comprobado
+y documentado para pasar a la fase de desarrollo. Otros vacíos, como la
 portabilidad, el plazo para avisar una vulneración o la obligatoriedad
 del expediente electrónico, no se resuelven con un sistema: requieren
 cambios en la ley, en su reglamento o en las normas sanitarias.
@@ -448,8 +449,12 @@ segundo es el sector gubernamental, que se rige por la Ley General de
 Protección de Datos Personales en Posesión de Sujetos Obligados
 (LGPDPPSO, 2025). El tercero es la perspectiva del paciente, titular de
 los datos, que no participa en el estudio de campo. El caso cierra con
-el paquete de diseño documentado con el detalle necesario para que un
-tercero lo implemente.
+el paquete de diseño comprobado en tres niveles ---la trazabilidad
+entre obligaciones y requerimientos, los casos de prueba sobre las
+maquetas y la revisión de expertos del grupo focal--- y documentado con
+el detalle necesario para que una fase de desarrollo lo tome como
+punto de partida, sea por el autor o por un tercero al que se
+transfiera (sección~4.5).
 
 \subsection{Preguntas guía}
 Cinco preguntas sirven de hilo conductor al documento:
@@ -2517,8 +2522,10 @@ y requerimientos, la arquitectura de servicios, los diagramas de
 ingeniería, el modelo de datos, los requerimientos del producto mínimo
 viable, los casos de prueba de aceptación y las maquetas navegables de
 interfaz. El paquete se evalúa con casos de prueba y con la revisión
-de expertos del grupo focal, y se documenta con el detalle necesario para que un
-tercero lo implemente. Las maquetas son representaciones de pantalla
+de expertos del grupo focal, y se documenta con el detalle necesario
+para que una fase de desarrollo lo tome como punto de partida sin
+repetir el análisis, sea por el autor o por un tercero al que se
+transfiera (sección~4.5). Las maquetas son representaciones de pantalla
 sin lógica de negocio ni datos reales; ninguna decisión de arquitectura
 se desplegó ni se probó.
  
@@ -4241,7 +4248,13 @@ capítulo seis. No incluye la implementación productiva de NutriApp, su
 salida al mercado ni la operación real de un responsable o de un
 encargado del tratamiento; ninguna cifra de costo o de ingreso de la
 sección~\ref{sec:costos} ni del modelo de negocio que sigue se ha
-observado en operación. Las decisiones de arquitectura no han sido
+observado en operación. Dentro de ese límite, el diseño queda comprobado
+en lo que el caso puede comprobar: cada obligación de la matriz tiene un
+componente que la atiende, los tres casos de prueba de aceptación se
+ejecutan sobre las maquetas y las maquetas pasan por la revisión de
+expertos del grupo focal; el paquete queda en el punto en que una fase
+de desarrollo puede tomarlo sin repetir el análisis, y en condiciones de
+transferirse o licenciarse (sección~4.5). Las decisiones de arquitectura no han sido
 auditadas por un tercero, y los casos de prueba comprueban la maqueta,
 no un sistema en ejecución, y los ejecuta el propio autor (sección~4.4.3).
 El borrado criptográfico no alcanza a los respaldos automáticos de la base
@@ -4268,8 +4281,9 @@ Tabla~\ref{tab:comparativo-normativo}), que este trabajo dejó fuera del product
  
 \subsubsection{Trabajo posterior: comercialización y formación institucional}
  
-El caso termina en el diseño y en su prueba piloto. Lo que sigue no
-forma parte del desarrollo entregado: son líneas de trabajo posterior,
+El caso termina con el diseño comprobado, listo para pasar a la fase de
+desarrollo. Lo que sigue no forma parte del paquete entregado: son
+líneas de trabajo posterior,
 con un horizonte orientativo de doce a dieciocho meses, para quien
 decida llevar el diseño al mercado. Se documentan aquí, y no como
 resultado, porque ninguna de estas cifras se ha observado: son la
@@ -5758,75 +5772,173 @@ Recuperado el 30 de septiembre de 2026, de \url{https://www.cucs.udg.mx/sites/de
 \label{anexo:ia}
  
 Este anexo documenta el uso de herramientas de inteligencia artificial
-en la elaboración del trabajo: qué tareas se apoyaron en ellas, con qué
-instrucciones y cómo se conservó la dirección del autor en cada paso.
+durante la elaboración del trabajo: en qué tareas se apoyó el autor,
+con qué instrucciones, qué aportaron y cómo se conservó la dirección
+del trabajo en cada paso. Sigue la estructura acordada con el tutor:
+uso de las herramientas, compendio de instrucciones, síntesis del apoyo
+recibido y evidencia de dirección humana.
  
-\subsubsection*{Propósito y alcance}
+\subsubsection*{Uso de las herramientas}
  
-Las herramientas se usaron como apoyo a la redacción, a la revisión de
-consistencia entre capítulos, a la verificación de citas y a la
-generación de diagramas y maquetas a partir del texto del propio
-documento. No sustituyeron el análisis normativo, el diseño del
-artefacto ni las decisiones metodológicas, que son del autor. Las citas
-y cifras que las herramientas propusieron se verificaron contra la
-fuente oficial antes de integrarse; las que no pudieron verificarse se
-retiraron del texto.
- 
-\subsubsection*{Herramientas y tareas}
+El texto del documento, el análisis normativo, el diseño de NutriApp,
+las decisiones metodológicas y la interpretación de los resultados son
+del autor. Las herramientas se usaron en cinco funciones. Primera, como
+apoyo de redacción sobre párrafos ya escritos por el autor: sugerencias
+de claridad, concisión y registro que el autor aceptó, modificó o
+descartó. Segunda, como fuente de ideas y de alternativas para discutir
+una decisión antes de tomarla. Tercera, para confirmar referencias,
+cotejando cada cita contra la fuente oficial (la ley, el reglamento, la
+norma o el comunicado citados). Cuarta, para vigilar que la idea central
+del trabajo ---el nutriólogo conserva las obligaciones que la ley le
+impone y NutriApp aporta los medios para cumplirlas--- se mantuviera en
+todos los capítulos. Quinta, para señalar contradicciones entre partes
+del manuscrito o entre el manuscrito y sus fuentes. Además, se usaron
+para construir las maquetas navegables y para generar el código de
+dibujo de los diagramas a partir de especificaciones escritas por el
+autor. Las citas y cifras que una herramienta propuso se verificaron
+contra la fuente oficial antes de integrarse; las que no pudieron
+verificarse se retiraron del texto.
  
 \begin{itemize}
-  \item Claude (Anthropic; en la etapa final, el modelo Fable~5.1): redacción asistida y reescritura de
-    párrafos bajo instrucciones del autor; revisión de consistencia
-    entre capítulos, tablas y figuras; preparación de los cambios al
-    archivo \LaTeX{} como listas de pasos que el autor aplicó y revisó
-    uno por uno y, en la etapa final, como archivos completos cuyo
-    contenido el autor cotejó contra el repositorio antes de integrarlos;
-    verificación de citas contra las fuentes oficiales.
-  \item Grok (xAI): revisión cruzada de los cambios propuestos por la
+  \item Claude (Anthropic; modelos Opus y, en la etapa final, Fable~5.1):
+    sugerencias de redacción sobre texto del autor; revisión de
+    consistencia entre capítulos, tablas y figuras; confirmación de
+    citas contra las fuentes oficiales; en la etapa final, preparación
+    de las correcciones acordadas como diferencias sobre el archivo
+    \LaTeX{} del repositorio, que el autor cotejó línea por línea antes
+    de integrarlas.
+  \item Grok (xAI): revisión cruzada de las observaciones de la
     herramienta anterior y auditoría de inconsistencias contra el
     manuscrito; generación del código de dibujo de los diagramas de
     ingeniería del capítulo cinco y de la composición de las maquetas
-    compuestas del capítulo seis, a partir de especificaciones derivadas
-    del texto. El diseño, el contenido y la validación de los diagramas y
-    las maquetas son del autor, que revisó cada versión.
-      \item Figma Make: construcción de las maquetas navegables descritas
+    compuestas del capítulo seis, a partir de especificaciones escritas
+    por el autor, que revisó cada versión.
+  \item ChatGPT (OpenAI): segunda opinión, en la etapa final, sobre
+    hallazgos en los que las dos herramientas anteriores no coincidían.
+  \item Figma Make: construcción de las maquetas navegables descritas
     en los capítulos cuatro y seis a partir de los requerimientos del
     capítulo seis.
   \item Gemini (Google): notas de alineación entre el estudio de
     mercado y el documento.
 \end{itemize}
  
-Las dos primeras herramientas se usaron en contraste: cada cambio
-generado por una se sometió a la revisión de la otra, y las
-discrepancias se resolvieron consultando la fuente oficial o el propio
-manuscrito. En la etapa final, cada una operó además como un conjunto de
-revisores especializados (normativo, consistencia, estilo, aritmética,
-referencias y metodología) que leyeron el manuscrito completo y
-devolvieron hallazgos con línea y fuente; el autor decidió uno por uno
-cuáles entraban, y las decisiones quedaron registradas.
+Las dos primeras herramientas se usaron en contraste: cada observación
+de una se sometió a la revisión de la otra, y las discrepancias se
+resolvieron consultando la fuente oficial o el propio manuscrito. En la
+etapa final, cada una leyó además el manuscrito completo desde varias
+perspectivas de revisión (normativa, consistencia, estilo, aritmética,
+referencias y metodología) y devolvió hallazgos con línea y fuente; el
+autor decidió uno por uno cuáles entraban y dejó registro de cada
+decisión.
  
 \subsubsection*{Compendio de instrucciones}
  
-Las instrucciones dadas a las herramientas fueron de cuatro tipos:
-(1)~redacción o reescritura de un apartado bajo criterios indicados por
-el autor o por el tutor; (2)~revisión de un capítulo o de un cambio
-contra el resto del manuscrito y contra las fuentes citadas, con
-indicación de línea y de fuente para cada observación; (3)~traducción
-de decisiones del autor a cambios concretos en el archivo \LaTeX{}; y
-(4)~generación de figuras a partir de una especificación escrita. El
-registro completo de instrucciones y respuestas se conserva en el
-archivo de trabajo del autor.
+Las instrucciones dadas a las herramientas fueron de cinco tipos:
+(1)~revisión de estilo de un párrafo o apartado escrito por el autor;
+(2)~discusión de una decisión o de una duda; (3)~confirmación de citas y
+de referencias contra la fuente oficial; (4)~revisión de un capítulo o
+del manuscrito completo en busca de contradicciones, con línea y fuente
+para cada observación; y (5)~traducción de decisiones ya tomadas por el
+autor a cambios concretos en el archivo \LaTeX{}, en los instrumentos
+del grupo focal o en una figura. Las siguientes catorce instrucciones
+son representativas de cada tipo; se transcriben con ajustes mínimos de
+ortografía.
+ 
+\begin{enumerate}
+  \item Estilo: «Cuando te pida humanizar un párrafo, reescríbelo
+    evitando las frases típicas de la inteligencia artificial, varía la
+    longitud de las oraciones y prefiere el vocabulario académico
+    directo. No cambies el contenido técnico, las citas ni las
+    referencias; solo el estilo. Muéstrame el texto y, si te lo pido,
+    también un \textit{diff} breve de qué cambiaste y por qué».
+  \item Estilo: «Mantén consistencia terminológica con lo ya escrito en
+    los capítulos cargados. Si algo no está en el material cargado, dilo
+    explícitamente en vez de inventar».
+  \item Discusión: «NutriApp no debe asumir obligaciones que la ley
+    impone al profesional. No propongas funciones nuevas sin
+    consultarme».
+  \item Discusión: «Esto es una auditoría de ChatGPT; ya hice el
+    \textit{push} con la versión que me compartiste. No lo hagas como la
+    última auditoría: solo quiero saber si aplica o no y qué tendríamos
+    que cambiar».
+  \item Discusión: «No quiero decirle al experto qué hacer. Lo único que
+    necesito es que el cierre de diez minutos vaya al final; no pongas
+    tiempos, que quede abierto a su interpretación».
+  \item Referencias: «¿Ya está completo solo con referencias oficiales?
+    ¿Nada de foros, revistas o empresas privadas?».
+  \item Referencias: «Cualquier afirmación de cambios que haya hecho
+    Grok no la des por hecha; necesitamos verificarla».
+  \item Contradicciones: «Quiero que corras una auditoría sin sesgo con
+    revisores nuevos que solo usen el contexto para revisar, y ya
+    cerrarlos».
+  \item Contradicciones: «Quiero otra auditoría igual, pero que confirme
+    todo lo que sí es de cambio».
+  \item Contradicciones (a Grok): «Revisa el manuscrito completo.
+    Reporta consistencia interna (cifras, nombres, términos, remisiones
+    a secciones, tablas y figuras, contradicciones entre capítulos),
+    afirmaciones sobre los nutriólogos sin cita y textos donde NutriApp
+    parezca asumir obligaciones del profesional o estar ya
+    implementada. Para cada hallazgo: líneas, texto actual, problema,
+    fuente oficial, corrección propuesta, severidad y certeza. No
+    propongas funciones nuevas. Si una fuente no abre, dilo y no
+    afirmes lo que dice».
+  \item Contradicciones: «Pásame un resumen para Grok, para que corra
+    otra auditoría, contando lo que hayas desestimado de su revisión y
+    por qué».
+  \item Cambios al archivo: «¿Me puedes hacer los cambios en el .tex
+    para que yo solo lo reemplace y que, al hacer el \textit{push}, solo
+    se vean los cambios? Enfócate solo en los cambios; lo que esté bien,
+    déjalo».
+  \item Cambios al archivo: «Ya hice el \textit{push}; revísalo, que
+    todo esté ahí».
+  \item Instrumentos: «Necesito tres encuestas acordes con lo
+    documentado en el caso: una previa, otra durante y otra de salida.
+    En la de inicio debe aparecer la casilla de que va a ser anónima».
+\end{enumerate}
+ 
+El registro completo de instrucciones y respuestas se conserva en el
+archivo de trabajo del autor, disponible a solicitud.
+ 
+\subsubsection*{Síntesis del apoyo recibido}
+ 
+El apoyo se concentró en cuatro resultados. Primero, redacción: los
+párrafos del autor se revisaron en busca de frases hechas, oraciones
+con más de una idea y términos usados con más de un sentido; las
+sugerencias se aceptaron solo cuando no cambiaban el contenido técnico,
+las citas ni las referencias. Segundo, referencias: cada cita normativa
+se cotejó contra el texto oficial, lo que permitió corregir artículos
+mal atribuidos (la trazabilidad, que el texto atribuía al artículo~18
+de la ley y que el Reglamento prevé en su artículo~48, fracción~X,
+entre las medidas del principio de responsabilidad), fechas de
+publicación, y el orden y los sufijos de la lista de referencias
+conforme a APA. Tercero, idea principal: en cada ronda se buscó toda
+oración en la que NutriApp pareciera asumir una obligación del
+nutriólogo, «cumplir» o «garantizar» la ley, o estar ya implementada,
+y el autor la reformuló. Cuarto, contradicciones: se señalaron cifras,
+artículos y remisiones a tablas, figuras y secciones que no coincidían
+entre el resumen, los capítulos y las tablas (por ejemplo, una cifra
+del INAI presentada como monto de multas cuando el comunicado reporta
+inconformidades, o un término corregido en una tabla que conservaba el
+sentido anterior en dos oraciones del capítulo dos), y el autor resolvió
+cada una consultando la fuente. Las herramientas no produjeron el
+análisis normativo, el diseño del artefacto, los casos de prueba ni la
+interpretación de los resultados, y ninguna de sus observaciones entró
+al documento sin la decisión expresa del autor.
  
 \subsubsection*{Dirección humana y evidencia}
  
 El flujo de trabajo fue el mismo durante todo el proyecto. El autor
 publica una versión del manuscrito en el repositorio del proyecto; la
-herramienta lee esa versión y devuelve observaciones; el autor decide
-cuáles atender y aplica los cambios; antes de compartir un capítulo con
-el tutor, el autor lo lee completo y ajusta lo que no corresponde a su
-criterio o a la dirección del trabajo. Ningún cambio llegó al documento
-sin pasar por esa lectura. El historial del repositorio conserva cada
-versión integrada, y las observaciones del tutor se atienden en un
-control de cambios propio.
+herramienta lee esa versión y devuelve observaciones con línea y
+fuente; el autor decide cuáles atender, integra los cambios y verifica
+que la versión publicada coincida con la que revisó; antes de compartir
+un capítulo con el tutor, el autor lo lee completo y ajusta lo que no
+corresponde a su criterio o a la dirección del trabajo. Ningún cambio
+llegó al documento sin pasar por esa lectura. El historial del
+repositorio conserva cada versión integrada; los dictámenes de cada
+ronda de observaciones (qué entró, qué se desestimó y por qué) se
+conservan con el registro de instrucciones en el archivo de trabajo del
+autor; y las observaciones del tutor se atienden en un control de
+cambios propio.
 
 \end{document}
