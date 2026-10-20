@@ -213,13 +213,14 @@ la primera consulta, y la Ley Federal de Protección de Datos Personales
 en Posesión de los Particulares (LFPDPPP) le exige por ello un aviso de
 privacidad, el consentimiento expreso y por escrito del paciente,
 medidas de seguridad y la respuesta a los derechos de acceso, rectificación, cancelación y oposición (ARCO) en veinte días.
-La ley no precisa qué medidas bastan. Su Reglamento pide trazabilidad y
-la exige en cualquier soporte, una condición que una hoja de cálculo aislada,
+La ley no precisa qué medidas bastan. Su Reglamento exige medidas de
+seguridad en cualquier soporte y prevé la trazabilidad entre las medidas
+del principio de responsabilidad, una condición que una hoja de cálculo aislada,
 aun con contraseña, no cumple por sí misma. Las multas pueden llegar a
 \$72,409,600 pesos cuando hay datos de salud;
 la autoridad pasó en 2025 del Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI) a la Secretaría Anticorrupción y Buen
-Gobierno, y ninguna norma de educación superior obliga a incluir la
-protección de datos en la formación del nutriólogo.
+Gobierno, y ninguna norma de educación superior exige la protección de
+datos como contenido específico de la formación del nutriólogo.
  
 El caso aplica la investigación de diseño (\textit{design science
 research}) con estrategia de caso de estudio. Se analizó el marco
@@ -337,12 +338,13 @@ oposición (ARCO), el nutriólogo tiene veinte días para responderle
 (LFPDPPP, 2025, art.~31).
  
 La ley establece qué debe lograrse, pero no con qué medios. No precisa
-qué medidas de seguridad bastan en un consultorio. El Reglamento pide
-medidas que permitan rastrear los datos durante su tratamiento
-(Reglamento de la Ley Federal de Protección de Datos Personales en
-Posesión de los Particulares [RLFPDPPP], 2011, art.~48, fracc.~X) y
-las exige a todo responsable, cualquiera que sea el soporte en que
-trate los datos (RLFPDPPP, 2011, art.~57). La NOM-024 sí detalla
+qué medidas de seguridad bastan en un consultorio. El Reglamento prevé,
+entre las medidas del principio de responsabilidad, las que permitan
+rastrear los datos durante su tratamiento (Reglamento de la Ley Federal
+de Protección de Datos Personales en Posesión de los Particulares
+[RLFPDPPP], 2011, art.~48, fracc.~X), y exige medidas de seguridad a todo
+responsable, cualquiera que sea el soporte en que trate los datos
+(RLFPDPPP, 2011, art.~57). La NOM-024 sí detalla
 credenciales propias por usuario, permisos por perfil y trazabilidad de
 la información en salud. Solo obliga, sin embargo, al consultorio que
 adopta un sistema de registro electrónico para la salud
@@ -354,7 +356,7 @@ cálculo, notas en papel o archivos compartidos por mensajería. Una hoja
 de cálculo, aun protegida con contraseña, no identifica a cada usuario
 ni registra quién abrió qué expediente y cuándo. Tampoco lleva la
 cuenta del plazo de una solicitud ARCO. Con esas herramientas no queda
-el registro que pide el Reglamento para rastrear los datos.
+el registro que el Reglamento prevé para rastrear los datos.
  
 El incumplimiento tiene un costo. La LFPDPPP prevé multas de hasta
 320,000 veces la Unidad de Medida y Actualización (UMA), que pueden
@@ -1804,7 +1806,7 @@ capítulo cinco. Por legibilidad, la tabla se presenta en dos partes.
   \\[4pt]
 
   Trazabilidad de consultas, accesos y modificaciones
-    & RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 (requisito funcional de trazabilidad)
+    & LFPDPPP 2025, art.~13; RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 (requisito funcional de trazabilidad)
     & Registro de auditoría (\textit{audit log}) inmutable que documenta
       cada consulta, modificación, descarga e intento de acceso
       fallido al expediente, con identificación del usuario,
@@ -2106,7 +2108,7 @@ art.~18), exigible en cualquier sistema de tratamiento (RLFPDPPP,
  
 \subsubsection{Trazabilidad y auditoría}
  
-El Reglamento requiere medidas que permitan rastrear los datos
+El Reglamento prevé medidas que permitan rastrear los datos
 personales durante su tratamiento (RLFPDPPP, 2011, art.~48,
 fracc.~X) y la NOM-024 exige trazabilidad dentro del sistema de
 gestión de seguridad (NOM-024-SSA3-2012, 2012, numeral~6.6.1). En
@@ -2275,7 +2277,7 @@ casos, condiciones de salud que no comparte con nadie más.
 Este patrón podría resultar de una combinación de factores que este caso de
 estudio busca documentar con evidencia: planes de estudio a los que
 ninguna norma de educación superior obliga a incluir la protección de
-datos personales, una ley que establece
+datos personales como contenido específico, una ley que establece
 obligaciones sin traducirlas en requerimientos operativos para el
 gremio, y una autoridad, el Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI), hoy extinto, ante el cual en 2022 la salud ocupó
 el tercer lugar en inconformidades de los titulares (INAI, 2023a, p.~2) y que en el primer semestre de 2023
@@ -3926,8 +3928,8 @@ cada una el componente que la atiende:
   \item Autenticación verificable de usuarios (NOM-024-SSA3-2012, 2012,
     numeral~6.6.3): Amazon Cognito con MFA obligatoria para el
     nutriólogo y opcional para el paciente.
-  \item Trazabilidad de consultas, accesos y modificaciones (RLFPDPPP, 2011,
-    art.~48, fracc.~X): CloudTrail, pgAudit y la capa de aplicación
+  \item Trazabilidad de consultas, accesos y modificaciones (LFPDPPP, 2025,
+    art.~13; RLFPDPPP, 2011, art.~48, fracc.~X): CloudTrail, pgAudit y la capa de aplicación
     (\texttt{DeclarationLog} y \texttt{audit\_log}), exportados a S3 con
     Object Lock y conservados cinco años.
   \item Inventario de datos, análisis de riesgos y análisis de brecha
