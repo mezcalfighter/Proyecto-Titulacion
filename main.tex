@@ -1305,7 +1305,7 @@ por encima de cada uno.
  
   \textbf{8. Alineación con GDPR europeo}
     & Parcial. La LFPDPPP comparte principios estructurales
-      con el GDPR pero México no cuenta con una decisión de
+      con el GDPR, pero México no cuenta con una decisión de
       adecuación de la Comisión Europea, el mecanismo que
       habilita la transferencia de datos desde la UE (GDPR,
       2016, art.~45).
@@ -1335,7 +1335,7 @@ por encima de cada uno.
       registro (NOM-004-SSA3-2012, 2012; NOM-024-SSA3-2012, 2012,
       numeral~1.2). Ninguna norma obliga al
       profesional a adoptar un sistema digital: un nutriólogo
-      puede operar con papel o hoja de cálculo sin incumplir
+      puede operar con papel u hoja de cálculo sin incumplir
       una obligación de adoptar tecnología específica.
     & Resoluciones del Conselho Federal de Medicina (CFM)
       por tipo de servicio (CFM, 2022). Sin una norma técnica
@@ -1794,7 +1794,7 @@ capítulo cinco. Por legibilidad, la tabla se presenta en dos partes.
 
   Autenticación verificable de usuarios
     & NOM-024-SSA3-2012, numeral~6.6.3 (requisito funcional de autenticación
-      de usuarios antes de permitir acceso a la información
+      de usuarios antes de permitir acceso a la información)
     & Autenticación multifactor (MFA) obligatoria para el
       nutriólogo y opcional para el paciente, que solo accede a su
       propio expediente. Gestión de identidades a través de Amazon
@@ -1804,7 +1804,7 @@ capítulo cinco. Por legibilidad, la tabla se presenta en dos partes.
   \\[4pt]
 
   Trazabilidad de consultas, accesos y modificaciones
-    & RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 (requisito funcional de trazabilidad
+    & RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 (requisito funcional de trazabilidad)
     & Registro de auditoría (\textit{audit log}) inmutable que documenta
       cada consulta, modificación, descarga e intento de acceso
       fallido al expediente, con identificación del usuario,
@@ -3007,19 +3007,19 @@ obligación que atiende.
   Lógica de aplicación & API Gateway + Lambda & Proporcionalidad.
     LFPDPPP 2025, arts.~5 y~12 \\[4pt]
   Identidad y acceso & Cognito + MFA & Autenticación y perfiles.
-    NOM-024-SSA3-2012 numerales~6.6.3 y~6.6.4; LFPDPPP 2025, art.~18 \\[4pt]
+    NOM-024-SSA3-2012, numerales~6.6.3 y~6.6.4; LFPDPPP 2025, art.~18 \\[4pt]
   Datos y llaves & RDS PostgreSQL + KMS & Cifrado en reposo AES-256 (Advanced Encryption Standard) con
     llave por expediente. LFPDPPP 2025, art.~18; RLFPDPPP 2011, art.~57 \\[4pt]
   Almacenamiento & S3 + Object Lock & Adjuntos y registros (el
     expediente estructurado, en RDS, sigue el mismo plazo): cinco años
-    desde el último acto médico (NOM-004-SSA3-2012 numeral~5.4);
+    desde el último acto médico (NOM-004-SSA3-2012, numeral~5.4);
     consentimientos: mientras dura el tratamiento y la conservación del
-    expediente (NOM-004-SSA3-2012 numeral~5.4); carga de la prueba: RLFPDPPP 2011, art.~20;    contratos y comprobantes: diez años (Código de Comercio arts.~38
+    expediente (NOM-004-SSA3-2012, numeral~5.4); carga de la prueba: RLFPDPPP 2011, art.~20;    contratos y comprobantes: diez años (Código de Comercio arts.~38
     y~49), comprobantes fiscales cinco (Código Fiscal de la Federación
     art.~30); integridad de los mensajes de datos
     conforme a NOM-151-SCFI-2016 \\[4pt]
   Auditoría & CloudTrail + pgAudit + CloudWatch & Trazabilidad.
-    RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012 numeral~6.6.1 \\[4pt]
+    RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 \\[4pt]
   Pagos y suscripción & Mercado Pago (\textit{checkout} alojado) & Datos
     financieros con consentimiento expreso; sin datos de tarjeta en
     NutriApp. LFPDPPP 2025, arts.~7 y~36 \\[4pt]
@@ -3824,7 +3824,7 @@ parcialmente o no refleja el diseño.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2, fracc.~IV, 8 y~15. Nutriólogo registrado con autenticación multifactor (MFA); paciente dado de alta con expediente «pendiente de consentimiento». & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y~18; RLFPDPPP 2011, art.~48, fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto y asigna un plan en \texttt{AssignDiet}; el paciente lo consulta en \texttt{CurrentDiet}; un tercero sin relación intenta abrir el expediente. & El expediente admite los datos, la medición, la nota, el adjunto y el plan, que el paciente ve en \texttt{CurrentDiet}; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25, fracc.~VII, y~31; NOM-004-SSA3-2012 numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica veinte días para resolver y quince para ejecutar (art.~31), la conservación mínima y el bloqueo si procede; folio de la solicitud; la respuesta con folio llega al correo confirmado del titular y después se suprimen los datos de la cuenta y de contacto, salvo que el titular tenga otro expediente activo; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25, fracc.~VII, y~31; NOM-004-SSA3-2012, numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica veinte días para resolver y quince para ejecutar (art.~31), la conservación mínima y el bloqueo si procede; folio de la solicitud; la respuesta con folio llega al correo confirmado del titular y después se suprimen los datos de la cuenta y de contacto, salvo que el titular tenga otro expediente activo; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -5115,8 +5115,8 @@ Recuperado el 18 de octubre de 2026, de \url{https://pro.doctoralia.com.mx/preci
   % Cap. 2 (secc. 2.5.6): sistema de gestión de información de
   % privacidad; roles de responsable y encargado (ISO, 2025c).
 
-\item La Silla Rota. (2026, 27 de agosto). Las 10 carreras con los
-  salarios más bajos en México, según el IMCO. \textit{La Silla Rota}. \url{https://lasillarota.com/dinero/2026/8/27/las-10-carreras-con-los-salarios-mas-bajos-en-mexico-segun-el-imco-526227.html}
+\item La Silla Rota. (2026, 27 de agosto). \textit{Las 10 carreras con los
+  salarios más bajos en México, según el IMCO}. \url{https://lasillarota.com/dinero/2026/8/27/las-10-carreras-con-los-salarios-mas-bajos-en-mexico-segun-el-imco-526227.html}
  
   % Cap. 7 (secc. 7.3): ingreso mensual promedio de nutrición,
   % \$17,773 MXN, según Compara Carreras 2026 del IMCO (Instituto
@@ -5131,6 +5131,19 @@ Recuperado el 18 de octubre de 2026, de \url{https://pro.doctoralia.com.mx/preci
   % proveedor'' (LGPD, 2018, art.~18, inc.~V). Sanciones: hasta
   % 2\% del faturamento con tope de 50 millones de reales por
   % infracción (LGPD, 2018, art.~52, inc.~II).
+
+\item Ley~18.331, de Protección de Datos Personales y Acción de
+  Habeas Data. (2008, 11 de agosto). \textit{Diario Oficial de la
+  República Oriental del Uruguay}.
+  Recuperado el 18 de octubre de 2026, de \url{https://www.impo.com.uy/bases/leyes/18331-2008}
+
+% ------------------------------------------------------------
+  % Cap. 2 (secc. 2.2.2): derecho de acceso, no portabilidad
+  % (Ley 18.331, 2008, art.~14). Datos sensibles (art.~18).
+  % URCDP creada en el art.~31; potestades sancionatorias,
+  % incluida la clausura judicial de bases de datos (art.~35).
+
+% ── M ────────────────────────────────────────────────────────
 
 \item Ley del Impuesto al Valor Agregado. (1978, 29 de diciembre;
   última reforma 12 de noviembre de 2021). \textit{Diario Oficial de la Federación}. Recuperado el 18 de octubre de 2026, de \url{https://www.diputados.gob.mx/LeyesBiblio/pdf/LIVA.pdf}
@@ -5253,19 +5266,6 @@ Federación}. Recuperado el 18 de octubre de 2026, de \url{https://www.diputados
   % Cap. 2 (secc. 2.1.4): el art.~36 obliga a todo profesionista a
   % guardar secreto en los asuntos que le confíen sus clientes (Ley
   % Reglamentaria del Artículo~5°, 1945/2010, art.~36).
-
-\item Ley~18.331, de Protección de Datos Personales y Acción de
-  Habeas Data. (2008, 11 de agosto). \textit{Diario Oficial de la
-  República Oriental del Uruguay}.
-  Recuperado el 18 de octubre de 2026, de \url{https://www.impo.com.uy/bases/leyes/18331-2008}
-
-% ------------------------------------------------------------
-  % Cap. 2 (secc. 2.2.2): derecho de acceso, no portabilidad
-  % (Ley 18.331, 2008, art.~14). Datos sensibles (art.~18).
-  % URCDP creada en el art.~31; potestades sancionatorias,
-  % incluida la clausura judicial de bases de datos (art.~35).
-
-% ── M ────────────────────────────────────────────────────────
 
 \item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
   La lucha por el derecho a saber. \textit{El Sol de México}.
@@ -5413,7 +5413,7 @@ Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/deve
   Europeo y del Consejo relativo a la protección de las personas
   físicas en lo que respecta al tratamiento de datos personales
   y a la libre circulación de estos datos} (GDPR).
-  \textit{Diario Oficial de la Unión Europea}, L~119, 1--88.
+  Diario Oficial de la Unión Europea, L~119, 1--88.
   Recuperado el 18 de octubre de 2026, de \url{https://eur-lex.europa.eu/legal-content/ES/TXT/PDF/?uri=CELEX:32016R0679}
 
   % Cap. 2 (secc. 2.2.4): categoría especial de datos de salud ---
@@ -5480,16 +5480,6 @@ Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/deve
   % communications security over the Internet'' (Rescorla, 2018,
   % p.~1).
 
-\item Resolução CD/ANPD n°~2, de 27 de janeiro de 2022. (2022).
-  \textit{Aprova o Regulamento de aplicação da Lei n°~13.709, de
-  14 de agosto de 2018 (LGPD), para agentes de tratamento de
-  pequeno porte}. Autoridade Nacional de Proteção de Dados.
-  Recuperado el 18 de octubre de 2026, de \url{https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional/atos-normativos/regulamentacoes_anpd/resolucao-cd-anpd-no-2-de-27-de-janeiro-de-2022}
- 
-  % Cap. 2 (secc. 2.3.2): los agentes de tratamiento de pequeño
-  % porte no están obligados a designar encarregado, pero deben
-  % ofrecer un canal de comunicación con el titular (Resolução
-  % CD/ANPD n°~2, 2022, art.~11).
 \item Resolução CD/ANPD n°~15, de 24 de abril de 2024. (2024).
   \textit{Aprova o Regulamento de Comunicação de Incidente de
   Segurança}. Autoridade Nacional de Proteção de Dados.
@@ -5500,6 +5490,16 @@ Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/deve
   % salvo plazo distinto en legislación específica; criterios de
   % riesgo o daño relevante (art.~5).
   
+\item Resolução CD/ANPD n°~2, de 27 de janeiro de 2022. (2022).
+  \textit{Aprova o Regulamento de aplicação da Lei n°~13.709, de
+  14 de agosto de 2018 (LGPD), para agentes de tratamento de
+  pequeno porte}. Autoridade Nacional de Proteção de Dados.
+  Recuperado el 18 de octubre de 2026, de \url{https://www.gov.br/anpd/pt-br/acesso-a-informacao/institucional/atos-normativos/regulamentacoes_anpd/resolucao-cd-anpd-no-2-de-27-de-janeiro-de-2022}
+ 
+  % Cap. 2 (secc. 2.3.2): los agentes de tratamiento de pequeño
+  % porte no están obligados a designar encarregado, pero deben
+  % ofrecer un canal de comunicación con el titular (Resolução
+  % CD/ANPD n°~2, 2022, art.~11).
 \item Secretaría Anticorrupción y Buen Gobierno. (2025a, 21 de
   marzo). \textit{Decreto por el que se reforman, adicionan y derogan diversas disposiciones del
   Reglamento Interior de la Secretaría Anticorrupción y Buen
