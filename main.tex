@@ -246,17 +246,22 @@ el modelo de datos, los requerimientos del producto mínimo viable, tres
 casos de prueba de aceptación y las maquetas navegables de la interfaz.
 Se comprueba en tres niveles: cada una de las once obligaciones tiene un
 componente que la atiende, los casos de prueba se ejecutan sobre las
-maquetas, y un grupo focal de seis a ocho nutriólogos con práctica
-clínica aporta el diagnóstico de la práctica actual y la revisión del
-diseño por expertos. Operar el diseño para 500 nutriólogos y 5,000
+maquetas, y un grupo focal de nutriólogos con práctica clínica aporta
+el diagnóstico de la práctica actual y la revisión del diseño por
+expertos. Operar el diseño para 500 nutriólogos y 5,000
 pacientes costaría entre \$141 y \$299 dólares al mes, una fracción
 mínima de las sanciones que la ley prevé para los datos de salud. Quedan
 fuera del producto mínimo viable la firma electrónica avanzada, la
 exportación estructurada del expediente y la estructura completa de la
 historia clínica.
-% PENDIENTE tras el grupo focal (23-oct): una o dos oraciones con el
-% diagnóstico (sección 3.3): qué obligaciones faltan en la práctica
-% reportada y por qué. Una oración con la evaluación de expertos (7.1).
+ 
+En el grupo focal, ninguno de los ocho nutriólogos analizados recaba
+un consentimiento específico para los datos de salud, solo uno entrega
+el aviso de privacidad por escrito, ninguno conoce el plazo legal de
+respuesta ni a la autoridad vigente, y la conservación de cinco años se
+conoce más de lo que se aplica. En la evaluación, los ocho usarían las
+funciones mostradas, consideran razonable la carga de trabajo que piden
+y perciben el folio y el código de acceso como una protección.
  
 El caso muestra que las obligaciones de la consulta privada pueden
 traducirse en funciones concretas que dejan las decisiones en manos del
@@ -603,8 +608,7 @@ al sector privado (2009, 2010--2011 y 2025), una estrategia de
 comunicación dirigida a los profesionales de salud
 independientes, como lo son los nutriólogos de consulta privada. La
 falta de una estrategia así es una de las explicaciones posibles del
-desconocimiento que este caso explora; el diagnóstico del capítulo
-tres puede aportar indicios a favor o en contra.
+desconocimiento que este caso explora; el diagnóstico del capítulo~3 puede aportar indicios a favor o en contra.
  
 \subsubsection{México y la protección de datos: entre compromisos
 internacionales y necesidades internas}
@@ -1697,7 +1701,7 @@ la LFPDPPP}
   riesgos corren antes de diseñar. Si los nutriólogos
   independientes tienen formación y herramientas para levantar ese
   inventario es una de las preguntas que el diagnóstico del
-  capítulo tres explora. NutriApp documenta el
+  capítulo~3 explora. NutriApp documenta el
   inventario y el análisis de riesgos de los datos que se tratan
   dentro de la plataforma y se los entrega al nutriólogo como
   insumo; la obligación del artículo~61 sigue siendo suya y abarca
@@ -1734,7 +1738,7 @@ este capítulo con el requerimiento técnico que la atiende en
 NutriApp. Para el lector muestran el fundamento normativo de los
 requerimientos incluidos en ellas; para el desarrollo conectan el
 marco legal con la arquitectura técnica descrita en el
-capítulo cinco. Por legibilidad, la tabla se presenta en dos partes.
+capítulo~5. Por legibilidad, la tabla se presenta en dos partes.
 
 % ── TABLA 1: Requerimientos LFPDPPP y Reglamento ─────────────────
 \begin{longtable}{>{\raggedright\arraybackslash}p{2.8cm}
@@ -1812,9 +1816,10 @@ capítulo cinco. Por legibilidad, la tabla se presenta en dos partes.
   Autenticación verificable de usuarios
     & NOM-024-SSA3-2012, numeral~6.6.3 (requisito funcional de autenticación
       de usuarios antes de permitir acceso a la información)
-    & Autenticación multifactor (MFA) obligatoria para el
-      nutriólogo y opcional para el paciente, que solo accede a su
-      propio expediente. Gestión de identidades a través de Amazon
+    & Autenticación multifactor (MFA) con código TOTP de una
+      aplicación de autenticación, obligatoria para el nutriólogo, el
+      docente y el administrador y opcional para el paciente, que solo
+      accede a su propio expediente. Gestión de identidades a través de Amazon
       Cognito. Sesiones con tiempo de expiración configurable
       según rol del usuario. Registro de cada inicio de sesión
       exitoso y fallido. \\
@@ -2028,8 +2033,8 @@ que usa NutriApp.
   \midrule
   Identidad y acceso
     & Servicio de identidades y su disponibilidad
-    & Políticas de acceso por rol y MFA obligatoria para el
-      nutriólogo
+    & Políticas de acceso por rol y MFA (TOTP) obligatoria para el
+      nutriólogo, el docente y el administrador
     & Altas y bajas de sus pacientes; custodia de sus
       credenciales \\[4pt]
   Configuración de servicios
@@ -2086,11 +2091,23 @@ a adoptar medidas de seguridad administrativas, técnicas y físicas
 contra el acceso no autorizado (LFPDPPP, 2025, art.~18) y la
 NOM-024 establece credenciales propias por usuario y permisos
 según su perfil (NOM-024-SSA3-2012, 2012, numerales~6.6.3
-y~6.6.4), sin exigir un segundo factor. Para el paciente, que solo
-accede a su propio expediente, el segundo factor es opcional. Las
-identidades se gestionan con Amazon Cognito, que admite
-\textit{passkeys} sobre los estándares WebAuthn y FIDO2 (AWS,
-2024a) además de OAuth~2.0, y el control de acceso por rol limita
+y~6.6.4), sin exigir un segundo factor. El segundo factor es un
+código de un solo uso basado en tiempo (TOTP, por \textit{time-based
+one-time password}; M'Raihi et al., 2011) que genera una aplicación
+de autenticación en el teléfono del profesional y que Amazon Cognito
+gestiona como MFA por \textit{software token} (AWS, s.f.-a); la
+contraseña más ese autenticador alcanza AAL2, que exige combinar una
+contraseña con un autenticador físico de un solo factor (NIST,
+2025a). No se usan códigos por mensaje de texto: NIST restringe el uso
+de la red telefónica para la verificación fuera de banda (NIST,
+2025a), y el SMS tendría un costo por envío ajeno al modelo de la
+sección~7.3. Las \textit{passkeys} sobre los estándares WebAuthn y
+FIDO2, que Cognito admite (AWS, 2024a), quedan como autenticador
+adicional opcional. La misma regla aplica al docente y al
+administrador, cuentas que operan sobre datos de terceros; para el
+paciente, que solo accede a su propio expediente, el segundo factor es
+opcional. Las identidades se gestionan con Amazon Cognito, con
+OAuth~2.0, y el control de acceso por rol limita
 lo que cada cuenta ve: el nutriólogo, solo a sus pacientes; el
 paciente, solo su expediente; el docente, solo los expedientes ficticios de sus estudiantes, en modo de lectura; el administrador, ningún contenido
 clínico.
@@ -2108,13 +2125,13 @@ de auditoría se cifran con AES-256, el estándar del FIPS~197,
 publicado en 2001 y actualizado en 2023 (NIST, 2023).
  
 Las llaves siguen un esquema de cifrado por envolvente (AWS,
-s.f.-a): una llave maestra en AWS Key Management Service por
+s.f.-c): una llave maestra en AWS Key Management Service por
 entorno, cuyas políticas definen quién puede usarla, y una llave de
 datos por expediente, cifrada bajo la maestra. El registro de
 auditoría conserva cada uso de la llave maestra. El esquema tiene
 una consecuencia para la eliminación: una llave maestra no se
 borra en el acto; su eliminación se programa con una espera de
-siete a treinta días (AWS, s.f.-e), por lo que destruir un
+siete a treinta días (AWS, s.f.-i), por lo que destruir un
 expediente significa destruir su llave de datos y no la llave del
 entorno. Estas medidas atienden el deber de proteger los datos
 contra acceso o tratamiento no autorizado (LFPDPPP, 2025,
@@ -2131,9 +2148,9 @@ NutriApp esa trazabilidad se compone de tres capas. AWS CloudTrail
 registra por defecto los eventos de administración de la cuenta;
 los eventos de datos, como las lecturas y escrituras de objetos en
 S3 y las invocaciones de funciones, no se registran por defecto,
-de modo que la configuración los activa (AWS, s.f.-i). La
+de modo que la configuración los activa (AWS, s.f.-p). La
 actividad SQL de la base de datos, que CloudTrail no registra, se
-audita con la extensión pgAudit de RDS para PostgreSQL, cuyos registros se publican en Amazon CloudWatch Logs (AWS, s.f.-k).
+audita con la extensión pgAudit de RDS para PostgreSQL, cuyos registros se publican en Amazon CloudWatch Logs (AWS, s.f.-s).
 En la capa de aplicación, el registro \texttt{DeclarationLog}
 conserva cada consentimiento, solicitud ARCO y declaración
 profesional con folio, fecha y una copia de los datos declarados, y
@@ -2142,10 +2159,12 @@ modificó o descargó cada expediente, con los intentos fallidos.
  
 Los tres registros se exportan a S3 con Object Lock en modo de
 cumplimiento, que impide borrarlos o sobrescribirlos durante la
-retención, incluso con privilegios administrativos (AWS, s.f.-h),
+retención, incluso con privilegios administrativos (AWS, s.f.-o),
 y se conservan los cinco años que la NOM-004 fija para el
 expediente (NOM-004-SSA3-2012, 2012, numeral~5.4). Solo un rol de
-auditoría accede a los registros completos. El nutriólogo consulta
+auditoría accede a los registros completos: un rol de IAM de solo
+lectura de la operación del encargado, no un usuario de la aplicación
+(sección~5.1). El nutriólogo consulta
 el historial de sus expedientes sin poder alterarlo, y el paciente
 ve una vista derivada con los accesos a su propio expediente.
  
@@ -2252,11 +2271,11 @@ El análisis normativo del capítulo anterior establece qué exige la
 ley. Este capítulo busca establecer qué ocurre en la práctica: cómo
 manejan sus datos los nutriólogos en México, qué herramientas usan,
 qué obligaciones faltan en su práctica y qué necesitarían para cumplirlas. Para
-responder esas preguntas, el caso reúne a un grupo de seis a ocho
-nutriólogos con práctica clínica en una sesión de grupo focal
-(sección~4.3). El capítulo presenta el contexto del sector, el diseño
+responder esas preguntas, el caso reunió a nueve nutriólogos con
+práctica clínica en una sesión de grupo focal, de los que el análisis
+considera a ocho (sección~4.3). El capítulo presenta el contexto del sector, el diseño
 del diagnóstico y sus resultados; la valoración que los mismos
-participantes hacen del diseño se reporta en el capítulo siete.
+participantes hacen del diseño se reporta en el capítulo~7.
 
 % ────────────────────────────────────────────────────────────────────────────
 \subsection{Hábitos digitales del nutriólogo en México}
@@ -2385,7 +2404,7 @@ sección~4.3: el cuestionario previo, que se contesta en línea
 antes de la sesión, y los cuatro primeros bloques de la guía de discusión; las dos
 ocurren antes de que los participantes conozcan NutriApp. El resto de
 la sesión, con la presentación de las maquetas y el quinto bloque, evalúa
-el diseño y se reporta en el capítulo siete. Separar los dos momentos evita que la maqueta
+el diseño y se reporta en el capítulo~7. Separar los dos momentos evita que la maqueta
 condicione lo que los participantes dicen de su práctica actual.
  
 El cuestionario previo da las métricas base. Además del perfil del
@@ -2395,12 +2414,21 @@ herramienta principal del expediente, si sabe qué datos de sus pacientes
 guarda y en qué lugares, si entrega algún aviso sobre el
 uso de los datos, el medio por el que comparte información de pacientes
 y si ha recibido solicitudes para ver, corregir o borrar sus datos.
+Una tercera parte, de nueve preguntas cerradas con «No lo sé» como
+respuesta válida, registra lo que el participante sabe hoy de la ley:
+si recibió formación en protección de datos, si conoce la LFPDPPP y a
+su autoridad, si identifica los datos de salud como sensibles y su
+propio papel de responsable, y si conoce el aviso de privacidad, el
+plazo para responder una solicitud del paciente, la existencia de
+multas y el plazo de conservación del expediente.
 Cada pregunta sobre la práctica corresponde a una
 obligación de las Tablas~\ref{tab:trazabilidad-1}
-y~\ref{tab:trazabilidad-2}. Con seis a ocho participantes, los
+y~\ref{tab:trazabilidad-2}, y cada pregunta de conocimiento se
+califica contra la norma que indica el Anexo~\ref{anexo:grupo-focal}.
+Con seis a ocho participantes, los
 resultados se reportan como conteos, es decir, cuántos de ellos
-cumplen cada obligación, y no como porcentajes ni promedios
-generalizables.
+cumplen cada obligación y cuántos conocen cada requisito, y no como
+porcentajes ni promedios generalizables.
 
 Los cuatro primeros bloques de la guía recorren la práctica actual: cómo se registra y se organiza la información del paciente en el
 expediente clínico y cuánto tiempo se conserva; el aviso de privacidad,
@@ -2425,42 +2453,122 @@ cuestionario previo se contrastan con lo que los participantes describen en
 la discusión, y ambos se cruzan con las obligaciones de las tablas de
 trazabilidad. El resultado es la lista de obligaciones presentes y
 ausentes en la práctica reportada, con las razones y los obstáculos
-que la explican. Esa lista es la línea base contra la que el capítulo
-siete valora el diseño.
+que la explican. Esa lista es la línea base contra la que el capítulo~7 valora el diseño.
  
 \subsection{Resultados del diagnóstico}
-% NOTA: se completa tras la sesión del grupo focal (23-oct-2026, en línea)
-% con el cuestionario previo (conteos), la transcripción anonimizada y el
-% resumen ejecutivo del facilitador externo. Sin porcentajes: n = 6 a 8.
-% Orden: el de los temas de la guía y de las tablas de trazabilidad.
+ 
+La línea base se integró con el cuestionario previo, que los ocho
+participantes analizados respondieron el 23 de octubre de 2026 antes de
+la sesión, y con los cuatro primeros bloques de la discusión. Los
+conteos completos, pregunta por pregunta, están en el
+Anexo~\ref{anexo:previo-resultados}; aquí se leen contra las
+obligaciones de las Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}. De las nueve personas que asistieron, una
+se excluyó del análisis (sección~4.3.4).
  
 \paragraph{Perfil de los participantes}
-\mbox{}
-% Años de ejercicio, tipo de consulta y pacientes al mes (conteos).
+Cuatro ejercen en consulta privada, dos en una institución y dos en
+ambos ámbitos; en la sesión, dos describieron práctica en un hospital
+público y una en salud ocupacional de empresa. Cuatro llevan menos de
+dos años atendiendo pacientes y cuatro entre dos y cinco. Tres
+consultan sobre todo en persona, uno en línea y cuatro de forma mixta;
+tres atienden menos de veinte pacientes al mes, uno entre veinte y
+cincuenta, y cuatro entre cincuenta y uno y cien.
  
 \paragraph{Herramientas y práctica actual}
-\mbox{}
-% Herramienta del expediente y protección de acceso; con quién y por
-% qué medio se comparten datos de pacientes.
+En el cuestionario, tres llevan el expediente principal en una hoja de
+cálculo, tres en un software especializado para nutriólogos, uno en un
+documento de texto y una en una aplicación de notas. La discusión
+matizó ese conteo: seis de los ocho usan algún software especializado
+---tres productos comerciales y uno hecho a la medida---, pero en todos
+los casos convive con archivos de uso general (documentos de texto,
+hojas de cálculo, carpetas en la computadora, nube personal o un disco
+duro externo); en la práctica hospitalaria pública, el expediente es
+impreso. La información reside en la computadora (cinco), en la nube de
+consumo (cinco), en el servidor del software (cuatro), en el teléfono
+(uno) y en papel (uno); seis dicen saber qué datos guardan y en qué
+lugares, y dos «más o menos». La protección declarada es la contraseña
+del dispositivo (cinco), la del archivo o la aplicación (cuatro) y el
+respaldo periódico (tres); nadie marcó cifrado ni usuarios individuales
+por persona, y una respuesta no declara protección alguna. Nadie
+comparte el expediente con asistentes: en el único caso con apoyo
+externo, quien confirma las citas ve solo el nombre y el teléfono. La
+compartición con terceros es esporádica ---cuatro la harían o la han
+hecho por WhatsApp y dos por correo; tres no comparten--- y, en los
+casos relatados en la discusión, medió el aviso al paciente o una
+firma.
  
 \paragraph{Aviso de privacidad}
-\mbox{}
+Uno de los ocho entrega un aviso por escrito o en pantalla, uno lo
+explica de palabra y seis no lo tocan. En la discusión aparecieron los
+dos mecanismos existentes: un aviso que el paciente firma en una
+plataforma de firma electrónica y una casilla de aceptación en el
+formulario previo a la consulta; con pacientes menores de edad, en
+ambos casos firma el padre, la madre o el tutor. Preguntados de forma
+cerrada por el obstáculo, tres lo atribuyen a desconocimiento (dos no
+sabían que era obligatorio y uno no sabía qué debe decir), dos a que su
+herramienta no lo incluye y uno a falta de tiempo; dos declaran ya
+hacerlo (Anexo~\ref{anexo:salida-resultados}).
  
 \paragraph{Consentimiento por escrito para datos de salud}
-\mbox{}
+Ninguno recaba un consentimiento específico para los datos de salud:
+dos lo integran al consentimiento del tratamiento clínico y seis no
+piden ninguna autorización firmada. La distinción entre el
+consentimiento clínico y el de datos (sección~3.2) no apareció en la
+discusión ni en los mecanismos descritos.
  
 \paragraph{Derechos ARCO y medidas de seguridad}
-\mbox{}
+En el cuestionario, nadie reporta haber recibido solicitudes para ver,
+corregir o borrar datos; en la discusión, una participante relató dos
+solicitudes de acceso atendidas con firma de por medio. La diferencia
+ilustra el contraste entre el registro cerrado y el relato que busca la
+triangulación (sección~4.3.5). Ante la petición hipotética de borrar
+toda la información, quienes respondieron la resolverían borrando el
+expediente, con un documento o un escrito del paciente como constancia;
+nadie mencionó la conservación mínima ni el bloqueo. Ninguno de los
+ocho conoce el plazo legal de respuesta ni identifica a la autoridad
+vigente ---una respuesta nombró al INAI y dos a la COFEPRIS---, y nadie
+conoce el orden de magnitud de las multas, aunque cuatro saben que
+existen. La conservación muestra la brecha más clara entre lo que se
+sabe y lo que se hace: seis saben que el expediente clínico se conserva
+cinco años, pero solo uno declara conservarlo cinco años o más; cuatro
+lo conservan de uno a cuatro años, uno menos de un año y dos lo
+conservan indefinidamente o sin regla definida, y en la discusión nadie
+ha depurado un expediente, «por si el paciente regresa» o hasta que
+falte espacio. Ante la pérdida de un equipo o un acceso no autorizado,
+ninguno tiene un procedimiento: las respuestas se orientan a recuperar
+la información desde la nube o el respaldo, solo una describe contención
+(cerrar sesiones y cambiar contraseñas) y solo una, al preguntarlo,
+avisaría a sus pacientes tras confirmar una filtración. Cuatro de los
+ocho no han recibido formación alguna en protección de datos, y nadie
+declara conocer la ley al punto de aplicarla en su consulta.
  
 \paragraph{Obligaciones presentes y ausentes en la práctica reportada}
-\mbox{}
-% Tabla: obligación (Tablas de trazabilidad) | participantes que la
-% cumplen según el cuestionario previo | lo que describen en la discusión.
+Leída contra las Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}, la práctica reportada presenta de forma
+parcial las medidas de seguridad básicas (obligación~III: contraseñas y
+respaldo, sin cifrado) y el conocimiento del propio inventario
+(VI); el acceso de hecho es individual (IV), pero sin usuarios propios
+ni registro de quién consulta qué expediente (VIII, ausente en todas
+las herramientas descritas). Están ausentes el aviso de privacidad
+sistemático (II), el consentimiento específico para datos de salud (I),
+el procedimiento ante vulneraciones con aviso al titular (V), la
+gestión de solicitudes con plazo y registro (VII) y la regla de
+conservación aplicada (IX). El uso de nube y de software de terceros es
+general, sin verificación declarada de las condiciones del proveedor
+(XI); una participante cambió de herramienta precisamente por
+desconfianza en el acceso del personal del proveedor a los datos. La
+obligación~X no se midió en campo, porque la pregunta prevista no se
+incluyó en el formulario aplicado (Anexo~\ref{anexo:cuestionario}), y
+se evalúa solo con el análisis documental. Los obstáculos que los
+participantes reportan son de desconocimiento y de herramienta, no de
+rechazo a la obligación. Esta lista es la línea base contra la que el
+capítulo~7 valora el diseño.
  
 % ============================================================
 % CAPÍTULO 4 — METODOLOGÍA (grupo focal con expertos)
-% Parámetros de campo: una sesión en línea de 60 min con 6 a 8
-% nutriólogos con consulta, 23-oct-2026, facilitador externo.
+% Parámetros de campo: sesión en línea del 23-oct-2026; asistieron 9,
+% se analizan 8; moderó el asesor por ausencia del facilitador externo.
 % Sin entradas bibliográficas nuevas.
 % ============================================================
 \section{Metodología}
@@ -2491,24 +2599,24 @@ effectively and efficiently accomplished''} (p.~76).
  
 El proceso sigue las seis actividades que Peffers et al. (2007) proponen
 para este tipo de investigación. La identificación del problema y la
-definición de objetivos ocupan los capítulos uno a tres, con una entrada
+definición de objetivos ocupan los capítulos~1 a~3, con una entrada
 centrada en el problema que plantea el marco normativo: el diagnóstico
-empírico del capítulo tres se recoge en la misma sesión que la evaluación
+empírico del capítulo~3 se recoge en la misma sesión que la evaluación
 y sirve de línea base (sección~3.2), no de insumo del diseño; los
-capítulos dos (secciones~2.4 y~2.5), cinco y seis desarrollan el
+capítulos~2 (secciones~2.4 y~2.5), 5 y~6 desarrollan el
 artefacto. La demostración, que en Peffers et al.
 consiste en mostrar que el artefacto resuelve una instancia del
-problema, se hace en el capítulo seis con maquetas navegables de la
+problema, se hace en el capítulo~6 con maquetas navegables de la
 interfaz y una prueba piloto con el grupo
-focal. El capítulo siete evalúa con los tres métodos de la
+focal. El capítulo~7 evalúa con los tres métodos de la
 sección~4.4.2: casos de prueba de aceptación que se ejecutan sobre las
-maquetas, revisión por expertos en el quinto bloque de la guía de discusión y observación de lo que
+maquetas, revisión por expertos de los participantes del grupo focal y observación de lo que
 los participantes dicen y hacen frente a ellas; verifica además la
 trazabilidad de las once obligaciones (sección~7.2) y estima el costo de
 operar el diseño (sección~7.3). Este
 documento constituye la comunicación. El ciclo no incluye la
 implementación del sistema ni su evaluación en operación, porque el
-alcance termina en el diseño; el capítulo ocho propone la ruta para
+alcance termina en el diseño; el capítulo~8 propone la ruta para
 quien continúe el trabajo.
  
 La estrategia de caso de estudio se adopta porque el contexto es
@@ -2527,7 +2635,7 @@ evaluación en producción quedan fuera. Peffers et al. (2007) admiten
 como artefacto de investigación de diseño cualquier objeto diseñado en
 el que esté incorporada una contribución de investigación. El artefacto
 de este caso es el paquete de diseño. Lo integran el marco normativo y
-técnico del capítulo dos, la matriz de trazabilidad entre obligaciones
+técnico del capítulo~2, la matriz de trazabilidad entre obligaciones
 y requerimientos, la arquitectura de servicios, los diagramas de
 ingeniería, el modelo de datos, los requerimientos del producto mínimo
 viable, los casos de prueba de aceptación y las maquetas navegables de
@@ -2545,7 +2653,7 @@ se desplegó ni se probó.
  
 \subsubsection{Criterios de selección del marco legal}
  
-El marco normativo del capítulo dos se construyó con fuentes primarias
+El marco normativo del capítulo~2 se construyó con fuentes primarias
 (la LFPDPPP de 2025, el Reglamento de 2011, la Ley General de Salud,
 la NOM-004-SSA3-2012 y la NOM-024-SSA3-2012) y con fuentes secundarias:
 literatura académica y documentación técnica de los estándares
@@ -2623,44 +2731,57 @@ sesión, participar y que la sesión se transcriba de forma automática;
 se excluyen quienes no atienden pacientes, porque las preguntas se
 refieren a su experiencia clínica.
  
-Se forma un solo grupo de seis a ocho nutriólogos. La invitación se
-envió por mensaje directo en Doctoralia a diez nutriólogos con consulta
-activa, para asegurar al menos seis participantes. La sesión se realiza
-el viernes 23 de octubre de 2026, a las 14:00~h (hora de la Ciudad de
+Se formó un solo grupo. La invitación se envió por mensaje directo en
+Doctoralia a diez nutriólogos con consulta activa, para asegurar al
+menos seis participantes; asistieron nueve. La sesión se realizó el
+viernes 23 de octubre de 2026, a las 14:00~h (hora de la Ciudad de
 México), en línea por Google Meet, con su función de transcripción
-automática, y dura 60~minutos. La conduce un facilitador externo con
-experiencia en grupos focales, que recibe con anticipación los
-objetivos de la sesión y los temas de la guía de discusión y define la
-dinámica y los tiempos de cada bloque. El diseño de los instrumentos se
+automática, y duró 60~minutos. El diseño preveía la conducción por un
+facilitador externo con experiencia en grupos focales, que recibió con
+anticipación los objetivos de la sesión, la guía de discusión y las
+conclusiones por corroborar o desechar; una ausencia imprevista el
+mismo día llevó a que la sesión la moderara el asesor de la tesis, con
+esos mismos materiales. El cambio consta en la minuta
+(Anexo~\ref{anexo:minuta}) y se declara como limitación
+(secciones~4.4.3 y~8.3). El diseño de los instrumentos se
 fundamenta en la metodología de grupos focales y de construcción de
 instrumentos de la investigación en ciencias sociales
-(Hernández-Sampieri et al., 2014) y se somete a la revisión de un
+(Hernández-Sampieri et al., 2014) y se sometió a la revisión de un
 colaborador externo con experiencia en trabajo de campo, ajeno al grupo
 focal, antes de su aplicación. El procesamiento de los datos y la
 interpretación de los resultados en relación con el marco normativo
-están a cargo del autor, que asiste a la sesión para presentar las
+están a cargo del autor, que asistió a la sesión para presentar las
 maquetas y el cierre de requisitos, sin intervenir en la discusión.
  
 \subsubsection{Instrumentos}
  
-Los materiales del estudio de campo son tres y se aplican en este
-orden: el consentimiento informado, el cuestionario previo y la guía de
-discusión. Los tres se reproducen en el Anexo~\ref{anexo:grupo-focal}. El \textit{consentimiento informado} se recaba antes de la
-sesión; con su aceptación, cada participante autoriza su intervención y
-la transcripción automática de la sesión.
+Los materiales del estudio de campo son cuatro y se aplican en este
+orden: el consentimiento informado, el cuestionario previo, la guía de
+discusión y una encuesta de salida anónima que, después de la sesión,
+registra la valoración de las funciones mostradas, la percepción de la
+carga de trabajo que pedirían y los cambios que cada participante prevé
+en su práctica. Los cuatro se reproducen en el
+Anexo~\ref{anexo:grupo-focal}. El \textit{consentimiento informado} se
+recabó antes de la sesión; con su aceptación, cada participante
+autorizó su intervención y la transcripción automática de la sesión.
  
 El \textit{cuestionario previo} es breve y se contesta antes de la
-sesión en Google Forms, sin inicio de sesión ni registro del correo.
+sesión en Google Forms, sin inicio de sesión ni registro del correo; en
+la aplicación se envió junto con el consentimiento informado, en un
+solo formulario (sección~4.5).
 Recoge el perfil del participante (ámbito de ejercicio, años de
 práctica con pacientes, tipo de consulta y número aproximado de
 pacientes al mes) y su práctica actual con datos de pacientes: la
 herramienta principal del expediente, si sabe qué datos de sus
 pacientes guarda y en qué lugares, si entrega algún aviso sobre el uso
 de los datos, el medio por el que comparte información de pacientes y
-si ha recibido solicitudes para ver, corregir o borrar sus datos. Sus
-respuestas forman la línea base del capítulo tres, se recogen antes de
-que el participante conozca NutriApp y se manejan de forma
-confidencial.
+si ha recibido solicitudes para ver, corregir o borrar sus datos.
+Cierra con nueve preguntas cerradas sobre lo que el participante sabe
+de la ley, con «No lo sé» como respuesta válida; el formulario aclara
+que no es un examen y que nadie ve las respuestas individuales. Sus
+respuestas forman la línea base del capítulo~3, de práctica y de
+conocimiento, se recogen antes de que el participante conozca NutriApp
+y se manejan de forma confidencial.
  
 La \textit{guía de discusión} organiza la sesión en cinco bloques con
 preguntas abiertas de práctica antes que de conocimiento, para que el
@@ -2682,7 +2803,7 @@ describe la práctica antes de conocer el diseño.
  
 \subsubsection{Procedimiento de sesión}
  
-La sesión sigue este orden en 60~minutos. El facilitador define la
+La sesión siguió este orden en 60~minutos; el moderador definió la
 dinámica y el tiempo de cada bloque, salvo los diez minutos finales. La
 línea base se recoge antes de mostrar cualquier material de NutriApp,
 para que la maqueta no condicione las respuestas sobre la práctica
@@ -2700,22 +2821,35 @@ actual.
   \item Cierre, en los últimos diez minutos: una exposición breve de los
     requisitos mínimos de la LFPDPPP para el consultorio y respuesta a
     preguntas frecuentes. Va al final, una vez concluida la discusión,
-    para no influir en lo que los participantes reportan.
+    para no influir en lo que los participantes reportan; tras la
+    sesión se envía a los participantes la encuesta de salida y el
+    documento de referencia comprometido en el cierre
+    (Anexo~\ref{anexo:referencia}).
 \end{enumerate}
  
-La información de la sesión se maneja de forma confidencial; la
-transcripción automática sigue el procedimiento de la sección~4.5, y
-el anexo del estudio de campo es el resumen ejecutivo de la sesión, que elabora el facilitador externo.
+La información de la sesión se maneja de forma confidencial, y la
+transcripción automática sigue el procedimiento de la sección~4.5. El
+anexo del estudio de campo es la minuta de la sesión, que elaboró el
+autor a partir de la transcripción anonimizada ante el cambio de
+moderador (Anexo~\ref{anexo:minuta}). El quinto bloque no llegó a
+desarrollarse como discusión, porque tras la presentación de las
+maquetas no hubo intervenciones; las opiniones sobre las funciones se
+recogieron con la encuesta de salida (sección~7.1).
  
 \subsubsection{Muestra}
  
-La muestra es no probabilística y dirigida: de seis a ocho nutriólogos
-con práctica clínica, elegidos por su ejercicio profesional y no por
-su representatividad estadística. El tamaño está dentro del rango de seis a
-diez participantes que se recomienda para grupos de enfoque sobre
-asuntos de la práctica cotidiana (Creswell, 2005, como se citó en
-Hernández-Sampieri et al., 2014, p.~409) y permite que todos
-intervengan en una sesión de 60 minutos.
+La muestra fue no probabilística y dirigida: nutriólogos con práctica
+clínica, elegidos por su ejercicio profesional y no por su
+representatividad estadística. Asistieron nueve; el análisis considera
+a ocho, porque una participante atendió consulta durante la sesión, no
+intervino en la discusión y contestó el cuestionario previo horas
+después de esta, cuando ya no registraba la práctica previa al contacto
+con el diseño; sus respuestas se documentan, fuera de los conteos, en
+el Anexo~\ref{anexo:previo-resultados}. El tamaño queda dentro del
+rango de seis a diez participantes que se recomienda para grupos de
+enfoque sobre asuntos de la práctica cotidiana (Creswell, 2005, como se
+citó en Hernández-Sampieri et al., 2014, p.~409) y permitió que todos
+intervinieran en una sesión de 60 minutos.
 El caso es único y los participantes son fuentes de evidencia dentro
 de él, en el sentido de Yin (2018); el tamaño de la muestra no busca
 inferencia estadística sobre el gremio. Los patrones que surjan,
@@ -2725,7 +2859,9 @@ como evidencia exploratoria del grupo estudiado.
 \subsubsection{Análisis y triangulación}
  
 El cuestionario previo se procesa con estadística descriptiva:
-frecuencias absolutas por pregunta y por perfil. Con seis a ocho
+frecuencias absolutas por pregunta y por perfil; en las preguntas de
+conocimiento se cuenta cuántos participantes responden conforme a la
+norma, cuántos responden otra cosa y cuántos marcan «No lo sé». Con seis a ocho
 participantes no se calculan porcentajes ni se generalizan
 proporciones. La transcripción anonimizada se codifica por los bloques
 de la guía; dentro de cada bloque se agrupan las prácticas
@@ -2734,14 +2870,18 @@ obstáculos que identifican.
  
 La triangulación contrasta lo que los participantes declaran en el
 cuestionario previo con lo que describen en la discusión, para detectar
-diferencias entre lo que se dice y lo que se hace; cruza las prácticas
+diferencias entre lo que se dice y lo que se hace, y entre lo que se
+sabe de la ley y lo que se practica; cruza las prácticas
 reportadas con las obligaciones de las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}, para identificar qué obligaciones están
 presentes en la práctica reportada y cuáles faltan; y compara esos
 hallazgos con la literatura sobre protección de datos en profesiones de
 salud en México y América Latina. Los resultados del
-diagnóstico se presentan en el capítulo tres; las opiniones sobre las
-funciones de NutriApp, en el capítulo siete.
+diagnóstico se presentan en el capítulo~3; las opiniones sobre las
+funciones de NutriApp, en el capítulo~7. El cruce entre el
+cuestionario y la discusión se hace en el nivel del grupo, sin
+emparejar las respuestas y las intervenciones de una misma persona,
+conforme al compromiso del consentimiento (sección~4.5).
  
 % ------------------------------------------------------------
 \subsection{Diseño y evaluación del artefacto}
@@ -2763,12 +2903,12 @@ suficiente, respaldado por el pilar de seguridad del Amazon Web Services
 sección~2.5.6. El resultado se
 documenta en las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2} y se materializa en la arquitectura del
-capítulo cinco.
+capítulo~5.
  
 \subsubsection{Demostración y evaluación}
  
 Las maquetas navegables, construidas en Figma Make a partir de los
-requerimientos del capítulo seis, demuestran el artefacto junto con la
+requerimientos del capítulo~6, demuestran el artefacto junto con la
 prueba piloto en la sesión del grupo focal. La evaluación
 combina tres métodos: pruebas y observación, afines a dos de los
 métodos que Hevner et al. (2004) reconocen para artefactos de diseño, y
@@ -2779,18 +2919,19 @@ requerimientos. Cada caso indica la obligación que lo origina, la
 precondición, los pasos, el resultado esperado conforme a la ley y la
 evidencia que debe verse en la maqueta. El autor ejecuta los casos como
 recorrido sobre las maquetas y los califica en tres valores: refleja
-el diseño, lo refleja parcialmente o no lo refleja. El capítulo seis
+el diseño, lo refleja parcialmente o no lo refleja. El capítulo~6
 presenta los tres casos del producto mínimo viable (consentimiento del
 paciente, alta de un expediente y solicitud de cancelación) y el
-capítulo siete reporta su resultado. Un resultado de «no refleja» se
+capítulo~7 reporta su resultado. Un resultado de «no refleja» se
 reporta como hallazgo y señala la distancia entre la maqueta y el
 diseño.
  
 Los nutriólogos del grupo focal hacen la \textit{revisión por
-expertos} con sus opiniones sobre cada función de las maquetas en el
-quinto bloque de la guía de discusión. La \textit{observación en el
-caso} recoge lo que dicen y hacen frente a las maquetas durante ese
-bloque.
+expertos} con sus opiniones sobre las funciones de las maquetas,
+previstas para el quinto bloque de la guía de discusión y recogidas, en
+la aplicación, con la encuesta de salida (sección~7.1). La
+\textit{observación en el caso} recoge lo que dicen y hacen frente a
+las maquetas durante la sesión.
  
 \subsubsection{Alcance y limitaciones}
  
@@ -2807,8 +2948,9 @@ El análisis normativo se centra en la LFPDPPP, su Reglamento, la
 NOM-004 y la NOM-024. Una implementación requeriría análisis
 adicionales en materia fiscal, laboral y sanitaria.
  
-Los participantes son de seis a ocho nutriólogos con práctica clínica,
-reunidos en una sola sesión y seleccionados de forma dirigida. Los
+Los participantes fueron nueve nutriólogos con práctica clínica (ocho
+analizados), reunidos en una sola sesión y seleccionados de forma
+dirigida. Los
 resultados describen a ese grupo y constituyen evidencia exploratoria,
 sin inferencia sobre el gremio. Quienes aceptan participar en un
 estudio sobre protección de datos, reclutados en un directorio en línea,
@@ -2826,14 +2968,24 @@ abandonarse en cualquier momento sin consecuencia; cada participante
 acepta, en el consentimiento informado previo a la sesión,
 participar y que la sesión se transcriba de forma automática, y declara ser
 mayor de edad. El cuestionario previo se contesta en Google Forms, sin
-inicio de sesión, y no pide nombre, cédula profesional ni correo. Cada
+inicio de sesión. En la aplicación, el aviso de participación y el
+cuestionario se enviaron en un solo formulario, que registró el nombre
+de cada participante junto con sus respuestas para coordinar la sesión
+y el pago; no pidió cédula profesional ni correo. Antes del análisis,
+el autor separó los nombres de las respuestas, asignó a cada
+participante un código y conservó los nombres solo en el registro de
+pagos, de modo que ni el análisis ni los resultados identifican a
+nadie; la encuesta de salida pidió también el nombre y se trató de la
+misma forma. Cada
 participante recibe \$350 pesos como pago por su tiempo y su experiencia; el
 monto no depende de sus respuestas. La sesión es
 confidencial; la transcripción automática se anonimiza antes de
-elaborar el resumen ejecutivo, que no identifica a los participantes;
-el audio no se graba ni se conserva. Los resultados se reportan en
+elaborar la minuta de la sesión, que no identifica a los participantes;
+el audio no se graba ni se conserva, y la transcripción original se
+elimina una vez elaborada la minuta. Los resultados se reportan en
 forma agregada o con citas sin atribución, y el
-Anexo~\ref{anexo:grupo-focal} incluye el resumen ejecutivo de la sesión.
+Anexo~\ref{anexo:grupo-focal} incluye la minuta de la sesión y los
+resultados agregados de los cuestionarios.
  
 El uso de las maquetas de NutriApp en la sesión es demostrativo.
 Ningún dato real de pacientes se captura en ellas: todos los perfiles
@@ -2849,14 +3001,18 @@ Ninguna organización externa financió ni condicionó este trabajo, y
 ningún participante tiene relación con esa eventual transferencia. El
 colaborador externo que revisa los instrumentos antes de su aplicación lo hace
 sin contraprestación, no participa en la interpretación de los
-resultados y no tiene interés en NutriApp ni en su transferencia.
+resultados y no tiene interés en NutriApp ni en su transferencia. La
+sesión la moderó el asesor de la tesis, ante la ausencia imprevista del
+facilitador externo previsto; el asesor tampoco tiene interés en
+NutriApp ni en su transferencia, y la pérdida de independencia del
+moderador se declara como limitación (sección~8.3).
 
 % ═══════════════════════════════════════════════════════════════════════════
 \section{Diseño de la solución}
 % ═══════════════════════════════════════════════════════════════════════════
  
 El diseño de NutriApp lleva las obligaciones y el marco técnico del
-capítulo dos a una arquitectura de servicios, que comprende la
+capítulo~2 a una arquitectura de servicios, que comprende la
 infraestructura elegida, los diagramas de ingeniería que la
 representan y el modelo de datos que la sustenta (alcance declarado
 en la sección~4.1.2). Los componentes se distinguen por su origen.
@@ -2893,8 +3049,8 @@ la ACL web global de WAF, Shield y el certificado de ACM) es global y
 opera fuera de ella; la ACL web regional de WAF, que protege a API
 Gateway, sí está en \texttt{mx-central-1}.
 Amazon SES no está disponible en \texttt{mx-central-1}, por lo que los
-avisos por correo, sin contenido clínico, salen de la región de SES
-que se defina (Figura~\ref{fig:aws-b}), fuera del territorio
+avisos por correo, sin contenido clínico, salen de SES en
+\texttt{us-east-1} (Figura~\ref{fig:aws-b}), fuera del territorio
 nacional. Esos servicios se transparentan al nutriólogo como
 subcontrataciones del encargado (sección~2.5.1).
 
@@ -2917,20 +3073,51 @@ servicio distribuido.
 \textbf{Lógica de aplicación.} Amazon API Gateway expone los servicios
 REST, valida los tokens emitidos por Amazon Cognito en las rutas
 privadas (las del catálogo son públicas) e invoca las funciones Lambda mediante integración \textit{Lambda proxy} (AWS,
-s.f.-g).
+s.f.-m).
 Las funciones AWS Lambda (Node.js) ejecutan la lógica de negocio con
 límites de concurrencia que acotan las ejecuciones simultáneas. La API
 recibe y devuelve solo los campos que cada pantalla necesita, en
 atención al principio de proporcionalidad (Ley Federal de Protección de Datos Personales en Posesión de los Particulares [LFPDPPP], 2025, arts.~5 y~12).
 
 \textbf{Identidad y acceso.} Amazon Cognito gestiona el registro, la
-confirmación del correo, la autenticación multifactor (MFA), obligatoria para el nutriólogo desde
-el registro y opcional para el paciente, la emisión de tokens y el
-bloqueo tras intentos fallidos consecutivos, con el nivel de aseguramiento AAL2 (\textit{Authenticator Assurance Level}~2) como nivel
-objetivo (sección~2.5.2). Los permisos se asignan por rol (nutriólogo,
-paciente, docente y administrador). La cuenta Students es un
-nutriólogo con permisos acotados a pacientes ficticios
-(sección~6.2.5).
+confirmación del correo, la autenticación multifactor (MFA), la
+emisión de tokens y el bloqueo tras intentos fallidos consecutivos,
+con el nivel de aseguramiento AAL2 (\textit{Authenticator Assurance
+Level}~2) como nivel objetivo (sección~2.5.2). El segundo factor es un
+código TOTP (\textit{time-based one-time password}) generado por una
+aplicación de autenticación, que Cognito ofrece como MFA por
+\textit{software token} y que el profesional inscribe con un código QR
+en la pantalla \texttt{MFASetup} (AWS, s.f.-a); la MFA por SMS
+permanece desactivada y la \textit{passkey} se admite como
+autenticador adicional (AWS, 2024a). El grupo de usuarios se configura
+con MFA opcional, y la obligatoriedad para nutriólogo, docente y
+administrador la impone la aplicación: \texttt{MFASetup} es un paso del
+registro que no puede omitirse, y la API rechaza toda ruta clínica o
+administrativa de una cuenta de esos roles sin autenticador inscrito.
+La pérdida del dispositivo se resuelve con un procedimiento operado
+por el administrador de NutriApp (verificación por el correo
+confirmado y los datos declarados, restablecimiento del factor y nueva
+inscripción), que queda con folio en el registro de auditoría. Cada rol
+usa un cliente de aplicación de Cognito propio, porque la vigencia de
+los tokens se fija por cliente: quince minutos para el token de acceso
+y doce horas para el de actualización en nutriólogo, docente y
+administrador; sesenta minutos y treinta días en el paciente. El
+bloqueo por intentos fallidos sigue el comportamiento documentado de
+Cognito, que tras cinco intentos fallidos con contraseña bloquea al
+usuario un segundo y duplica la espera en cada intento siguiente hasta
+unos quince minutos (AWS, s.f.-r); los inicios de sesión exitosos y
+fallidos quedan en CloudTrail y, mediante un disparador posterior a la
+autenticación, en el \texttt{audit\_log}. Los permisos se asignan por
+rol (nutriólogo, paciente, docente y administrador): cada función
+Lambda autoriza la solicitud a partir del grupo de Cognito que trae el
+token y del nutriólogo responsable del registro solicitado, y las
+tablas clínicas de PostgreSQL añaden seguridad por filas para que
+ninguna consulta cruce expedientes de distintos responsables. El rol
+de auditoría de la sección~2.5.4 no es un usuario de la aplicación sino
+un rol de IAM de solo lectura de la operación de NutriApp, con MFA y
+acceso a los depósitos de registros, sin acceso a RDS; su uso queda en
+CloudTrail. La cuenta Students es un nutriólogo con permisos acotados
+a pacientes ficticios (sección~6.2.5).
 
 \textbf{Datos y llaves.} Amazon RDS para PostgreSQL almacena
 expedientes, consentimientos, solicitudes de derechos de acceso, rectificación, cancelación y oposición (ARCO) y el
@@ -2939,7 +3126,36 @@ PDF e imágenes de progreso, con versionado y Object Lock durante el
 plazo de conservación de la NOM-004-SSA3-2012 (sección~2.5.5); las reglas de
 ciclo de vida actúan después de ese plazo. AWS Key Management Service (KMS)
 custodia las llaves con el esquema por envolvente de la
-sección~2.5.3. Los consentimientos y los contratos de suscripción se
+sección~2.5.3. La llave de datos de cada expediente se genera bajo la
+llave maestra del entorno y solo se conserva cifrada, en la columna
+\texttt{llave\_datos\_cifrada} del expediente; en claro existe
+únicamente en la memoria de la función Lambda mientras atiende una
+solicitud. Con ella se cifran en la aplicación, con AES-256-GCM
+mediante el AWS Encryption SDK para JavaScript (AWS, s.f.-b), las
+columnas clínicas de \texttt{expediente}, \texttt{nota},
+\texttt{medicion} y \texttt{plan\_alimentacion} y cada adjunto antes
+de subirlo a S3, además del cifrado del lado del servidor de RDS y de
+S3 bajo la llave maestra; así, destruir la llave de datos vuelve
+ilegible el expediente completo, adjuntos incluidos (sección~2.5.5).
+Los adjuntos admiten PDF, JPEG y PNG hasta 5~MB por archivo, validados
+por su firma binaria y no solo por la extensión; la carga y la
+descarga pasan por API Gateway y Lambda, cuya invocación síncrona
+admite 6~MB de carga útil (AWS, s.f.-n), y cada descarga queda en el
+\texttt{audit\_log}. Los PDF que la plataforma entrega, el aviso de
+privacidad y el plan de alimentación, los genera una Lambda a partir
+del texto almacenado, con versión y folio al pie. Los respaldos
+automáticos de RDS se conservan siete días, sin instantáneas manuales
+de larga duración ni copia a otra región, de modo que la supresión de
+un expediente es definitiva siete días después de destruir su llave;
+la función de supresión asienta esa fecha en el \texttt{audit\_log}.
+La retención de Object Lock de cada adjunto se fija al cargarlo en la
+fecha de carga más cinco años, y cada acto que actualiza
+\texttt{fecha\_ultimo\_acto} o fija \texttt{bloqueo\_hasta} la
+extiende, para todos los objetos del expediente, hasta el nuevo
+vencimiento: el modo de cumplimiento permite alargar la retención y no
+acortarla (AWS, s.f.-o), y cada extensión queda en el
+\texttt{audit\_log}.
+Los consentimientos y los contratos de suscripción se
 conservan como mensajes de datos íntegros e inalterables, con plazos
 distintos. El consentimiento se conserva mientras dura el
 tratamiento y, después, durante el plazo de conservación del expediente,
@@ -2952,27 +3168,66 @@ NOM-151-SCFI-2016 no fija un plazo de conservación propio, pero da a la constan
 conservar los mensajes de datos en los términos de los artículos~33,
 38 y~49 del Código de Comercio. La constancia de conservación la emite
 un prestador de servicios de certificación (Norma Oficial Mexicana
-NOM-151-SCFI-2016, 2017, numerales~1 y~6.2; sección~7.3).
+NOM-151-SCFI-2016, 2017, numerales~1 y~6.2; sección~7.3). La
+constancia se solicita al prestador, por su interfaz de programación,
+en dos momentos: para cada contrato de suscripción, en el acto de la
+aceptación, sobre el resumen SHA-256 del documento y nunca sobre su
+contenido; y para los consentimientos y demás declaraciones, una vez al
+día, sobre el resumen encadenado de las entradas del
+\texttt{DeclarationLog} de esa fecha, con lo que la integridad de cada
+consentimiento se prueba por su pertenencia al lote. Las constancias
+se guardan en el depósito de contratos y comprobantes, y su referencia
+queda en \texttt{contrato\_suscripcion} y en la tabla
+\texttt{constancia\_lote}.
 
 \textbf{Auditoría.} AWS CloudTrail registra los eventos de
 administración y, una vez activados, los eventos de datos de S3 y
 Lambda. La extensión pgAudit de RDS para PostgreSQL audita las
 lecturas, las escrituras y los cambios de esquema sin registrar los
-parámetros de las sentencias (AWS, s.f.-k), y el
+parámetros de las sentencias (AWS, s.f.-s), y el
 \texttt{DeclarationLog} y el registro de accesos (\texttt{audit\_log})
 guardan en la capa de aplicación consentimientos, solicitudes,
 declaraciones y accesos al expediente. Los tres registros se
-conservan con el esquema de retención de la sección~2.5.4. Amazon
-CloudWatch concentra métricas y dispara alarmas ante comportamientos
-anómalos.
+conservan con el esquema de retención de la sección~2.5.4. Dentro de
+RDS, el rol de base de datos de la aplicación solo puede insertar y
+leer en \texttt{audit\_log} y \texttt{declaration\_log}, nunca
+actualizar ni borrar; la anulación de la referencia al expediente tras
+la supresión la hace la clave foránea (\texttt{ON DELETE SET NULL}) y
+no la aplicación. Una función programada diaria exporta las filas
+nuevas de ambas tablas al depósito de registros de auditoría con la
+extensión \texttt{aws\_s3} de RDS para PostgreSQL (AWS, s.f.-k), por
+el punto de enlace de gateway de la Figura~\ref{fig:aws-c}; la
+exportación de pgAudit desde CloudWatch Logs sigue la misma cadencia
+diaria, y los grupos de registros de CloudWatch Logs se conservan
+noventa días una vez exportados. Amazon CloudWatch concentra métricas y
+dispara alarmas sobre cuatro señales definidas: intentos fallidos de
+acceso a expedientes por cuenta en una hora, descargas de adjuntos por
+cuenta en una hora, respuestas 401 y 403 de la API por minuto y usos
+de la llave maestra fuera de las funciones autorizadas. Cada alarma
+crea, mediante EventBridge, un \texttt{incidente} en estado «en
+investigación» con folio \texttt{INC-XXXXXXXX}; el administrador de
+NutriApp lo completa en el panel interno \texttt{AdminIncidents} (sin
+maqueta en la prueba piloto) con la naturaleza del incidente, las
+categorías de datos y los expedientes afectados, las acciones
+correctivas y las recomendaciones al titular, que son los elementos
+del aviso que exige el Reglamento (RLFPDPPP, 2011, art.~65), sin
+acceder a contenido clínico. Al confirmarse la vulneración, la
+plataforma asienta \texttt{alerta\_responsable\_en}, avisa al
+nutriólogo en la aplicación y en su correo confirmado, y le muestra en
+\texttt{PatientDetail} el incidente con el campo para registrar
+\texttt{aviso\_titulares\_en} y el texto enviado (RLFPDPPP, 2011,
+art.~64).
 
 \textbf{Pagos y suscripción.} La suscripción del nutriólogo a los planes
 Basic y Pro, y en su caso el Destacado en el catálogo
 (sección~8.3.1), se cobra a través de Mercado Pago con \textit{checkout}
-alojado. La tarjeta se captura en las páginas del proveedor, y
-NutriApp recibe solo un identificador de suscripción y las
-notificaciones de cobro, cuya firma verifica antes de procesarlas
-(Mercado Pago, s.f.-a). El proveedor de pagos es responsable
+alojado: el cobro recurrente usa el producto Suscripciones, que crea un
+plan de preaprobación y redirige al formulario de pago del proveedor
+(Mercado Pago, s.f.-c). La tarjeta se captura en las páginas del
+proveedor, y NutriApp recibe solo un identificador de suscripción y las
+notificaciones de cobro, cuya firma verifica con el encabezado
+\texttt{x-signature} antes de procesarlas (Mercado Pago, s.f.-a,
+s.f.-d). El proveedor de pagos es responsable
 independiente de los datos financieros que recaba, con su propio aviso
 de privacidad. Los datos financieros exigen consentimiento expreso
 (LFPDPPP, 2025, art.~7), que el proveedor recaba en su propio
@@ -2980,17 +3235,125 @@ de privacidad. Los datos financieros exigen consentimiento expreso
 identificación necesarios para la suscripción, transferencia amparada
 por la relación jurídica entre NutriApp y el nutriólogo (LFPDPPP,
 2025, art.~36, fracc.~VII). NutriApp no almacena datos de tarjeta.
+La suscripción recorre cuatro estados que las notificaciones de cobro
+actualizan: \textit{activa}; \textit{en gracia}, durante quince días
+tras un cobro rechazado, con servicio íntegro y aviso al nutriólogo;
+\textit{suspendida}, con acceso de solo lectura a sus expedientes y a
+las solicitudes ARCO en curso, sin captura nueva, citas ni
+publicaciones, durante noventa días; y \textit{terminada}, por
+cancelación del nutriólogo o al agotarse la suspensión. Al terminar,
+NutriApp entrega al responsable una copia íntegra de cada expediente
+(un PDF con identificación, antecedentes, notas, mediciones y planes,
+más los adjuntos originales), descargable con sesión y segundo factor
+y asentada con folio en el \texttt{DeclarationLog}; esa copia no es la
+exportación estructurada del numeral~6.6.6 de la NOM-024, que sigue
+fuera del MVP. Confirmada la entrega por el nutriólogo, NutriApp
+suprime los expedientes por borrado criptográfico, como corresponde al
+encargado al concluir la relación jurídica (RLFPDPPP, 2011, art.~50,
+fracc.~V), y conserva solo los registros de auditoría por su plazo
+propio.
  
 \textbf{Retención, bloqueo y eliminación.} Una función que Amazon
-EventBridge ejecuta de forma periódica genera los avisos de vencimiento
-de la conservación
-y del bloqueo de la sección~2.5.5, y la supresión solo se ejecuta tras
-la confirmación del nutriólogo. Las
-notificaciones al titular salen por el correo confirmado de su cuenta
-(Amazon SES) y, si aceptó la casilla de avisos, por mensaje de texto (SMS) o WhatsApp. El
+EventBridge ejecuta cada día genera los avisos de vencimiento de la
+conservación y del bloqueo de la sección~2.5.5, calcula los días
+restantes de cada solicitud ARCO y produce los avisos de las cuentas
+Students; una regla aparte, cada hora, marca como vencidas las
+solicitudes de cita sin respuesta en 48 horas. El aviso de vencimiento
+llega al nutriólogo en la aplicación y en su correo confirmado, y se
+repite cada treinta días mientras no decida; en \texttt{PatientDetail}
+el expediente vencido ofrece dos acciones del responsable, «Confirmar
+supresión», que ejecuta el borrado criptográfico, y «Conservar», con
+motivo y nueva fecha de revisión, y ambas quedan con folio en el
+\texttt{DeclarationLog}. Los avisos dentro de la aplicación se guardan
+en la tabla \texttt{notificacion} (destinatario, rol, tipo, objeto y
+fechas de creación y lectura), que la interfaz consulta al cargar y
+cada sesenta segundos; la alarma de CloudWatch sobre las solicitudes
+ARCO a cinco días o menos del plazo es un control de la operación de
+NutriApp y no sustituye ese aviso. Las fechas límite del artículo~31
+se calculan en días naturales a partir del día en que el responsable
+recibe la solicitud (RLFPDPPP, 2011, art.~95), la lectura más
+exigente, y el responsable puede configurar el cómputo en días hábiles
+con su propio calendario de inhábiles. Un expediente en estado de
+bloqueo solo lo abre el nutriólogo responsable mediante la acción
+«consulta por responsabilidad legal», que exige un motivo y queda en
+el \texttt{audit\_log}; el rol de base de datos de la aplicación carece
+de permiso de borrado sobre las tablas clínicas, y la supresión la
+ejecuta un rol distinto reservado a la función de supresión
+confirmada. Las notificaciones al titular
+salen por el correo confirmado de su cuenta (Amazon SES) y, si aceptó
+la casilla de avisos, por mensaje de texto (SMS) o WhatsApp. El
 proveedor de mensajería es una subcontratación de NutriApp como
 encargado, autorizada por el nutriólogo en el contrato y sujeta a las
 mismas obligaciones (RLFPDPPP, 2011, art.~54).
+ 
+\textbf{Correo y mensajería.} Amazon SES opera desde
+\texttt{us-east-1}, la misma región que ya usa el certificado de
+CloudFront (Figura~\ref{fig:aws-a}); Cognito envía sus correos de
+confirmación e invitación con una identidad de SES de esa región,
+admitida como región alterna para los grupos de usuarios de México
+Central (AWS, s.f.-j). La identidad de dominio se verifica con Easy
+DKIM, y los registros SPF y DMARC del dominio se publican en Route~53,
+de modo que las respuestas ARCO, los acuses de consentimiento y las
+invitaciones salen de un remitente único autenticado. Para los avisos
+opcionales, el paciente que marca la casilla captura su número móvil
+en formato internacional y lo confirma con un código de un solo uso
+enviado por el mismo canal mediante Twilio Verify (Twilio, s.f.); ese
+código prueba la posesión del número y no es un factor de
+autenticación, por lo que no contradice la regla R3 de la
+sección~7.3. El número confirmado y la fecha quedan en
+\texttt{paciente} (\texttt{telefono\_e164},
+\texttt{telefono\_verificado\_en}) y la casilla en el
+\texttt{consentimiento}, como evidencia del consentimiento previo que
+WhatsApp exige a las empresas antes de enviar mensajes (Meta, s.f.).
+Los avisos usan plantillas de utilidad aprobadas, con texto fijo y
+folio y sin contenido clínico; si WhatsApp devuelve un error de entrega
+porque el destinatario no tiene la aplicación, la misma función reenvía
+el texto por SMS y asienta el canal en el \texttt{audit\_log}.
+ 
+\textbf{Aviso de privacidad e inventario de datos.} El aviso de
+privacidad de cada nutriólogo se edita en la pantalla
+\texttt{PrivacyNotice} de su perfil a partir de la plantilla de
+NutriApp, que ya trae los elementos que exige la ley (identidad y
+domicilio del responsable, datos tratados y sensibles, finalidades,
+opciones para limitar el uso, medios para ejercer los derechos ARCO y
+procedimiento para comunicar cambios; LFPDPPP, 2025, art.~15) y las
+subcontrataciones del encargado; el nutriólogo completa sus datos y lo
+publica. Cada publicación crea una fila inmutable en la entidad
+\texttt{aviso\_privacidad} (nutriólogo, versión, texto, resumen
+SHA-256 y fecha), que es la que referencia
+\texttt{consentimiento.aviso\_version}, y una Lambda genera el PDF que
+se conserva con el consentimiento. Una versión nueva no invalida los
+consentimientos previos: se comunica a los pacientes con expediente
+activo por el medio que el propio aviso declara, el correo confirmado y
+la aplicación (LFPDPPP, 2025, art.~15, fracc.~VI), y la fecha en que
+cada paciente la vio queda registrada. El inventario de datos de la
+Tabla~\ref{tab:trazabilidad-2} es un documento versionado, en JSON y
+PDF, que NutriApp genera a partir del modelo de datos de la
+sección~5.2.3 con una fila por campo: entidad, dato, clase de
+sensibilidad (datos de salud, identificación, contacto, pago u
+operación), dónde reside (RDS, S3, Cognito, SES, Twilio o Mercado
+Pago), finalidad y plazo de conservación; se reemite con cada cambio
+del modelo, se conserva en el depósito de registros de auditoría y el
+nutriólogo lo descarga desde su perfil (\texttt{DataInventory}, sin
+maqueta en la prueba piloto). La evaluación de impacto y el registro
+de hallazgos que el Reglamento prevé (RLFPDPPP, 2011, art.~61) son
+documentos del encargado en el mismo depósito.
+ 
+\textbf{Entornos y operación.} La separación de entornos se hace con
+dos cuentas de AWS bajo una organización, una de desarrollo y pruebas
+y otra de producción, cada una con su llave maestra de KMS; los datos
+de personas reales solo existen en la segunda (AWS, 2024b). Las cuatro
+reglas de cada ACL web de WAF son tres grupos administrados por AWS, el
+conjunto de reglas básico, el de entradas maliciosas conocidas y el de
+bases de datos SQL (AWS, s.f.-d), más una regla basada en tasa de
+2,000 solicitudes por dirección IP en cinco minutos, muy por encima de
+las cuarenta llamadas por consulta del modelo de carga; la
+concurrencia reservada de Lambda se fija en cien ejecuciones para el
+conjunto de funciones de la API, cerca de diez veces el pico de la
+ruta crítica (sección~7.3). NutriApp, como encargado, revisa sus
+controles cada seis meses contra el Anexo~A de ISO/IEC~27001:2022
+(sección~2.5.6) y conserva el acta en el depósito de registros de
+auditoría, junto con el inventario de datos.
  
 La Tabla~\ref{tab:stack} recoge, para cada capa, el servicio y la
 obligación que atiende.
@@ -3025,7 +3388,7 @@ obligación que atiende.
     seguridad. LFPDPPP 2025, art.~18 \\[4pt]
   Lógica de aplicación & API Gateway + Lambda & Proporcionalidad.
     LFPDPPP 2025, arts.~5 y~12 \\[4pt]
-  Identidad y acceso & Cognito + MFA & Autenticación y perfiles.
+  Identidad y acceso & Cognito + MFA (TOTP) & Autenticación y perfiles.
     NOM-024-SSA3-2012, numerales~6.6.3 y~6.6.4; LFPDPPP 2025, art.~18 \\[4pt]
   Datos y llaves & RDS PostgreSQL + KMS & Cifrado en reposo AES-256 (Advanced Encryption Standard) con
     llave por expediente. LFPDPPP 2025, art.~18; RLFPDPPP 2011, art.~57 \\[4pt]
@@ -3039,10 +3402,10 @@ obligación que atiende.
     conforme a NOM-151-SCFI-2016 \\[4pt]
   Auditoría & CloudTrail + pgAudit + CloudWatch & Trazabilidad.
     RLFPDPPP 2011, art.~48, fracc.~X; NOM-024-SSA3-2012, numeral~6.6.1 \\[4pt]
-  Pagos y suscripción & Mercado Pago (\textit{checkout} alojado) & Datos
+  Pagos y suscripción & Mercado Pago (Suscripciones, \textit{checkout} alojado) & Datos
     financieros con consentimiento expreso; sin datos de tarjeta en
     NutriApp. LFPDPPP 2025, arts.~7 y~36 \\[4pt]
-  Notificaciones & Amazon SES; Twilio SMS + WhatsApp API & Correo
+  Notificaciones & Amazon SES (\texttt{us-east-1}); Twilio Verify, SMS + WhatsApp API & Correo
     confirmado por defecto; SMS o WhatsApp solo con la casilla aceptada;
     sin contenido clínico; subcontratación del encargado. RLFPDPPP 2011,
     art.~54 \\[4pt]
@@ -3079,11 +3442,11 @@ TLS~1.3.
  
 La parte~(b) es la red privada. API Gateway invoca directamente las
 funciones Lambda en Node.js mediante integración \textit{Lambda proxy} (AWS,
-s.f.-g); las funciones se conectan a subredes privadas de al menos dos
+s.f.-m); las funciones se conectan a subredes privadas de al menos dos
 zonas de disponibilidad; RDS para PostgreSQL
 opera en una zona, con Multi-AZ como opción. La salida a internet pasa
 por un NAT Gateway: los avisos con folio salen por Amazon SES, el
-canal por defecto, los avisos opcionales por Twilio y las consultas a
+canal por defecto, desde \texttt{us-east-1}; los avisos opcionales por Twilio y las consultas a
 la API de Mercado Pago, cuyas notificaciones de cobro firmadas entran
 por API Gateway (parte~a). La figura distingue a
 Twilio como subcontratación del encargado y a Mercado Pago como
@@ -3112,12 +3475,15 @@ métricas y alarmas, entre ellas la de solicitudes ARCO a cinco días o
 menos del plazo; pgAudit registra la actividad SQL en Amazon CloudWatch
 Logs, desde donde una exportación periódica (\texttt{CreateExportTask})
 la copia al depósito de registros de auditoría con Object Lock (AWS,
-s.f.-f); AWS CloudTrail registra los eventos de administración y de
-datos y los exporta al mismo depósito; y el inventario de datos
-clasificado por sensibilidad se mantiene junto a esos registros. La
+s.f.-l); AWS CloudTrail registra los eventos de administración y de
+datos y los exporta al mismo depósito; una función diaria exporta
+\texttt{audit\_log} y \texttt{declaration\_log} con la extensión
+\texttt{aws\_s3} de RDS (sección~5.1); y el inventario de datos
+clasificado por sensibilidad, en JSON y PDF, se mantiene junto a esos
+registros. La
 exportación desde CloudWatch Logs es por tareas: los datos pueden tardar hasta 12 horas en estar
 disponibles y AWS no la recomienda como archivo continuo, para lo cual
-sugiere suscripciones (AWS, s.f.-f). Queda como limitación del diseño.
+sugiere suscripciones (AWS, s.f.-l). Queda como limitación del diseño.
  
 \begin{landscape}
 \begin{figure}[H]
@@ -3422,7 +3788,22 @@ la supresión, la destrucción de la llave y las notificaciones; su
 referencia al expediente se anula tras la supresión, sin borrar el
 registro. Las dos tablas forman la capa de aplicación del registro de
 auditoría y se exportan juntas al depósito de registros de auditoría
-(sección~5.2.1).
+(sección~5.2.1). Los mecanismos de la sección~5.1 añaden al modelo
+tres entidades y varios campos: \texttt{aviso\_privacidad} (las
+versiones del aviso de cada nutriólogo, a las que apunta
+\texttt{consentimiento.aviso\_version}), \texttt{notificacion} (los
+avisos dentro de la aplicación) y \texttt{constancia\_lote} (las
+constancias diarias de la NOM-151); \texttt{paciente} guarda el número
+móvil confirmado y la fecha de su invitación; \texttt{expediente}, la
+llave de datos cifrada (\texttt{llave\_datos\_cifrada}); \texttt{adjunto},
+el tipo, el tamaño y el resumen SHA-256; \texttt{arco\_request}, el
+texto de la respuesta, el fundamento y las fechas límite calculadas;
+\texttt{incidente}, el folio \texttt{INC-}, el estado y el administrador
+que lo registra; \texttt{plan\_subscription}, el estado de la
+suscripción (activa, en gracia, suspendida o terminada);
+\texttt{nutriologo}, el estado de moderación de la sección~6.2.6; y
+\texttt{induccion\_paso}, el avance de inducción de las cuentas
+Students.
  
 Las cuentas de práctica no crean un tipo de usuario aparte: un
 estudiante es un \texttt{nutriologo} de tipo \textit{students},
@@ -3488,7 +3869,7 @@ borrado criptográfico solo se ejecuta con su confirmación
 \section{Demostración del diseño: maquetas y prueba piloto}
 % ═══════════════════════════════════════════════════════════════════════════
  
-Este capítulo muestra el diseño del capítulo cinco convertido en algo
+Este capítulo muestra el diseño del capítulo~5 convertido en algo
 que se puede recorrer: un producto mínimo viable (MVP), formado por
 los módulos que atienden las obligaciones de las
 Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2} y por los
@@ -3514,8 +3895,10 @@ Los requerimientos del MVP se organizan en tres grupos.
 \textbf{Seguridad técnica} (Ley Federal de Protección de Datos Personales en Posesión de los Particulares [LFPDPPP], 2025, art.~18; NOM-024-SSA3-2012,
 2012, numerales~6.6.1, 6.6.3 y~6.6.4; sección~2.5): los datos se cifran con
 AES-256 (Advanced Encryption Standard) en reposo y con TLS~1.3 (Transport Layer Security) en tránsito. La autenticación
-multifactor es obligatoria para el nutriólogo, y el registro de
-auditoría abarca las tres capas descritas en el marco técnico. La
+multifactor, con código TOTP de una aplicación de autenticación, es
+obligatoria para el nutriólogo, el docente y el administrador, y el
+registro de auditoría abarca las tres capas descritas en el marco
+técnico. La
 eliminación procede por bloqueo y supresión: al vencer la retención o
 el bloqueo, el sistema avisa al nutriólogo y, con su confirmación,
 destruye la llave de datos del expediente (sección~2.5.5).
@@ -3523,7 +3906,8 @@ destruye la llave de datos del expediente (sección~2.5.5).
 \textbf{Derechos del titular} (LFPDPPP, 2025, arts.~8, 15 y~22--34): el
 consentimiento lo otorga el propio paciente, con acción afirmativa y
 sin casillas premarcadas, y se registra con folio y fecha. El aviso de
-privacidad es accesible desde cualquier pantalla. El módulo de derechos de acceso, rectificación, cancelación y oposición (ARCO)
+privacidad, que el nutriólogo edita y publica por versiones desde su
+perfil (sección~5.1), es accesible desde cualquier pantalla. El módulo de derechos de acceso, rectificación, cancelación y oposición (ARCO)
 recibe la solicitud, registra la resolución del nutriólogo y notifica
 al titular, con respuesta en veinte días y ejecución en los quince
 siguientes (art.~31).
@@ -3539,8 +3923,8 @@ con folio único y copia de los datos declarados en cada firma. El
 titular recibe con folio la resolución de su solicitud, con el periodo
 de bloqueo y la fecha prevista de supresión; la supresión final la
 confirma el nutriólogo y queda en el registro de auditoría. Ante una
-vulneración, la plataforma registra el incidente y
-alerta al nutriólogo, que decide y envía el aviso al titular (LFPDPPP,
+vulneración, la plataforma registra el incidente con folio, a partir
+de las alarmas definidas en la sección~5.1, y alerta al nutriólogo, que decide y envía el aviso al titular (LFPDPPP,
 2025, art.~19; Tabla~\ref{tab:trazabilidad-2}); ese registro es
 interno y no tiene maqueta en la prueba piloto.
  
@@ -3587,9 +3971,10 @@ repositorio del proyecto contiene las maquetas navegables y el código
 El nutriólogo se registra en la pantalla de alta profesional
 (\texttt{NutritionistRegister}) con su cédula profesional y la
 institución que expidió su título. Ahí firma una declaración bajo
-protesta, que el \texttt{DeclarationLog} conserva, y configura el
-segundo factor (\texttt{MFASetup}) antes de poder entrar a cualquier
-expediente. La veracidad de la cédula y del título es responsabilidad
+protesta, que el \texttt{DeclarationLog} conserva, e inscribe el
+segundo factor en la pantalla \texttt{MFASetup}, que muestra el código
+QR para la aplicación de autenticación y comprueba un primer código
+TOTP, antes de poder entrar a cualquier expediente (sección~5.1). La veracidad de la cédula y del título es responsabilidad
 del nutriólogo, que la asume en esa declaración; NutriApp no los
 verifica. Exhibir la institución que expidió el título y el número de
 cédula, también en la publicidad, es obligación de quien ejerce la
@@ -3612,12 +3997,25 @@ manifestación de la voluntad libre, específica e informada (art.~2,
 fracc.~IV). En la maqueta, por tanto, es el paciente quien consiente:
 en su propia sesión autenticada desde su dispositivo o, en el
 consultorio, sobre el dispositivo del nutriólogo, autenticándose él
-mismo.
+mismo. La cuenta del paciente la crea la plataforma cuando el
+nutriólogo lo da de alta: \texttt{AddPatient} captura solo nombre y
+correo, una Lambda crea el usuario en Cognito como administrador y
+Cognito envía por SES la invitación con contraseña temporal, que caduca
+a los siete días y puede reenviarse desde \texttt{PatientList} (AWS,
+s.f.-h). Al primer acceso el paciente confirma su correo, fija su
+contraseña y encuentra como primera pantalla la de consentimiento; si
+el correo ya tiene cuenta porque otro nutriólogo lo atiende, no se crea
+otra: el expediente nuevo queda pendiente en su panel hasta que
+consiente. En el consultorio, el consentimiento abre una sesión
+aislada del paciente en el dispositivo del nutriólogo, que se cierra al
+confirmar o a los cinco minutos.
  
 La pantalla de consentimiento muestra el aviso de privacidad
 completo, con opción de descarga en PDF, y dos casillas sin marcar: la
 obligatoria para el tratamiento de datos de salud y una opcional para
-recibir avisos también por WhatsApp o mensaje de texto (SMS). Los avisos con efecto
+recibir avisos también por WhatsApp o mensaje de texto (SMS), que al
+marcarse pide el número móvil y lo confirma con un código de un solo
+uso (sección~5.1). Los avisos con efecto
 jurídico llegan siempre al correo confirmado de la cuenta y ningún
 mensaje lleva contenido clínico (sección~2.5.5). Al confirmar, el
 sistema genera el folio \texttt{DEC-XXXXXXXX} y el
@@ -3644,7 +4042,8 @@ paciente completa el trámite (Figura~\ref{fig:maq-consentimiento}).
 Una vez registrado el consentimiento, las pantallas de alta de paciente
 (\texttt{AddPatient}) y de expediente (\texttt{PatientDetail}) admiten
 datos de identificación, antecedentes, mediciones, notas de nutrición con
-autor, fecha y hora, y adjuntos. Sin ese consentimiento el alta no se
+autor, fecha y hora, y adjuntos en PDF, JPEG o PNG de hasta 5~MB por
+archivo (sección~5.1). Sin ese consentimiento el alta no se
 completa y el expediente sigue en el estado pendiente del flujo
 anterior; el caso CP-02 parte, por eso, de un consentimiento ya
 registrado. Cada pantalla recibe solo los campos que esa vista
@@ -3697,11 +4096,27 @@ titular genera una cuenta nueva. El aviso al nutriólogo al vencer la conservaci
 bloqueo y el borrado criptográfico con su confirmación siguen la
 secuencia de la sección~2.5.5.
  
+El nutriólogo resuelve desde \texttt{PatientDetail} con un texto de
+respuesta y, cuando niega, el fundamento, que \texttt{arco\_request}
+conserva; en una solicitud de acceso, la plataforma genera y adjunta
+una copia simple del expediente en PDF (identificación, antecedentes,
+notas, mediciones, plan vigente y lista de adjuntos), sin la estructura
+de exportación del numeral~6.6.6 de la NOM-024, que sigue fuera del
+MVP; la rectificación se ejecuta como modificación del expediente
+ligada al folio en el \texttt{audit\_log}, y la oposición se resuelve
+con texto y, si procede, con bloqueo. La revocación del consentimiento
+tiene su propio botón junto a las cuatro tarjetas, con un diálogo que
+explica que no tiene efectos retroactivos (LFPDPPP, 2025, art.~7) y
+que el expediente sigue sujeto a la conservación de la NOM-004, y
+genera el registro equivalente al consentimiento
+(Figura~\ref{fig:uml-cu-a}).
+ 
 Al nutriólogo, el expediente (\texttt{PatientDetail}) le muestra las
 solicitudes activas con folio, tipo, fecha, días restantes y estado;
-una alarma de CloudWatch genera un aviso en la aplicación cuando quedan
-cinco días o menos del plazo del artículo~31
-(Figura~\ref{fig:maq-arco}).
+la función diaria de la sección~5.1 genera un aviso en la aplicación y
+en el correo cuando quedan cinco días o menos del plazo del
+artículo~31, y la alarma de CloudWatch sobre la misma métrica alerta a
+la operación de NutriApp (Figura~\ref{fig:maq-arco}).
  
 \begin{landscape}
 \begin{figure}[H]
@@ -3768,7 +4183,11 @@ está en la lista de su institución, y acepta el aviso de privacidad y
 los términos en casillas sin marcar. Una de esas casillas declara que
 la cuenta solo funciona con pacientes ficticios. Al crearse la cuenta,
 una función genera diez pacientes ficticios etiquetados como usuarios
-de prueba. Los expedientes de práctica se generan así con datos
+de prueba, sin cuenta de Cognito ni correo, con expediente activo y un
+consentimiento marcado como ficticio (folio \texttt{DEC-FIC-XXXXXXXX})
+para que el resto de los flujos pueda practicarse; \texttt{AddPatient}
+queda deshabilitado en estas cuentas, que exigen el mismo segundo
+factor que el titular. Los expedientes de práctica se generan así con datos
 ficticios y la cuenta declara que solo debe usarse con ellos; mientras
 se use de ese modo, no contienen datos de ninguna persona identificada
 o identificable (LFPDPPP, 2025, art.~2, fracc.~V) y no se les aplica
@@ -3777,12 +4196,21 @@ el tratamiento queda sujeto a la LFPDPPP y los términos de uso lo
 prohíben. Los datos del propio estudiante sí son datos personales, y
 se tratan conforme al aviso de privacidad que acepta al activar la
 cuenta. La cuenta vence con el semestre de la institución, con aviso
-previo por correo. Al egresar, quien quiera seguir usando NutriApp se
+por correo y en la aplicación quince días antes; treinta días después
+del vencimiento, la función programada suprime la cuenta y sus
+expedientes ficticios, sin conservación de la NOM-004, y conserva los
+datos del estudiante solo el tiempo que declara el aviso de privacidad
+que aceptó. Al egresar, quien quiera seguir usando NutriApp se
 registra como nutriólogo titular en un plan de pago. El docente
-responsable ve en su panel
+responsable, asignado por el código de activación con que el
+estudiante se dio de alta, ve en su panel
 (\texttt{TeacherDashboard}) los expedientes ficticios de sus
 estudiantes en modo de solo lectura, el avance del módulo de inducción
-y el reporte semestral (Figura~\ref{fig:maq-students}).
+(la secuencia guiada de los flujos del MVP sobre los pacientes
+ficticios: alta de datos, nota y adjunto, plan, y solicitud y
+resolución ARCO simuladas, con una fila por paso completado en
+\texttt{induccion\_paso}) y el reporte semestral
+(Figura~\ref{fig:maq-students}).
  
 \begin{landscape}
 \begin{figure}[H]
@@ -3804,10 +4232,17 @@ responsabilidad por el contenido es del nutriólogo como profesionista
 independiente y se establece en los términos de uso; NutriApp opera la
 plataforma sin avalar lo publicado. El paciente o el nutriólogo pueden reportar
 una publicación (\texttt{ReportContent}) y el administrador la revisa
-en \texttt{AdminSocialModeration} con una escala progresiva de
-estados: \texttt{ACTIVE}, \texttt{1ST\_STRIKE},
-\texttt{2ND\_STRIKE}, \texttt{SUSPENDED}, \texttt{UNDER\_REVIEW},
-\texttt{REINSTATED} y \texttt{CANCELLED}. Toda decisión genera un
+en \texttt{AdminSocialModeration} con dos escalas: la publicación pasa
+de \texttt{ACTIVE} a \texttt{HIDDEN} o \texttt{UNDER\_REVIEW}, y el
+autor acumula \texttt{1ST\_STRIKE}, \texttt{2ND\_STRIKE} y
+\texttt{SUSPENDED} por cada publicación ocultada, con
+\texttt{UNDER\_REVIEW} cuando pide revisión, \texttt{REINSTATED} si
+procede y \texttt{CANCELLED} cuando el administrador retira el módulo
+social por reincidencia. La tercera amonestación suspende la
+publicación durante treinta días, las amonestaciones caducan a los doce
+meses, ninguno de estos estados afecta expedientes, citas ni
+suscripción, y las imágenes admiten JPEG y PNG de hasta 5~MB. Toda
+decisión genera un
 folio \texttt{MOD-XXXXXXXX} en \texttt{moderation\_event} con motivo,
 nota interna, fecha y hora, como registro de las decisiones tomadas.
 \end{sloppypar}
@@ -3822,10 +4257,10 @@ operación. La sesión sigue el procedimiento de la
 sección~4.3.3; los casos de prueba se ejecutan aparte, como recorrido
 sobre las maquetas (sección~4.4.2).
  
-En la sesión, las maquetas se presentan brevemente en pantalla con
-perfiles de pacientes ficticios y los participantes opinan sobre ellas
-frente a su práctica actual en el quinto bloque de la guía de discusión
-(sección~4.3.2).
+En la sesión, las maquetas se presentaron brevemente en pantalla con
+perfiles de pacientes ficticios; las opiniones de los participantes
+sobre ellas, previstas para el quinto bloque de la guía de discusión,
+se recogieron con la encuesta de salida (secciones~4.3.3 y~7.1).
  
 Los \textbf{casos de prueba de aceptación} siguen el formato de la
 sección~4.4.2; la Tabla~\ref{tab:casos-prueba} los concreta para los
@@ -3843,7 +4278,7 @@ parcialmente o no refleja el diseño.
     \midrule
     CP-01 Consentimiento del paciente & LFPDPPP 2025, arts.~2, fracc.~IV, 8 y~15. Nutriólogo registrado con autenticación multifactor (MFA); paciente dado de alta con expediente «pendiente de consentimiento». & El paciente entra a su sesión, lee el aviso, marca la casilla obligatoria, deja la opcional sin marcar y confirma. & El expediente pasa de «pendiente de consentimiento» a activo; folio \texttt{DEC-} visible para ambos; el \texttt{DeclarationLog} muestra titular, mecanismo, versión del aviso, fecha y hora; ninguna casilla venía marcada. \\
     CP-02 Alta de paciente y expediente & LFPDPPP 2025, arts.~5 y~18; RLFPDPPP 2011, art.~48, fracc.~X. Consentimiento del CP-01 registrado. & El nutriólogo captura datos, una medición, una nota y un adjunto y asigna un plan en \texttt{AssignDiet}; el paciente lo consulta en \texttt{CurrentDiet}; un tercero sin relación intenta abrir el expediente. & El expediente admite los datos, la medición, la nota, el adjunto y el plan, que el paciente ve en \texttt{CurrentDiet}; cada acceso aparece en el registro que el paciente puede ver; el intento del tercero se rechaza y queda registrado. \\
-    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25, fracc.~VII, y~31; NOM-004-SSA3-2012, numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica veinte días para resolver y quince para ejecutar (art.~31), la conservación mínima y el bloqueo si procede; folio de la solicitud; la respuesta con folio llega al correo confirmado del titular y después se suprimen los datos de la cuenta y de contacto, salvo que el titular tenga otro expediente activo; el expediente queda en el estado que fije la resolución; alarma visible en la bandeja del nutriólogo. \\
+    CP-03 Solicitud de cancelación & LFPDPPP 2025, arts.~24, 25, fracc.~VII, y~31; NOM-004-SSA3-2012, numeral~5.4. Expediente activo con datos. & El paciente solicita cancelación desde su perfil; el nutriólogo la resuelve dentro del plazo. & El diálogo explica veinte días para resolver y quince para ejecutar (art.~31), la conservación mínima y el bloqueo si procede; folio de la solicitud; la respuesta con folio llega al correo confirmado del titular y después se suprimen los datos de la cuenta y de contacto, salvo que el titular tenga otro expediente activo; el expediente queda en el estado que fije la resolución; aviso visible en la bandeja del nutriólogo. \\
     \bottomrule
   \end{tabularx}
 \end{table}
@@ -3859,7 +4294,7 @@ y~\ref{tab:trazabilidad-2}: consentimiento, aviso de privacidad, ARCO, registro 
 incidentes, inventario de datos, cifrado, MFA, trazabilidad y eliminación; las obligaciones
 sanitarias ya declaradas
 fuera del MVP no forman parte de ese criterio. La \textit{viabilidad
-técnica} limita el MVP a lo que el diseño del capítulo cinco puede
+técnica} limita el MVP a lo que el diseño del capítulo~5 puede
 sostener con Amazon Web Services (AWS) y React, con proveedores que son subcontrataciones
 del encargado (Amazon SES, Twilio) o responsables independientes
 (Mercado Pago) en los términos de la sección~5.1. La \textit{prioridad de uso} incluye los módulos
@@ -3883,28 +4318,79 @@ sección~8.3.
 % ─────────────────────────────────────────────────────────────────────────
 % NOTA: se completa después de la sesión del 23-oct-2026.
  
-La evaluación sigue los tres métodos de la sección~4.4.2. Sus
-resultados se leen contra la línea base del capítulo tres: lo que el
+La evaluación sigue los tres métodos de la sección~4.4.2 y sus
+resultados se leen contra la línea base del capítulo~3: lo que el
 diagnóstico muestra ausente en la práctica reportada es lo que el
-diseño debe resolver, y las opiniones de los participantes en el quinto
-bloque indican si las maquetas lo hacen de forma clara, apegada a la
-práctica y con una carga
-razonable para el profesional.
+diseño debe resolver. En la aplicación, el quinto bloque de la guía no
+llegó a desarrollarse: tras la demostración de las maquetas y tras el
+cierre no hubo preguntas ni comentarios, de modo que la revisión por
+expertos descansa en la encuesta de salida, que los ocho participantes
+analizados respondieron entre el 25 y el 26 de octubre de 2026, dos y
+tres días después de la sesión (Anexo~\ref{anexo:salida-resultados}).
  
 \paragraph{Casos de prueba de aceptación}
 \mbox{}
-% Resultado de CP-01, CP-02 y CP-03 (refleja / refleja parcialmente /
-% no refleja), con la captura que sirve de evidencia en cada uno.
+% Pendiente: resultado de CP-01, CP-02 y CP-03 (refleja / refleja
+% parcialmente / no refleja), con la captura que sirve de evidencia en
+% cada uno (Anexo B); los ejecuta y califica el autor (sección 4.4.3).
  
-\paragraph{Revisión por expertos: opiniones por función}
-\mbox{}
-% Opiniones del quinto bloque por función, tomadas del resumen ejecutivo:
-% qué se parece a la práctica, qué cambiaría y qué no usarían.
+\paragraph{Revisión por expertos: la encuesta de salida}
+Los ocho usarían las funciones mostradas y los ocho consideran
+razonable el trabajo que la plataforma les pediría; la valoración se
+respondió una sola vez para la lista completa de funciones, no función
+por función. Solo dos dicen que lo mostrado se parece a cómo trabajan
+hoy (cuatro respondieron «parcialmente» y dos «no»): el diseño no
+replica la práctica actual y aun así lo usarían. Los ocho perciben el
+código de verificación al iniciar sesión y el folio de cada
+consentimiento o solicitud como una protección y no como un trámite
+extra. Siete aceptarían ---y uno respondió «tal vez»--- que, ante la
+petición de borrar toda la información, la plataforma bloquee el
+expediente clínico en lugar de borrarlo y les indique qué responder y
+en qué plazo: es la respuesta del diseño al hallazgo del diagnóstico
+(sección~3.3). Las dos funciones que no se mostraron se preguntaron
+descritas: los ocho creen que la cuenta de práctica ayudaría a que los
+estudiantes aprendan lo que pide la ley, y los ocho aparecerían en el
+catálogo con reserva de cita.
+ 
+En las respuestas abiertas, cinco señalan como lo más útil funciones de
+cumplimiento (el seguimiento legal por paciente, la orientación sobre
+qué responder a quien pide borrar su información, la depuración a los
+cinco años, el orden de los apartados) y tres, funciones de gestión de
+la consulta (finanzas, agenda y vista del paciente con confirmación de
+citas). Las mejoras pedidas fueron un diseño visual más amigable (tres
+menciones); el tratamiento de pacientes menores de edad ---indicar que
+el consentimiento lo firmó el tutor y adaptar los flujos a la consulta
+pediátrica, dos menciones que se recogen como siguiente paso en la
+sección~8.3---; conservar plantillas propias (una); y que el paciente
+agende directamente (una), función que el diseño ya prevé en el
+catálogo (sección~6.2.4) y que esa participante valoró como motivo para
+dejar la plataforma comercial que hoy usa como agenda y directorio.
+Siete piensan cambiar algo en su práctica a partir de la sesión y uno
+respondió «tal vez»; lo primero que harían coincide con las ausencias
+del diagnóstico: entregar un aviso de privacidad por escrito (siete),
+pedir el consentimiento para datos de salud aparte del clínico (seis) y
+definir la conservación de cinco años (cuatro). Estas respuestas se
+leen como evidencia exploratoria de la revisión por expertos, no como
+prueba de uso: los participantes evaluaron una demostración, no
+operaron las maquetas; conocían al autor, recibieron un pago y el
+formulario registró su nombre, condiciones que favorecen la
+complacencia; y la encuesta se respondió días después de la sesión, por
+lo que recoge lo que los participantes declaran tras ese intervalo
+(sección~8.3).
  
 \paragraph{Observación en el caso}
-\mbox{}
-% Lo que los participantes dicen y hacen frente a las maquetas en el
-% quinto bloque: qué entienden, qué falta, qué no usarían.
+La hoja de observación prevista para el quinto bloque quedó sin
+materia, porque no hubo discusión sobre las maquetas. Lo observado se
+reduce a tres hechos. El primero es el propio silencio tras la
+demostración y tras el cierre. El segundo, durante los bloques de
+práctica, fue el interés en que la herramienta avise cuándo depurar
+expedientes («yo creo que me serviría», ante la pregunta del
+moderador). El tercero fue el relato de una participante que dejó un
+software comercial porque el personal del proveedor podía acceder a la
+información de sus pacientes. Los dos últimos sostienen decisiones ya
+tomadas en el diseño: los avisos de vencimiento de la conservación con
+confirmación del responsable (sección~2.5.5) y la transparencia de las
+subcontrataciones ante el nutriólogo (sección~5.1).
  
 
 % ─────────────────────────────────────────────────────────────────────────
@@ -3914,7 +4400,7 @@ razonable para el profesional.
 La validación normativa del diseño de NutriApp consiste en verificar
 que cada obligación legal identificada en las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2} tiene un componente técnico correspondiente en el
-diseño de los capítulos cinco y seis; esa correspondencia se sintetiza por
+diseño de los capítulos~5 y~6; esa correspondencia se sintetiza por
 capa (Tabla~\ref{tab:stack}) y la lista siguiente la completa obligación
 por obligación. El
 criterio de validez es la completitud respecto de las obligaciones de
@@ -3943,18 +4429,21 @@ cada una el componente que la atiende:
     tránsito, autenticación multifactor (MFA), control de acceso por rol, registros de auditoría y
     separación de entornos.
   \item Autenticación verificable de usuarios (NOM-024-SSA3-2012, 2012,
-    numeral~6.6.3): Amazon Cognito con MFA obligatoria para el
-    nutriólogo y opcional para el paciente.
+    numeral~6.6.3): Amazon Cognito con MFA por código TOTP, obligatoria
+    para el nutriólogo, el docente y el administrador y opcional para el
+    paciente.
   \item Trazabilidad de consultas, accesos y modificaciones (LFPDPPP, 2025,
     art.~13; RLFPDPPP, 2011, art.~48, fracc.~X): CloudTrail, pgAudit y la capa de aplicación
     (\texttt{DeclarationLog} y \texttt{audit\_log}), exportados a S3 con
     Object Lock y conservados cinco años.
   \item Inventario de datos, análisis de riesgos y análisis de brecha
-    (RLFPDPPP, 2011, art.~61): catálogo de datos en Amazon Web Services (AWS) clasificado por nivel
+    (RLFPDPPP, 2011, art.~61): inventario de datos versionado, en JSON y
+    PDF, generado a partir del modelo de datos y clasificado por nivel
     de sensibilidad, entregado al nutriólogo como insumo de su propio
-    análisis.
+    análisis (sección~5.1).
   \item Gestión de derechos ARCO en plazo legal (derechos de acceso, rectificación, cancelación y oposición; LFPDPPP, 2025,
-    art.~31): módulo ARCO con alertas automáticas de vencimiento; la
+    art.~31): módulo ARCO con fechas límite calculadas y avisos
+    automáticos de vencimiento en la aplicación y por correo; la
     resolución la emite el nutriólogo.
   \item Aviso al titular ante vulneraciones de seguridad (LFPDPPP, 2025,
     art.~19; RLFPDPPP, 2011, arts.~64 y~65): registro de incidentes con alerta
@@ -3977,7 +4466,7 @@ cada una el componente que la atiende:
     fuera del MVP (sección~6.1).
   \item Uso de proveedor de cómputo en la nube (RLFPDPPP, 2011, arts.~51,
     52 y~54): NutriApp como encargado bajo contrato con el nutriólogo;
-    AWS (incluido Amazon SES, fuera de \texttt{mx-central-1}) y Twilio
+    AWS (incluido Amazon SES, en \texttt{us-east-1}) y Twilio
     como subcontrataciones autorizadas y
     transparentadas.
 \end{enumerate}
@@ -4006,7 +4495,7 @@ llevarlo a la práctica.
  
 \textbf{Modelo de carga.} Antes de estimar costos hay que saber cuánto
 trabajo real recibe la plataforma, porque la mayor parte del costo de los
-servicios del capítulo cinco es fijo, por hora o por mes, y solo unos
+servicios del capítulo~5 es fijo, por hora o por mes, y solo unos
 cuantos componentes crecen con el tráfico. El dimensionamiento supuesto para el MVP, 500 nutriólogos y
 5,000 pacientes, se traduce en solicitudes (Tabla~\ref{tab:carga}): con seis consultas diarias por
 nutriólogo, treinta llamadas a la API por consulta y seis sesiones
@@ -4021,7 +4510,7 @@ solicitudes por segundo y once ejecuciones simultáneas. Los límites de
 referencia son de otro orden: mil ejecuciones simultáneas por cuenta en
 Lambda, 2,500 solicitudes por segundo en API Gateway para la región de
 México y unas 225 conexiones en una instancia db.t4g.small (AWS,
-s.f.-c). No hay, en ningún escenario, transacciones simultáneas
+s.f.-f). No hay, en ningún escenario, transacciones simultáneas
 que la instancia o las funciones no puedan atender; lo que encarece la
 ruta crítica son los componentes que cobran por mensaje.
  
@@ -4058,9 +4547,9 @@ datos, NAT Gateway, punto de enlace) cuestan
 lo mismo con dos o con once ejecuciones simultáneas; los que cobran por
 solicitud o por mensaje (API Gateway, CloudTrail, WhatsApp, mensajes de texto [SMS]) son los
 que forman la ruta crítica. Los precios son de lista, consultados en
-septiembre de 2026 (AWS, s.f.-b; Mercado
+septiembre de 2026 (AWS, s.f.-e; Mercado
 Pago, s.f.-b; Meta, 2025; Twilio, 2026); las tarifas de mx-central-1, publicadas en los archivos de
-la Price List de AWS (AWS, s.f.-d), se aproximan con las de us-east-1 y
+la Price List de AWS (AWS, s.f.-g), se aproximan con las de us-east-1 y
 un factor regional del 5\% (regla R2).
  
 El escenario base cuesta \$141 dólares al mes (\$1,692 dólares al año; \$0.28 dólares por
@@ -4158,7 +4647,7 @@ s.f.), y el estudio de la solicitud de registro de marca, que cuesta
 Mexicano de la Propiedad Industrial [IMPI], 2023), y el dominio es precio de lista de Route~53. El resto son
 estimaciones del autor con rango, y el desarrollo domina: ochocientas
 horas para convertir las maquetas en el sistema descrito en los
-capítulos cinco y seis, a tarifas de mercado de entre \$300 y \$500 pesos
+capítulos~5 y~6, a tarifas de mercado de entre \$300 y \$500 pesos
 por hora. Si el propio autor construye el MVP, la inversión en efectivo
 baja a entre \$63,000 y \$148,000 pesos.
  
@@ -4243,18 +4732,117 @@ la suscripción no sustituye el cumplimiento, que sigue siendo del nutriólogo.
 % ═══════════════════════════════════════════════════════════════════════════
 
 \subsection{Hallazgos frente a las preguntas guía}
-\mbox{}
-% Texto aquí
+Las cinco preguntas de la sección~1.5 ordenan los hallazgos.
+
+La primera pedía identificar las obligaciones que el marco mexicano
+impone al nutriólogo de consulta privada y lo que deja sin precisar
+frente a Brasil, Uruguay, Estados Unidos y Alemania. El capítulo~2
+identificó once obligaciones exigibles, del aviso de privacidad a las
+condiciones del cómputo en la nube (Tablas~\ref{tab:trazabilidad-1}
+y~\ref{tab:trazabilidad-2}), y las imprecisiones que la comparación
+hace visibles: la ley mexicana no dice qué medidas de seguridad bastan,
+no fija plazo para avisar una vulneración ni obliga a notificarla a la
+autoridad, y deja fuera la portabilidad; el expediente clínico
+electrónico no es obligatorio, de modo que la NOM-024 solo alcanza a
+quien adopta un sistema electrónico.
+
+La segunda preguntaba qué obligaciones están presentes y cuáles
+ausentes en la práctica reportada, y por qué. En el grupo estudiado
+están parcialmente presentes las medidas básicas de seguridad y el
+conocimiento del propio inventario, y ausentes el aviso de privacidad
+sistemático, el consentimiento específico para datos de salud, la
+trazabilidad de accesos, el procedimiento ante vulneraciones, la
+gestión de solicitudes con plazo y registro, y la regla de conservación
+aplicada, que se conoce más de lo que se practica. Las razones
+reportadas son el desconocimiento operativo de la ley y herramientas
+que no incorporan esas funciones, no el rechazo a la obligación
+(sección~3.3).
+
+La tercera preguntaba si un diseño de software puede convertir esas
+obligaciones en funciones verificables sin asumir las decisiones que la
+ley reserva al profesional. En el nivel del diseño, la respuesta es
+afirmativa: la matriz de trazabilidad liga cada obligación con un
+componente comprobable (sección~7.2) y las decisiones quedan en el
+nutriólogo ---resolver cada solicitud, negar una cancelación con
+fundamento, confirmar la supresión, decidir y enviar el aviso ante una
+vulneración---, mientras la plataforma aporta los medios y deja
+constancia con folio. La comprobación se hizo sobre maquetas; su
+verificación en un sistema en ejecución queda para la fase de
+desarrollo (sección~8.3).
+
+La cuarta preguntaba cómo valoran esas funciones nutriólogos con
+práctica clínica frente a su forma actual de trabajo. Los ocho
+participantes analizados usarían las funciones mostradas, consideran
+razonable la carga de trabajo y perciben el folio y el código de acceso
+como protección; siete aceptarían el bloqueo en lugar del borrado ante
+una solicitud de cancelación; y solo dos dicen que el diseño se parece
+a cómo trabajan hoy, lo que confirma la distancia entre la práctica y
+la norma que el diseño busca cerrar. La evidencia es exploratoria, en
+los términos de las secciones~7.1 y~8.3.
+
+La quinta preguntaba cuánto costaría operar el diseño y cómo se compara
+la suscripción con las sanciones. Operar el producto mínimo viable para
+500 nutriólogos y 5,000 pacientes costaría entre \$141 y \$299 dólares
+al mes según el escenario, de \$0.28 a \$0.60 dólares por nutriólogo;
+la multa promedio que impuso el INAI en 2023 equivale a 181
+suscripciones anuales del plan Pro y la sanción máxima con datos de
+salud a 20,748, una comparación que encuadra el costo como fracción
+menor del riesgo sin presentar la suscripción como sustituto del
+cumplimiento, que sigue siendo del nutriólogo (sección~7.3).
 
 \subsection{Lecciones aprendidas y recomendaciones para el gremio}
-\mbox{}
-% Texto aquí
+La lección central del caso es que la brecha de cumplimiento en la
+consulta de nutrición es operativa, no actitudinal. Los participantes
+protegen la disponibilidad de su información ---contraseñas, respaldos,
+nube--- porque sus herramientas lo facilitan; no entregan aviso de
+privacidad, no separan el consentimiento de datos del clínico y no
+registran accesos ni plazos porque nadie se los enseñó y porque sus
+herramientas no lo traen. Quien quiera cerrar la brecha tiene que
+atacar el desconocimiento y la herramienta a la vez; la sola difusión
+de la norma deja al profesional sabiendo qué debe, sin con qué.
+
+Del diagnóstico se siguen prácticas que no requieren software y que el
+gremio puede adoptar de inmediato: entregar un aviso de privacidad por
+escrito con los elementos del artículo~15 de la ley; recabar el
+consentimiento para los datos de salud por separado del consentimiento
+clínico y conservar la constancia; fijar la regla de conservación de
+cinco años con una depuración programada, que alcance también a los
+respaldos; anotar con fechas toda solicitud de un paciente sobre sus
+datos; tener por escrito tres pasos ante un incidente ---contener,
+documentar y avisar al titular sin dilación---; y revisar dónde guarda
+los datos el proveedor de software o de nube y bajo qué condiciones,
+antes de contratarlo. El documento de referencia entregado a los
+participantes (Anexo~\ref{anexo:referencia}) resume estas prácticas
+con su fundamento normativo.
+
+Para las instituciones que forman nutriólogos, el caso aporta dos
+datos: ninguna norma de educación superior exige la protección de datos
+como contenido específico de la carrera (sección~3.1) y cuatro de los
+ocho participantes no han recibido formación alguna en la materia,
+mientras el cierre de la sesión mostró que una exposición breve y
+situada en el consultorio basta para que el profesional identifique qué
+le falta. Incorporar el manejo legal del expediente a los planes de
+estudio no requiere una asignatura nueva: cabe en las materias de
+ética, de tecnología o de práctica profesional ya existentes. La cuenta
+de práctica para estudiantes del diseño (sección~6.2.5) y el Plan
+Universidad (sección~8.3.1) se proponen como una vía, no como un
+resultado.
+
+Para quienes desarrollan software para el sector, el hallazgo es que
+usar una herramienta especializada hoy no se traduce en cumplimiento:
+en el grupo, las obligaciones ausentes lo están por igual entre quienes
+usan software comercial y quienes usan archivos de uso general, y «mi
+herramienta no lo trae» apareció como obstáculo declarado. Incorporar
+el aviso, el consentimiento con constancia, los plazos y el registro de
+accesos es una oportunidad de diferenciación además de una necesidad
+regulatoria; el paquete de diseño de este caso documenta una forma de
+hacerlo.
 
 \subsection{Limitaciones, siguientes pasos y transferencia del diseño}
 El caso se limita al diseño y a su demostración: el análisis normativo
-del capítulo dos, el diagnóstico del capítulo tres, el paquete de
-diseño del capítulo cinco y las maquetas con su prueba piloto del
-capítulo seis. No incluye la implementación productiva de NutriApp, su
+del capítulo~2, el diagnóstico del capítulo~3, el paquete de
+diseño del capítulo~5 y las maquetas con su prueba piloto del
+capítulo~6. No incluye la implementación productiva de NutriApp, su
 salida al mercado ni la operación real de un responsable o de un
 encargado del tratamiento; ninguna cifra de costo o de ingreso de la
 sección~\ref{sec:costos} ni del modelo de negocio que sigue se ha
@@ -4268,10 +4856,27 @@ transferirse o licenciarse (sección~4.5). Las decisiones de arquitectura no han
 auditadas por un tercero, y los casos de prueba comprueban la maqueta,
 no un sistema en ejecución, y los ejecuta el propio autor (sección~4.4.3).
 El borrado criptográfico no alcanza a los respaldos automáticos de la base
-de datos hasta que caducan (hasta 35 días en Amazon RDS): la supresión es
-definitiva cuando expira el último respaldo que contiene la llave de datos
-cifrada. Las limitaciones que dependen del campo se
-escriben después de la prueba piloto.
+de datos hasta que caducan (siete días en el diseño, de un máximo de 35 en
+Amazon RDS; sección~5.1): la supresión es definitiva cuando expira el último
+respaldo que contiene la llave de datos cifrada.
+
+El estudio de campo añade sus propias limitaciones. La sesión la moderó
+el asesor de la tesis, por la ausencia imprevista del facilitador
+externo, y el autor presentó las maquetas e hizo el cierre, de modo que
+la conducción no fue independiente. El grupo fue pequeño, joven
+---ninguno rebasa los cinco años de práctica--- y de una sola sesión;
+los participantes conocían al autor, recibieron un pago y los
+formularios registraron su nombre, condiciones que favorecen respuestas
+complacientes. La evaluación del diseño se hizo sobre una demostración
+y no sobre el uso: el quinto bloque no produjo discusión y la revisión
+por expertos descansa en una encuesta de salida respondida dos y tres
+días después, con una sola valoración para la lista de funciones. El
+aviso de participación y el cuestionario previo se aplicaron en un solo
+formulario (sección~4.5); el conocimiento de la ley no se midió después
+de la sesión, por lo que el efecto del cierre queda como intención
+declarada; y la obligación~X no tiene dato de campo. Por todo ello, los
+resultados del capítulo~7 se presentan como evidencia exploratoria del
+grupo estudiado, no como validación con usuarios.
  
 Los siguientes pasos para quien implemente el diseño no dependen de
 ese resultado y quedan enunciados desde ahora. Son cinco: la estructura de
@@ -4483,7 +5088,7 @@ ingreso neto del MVP, unos \$111,000 pesos al mes, la tasa aplicable es
 La tabla muestra los dos regímenes en los dos escenarios: RESICO en la
 base y persona moral con alta disponibilidad en la ruta crítica. El IVA
 que Amazon Web Services (AWS) factura desde 2026 a través de su entidad mexicana (AWS,
-s.f.-j) y el de Mercado Pago son acreditables contra el IVA
+s.f.-q) y el de Mercado Pago son acreditables contra el IVA
 trasladado. No hay participación de utilidades porque el MVP no tiene
 empleados. Estos cálculos son una estimación para dimensionar el caso,
 no asesoría fiscal; los supuestos están en la hoja de cálculo y se
@@ -4555,74 +5160,126 @@ Recuperado el 18 de octubre de 2026, de \url{https://dgair.sep.gob.mx/storage/re
   % Única modificación localizada antes del corte: Acuerdo 02/02/24
   % (DOF 28-02-2024), que reformó el art.~22, párr.~segundo.
 
-\item Amazon Web Services. (s.f.-a). \textit{AWS KMS keys}. AWS Key
+\item Amazon Web Services. (s.f.-a). \textit{Adding MFA to a user pool}.
+  Amazon Cognito Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-mfa.html}
+ 
+  % Cap. 2 (secc. 2.5.2) y cap. 5 (secc. 5.1): MFA por TOTP
+  % (software token), SMS o correo; modos desactivada, opcional u
+  % obligatoria (AWS, s.f.-a).
+ 
+\item Amazon Web Services. (s.f.-b). \textit{AWS Encryption SDK for
+  JavaScript}. AWS Encryption SDK Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/encryption-sdk/latest/developer-guide/javascript.html}
+ 
+  % Cap. 5 (secc. 5.1): biblioteca de cifrado del lado del cliente para
+  % Node.js con cifrado por envolvente y AES-GCM de 256 bits (AWS,
+  % s.f.-b).
+ 
+\item Amazon Web Services. (s.f.-c). \textit{AWS KMS keys}. AWS Key
   Management Service Developer Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html}
  
   % Cap. 2 (secc. 2.5.3): cifrado por envolvente y llaves de datos
-  % (AWS, s.f.-a).
+  % (AWS, s.f.-c).
  
-\item Amazon Web Services. (s.f.-b). \textit{AWS Pricing}. Recuperado el
+\item Amazon Web Services. (s.f.-d). \textit{AWS Managed Rules rule
+  groups list}. AWS WAF Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-list.html}
+ 
+  % Cap. 5 (secc. 5.1): grupos de reglas administradas (conjunto
+  % básico, entradas maliciosas conocidas, bases de datos SQL) (AWS,
+  % s.f.-d).
+ 
+\item Amazon Web Services. (s.f.-e). \textit{AWS Pricing}. Recuperado el
   24 de septiembre de 2026, de \url{https://aws.amazon.com/pricing/}
  
   % Cap. 7 (secc. 7.3): precios de lista de los servicios de la
-   % Tabla de costos (AWS, s.f.-b).
+   % Tabla de costos (AWS, s.f.-e).
  
-\item Amazon Web Services. (s.f.-c). \textit{AWS service quotas}. AWS General Reference. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
+\item Amazon Web Services. (s.f.-f). \textit{AWS service quotas}. AWS General Reference. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html}
  
   % Cap. 7 (secc. 7.3, modelo de carga): mil ejecuciones simultáneas
   % de Lambda por cuenta y 2,500 solicitudes por segundo en API
   % Gateway para mx-central-1; conexiones de RDS según la clase de
-   % instancia (AWS, s.f.-c).
+   % instancia (AWS, s.f.-f).
  
-\item Amazon Web Services. (s.f.-d). \textit{Calling AWS services and
+\item Amazon Web Services. (s.f.-g). \textit{Calling AWS services and
   prices using the AWS Price List}. AWS Billing and Cost Management
   User Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/price-changes.html}
  
   % Cap. 7 (secc. 7.3): archivos de precios en JSON y CSV por servicio
-  % y región, incluida mx-central-1 (AWS, s.f.-d).
+  % y región, incluida mx-central-1 (AWS, s.f.-g).
 
-\item Amazon Web Services. (s.f.-e). \textit{Delete an AWS KMS key}.
+\item Amazon Web Services. (s.f.-h). \textit{Creating user accounts as
+  administrator}. Amazon Cognito Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-create-user-accounts.html}
+ 
+  % Cap. 6 (secc. 6.2.1): alta de usuarios por el administrador con
+  % contraseña temporal e invitación por correo (AWS, s.f.-h).
+ 
+\item Amazon Web Services. (s.f.-i). \textit{Delete an AWS KMS key}.
   AWS Key Management Service Developer Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/kms/latest/developerguide/deleting-keys.html}
  
   % Cap. 2 (secc. 2.5.3): la eliminación de una llave se programa
-  % con un periodo de espera de 7 a 30 días (AWS, s.f.-e).
+  % con un periodo de espera de 7 a 30 días (AWS, s.f.-i).
  
-\item Amazon Web Services. (s.f.-f). \textit{Exporting log data to
+\item Amazon Web Services. (s.f.-j). \textit{Email settings for Amazon
+  Cognito user pools}. Amazon Cognito Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-email.html}
+ 
+  % Cap. 5 (secc. 5.1): identidades de SES en una región alterna cuando
+  % SES no está en la región del grupo de usuarios; para Mexico
+  % (Central), US East (N. Virginia) y US West (Oregon) (AWS, s.f.-j).
+ 
+\item Amazon Web Services. (s.f.-k). \textit{Exporting data from an RDS
+  for PostgreSQL DB instance to Amazon S3}. Amazon RDS User Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/postgresql-s3-export.html}
+ 
+  % Cap. 5 (secc. 5.1 y 5.2.1): extensión aws_s3 y función
+  % aws_s3.query_export_to_s3 (AWS, s.f.-k).
+ 
+\item Amazon Web Services. (s.f.-l). \textit{Exporting log data to
   Amazon S3}. Amazon CloudWatch Logs User Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/S3Export.html}
 
   % Cap. 5 (secc. 5.2, parte d): exportación por tareas de CloudWatch
-  % Logs a S3 con Object Lock y sus limitaciones (AWS, s.f.-f).
+  % Logs a S3 con Object Lock y sus limitaciones (AWS, s.f.-l).
  
-\item Amazon Web Services. (s.f.-g). \textit{Lambda proxy integrations
+\item Amazon Web Services. (s.f.-m). \textit{Lambda proxy integrations
   in API Gateway}. Amazon API Gateway Developer Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html}
  
   % Cap. 5 (secc. 5.1 y 5.2, parte b): API Gateway invoca Lambda con
-  % integración proxy, sin balanceador intermedio (AWS, s.f.-g).
+  % integración proxy, sin balanceador intermedio (AWS, s.f.-m).
  
-\item Amazon Web Services. (s.f.-h). \textit{Locking objects with
+\item Amazon Web Services. (s.f.-n). \textit{Lambda quotas}. AWS Lambda
+  Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-limits.html}
+ 
+  % Cap. 5 (secc. 5.1): 6 MB de carga útil por invocación síncrona
+  % (AWS, s.f.-n).
+ 
+\item Amazon Web Services. (s.f.-o). \textit{Locking objects with
   Object Lock}. Amazon Simple Storage Service User Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html}
  
   % Cap. 2 (secc. 2.5.4 y 2.5.5): modo de cumplimiento; ningún
   % usuario puede borrar ni sobrescribir durante la retención
-  % (AWS, s.f.-h).
+  % (AWS, s.f.-o).
  
-\item Amazon Web Services. (s.f.-i). \textit{Logging data events}.
+\item Amazon Web Services. (s.f.-p). \textit{Logging data events}.
   AWS CloudTrail User Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/awscloudtrail/latest/userguide/logging-data-events-with-cloudtrail.html}
  
   % Cap. 2 (secc. 2.5.4): los eventos de datos no se registran por
-  % defecto; deben configurarse (AWS, s.f.-i).
+  % defecto; deben configurarse (AWS, s.f.-p).
  
-\item Amazon Web Services. (s.f.-j). \textit{Tax help: Mexico}. Recuperado el 18 de octubre de 2026, de \url{https://aws.amazon.com/tax-help/mexico/}
+\item Amazon Web Services. (s.f.-q). \textit{Tax help: Mexico}. Recuperado el 18 de octubre de 2026, de \url{https://aws.amazon.com/tax-help/mexico/}
  
   % Cap. 7 (secc. 7.3): AWS factura a clientes en México a través de
    % Amazon Web Services México y traslada el IVA desde 2026 (AWS,
-  % s.f.-h).
+  % s.f.-o).
  
-\item Amazon Web Services. (s.f.-k). \textit{Using pgAudit to log
+\item Amazon Web Services. (s.f.-r). \textit{Things to know about
+  authentication with user pools}. Amazon Cognito Developer Guide. Recuperado el 22 de octubre de 2026, de \url{https://docs.aws.amazon.com/cognito/latest/developerguide/authentication-flow-things-to-know.html}
+ 
+  % Cap. 5 (secc. 5.1): bloqueo tras cinco intentos fallidos, espera
+  % que se duplica hasta unos quince minutos (AWS, s.f.-r).
+ 
+\item Amazon Web Services. (s.f.-s). \textit{Using pgAudit to log
   database activity}. Amazon Relational Database Service User Guide. Recuperado el 18 de octubre de 2026, de \url{https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.pgaudit.html}
  
   % Cap. 2 (secc. 2.5.4) y cap. 5: auditoría de la actividad SQL con
-  % pgAudit (AWS, s.f.-k).
+  % pgAudit (AWS, s.f.-s).
 
 \item Amazon Web Services. (2023a). \textit{AWS compliance programs}. Recuperado el 18 de octubre de 2026, de \url{https://aws.amazon.com/compliance/programs/}
 
@@ -5314,6 +5971,25 @@ Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/deve
   % transacción con depósito inmediato o a 14 días (Mercado Pago,
   % s.f.-b).
  
+\item Mercado Pago. (s.f.-c). \textit{Integra Suscripciones y configura
+  cobros recurrentes}. Mercado Pago Developers. Recuperado el 22 de octubre de 2026, de \url{https://www.mercadopago.com.mx/developers/es/docs/subscriptions/landing}
+ 
+  % Cap. 5 (secc. 5.1): producto de cobro recurrente con plan de
+  % preaprobación y formulario de pago del proveedor (Mercado Pago,
+  % s.f.-c).
+ 
+\item Mercado Pago. (s.f.-d). \textit{Webhooks}. Mercado Pago Developers.
+  Recuperado el 22 de octubre de 2026, de \url{https://www.mercadopago.com.mx/developers/es/docs/your-integrations/notifications/webhooks}
+ 
+  % Cap. 5 (secc. 5.1): validación del origen de la notificación con
+  % el encabezado x-signature (Mercado Pago, s.f.-d).
+ 
+\item Meta. (s.f.). \textit{Get opt-in for WhatsApp}. WhatsApp Business
+  Platform, Meta for Developers. Recuperado el 22 de octubre de 2026, de \url{https://developers.facebook.com/docs/whatsapp/overview/getting-opt-in}
+ 
+  % Cap. 5 (secc. 5.1): las empresas deben obtener el consentimiento
+  % previo (opt-in) antes de enviar mensajes por WhatsApp (Meta, s.f.).
+ 
 \item Meta. (2025). \textit{Pricing}. WhatsApp Business Platform,
   Meta for Developers. Recuperado el 24 de septiembre de 2026, de
 \url{https://developers.facebook.com/documentation/business-messaging/whatsapp/pricing}
@@ -5334,6 +6010,13 @@ Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/deve
 
 % ── N ────────────────────────────────────────────────────────
 
+\item M'Raihi, D., Machani, S., Pei, M. y Rydell, J. (2011). \textit{TOTP:
+  Time-based one-time password algorithm} (RFC~6238). Internet
+  Engineering Task Force. \url{https://www.rfc-editor.org/rfc/rfc6238}
+ 
+  % Cap. 2 (secc. 2.5.2): algoritmo del código de un solo uso basado en
+  % tiempo (M'Raihi et al., 2011).
+ 
 \item National Institute of Standards and Technology. (2023).
   \textit{Advanced Encryption Standard (AES)} (FIPS PUB~197-upd1).
   U.S. Department of Commerce.
@@ -5604,6 +6287,11 @@ Laboral. Recuperado el 18 de octubre de 2026, de \url{https://www.observatoriola
   % que solo quien posea esa clave puede recuperar el contenido
   % (Stallings, 2020).
  
+\item Twilio. (s.f.). \textit{Verify API}. Twilio Docs. Recuperado el 22 de octubre de 2026, de \url{https://www.twilio.com/docs/verify/api}
+ 
+  % Cap. 5 (secc. 5.1): códigos de un solo uso por SMS y WhatsApp para
+  % confirmar el número del paciente (Twilio, s.f.).
+ 
 \item Twilio. (2026). \textit{SMS pricing: Mexico}. Recuperado el 24 de
   septiembre de 2026, de \url{https://www.twilio.com/en-us/sms/pricing/mx}
  
@@ -5750,19 +6438,134 @@ Recuperado el 30 de septiembre de 2026, de \url{https://www.cucs.udg.mx/sites/de
 \label{anexo:grupo-focal}
 
 \subsection{Consentimiento informado}
-\mbox{}
-% Texto que aceptaron los participantes antes de la sesión (sección
-% 4.3.2), tal como se envió.
+\label{anexo:consentimiento}
+ 
+Aviso de participación y aceptación enviado a cada participante antes de la sesión. En la aplicación fue la primera sección de un único formulario de Google Forms, seguido del cuestionario previo (Anexo~\ref{anexo:cuestionario}); el único campo de datos fue el nombre completo, y la desviación respecto del texto ---que anunciaba formularios separados--- se registra en la sección~4.5.
+ 
+Estudio: «Privacidad por diseño en la práctica nutriológica: análisis normativo y arquitectura para el cumplimiento de la LFPDPPP», caso de estudio de la Maestría en Informática Aplicada (ITESO). Responsable del estudio: Ing. Cristian Emanuel Ortega Camarena, emanuel.ortega@iteso.mx.
+ 
+Te invitamos a un grupo focal con nutriólogos que atienden pacientes. La sesión dura 60 minutos, es en línea por Google Meet, la conduce un facilitador externo y se realiza el viernes 23 de octubre de 2026 a las 14:00 h (hora de la Ciudad de México). En la primera parte se conversa sobre cómo se manejan los datos de los pacientes en la consulta; en la segunda se muestran brevemente las maquetas de NutriApp, un diseño que se evalúa antes de pasar a su desarrollo, para conocer tu opinión. Las maquetas usan perfiles de pacientes ficticios, marcados como (USUARIO DE PRUEBA); NutriApp no asume las obligaciones legales del nutriólogo, que sigue siendo el responsable de los datos de sus pacientes.
+ 
+Cómo se cuida tu información. Participas de forma voluntaria y puedes dejar la sesión en cualquier momento, sin dar explicaciones y sin consecuencia. La sesión se transcribe de forma automática con la función de Google Meet, con el único fin de elaborar un resumen; no se graba ni se conserva audio ni video, y la transcripción se anonimiza antes del resumen y después se elimina. Lo que digas es confidencial: los resultados se reportan de forma agregada o con citas sin atribución. Recibirás \$350 pesos por tu tiempo y tu experiencia; el monto no depende de tus respuestas.
+ 
+Lo que sigue es anónimo. Este es el único formulario que pide tu nombre, y solo para registrar tu aceptación, enviarte el enlace y entregar el pago. El cuestionario previo que recibirás después y la encuesta de salida no piden tu nombre ni registran tu cuenta, y no se vinculan con este formulario ni con la transcripción.
+ 
+Casilla obligatoria: He leído este aviso. Soy mayor de edad, atiendo pacientes actualmente y acepto participar en estas condiciones, incluida la transcripción automática de la sesión.
+ 
+\textit{Aviso de privacidad del estudio (simplificado). Responsable: Ing. Cristian Emanuel Ortega Camarena, emanuel.ortega@iteso.mx. Datos que se tratan: tu nombre y un medio de contacto, solo para registrar esta aceptación, coordinar la sesión y entregar el pago; y lo que expreses durante la sesión, a través de la transcripción automática, que se anonimiza antes de elaborar el resumen. Finalidad: la investigación académica descrita arriba. Los datos no se transfieren a terceros; el cuestionario previo y la encuesta de salida son anónimos y no se vinculan con este formulario ni con la transcripción. Conservación: el registro de la aceptación y del pago se conserva durante el proceso de titulación; la transcripción anonimizada se elimina una vez elaborado el resumen. Puedes ejercer tus derechos de acceso, rectificación, cancelación y oposición escribiendo a emanuel.ortega@iteso.mx.}
  
 \subsection{Cuestionario previo}
-\mbox{}
-% Preguntas y opciones del formulario de Google Forms, en el orden en
-% que se aplicaron: perfil y práctica actual (sección 4.3.2).
+\label{anexo:cuestionario}
+ 
+Preguntas y opciones en el orden aplicado, dentro del mismo formulario (sección~4.5). Entre corchetes, la obligación de las Tablas~\ref{tab:trazabilidad-1} y~\ref{tab:trazabilidad-2} a la que corresponde cada pregunta y, en la tercera parte, la respuesta conforme a la norma; esas marcas no se mostraron a los participantes. La pregunta sobre la norma del expediente clínico electrónico prevista en el diseño no se incluyó en el formulario aplicado, de modo que la obligación~X se evalúa solo con el análisis documental (secciones~3.3 y~7.2).
+ 
+\paragraph{Perfil}
+\begin{enumerate}
+  \item ¿En qué ámbito ejerces principalmente? (opción única: Consulta privada (propia o en un consultorio); Institución (hospital, clínica, empresa, escuela); Ambos)
+  \item ¿Cuántos años llevas atendiendo pacientes? (opción única: Menos de 2; De 2 a 5; De 6 a 10; Más de 10)
+  \item ¿Cómo atiendes la mayoría de tus consultas? (opción única: Presencial; En línea; Mixta)
+  \item ¿Cuántos pacientes atiendes al mes, aproximadamente? (opción única: Menos de 20; De 20 a 50; De 51 a 100; Más de 100)
+\end{enumerate}
+ 
+\paragraph{Tu práctica actual con los datos de tus pacientes}
+\begin{enumerate}
+  \item ¿Cuál es la herramienta principal en la que llevas el expediente de tus pacientes? (opción única: Papel; Hoja de cálculo (Excel, Google Sheets); Documento de texto (Word, Google Docs); Software especializado para nutriólogos (indica cuál en la siguiente pregunta); Notas en el teléfono o en una aplicación de mensajería; Otra) [IX]
+  \item Si usas software especializado, ¿cuál? (respuesta corta) [IX]
+  \item ¿Sabes qué datos de tus pacientes guardas y en qué lugares (dispositivos, nube, papel)? (opción única: Sí, los tengo identificados; Más o menos; No) [VI]
+  \item ¿Dónde se guarda la información de tus pacientes? Marca todas las que apliquen. (opción múltiple: En mi computadora; En mi teléfono; En la nube (Google Drive, iCloud, OneDrive, Dropbox); En el servidor del software que uso; En papel, en un archivero; No lo sé con certeza) [XI]
+  \item ¿Qué protección tiene esa información? Marca todas las que apliquen. (opción múltiple: Contraseña del dispositivo; Contraseña del archivo o de la aplicación; Cifrado; Respaldo periódico; Cada persona que entra tiene su propio usuario; Ninguna en particular; No lo sé) [III, IV]
+  \item ¿Entregas a tus pacientes algún aviso sobre el uso que das a sus datos? (opción única: Sí, por escrito o en pantalla; Sí, se lo explico de palabra; No) [II]
+  \item ¿Pides al paciente una autorización firmada para el manejo de sus datos de salud, distinta del consentimiento para el tratamiento clínico? (opción única: Sí, en un documento aparte; Sí, dentro del mismo consentimiento clínico; No) [I]
+  \item ¿Por qué medio compartes información de pacientes (con colegas, laboratorios o con el propio paciente)? Marca todas las que apliquen. (opción múltiple: Whats\-App u otra mensajería; Correo electrónico; Carpeta compartida en la nube; Impreso; No comparto información de pacientes) [III, XI]
+  \item ¿Algún paciente te ha pedido ver, corregir o borrar sus datos? (opción única: Sí; No) [VII]
+  \item Si contestaste que sí, ¿qué hiciste y en cuánto tiempo? (respuesta corta) [VII]
+  \item ¿Cuánto tiempo conservas el expediente de un paciente que dejó de atenderse contigo? (opción única: Menos de un año; De 1 a 4 años; 5 años o más; Indefinidamente; No lo he definido) [IX]
+  \item Si perdieras el teléfono o la computadora donde están los expedientes, ¿qué harías? (respuesta corta) [V]
+  \item ¿Quién más, aparte de ti, puede abrir los expedientes de tus pacientes (asistente, recepción, colegas, familiares)? (respuesta corta) [IV, VIII]
+\end{enumerate}
+ 
+\paragraph{Lo que sabes hoy de la ley (línea base)}
+\begin{enumerate}
+  \item ¿Has recibido formación sobre protección de datos personales? Marca todas las que apliquen. (opción múltiple: En la licenciatura; En un curso, diplomado o posgrado; Por mi cuenta (lecturas, videos); Ninguna) [conocimiento]
+  \item ¿Qué tanto conoces la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP)? (opción única: No la conozco; Sé que existe, pero no qué me exige; La conozco en términos generales; La conozco y aplico sus requisitos en mi consulta) [conocimiento]
+  \item Según esa ley, los datos sobre la salud de un paciente son: (opción única: Datos personales como cualquier otro; Datos personales sensibles, con requisitos adicionales; No están regulados por esa ley; No lo sé) [conocimiento · I, III] \{Datos personales sensibles (LFPDPPP 2025, art. 2)\}
+  \item Frente a esa ley, el nutriólogo que lleva expedientes de sus pacientes en consulta privada es: (opción única: El «responsable» de esos datos, con obligaciones propias; Un usuario sin obligaciones, porque los datos son del paciente; Obligado solo si trabaja en una institución; No lo sé) [conocimiento · todas] \{Responsable (LFPDPPP 2025, art. 2, fracc. XIV)\}
+  \item ¿Qué debe recibir el paciente antes de que uses sus datos, además de su consentimiento? (opción única: Un aviso de privacidad; Una copia de su expediente; Nada más; basta el consentimiento clínico; No lo sé) [conocimiento · II] \{Aviso de privacidad (LFPDPPP 2025, arts. 14 y 15)\}
+  \item Si un paciente te pide una copia de su expediente, ¿en cuántos días hábiles debes responderle según la ley? (opción única: 5; 10; 20; La ley no fija plazo; No lo sé) [conocimiento · VII] \{20 días (LFPDPPP 2025, art. 31)\}
+  \item ¿Qué autoridad vigila hoy el cumplimiento de esa ley? (opción única: Instituto Nacional de Transparencia (INAI); Secretaría Anticorrupción y Buen Gobierno; Secretaría de Salud; COFEPRIS; No lo sé) [conocimiento] \{Secretaría Anticorrupción y Buen Gobierno desde 2025 (LFPDPPP 2025, art. 2, fracc. XV); «INAI» indica conocimiento desactualizado\}
+  \item ¿La ley prevé multas por incumplir estas obligaciones? (opción única: Sí, y conozco el orden de magnitud; Sí, pero no sé de cuánto; No; No lo sé) [conocimiento] \{Sí (LFPDPPP 2025, arts. 58 y 59)\}
+  \item ¿Cuánto tiempo debe conservarse el expediente clínico según la norma sanitaria? (opción única: 1 año; 5 años; 10 años; No hay plazo; No lo sé) [conocimiento · IX] \{5 años desde el último acto médico (NOM-004-SSA3-2012, numeral 5.4)\}
+\end{enumerate}
  
 \subsection{Guía de discusión}
-\mbox{}
-% Los cinco bloques y sus preguntas, como los recibió el facilitador
-% (secciones 4.3.2 y 4.3.3).
+\label{anexo:guia}
+ 
+Guía preparada para la conducción de la sesión y entregada con anticipación; la usó el asesor, que moderó ante la ausencia del facilitador externo (sección~4.3.1 y Anexo~\ref{anexo:minuta}).
+ 
+Objetivo de la sesión: describir cómo manejan hoy los nutriólogos los datos de sus pacientes (bloques 1 a 4) y recoger su opinión sobre las funciones de NutriApp (bloque 5). Las preguntas son sobre lo que hacen, no sobre lo que saben de la ley; no se corrige a nadie durante la discusión.
+ 
+El facilitador define la dinámica y el tiempo de cada bloque. Lo único fijo es el orden: los bloques 1 a 4 van antes de mostrar cualquier material de NutriApp; después se presentan las maquetas y se abre el bloque 5; y al final, una vez concluida la discusión, el autor cierra con diez minutos de exposición sobre los requisitos mínimos de la LFPDPPP para el consultorio y preguntas frecuentes. Ese cierre va al final para no influir en lo que los participantes reportan.
+ 
+En cada bloque se buscan tres cosas: la práctica (qué hacen), las razones (por qué lo hacen así) y los obstáculos (qué les impide hacerlo distinto).
+ 
+Participantes: de seis a ocho nutriólogos con práctica clínica. El autor asiste para presentar las maquetas (entre el bloque 4 y el 5) y para el cierre; no interviene en la discusión.
+ 
+Transcripción: se activa la transcripción automática de Google Meet al inicio. No se graba audio ni video. Se recuerda a los participantes que la transcripción se anonimiza y que pueden omitir cualquier dato que identifique a un paciente.
+ 
+\paragraph{Orden de la sesión}
+\begin{enumerate}
+  \item Apertura: bienvenida; confirmar que todos enviaron la aceptación y contestaron el cuestionario previo; activar la transcripción; recordar la confidencialidad y que no se graba audio ni video; ronda breve de presentación (ámbito y años de práctica, sin nombre de consultorio).
+  \item Bloques 1 a 4: la práctica actual, sin material de NutriApp.
+  \item Presentación de las maquetas por el autor, con perfiles ficticios (USUARIO DE PRUEBA). Al presentarlas se dice que NutriApp no asume las obligaciones legales del nutriólogo.
+  \item Bloque 5: opiniones sobre las funciones de NutriApp.
+  \item Cierre, al final: diez minutos del autor con los requisitos mínimos de la LFPDPPP para el consultorio y preguntas frecuentes; al terminar se comparte el enlace de la encuesta de salida.
+\end{enumerate}
+\paragraph{Bloque 1: El expediente clínico en la práctica actual} (obligaciones IX, IV, VIII)
+\begin{enumerate}
+  \item ¿Cómo registran la información de un paciente nuevo y dónde la guardan después?
+  \item ¿Qué pasa con esa información cuando el paciente deja de venir? ¿Cuánto tiempo la conservan y por qué ese tiempo?
+  \item ¿Quién más puede ver esos expedientes (asistente, recepción, colegas)? ¿Cómo entran?
+  \item Sondeo: ¿han cambiado de herramienta alguna vez? ¿Qué los hizo cambiar o qué los detiene?
+\end{enumerate}
+ 
+\paragraph{Bloque 2: El aviso de privacidad y el consentimiento} (obligaciones II, I)
+\begin{enumerate}
+  \item ¿Qué le dicen al paciente, en la primera consulta, sobre lo que harán con sus datos? ¿Se lo dan por escrito?
+  \item ¿Qué firma el paciente al empezar? ¿Es el mismo documento para el tratamiento clínico y para el uso de sus datos, o son distintos?
+  \item ¿Qué hacen cuando el paciente es menor de edad o viene acompañado?
+  \item Sondeo: si no entregan un aviso o no piden firma, ¿qué lo dificulta (tiempo, no saber qué debe decir, incomodidad con el paciente)?
+\end{enumerate}
+ 
+\paragraph{Bloque 3: Almacenamiento y compartición de datos de salud} (obligaciones III, XI, V, VI)
+\begin{enumerate}
+  \item ¿Dónde viven hoy los datos de sus pacientes: teléfono, computadora, nube, papel? ¿Con qué protección?
+  \item ¿Cómo comparten información con colegas, laboratorios o con el propio paciente (mensajería, correo, carpeta compartida)?
+  \item Si perdieran el teléfono o la computadora, o alguien entrara a su cuenta, ¿qué harían? ¿Le avisarían al paciente?
+  \item Sondeo: ¿usan servicios en la nube o software de terceros? ¿Saben dónde guardan la información esos servicios?
+\end{enumerate}
+ 
+\paragraph{Bloque 4: Las solicitudes de los pacientes sobre sus datos} (obligaciones VII, IX)
+\begin{enumerate}
+  \item ¿Les ha pedido un paciente una copia de su expediente, corregir un dato o que lo borren? ¿Qué hicieron y en cuánto tiempo?
+  \item Si un paciente pide que borren todo, ¿qué harían con el expediente clínico? ¿Lo borrarían, lo guardarían, lo bloquearían?
+  \item ¿Cómo llevan la cuenta de una solicitud de este tipo (fecha en que llegó, plazo, respuesta)?
+  \item Sondeo: ¿qué les haría falta para responder una solicitud así con seguridad?
+\end{enumerate}
+ 
+\paragraph{Bloque 5: Opiniones sobre las funciones de NutriApp (después de la presentación de las maquetas)} (obligaciones evaluación (cap. 7))
+\begin{enumerate}
+  \item Consentimiento y aviso de privacidad del paciente (casilla obligatoria, folio, versión del aviso): ¿se parece a lo que hacen hoy? ¿Lo usarían? ¿Qué cambiarían?
+  \item Expediente con estados (pendiente de consentimiento, activo, revocado, bloqueado) y conservación de cinco años: ¿entienden qué significa cada estado? ¿Qué falta?
+  \item Solicitudes ARCO con plazo visible y bloqueo antes de suprimir: ¿resuelve el caso del paciente que pide borrar todo? ¿Es una carga razonable?
+  \item Seguridad: usuario propio con doble factor y registro de quién abrió qué expediente y cuándo: ¿lo ven como protección o como estorbo?
+  \item Avisos al paciente por correo, Whats\-App o mensaje de texto, y aviso ante un incidente: ¿lo usarían? ¿En qué canal?
+  \item Catálogo y reserva de cita; cuentas para estudiantes y docentes: ¿les aportan algo? ¿Qué no usarían y por qué?
+  \item Cierre del bloque: de todo lo que vieron, ¿qué les resolvería una obligación que hoy no cumplen? ¿Qué sobra?
+\end{enumerate}
+ 
+\paragraph{Hoja de observación del autor (bloque 5)}
+Hoja de observación del autor para el bloque 5 (sección 7.1, «Observación en el caso»). Se llena durante la discusión, sin nombres, con marcas por participante (P1…P8 en el orden en que intervienen).
+Columnas: Función mostrada; Qué entienden (frases literales breves); Qué falta o no se entiende; Qué no usarían y por qué; Reacciones (dudas, objeciones, comparaciones con su práctica). Filas: Consentimiento y aviso de privacidad; Expediente y estados; Solicitudes ARCO y cancelación; Seguridad y registro de accesos; Avisos al paciente e incidentes; Catálogo, cita, Students y docente. En la aplicación, el quinto bloque y esta hoja quedaron sin materia (sección~7.1).
  
 \subsection{Minuta de la sesión}
 \label{anexo:minuta}
@@ -6149,14 +6952,14 @@ verificarse se retiraron del texto.
   \item Grok (xAI): revisión cruzada de las observaciones de la
     herramienta anterior y auditoría de inconsistencias contra el
     manuscrito; generación del código de dibujo de los diagramas de
-    ingeniería del capítulo cinco y de la composición de las maquetas
-    compuestas del capítulo seis, a partir de especificaciones escritas
+    ingeniería del capítulo~5 y de la composición de las maquetas
+    compuestas del capítulo~6, a partir de especificaciones escritas
     por el autor, que revisó cada versión.
   \item ChatGPT (OpenAI): segunda opinión, en la etapa final, sobre
     hallazgos en los que las dos herramientas anteriores no coincidían.
   \item Figma Make: construcción de las maquetas navegables descritas
-    en los capítulos cuatro y seis a partir de los requerimientos del
-    capítulo seis.
+    en los capítulos~4 y~6 a partir de los requerimientos del
+    capítulo~6.
   \item Gemini (Google): notas de alineación entre el estudio de
     mercado y el documento.
 \end{itemize}
@@ -6258,7 +7061,7 @@ artículos y remisiones a tablas, figuras y secciones que no coincidían
 entre el resumen, los capítulos y las tablas (por ejemplo, una cifra
 del INAI presentada como monto de multas cuando el comunicado reporta
 inconformidades, o un término corregido en una tabla que conservaba el
-sentido anterior en dos oraciones del capítulo dos), y el autor resolvió
+sentido anterior en dos oraciones del capítulo~2), y el autor resolvió
 cada una consultando la fuente. Las herramientas no produjeron el
 análisis normativo, el diseño del artefacto, los casos de prueba ni la
 interpretación de los resultados, y ninguna de sus observaciones entró
