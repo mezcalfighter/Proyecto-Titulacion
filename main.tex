@@ -212,49 +212,59 @@ El nutriólogo de consulta privada trata datos personales sensibles desde
 la primera consulta, y la Ley Federal de Protección de Datos Personales
 en Posesión de los Particulares (LFPDPPP) le exige por ello un aviso de
 privacidad, el consentimiento expreso y por escrito del paciente,
-medidas de seguridad y la respuesta a los derechos de acceso, rectificación, cancelación y oposición (ARCO) en veinte días.
-La ley no precisa qué medidas bastan. Su Reglamento exige medidas de
-seguridad en cualquier soporte y prevé la trazabilidad entre las medidas
-del principio de responsabilidad, una condición que una hoja de cálculo aislada,
-aun con contraseña, no cumple por sí misma. Las multas pueden llegar a
-\$72,409,600 pesos cuando hay datos de salud;
-la autoridad pasó en 2025 del Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI) a la Secretaría Anticorrupción y Buen
-Gobierno, y ninguna norma de educación superior exige la protección de
-datos como contenido específico de la formación del nutriólogo.
+medidas de seguridad y la respuesta a los derechos de acceso,
+rectificación, cancelación y oposición (ARCO) en veinte días. La ley no
+precisa qué medidas bastan; su Reglamento exige medidas de seguridad en
+cualquier soporte y prevé la trazabilidad entre las medidas del
+principio de responsabilidad, una condición que una hoja de cálculo
+aislada, aun con contraseña, no cumple por sí misma. Ninguna norma de
+educación superior exige la protección de datos como contenido
+específico de la formación del nutriólogo, de modo que el profesional
+responde ante la autoridad por obligaciones que su formación no cubre y
+que sus herramientas habituales no le ayudan a documentar.
  
 El caso aplica la investigación de diseño (\textit{design science
-research}) con estrategia de caso de estudio. Se analizó el marco
-mexicano frente a los de Brasil, Uruguay, Estados Unidos y Alemania, se
-tradujeron once obligaciones legales a requerimientos técnicos
-verificables y se diseñó NutriApp, una plataforma en la nube con región
-primaria en México. El diseño integra el consentimiento del paciente con
-folio, cifrado AES-256 y TLS~1.3, autenticación multifactor para el
-nutriólogo, un registro de auditoría en tres capas y un módulo ARCO con
-bloqueo y supresión que solo se ejecuta cuando el profesional la
-confirma. En el diseño, NutriApp opera como encargado, de modo que las decisiones y
-las obligaciones del tratamiento siguen siendo del nutriólogo. El
-diseño se demuestra con maquetas navegables, se evalúa con tres casos de prueba, y un
-grupo focal de seis a ocho nutriólogos con práctica clínica aporta el
-diagnóstico de la práctica actual y la revisión del diseño por expertos.
+research}) con estrategia de caso de estudio, y abarca el diseño de la
+solución y su demostración; la implementación, el despliegue y la
+operación quedan fuera. Se analizó el marco mexicano frente a los de
+Brasil, Uruguay, Estados Unidos y Alemania y se tradujeron once
+obligaciones legales a requerimientos técnicos verificables. Sobre esa
+matriz, NutriApp se presenta como una opción de arquitectura para el
+consultorio de práctica privada: una plataforma en la nube con región
+primaria en México en la que el nutriólogo conserva el papel de
+responsable y la plataforma actúa como su encargado, de modo que las
+decisiones y las obligaciones del tratamiento siguen siendo suyas y la
+plataforma le da los medios para atenderlas y dejar constancia de ello.
+El diseño integra el consentimiento del paciente con folio, cifrado
+AES-256 y TLS~1.3, autenticación multifactor para el nutriólogo, un
+registro de auditoría en tres capas y un módulo ARCO con bloqueo y
+supresión que solo se ejecuta cuando el profesional la confirma.
  
-Cada una de las once obligaciones tiene un componente que la atiende.
-Operar el diseño para 500 nutriólogos y 5,000 pacientes costaría entre
-\$141 y \$299 dólares al mes, de \$0.28 a \$0.60 dólares por nutriólogo, y la
-multa promedio que impuso el INAI en 2023 equivale a 181 suscripciones
-anuales del plan Pro. Quedan fuera del producto mínimo viable la firma
-electrónica avanzada, la exportación estructurada del expediente y la
-estructura completa de la historia clínica.
+El paquete de diseño reúne el marco normativo y técnico, la matriz de
+trazabilidad, la arquitectura de servicios, los diagramas de ingeniería,
+el modelo de datos, los requerimientos del producto mínimo viable, tres
+casos de prueba de aceptación y las maquetas navegables de la interfaz.
+Se comprueba en tres niveles: cada una de las once obligaciones tiene un
+componente que la atiende, los casos de prueba se ejecutan sobre las
+maquetas, y un grupo focal de seis a ocho nutriólogos con práctica
+clínica aporta el diagnóstico de la práctica actual y la revisión del
+diseño por expertos. Operar el diseño para 500 nutriólogos y 5,000
+pacientes costaría entre \$141 y \$299 dólares al mes, una fracción
+mínima de las sanciones que la ley prevé para los datos de salud. Quedan
+fuera del producto mínimo viable la firma electrónica avanzada, la
+exportación estructurada del expediente y la estructura completa de la
+historia clínica.
 % PENDIENTE tras el grupo focal (23-oct): una o dos oraciones con el
 % diagnóstico (sección 3.3): qué obligaciones faltan en la práctica
 % reportada y por qué. Una oración con la evaluación de expertos (7.1).
  
 El caso muestra que las obligaciones de la consulta privada pueden
-traducirse en funciones concretas que dejan
-las decisiones en manos del nutriólogo, y entrega ese diseño comprobado
-y documentado para pasar a la fase de desarrollo. Otros vacíos, como la
-portabilidad, el plazo para avisar una vulneración o la obligatoriedad
-del expediente electrónico, no se resuelven con un sistema: requieren
-cambios en la ley, en su reglamento o en las normas sanitarias.
+traducirse en funciones concretas que dejan las decisiones en manos del
+nutriólogo, y entrega ese diseño comprobado y documentado para pasar a
+la fase de desarrollo. Otros vacíos, como la portabilidad, el plazo para
+avisar una vulneración o la obligatoriedad del expediente electrónico,
+no se resuelven con un sistema: requieren cambios en la ley, en su
+reglamento o en las normas sanitarias.
  
 \noindent\textbf{Palabras clave:} protección de datos personales,
 LFPDPPP, nutrición, expediente clínico electrónico, privacidad por
@@ -449,9 +459,9 @@ segundo es el sector gubernamental, que se rige por la Ley General de
 Protección de Datos Personales en Posesión de Sujetos Obligados
 (LGPDPPSO, 2025). El tercero es la perspectiva del paciente, titular de
 los datos, que no participa en el estudio de campo. El caso cierra con
-el paquete de diseño comprobado en tres niveles ---la trazabilidad
+el paquete de diseño comprobado en tres niveles: la trazabilidad
 entre obligaciones y requerimientos, los casos de prueba sobre las
-maquetas y la revisión de expertos del grupo focal--- y documentado con
+maquetas y la revisión de expertos del grupo focal, documentado con
 el detalle necesario para que una fase de desarrollo lo tome como
 punto de partida, sea por el autor o por un tercero al que se
 transfiera (sección~4.5).
