@@ -4333,36 +4333,32 @@ analizados respondieron entre el 25 y el 26 de octubre de 2026, dos y
 tres días después de la sesión (Anexo~\ref{anexo:salida-resultados}).
  
 \paragraph{Casos de prueba de aceptación}
--\mbox{}
--% Pendiente: resultado de CP-01, CP-02 y CP-03 (refleja / refleja
--% parcialmente / no refleja), con la captura que sirve de evidencia en
--% cada uno (Anexo B); los ejecuta y califica el autor (sección 4.4.3).
-+Los tres casos de la Tabla~\ref{tab:casos-prueba} los ejecutó el autor
-+como recorrido sobre las maquetas navegables (secciones~4.4.2
-+y~4.4.3); el Anexo~\ref{anexo:capturas} reproduce las capturas que
-+sirven de evidencia. CP-01 \textbf{refleja} el diseño: el expediente
-+nace «pendiente de consentimiento» ---visible para el paciente y en la
-+lista de pacientes del nutriólogo---, el aviso se presenta con las dos
-+casillas sin marcar, la aceptación se registra con la casilla opcional
-+sin aceptar, y la declaración muestra titular, mecanismo de
-+autenticación, versión del aviso, fecha y hora y folio \texttt{DEC-},
-+visible para ambos. CP-02 \textbf{refleja parcialmente} el diseño: el
-+alta captura solo nombre y correo y anuncia el bloqueo de los datos de
-+salud hasta el consentimiento; el expediente admite mediciones, notas
-+con autor y un adjunto, y el plan se asigna
-+(\texttt{AssignDiet}) y se consulta del lado del paciente; la maqueta
-+no incluye la pantalla del registro de accesos que el paciente puede
-+ver, y el rechazo a un tercero sin relación no es observable sin un
-+sistema en ejecución. CP-03 \textbf{refleja} el diseño: la solicitud
-+de cancelación se levanta desde el perfil del paciente, el diálogo
-+explica los veinte días para resolver y los quince para ejecutar, la
-+conservación mínima y el bloqueo, la confirmación entrega un folio
-+\texttt{ARCO-}, y la bandeja del nutriólogo muestra las solicitudes
-+con folio, días restantes calculados y la alerta de plazo. En los tres
-+casos, los registros internos (\texttt{DeclarationLog},
-+\texttt{audit\_log}) y los correos al titular no son observables en
-+una maqueta: los casos comprueban pantallas y estados, no la operación
-+(sección~8.3).
+Los tres casos de la Tabla~\ref{tab:casos-prueba} los ejecutó el autor
+como recorrido sobre las maquetas navegables (secciones~4.4.2
+y~4.4.3); el Anexo~\ref{anexo:capturas} reproduce las capturas que
+sirven de evidencia. CP-01 \textbf{refleja} el diseño: el expediente
+nace «pendiente de consentimiento» ---visible para el paciente y en la
+lista de pacientes del nutriólogo---, el aviso se presenta con las dos
+casillas sin marcar, la aceptación se registra con la casilla opcional
+sin aceptar, y la declaración muestra titular, mecanismo de
+autenticación, versión del aviso, fecha y hora y folio \texttt{DEC-},
+visible para ambos. CP-02 \textbf{refleja parcialmente} el diseño: el
+alta captura solo nombre y correo y anuncia el bloqueo de los datos de
+salud hasta el consentimiento; el expediente admite mediciones, notas
+con autor y un adjunto, y el plan se asigna
+(\texttt{AssignDiet}) y se consulta del lado del paciente; la maqueta
+no incluye la pantalla del registro de accesos que el paciente puede
+ver, y el rechazo a un tercero sin relación no es observable sin un
+sistema en ejecución. CP-03 \textbf{refleja} el diseño: la solicitud
+de cancelación se levanta desde el perfil del paciente, el diálogo
+explica los veinte días para resolver y los quince para ejecutar, la
+conservación mínima y el bloqueo, la confirmación entrega un folio
+\texttt{ARCO-}, y la bandeja del nutriólogo muestra las solicitudes
+con folio, días restantes calculados y la alerta de plazo. En los tres
+casos, los registros internos (\texttt{DeclarationLog},
+\texttt{audit\_log}) y los correos al titular no son observables en
+una maqueta: los casos comprueban pantallas y estados, no la operación
+(sección~8.3).
  
 \paragraph{Revisión por expertos: la encuesta de salida}
 Los ocho usarían las funciones mostradas y los ocho consideran
@@ -6943,10 +6939,87 @@ Documento de una página con diez buenas prácticas de protección de datos para
 
 \section{Capturas del prototipo}
 \label{anexo:capturas}
-\mbox{}
-% Pendiente (tras las maquetas v4): capturas de las pantallas del
-% prototipo referidas en 6.2 y 6.4. Las secciones 6.2 y 6.4 ya remiten
-% a este anexo como «Anexo B»; no cambiar su posición.═══════════════════════════════════════════════════════════════════════════
+
+Capturas de las maquetas navegables tomadas durante la ejecución de los
+casos de prueba de la sección~6.3; los resultados se reportan en la
+sección~7.1. Son wireframes con datos ilustrativos: nombres, folios,
+fechas y cifras son ficticios y pueden variar entre pantallas, porque
+la maqueta no conserva estado. Las once capturas se agrupan por caso
+de prueba.
+
+\subsection*{CP-01 · Consentimiento del paciente}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp01-a.png}
+  \caption{CP-01: aviso de privacidad desplegado en la sesión del paciente, con las dos casillas sin marcar y el expediente «pendiente de consentimiento».}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp01-b.png}
+  \caption{CP-01: aceptación con la casilla obligatoria marcada; la casilla opcional de notificaciones permanece sin marcar.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp01-c.png}
+  \caption{CP-01: declaración registrada con titular, mecanismo de autenticación, versión del aviso, fecha y hora y folio \texttt{DEC-}; notificaciones adicionales no aceptadas.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp01-d.png}
+  \caption{CP-01: lista de pacientes del nutriólogo con los estados «Aviso de privacidad aceptado» y «Pendiente de consentimiento».}
+\end{figure}
+
+\subsection*{CP-02 · Alta de paciente y expediente}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp02-a.png}
+  \caption{CP-02: alta de paciente con solo nombre y correo; el aviso anuncia el estado «pendiente de consentimiento» y el bloqueo de datos de salud.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp02-b.png}
+  \caption{CP-02: expediente con información médica, mediciones con fecha, notas clínicas con autor y un adjunto; el encabezado muestra el folio de la declaración (evidencia también de CP-01).}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp02-c.png}
+  \caption{CP-02: asignación de plan (\texttt{AssignDiet}) con plantillas, fecha de inicio y notas para el paciente.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp02-d.png}
+  \caption{CP-02: plan vigente con sus comidas; la vista del paciente con su plan del día aparece en la captura de la declaración (CP-01).}
+\end{figure}
+
+\subsection*{CP-03 · Solicitud de cancelación}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp03-a.png}
+  \caption{CP-03: solicitud de cancelación desde el perfil del paciente; el diálogo explica los plazos de veinte y quince días, la conservación mínima y el bloqueo.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp03-b.png}
+  \caption{CP-03: confirmación de la solicitud con folio \texttt{ARCO-} y plazo de respuesta.}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{cp03-c.png}
+  \caption{CP-03: bandeja del nutriólogo con las solicitudes ARCO: folio, días restantes calculados, estado y alerta de plazo de cinco días o menos.}
+\end{figure}
+
+% ═══════════════════════════════════════════════════════════════════════════
 \section{Uso ético de la inteligencia artificial}
 \label{anexo:ia}
  
