@@ -34,6 +34,21 @@
 \usepackage{lscape}             % páginas apaisadas para las subfiguras anchas
 \usepackage{afterpage}          % coloca cada figura apaisada después de la página en curso, sin cortarla
 
+% Inicio de cada sección principal (capítulos, Referencias y anexos):
+% empieza en hoja nueva, salvo que la hoja en curso lleve menos de la mitad ocupada,
+% para no dejar más de media hoja en blanco. Si queda una figura o tabla pendiente
+% de la sección anterior, primero se imprime. El 0.5 es la fracción de hoja ocupada.
+\makeatletter
+\newcommand{\saltoseccion}{\par
+  \ifx\@deferlist\@empty
+    \ifdim\pagegoal<\maxdimen
+      \ifdim\dimexpr\textheight-\pagegoal+\pagetotal\relax>0.5\textheight\clearpage\fi
+    \fi
+  \else\clearpage\fi}
+\makeatother
+\let\seccionbase\section
+\renewcommand{\section}{\saltoseccion\seccionbase}
+
 % Tablas
 \usepackage{booktabs}           % \toprule \midrule \bottomrule
 \usepackage{array}              % columnas con ancho fijo: p{4cm}
@@ -3552,12 +3567,11 @@ archivo continuo, para lo cual sugiere suscripciones (AWS, s.f.-l). Esto
 se registra como limitación del diseño.
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-a.pdf}
+    \includegraphics[width=\linewidth,height=0.90\textheight,keepaspectratio]{aws-a.pdf}
     \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico.}
     \label{fig:aws-a}
   \end{subfigure}
@@ -3566,7 +3580,6 @@ se registra como limitación del diseño.
   llaves; (d) operación y trazabilidad.}
   \label{fig:aws}
 \end{figure}
-\end{landscape}
  
 \begin{figure}[H]
   \ContinuedFloat
@@ -3733,7 +3746,7 @@ recibe una notificación en \texttt{AppointmentsManager} con un plazo de
 48 horas para aceptar o rechazar. Si no responde en ese plazo, el
 sistema sugiere al paciente nutriólogos alternativos.
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\textwidth]{uml-seq.pdf}
   \caption{Diagrama de secuencia: flujo de reserva de cita y confirmación del
@@ -3924,14 +3937,12 @@ confirma, el expediente se conserva. Los estados que el expediente
 recorre en ese trayecto se detallan en la Figura~\ref{fig:uml-estados}.
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{flujo-datos.pdf}
   \caption{Recorrido del dato de salud en NutriApp, del consentimiento a la supresión confirmada por el nutriólogo.}
   \label{fig:flujo-datos}
 \end{figure}
-\end{landscape}
 }% fin de \afterpage
 
 \subsubsection{Diagrama de estados del expediente}
@@ -3948,17 +3959,16 @@ niega porque corre la conservación mínima, el expediente sigue activo
 numeral~5.4). Si procede, la resuelve y la ejecuta en los plazos del
 artículo~31, y el expediente pasa a \textit{bloqueado} hasta el plazo
 de prescripción (LFPDPPP, 2025, art.~24; RLFPDPPP, 2011, art.~107,
-fracc.~I). En el diagrama, a \textit{suprimido} se llega por dos
-caminos: al vencer la conservación mínima de un expediente activo o
-revocado, o al vencer el periodo de bloqueo. En los dos, un aviso
+fracc.~I). A \textit{suprimido} se llega por tres caminos: al vencer la
+conservación mínima de un expediente activo o revocado, al vencer el
+periodo de bloqueo, o al terminar la suscripción una vez entregada la
+copia de los expedientes (sección~5.1). En los dos primeros, un aviso
 programado llega al nutriólogo y el borrado criptográfico solo se
-ejecuta con su confirmación (sección~2.5.5). El tercer camino, la
-supresión al terminar la suscripción una vez entregada la copia de los
-expedientes, se describe en la sección~5.1.
+ejecuta con su confirmación (sección~2.5.5).
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \includegraphics[width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
   \caption{Diagrama de estados del expediente clínico.}
   \label{fig:uml-estados}
 \end{figure}
@@ -4133,7 +4143,6 @@ emergente cuando el paciente completa el trámite
 (Figura~\ref{fig:maq-consentimiento}).
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-consentimiento.pdf}
@@ -4141,7 +4150,6 @@ emergente cuando el paciente completa el trámite
   privacidad, casillas sin marcar, folio y estado del expediente.}
   \label{fig:maq-consentimiento}
 \end{figure}
-\end{landscape}
 }% fin de \afterpage
  
 \subsubsection{Alta de paciente y expediente}
@@ -4167,7 +4175,6 @@ dieta actual (\texttt{CurrentDiet}) y en el seguimiento de avances
 expediente (Figura~\ref{fig:maq-expediente}).
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-expediente.pdf}
@@ -4175,7 +4182,14 @@ expediente (Figura~\ref{fig:maq-expediente}).
   de accesos.}
   \label{fig:maq-expediente}
 \end{figure}
-\end{landscape}
+
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-expediente.pdf}
+  \caption{Maqueta del alta de paciente y del expediente (continuación).}
+\end{figure}
 }% fin de \afterpage
  
 \subsubsection{Derechos ARCO y cancelación}
@@ -4232,7 +4246,6 @@ alarma de CloudWatch sobre la misma métrica alerta a la operación de
 NutriApp (Figura~\ref{fig:maq-arco}).
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
@@ -4240,7 +4253,22 @@ NutriApp (Figura~\ref{fig:maq-arco}).
    cancelación con bloqueo y plazo, y bandeja del nutriólogo.}
   \label{fig:maq-arco}
 \end{figure}
-\end{landscape}
+
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
+  \caption{Maqueta del módulo ARCO (continuación).}
+\end{figure}
+
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=3,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
+  \caption{Maqueta del módulo ARCO (continuación).}
+\end{figure}
 }% fin de \afterpage
  
 \subsubsection{Catálogo y reserva de cita}
@@ -4274,7 +4302,6 @@ responde, el sistema sugiere alternativas. Las citas se notifican
 únicamente dentro de la aplicación (Figura~\ref{fig:maq-catalogo}).
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
@@ -4282,7 +4309,14 @@ responde, el sistema sugiere alternativas. Las citas se notifican
   etiquetados, cédula declarada por el profesional y reserva de cita.}
   \label{fig:maq-catalogo}
 \end{figure}
-\end{landscape}
+
+\begin{figure}[H]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
+  \caption{Maqueta del catálogo (continuación).}
+\end{figure}
 }% fin de \afterpage
  
 \subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
@@ -4335,7 +4369,6 @@ solicitud y resolución ARCO simuladas, con una fila por paso completado
 en \texttt{induccion\_paso}.
  
 \afterpage{%
-\begin{landscape}
 \begin{figure}[H]
   \centering
   \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-students.pdf}
@@ -4343,7 +4376,6 @@ en \texttt{induccion\_paso}.
   pacientes ficticios.}
   \label{fig:maq-students}
 \end{figure}
-\end{landscape}
 
 \begin{figure}[H]
   \centering
@@ -4706,7 +4738,7 @@ escenario hay transacciones simultáneas que la instancia o las funciones
 no puedan atender. Lo que encarece la ruta crítica son los componentes
 que cobran por mensaje.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Modelo de carga del MVP: de usuarios a solicitudes por segundo.}
   \label{tab:carga}
@@ -4758,7 +4790,7 @@ zonas, NAT y punto de enlace redundantes) es una decisión de servicio,
 independiente de la carga, y por eso se muestra aparte: \$67 dólares al
 mes con el factor regional.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Estimación de costos operativos en dos escenarios (500 nutriólogos
   activos, 5,000 pacientes; USD por mes).}
@@ -4806,7 +4838,7 @@ mes con el factor regional.
   \end{flushleft}
 \end{table}
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Reglas de estimación de los dos escenarios de costo.}
   \label{tab:costos-reglas}
@@ -4845,7 +4877,7 @@ y~6, a tarifas de mercado de entre \$300 y \$500 pesos por hora. Si el
 propio autor construye el MVP, la inversión en efectivo baja a entre
 \$63,000 y \$148,000 pesos.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Inversión inicial estimada, sin mercadotecnia (MXN).}
   \label{tab:inversion}
@@ -4905,7 +4937,7 @@ entre un costo cierto y pequeño y un riesgo poco frecuente según las
 cifras del INAI (INAI, 2024), pero desproporcionado. La suscripción no
 sustituye el cumplimiento, que sigue siendo del nutriólogo.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Análisis costo-beneficio: NutriApp Pro frente a las sanciones de la LFPDPPP~2025.}
   \label{tab:costo-beneficio}
@@ -5144,7 +5176,7 @@ Personales en Posesión de los Particulares (LFPDPPP)~2025, con la
 trazabilidad y los plazos de los derechos de acceso, rectificación,
 cancelación y oposición (ARCO) controlados en el sistema.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Precios de la competencia y de NutriApp (planes base; consultados
   el 18 de octubre de 2026).}
@@ -5219,7 +5251,7 @@ del MVP (\$118,700 pesos al mes por doce). El mercado es amplio: 81,849
 alumnos inscritos en programas de nutrición en el país en el último
 ciclo escolar (Secretaría del Trabajo y Previsión Social, s.f.).
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Plan Universidad: paquetes por semestre y economía de un programa
   (MXN, IVA incluido).}
@@ -5330,7 +5362,7 @@ tiene empleados. Estos cálculos son una estimación para dimensionar el
 caso y no asesoría fiscal. Los supuestos están en la hoja de cálculo y
 se revisan con un contador antes de operar.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Ingresos, impuestos y utilidad mensual del MVP (500 nutriólogos
   pagantes; USD por mes).}
