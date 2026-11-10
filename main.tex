@@ -31,8 +31,8 @@
 \usepackage{caption}            % personalizar pies de figura/tabla
 \usepackage{subcaption}         % subfiguras lado a lado: \begin{subfigure}
 
-\usepackage{pdflscape}          % páginas apaisadas para las subfiguras anchas
-\graphicspath{{imagenes/}}      % carpeta donde guardar tus imágenes
+\usepackage{lscape}             % páginas apaisadas para las subfiguras anchas
+\usepackage{afterpage}          % coloca cada figura apaisada después de la página en curso, sin cortarla
 
 % Tablas
 \usepackage{booktabs}           % \toprule \midrule \bottomrule
@@ -2020,7 +2020,7 @@ demostrar. De las segundas, una parte la opera NutriApp como encargado.
 La Tabla~\ref{tab:responsabilidad} recoge esa distribución entre los
 tres actores para los controles que usa NutriApp.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
     \caption{Reparto de responsabilidades entre el proveedor de nube,
   NutriApp como encargado y el nutriólogo como responsable del
@@ -2372,7 +2372,7 @@ Personales en Posesión de los Particulares (LFPDPPP) en forma literal.
 Aun donde el tema aparece, como en la UNAM, responde a una decisión del
 propio plan y no a un requisito de la SEP o de la CIFRHS.
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\textwidth]{planes-nutricion.pdf}
   \caption[Presencia documental de los ejes legal-privacidad y TIC en salud
@@ -3551,6 +3551,7 @@ tardar hasta 12 horas en estar disponibles y AWS no la recomienda como
 archivo continuo, para lo cual sugiere suscripciones (AWS, s.f.-l). Esto
 se registra como limitación del diseño.
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -3605,6 +3606,7 @@ se registra como limitación del diseño.
   \end{subfigure}
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
+}% fin de \afterpage
 
 \subsubsection{Diagramas UML: casos de uso y secuencia}
 
@@ -3647,6 +3649,7 @@ inducción por el docente, y el aviso de vencimiento de la cuenta
 Students por el Sistema. La exportación del expediente no aparece porque
 no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -3687,6 +3690,7 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \end{subfigure}
   \caption{Casos de uso de NutriApp (continuación).}
 \end{figure}
+}% fin de \afterpage
  
 
 El diagrama se lee por actor. El paciente otorga su consentimiento y
@@ -3781,6 +3785,7 @@ PostgreSQL sobre Amazon RDS, conforme a la capa de datos de la
 sección~5.1.
 \end{sloppypar}
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -3837,6 +3842,7 @@ sección~5.1.
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
+}% fin de \afterpage
  
 En el bloque clínico, cada \texttt{paciente} tiene un
 \texttt{expediente} por cada nutriólogo que lo atiende, y ese nutriólogo
@@ -3917,6 +3923,7 @@ borrado criptográfico ocurre solo si él confirma la supresión. Si no la
 confirma, el expediente se conserva. Los estados que el expediente
 recorre en ese trayecto se detallan en la Figura~\ref{fig:uml-estados}.
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -3925,6 +3932,7 @@ recorre en ese trayecto se detallan en la Figura~\ref{fig:uml-estados}.
   \label{fig:flujo-datos}
 \end{figure}
 \end{landscape}
+}% fin de \afterpage
 
 \subsubsection{Diagrama de estados del expediente}
  
@@ -3950,7 +3958,7 @@ expedientes, se describe en la sección~5.1.
  
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \includegraphics[width=\linewidth,height=0.63\textheight,keepaspectratio]{uml-estados-expediente.pdf}
   \caption{Diagrama de estados del expediente clínico.}
   \label{fig:uml-estados}
 \end{figure}
@@ -4124,6 +4132,7 @@ en su lista de pacientes (\texttt{PatientList}) y recibe un aviso
 emergente cuando el paciente completa el trámite
 (Figura~\ref{fig:maq-consentimiento}).
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -4133,6 +4142,7 @@ emergente cuando el paciente completa el trámite
   \label{fig:maq-consentimiento}
 \end{figure}
 \end{landscape}
+}% fin de \afterpage
  
 \subsubsection{Alta de paciente y expediente}
  
@@ -4156,6 +4166,7 @@ dieta actual (\texttt{CurrentDiet}) y en el seguimiento de avances
 (\texttt{ProgressTracking}). Estas pantallas forman el recorrido del
 expediente (Figura~\ref{fig:maq-expediente}).
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -4165,6 +4176,7 @@ expediente (Figura~\ref{fig:maq-expediente}).
   \label{fig:maq-expediente}
 \end{figure}
 \end{landscape}
+}% fin de \afterpage
  
 \subsubsection{Derechos ARCO y cancelación}
  
@@ -4219,6 +4231,7 @@ el correo cuando quedan cinco días o menos del plazo del artículo~31. La
 alarma de CloudWatch sobre la misma métrica alerta a la operación de
 NutriApp (Figura~\ref{fig:maq-arco}).
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -4228,6 +4241,7 @@ NutriApp (Figura~\ref{fig:maq-arco}).
   \label{fig:maq-arco}
 \end{figure}
 \end{landscape}
+}% fin de \afterpage
  
 \subsubsection{Catálogo y reserva de cita}
  
@@ -4259,6 +4273,7 @@ recibe la solicitud en su gestor de citas
 responde, el sistema sugiere alternativas. Las citas se notifican
 únicamente dentro de la aplicación (Figura~\ref{fig:maq-catalogo}).
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -4268,6 +4283,7 @@ responde, el sistema sugiere alternativas. Las citas se notifican
   \label{fig:maq-catalogo}
 \end{figure}
 \end{landscape}
+}% fin de \afterpage
  
 \subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
  
@@ -4318,6 +4334,7 @@ los pacientes ficticios: alta de datos, nota y adjunto, plan, y
 solicitud y resolución ARCO simuladas, con una fila por paso completado
 en \texttt{induccion\_paso}.
  
+\afterpage{%
 \begin{landscape}
 \begin{figure}[H]
   \centering
@@ -4337,6 +4354,7 @@ en \texttt{induccion\_paso}.
   reporte semestral con el aviso de vencimiento.}
   \label{fig:maq-students-docente}
 \end{figure}
+}% fin de \afterpage
  
 \subsubsection{Comunidad y moderación}
  
@@ -4383,7 +4401,7 @@ sección~4.4.2; la Tabla~\ref{tab:casos-prueba} los concreta para los
 tres primeros flujos del MVP, y cada uno se califica en refleja, refleja
 parcialmente o no refleja el diseño.
  
-\begin{table}[H]
+\begin{table}[!htbp]
   \centering
   \caption{Casos de prueba de aceptación del MVP.}
   \label{tab:casos-prueba}
