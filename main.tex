@@ -646,8 +646,8 @@ internacionales y necesidades internas}
   \item \textbf{2002:} A principios de los años 2000, un grupo de
   periodistas y académicos conocido como el Grupo Oaxaca comenzó a
   exigir que el gobierno mexicano fuera más transparente sobre el uso
-  de los recursos públicos y la toma de decisiones (Marván Laborde,
-  2023). Su trabajo impulsó la aprobación de la Ley Federal de
+  de los recursos públicos y la toma de decisiones (Maza, 2021). Su
+  trabajo impulsó la aprobación de la Ley Federal de
   Transparencia y Acceso a la Información Pública Gubernamental,
   publicada el 11 de junio de 2002 (Ley Federal de Transparencia y
   Acceso a la Información Pública Gubernamental [LFTAIPG], 2002). La
@@ -2559,16 +2559,19 @@ Ante la pérdida de un equipo o un acceso no autorizado, ninguno tiene un
 procedimiento. Las respuestas se orientan a recuperar la información
 desde la nube o el respaldo. Solo una describe contención (cerrar
 sesiones y cambiar contraseñas) y solo una, al preguntarlo, avisaría a
-sus pacientes tras confirmar una filtración. Cuatro de los ocho no han
-recibido formación alguna en protección de datos, y nadie declara
-conocer la ley al punto de aplicarla en su consulta.
+sus pacientes tras confirmar una filtración. Cuatro de los ocho marcaron
+no haber recibido formación alguna en protección de datos, aunque una
+de esas personas marcó a la vez «En la licenciatura»
+(Anexo~\ref{anexo:previo-resultados}), y nadie declara conocer la ley al
+punto de aplicarla en su consulta.
  
 \paragraph{Obligaciones presentes y ausentes en la práctica reportada}
 Leída contra las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}, la práctica reportada presenta de forma
 parcial dos obligaciones: las medidas de seguridad básicas
 (obligación~III: contraseñas y respaldo, sin cifrado) y el conocimiento
-del propio inventario (VI). El acceso de hecho es individual (IV), pero
+del propio inventario (VI). El acceso de hecho es individual en cinco de
+los ocho casos y en dos alcanza a colegas (IV), pero
 sin usuarios propios ni registro de quién consulta qué expediente (V,
 ausente en todas las herramientas descritas).
 
@@ -3088,7 +3091,7 @@ API Gateway, sí está en \texttt{mx-central-1}. Amazon SES no está
 disponible en \texttt{mx-central-1}, por lo que los avisos por correo,
 sin contenido clínico, salen de SES en \texttt{us-east-1}
 (Figura~\ref{fig:aws-b}), fuera del territorio nacional. Esos servicios
-se informan al nutriólogo como subcontrataciones del encargado
+se transparentan al nutriólogo como subcontrataciones del encargado
 (sección~2.5.1).
 
 Los componentes se describen por capas. La justificación normativa de
@@ -3327,8 +3330,9 @@ días o menos del plazo es un control de la operación de NutriApp y no
 sustituye ese aviso. Las fechas límite del artículo~31 se calculan en
 días naturales a partir del día en que el responsable recibe la
 solicitud (RLFPDPPP, 2011, art.~95), la lectura más exigente, y el
-responsable puede configurar el cómputo en días hábiles con su propio
-calendario de inhábiles.
+responsable puede configurar el cómputo en días hábiles, que es como
+la ley define el término (LFPDPPP, 2025, art.~2, fracc.~VIII), con su
+propio calendario de inhábiles.
 
 Un expediente en estado de bloqueo solo lo abre el nutriólogo
 responsable mediante la acción «consulta por responsabilidad legal», que
@@ -3936,11 +3940,13 @@ niega porque corre la conservación mínima, el expediente sigue activo
 numeral~5.4). Si procede, la resuelve y la ejecuta en los plazos del
 artículo~31, y el expediente pasa a \textit{bloqueado} hasta el plazo
 de prescripción (LFPDPPP, 2025, art.~24; RLFPDPPP, 2011, art.~107,
-fracc.~I). A \textit{suprimido} se llega por dos caminos: al vencer la
-conservación mínima de un expediente activo o revocado, o al vencer el periodo de
-bloqueo. En los dos, un aviso programado llega al nutriólogo y el
-borrado criptográfico solo se ejecuta con su confirmación
-(sección~2.5.5).
+fracc.~I). En el diagrama, a \textit{suprimido} se llega por dos
+caminos: al vencer la conservación mínima de un expediente activo o
+revocado, o al vencer el periodo de bloqueo. En los dos, un aviso
+programado llega al nutriólogo y el borrado criptográfico solo se
+ejecuta con su confirmación (sección~2.5.5). El tercer camino, la
+supresión al terminar la suscripción una vez entregada la copia de los
+expedientes, se describe en la sección~5.1.
  
 \begin{figure}[H]
   \centering
@@ -4959,7 +4965,7 @@ La quinta preguntaba cuánto costaría operar el diseño y cómo se compara
 la suscripción con las sanciones. Operar el producto mínimo viable para
 500 nutriólogos y 5,000 pacientes costaría entre \$141 y \$299 dólares
 al mes según el escenario, de \$0.28 a \$0.60 dólares por nutriólogo. La
-multa promedio que impuso el INAI en 2023 equivale a 181 suscripciones
+multa promedio que impuso el Instituto Nacional de Transparencia, Acceso a la Información y Protección de Datos Personales (INAI) en 2023 equivale a 181 suscripciones
 anuales del plan Pro, y la sanción máxima con datos de salud, a 20,748.
 La comparación muestra el costo como una fracción menor del riesgo, sin
 presentar la suscripción como sustituto del cumplimiento, que sigue
@@ -4995,7 +5001,7 @@ normativo.
 Para las instituciones que forman nutriólogos, el caso aporta dos datos.
 Ninguna norma de educación superior exige la protección de datos como
 contenido específico de la carrera (sección~3.1), y cuatro de los ocho
-participantes no han recibido formación alguna en la materia. A la vez,
+participantes marcaron no haber recibido formación alguna en la materia. A la vez,
 el cierre de la sesión mostró que una exposición breve y situada en el
 consultorio basta para que el profesional identifique qué le falta.
 Incorporar el manejo legal del expediente a los planes de estudio no
@@ -5182,9 +5188,8 @@ incluirla.
 Los precios toman como referencia el mercado de capacitación. Un curso
 abierto de ocho horas sobre la LFPDPPP cuesta \$3,500 pesos más IVA por
 persona (CIGE México, 2026), mientras que los cursos que ofrecía el
-extinto Instituto Nacional de Transparencia, Acceso a la Información y
-Protección de Datos Personales (INAI) eran gratuitos pero generales, no
-sectoriales (INAI, s.f.). Un simposio de dos horas para una cohorte
+extinto INAI eran gratuitos pero generales, no sectoriales (INAI,
+s.f.). Un simposio de dos horas para una cohorte
 completa, específico de nutrición, se cotiza en \$8,000 pesos por
 separado y en \$7,000 pesos dentro del paquete, el equivalente a dos
 lugares en un curso abierto. Con cinco programas en el plan Integral el
@@ -6163,12 +6168,12 @@ Federación}. Recuperado el 18 de octubre de 2026, de \url{https://www.diputados
   % guardar secreto en los asuntos que le confíen sus clientes (Ley
   % Reglamentaria del Artículo~5°, 1945/2010, art.~36).
 
-\item Marván Laborde, M. (2023, 29 de abril). Del IFAI al INAI:
+\item Maza, A. (2021, 22 de enero). Del IFAI al INAI:
   La lucha por el derecho a saber. \textit{El Sol de México}.
   \url{https://oem.com.mx/elsoldemexico/mexico/del-ifai-al-inai-la-lucha-por-el-derecho-a-saber-15857467}
 
   % Cap. 2 (secc. 2.1.2): cronología institucional del IFAI al INAI
-  % y reforma de autonomía de 2014 (Marván Laborde, 2023).
+  % y reforma de autonomía de 2014 (Maza, 2021).
   
 \item Mercado Pago. (s.f.-a). \textit{Checkout Pro}. Mercado Pago Developers.
 Recuperado el 18 de octubre de 2026, de \url{https://www.mercadopago.com.mx/developers/es/docs/checkout-pro/overview}
@@ -6653,7 +6658,7 @@ Recuperado el 30 de septiembre de 2026, de \url{https://www.cucs.udg.mx/sites/de
 \subsection{Consentimiento informado}
 \label{anexo:consentimiento}
  
-Aviso de participación y aceptación enviado a cada participante antes de la sesión. En la aplicación fue la primera sección de un único formulario de Google Forms, seguido del cuestionario previo (Anexo~\ref{anexo:cuestionario}); el único campo de datos fue el nombre completo, y la desviación respecto del texto ---que anunciaba formularios separados--- se registra en la sección~4.5.
+Aviso de participación y aceptación enviado a cada participante antes de la sesión. En la aplicación fue la primera sección de un único formulario de Google Forms, seguido del cuestionario previo (Anexo~\ref{anexo:cuestionario}); el único campo de datos fue el nombre completo, y la desviación respecto del texto, que anunciaba formularios separados, se registra en la sección~4.5.
  
 Estudio: «Privacidad por diseño en la práctica nutriológica: análisis normativo y arquitectura para el cumplimiento de la LFPDPPP», caso de estudio de la Maestría en Informática Aplicada (ITESO). Responsable del estudio: Ing. Cristian Emanuel Ortega Camarena, emanuel.ortega@iteso.mx.
  
@@ -7130,7 +7135,7 @@ de prueba.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{cp01-a.png}
-  \caption{CP-01: aviso de privacidad desplegado en la sesión del paciente, con las dos casillas sin marcar y el expediente «pendiente de consentimiento».}
+  \caption{CP-01: aviso de privacidad desplegado en la sesión del paciente, con las dos casillas sin marcar y el expediente \textit{pendiente de consentimiento}.}
 \end{figure}
 
 \begin{figure}[H]
@@ -7156,7 +7161,7 @@ de prueba.
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{cp02-a.png}
-  \caption{CP-02: alta de paciente con solo nombre y correo; el aviso anuncia el estado «pendiente de consentimiento» y el bloqueo de datos de salud.}
+  \caption{CP-02: alta de paciente con solo nombre y correo; el aviso anuncia el estado \textit{pendiente de consentimiento} y el bloqueo de datos de salud.}
 \end{figure}
 
 \begin{figure}[H]
@@ -7219,9 +7224,9 @@ descartó. Segunda, como fuente de ideas y de alternativas para discutir
 una decisión antes de tomarla. Tercera, para confirmar referencias,
 cotejando cada cita contra la fuente oficial (la ley, el reglamento, la
 norma o el comunicado citados). Cuarta, para vigilar que la idea central
-del trabajo ---el nutriólogo conserva las obligaciones que la ley le
-impone y NutriApp aporta los medios para cumplirlas--- se mantuviera en
-todos los capítulos. Quinta, para señalar contradicciones entre partes
+del trabajo se mantuviera en todos los capítulos: el nutriólogo conserva
+las obligaciones que la ley le impone y NutriApp aporta los medios para
+cumplirlas. Quinta, para señalar contradicciones entre partes
 del manuscrito o entre el manuscrito y sus fuentes. Además, se usaron
 para construir las maquetas navegables y para generar el código de
 dibujo de los diagramas a partir de especificaciones escritas por el
@@ -7270,9 +7275,8 @@ de referencias contra la fuente oficial; (4)~revisión de un capítulo o
 del manuscrito completo en busca de contradicciones, con línea y fuente
 para cada observación; y (5)~traducción de decisiones ya tomadas por el
 autor a cambios concretos en el archivo \LaTeX{}, en los instrumentos
-del grupo focal o en una figura. Las siguientes catorce instrucciones
-son representativas de cada tipo; se transcriben con ajustes mínimos de
-ortografía.
+del grupo focal o en una figura. Las siguientes siete instrucciones
+son ejemplos; se transcriben con ajustes mínimos de ortografía.
  
 \begin{enumerate}
  \item Estilo: «Quiero recomendaciones para
