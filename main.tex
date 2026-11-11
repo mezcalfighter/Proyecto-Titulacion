@@ -360,9 +360,9 @@ de privacidad, el consentimiento expreso y por escrito del paciente,
 medidas de seguridad y la respuesta a los derechos de acceso,
 rectificación, cancelación y oposición (ARCO) en veinte días. La ley no
 precisa qué medidas bastan. Su Reglamento exige medidas de seguridad en
-cualquier soporte y prevé la trazabilidad entre las medidas del
-principio de responsabilidad, una condición que una hoja de cálculo
-aislada, aun con contraseña, no cumple por sí misma. Además, ninguna
+cualquier soporte. Entre las medidas del
+principio de responsabilidad prevé la trazabilidad, es decir, poder rastrear los datos durante su tratamiento. Una hoja de cálculo
+aislada, aun con contraseña, no cumple esa condición por sí misma. Además, ninguna
 norma de educación superior exige la protección de datos como contenido
 específico de la formación del nutriólogo. El resultado es que el
 profesional responde ante la autoridad por obligaciones que su formación
@@ -371,8 +371,8 @@ no cubre y que sus herramientas habituales no le ayudan a documentar.
 El caso aplica la investigación de diseño (\textit{design science
 research}) con estrategia de caso de estudio. Abarca el diseño de la
 solución y su demostración; no incluye la implementación, el despliegue
-ni la operación. Se analizó el marco mexicano frente a los de Brasil,
-Uruguay, Estados Unidos y Alemania, y se tradujeron once obligaciones
+ni la operación. Analicé el marco mexicano frente a los de Brasil,
+Uruguay, Estados Unidos y Alemania, y traduje once obligaciones
 legales a requerimientos técnicos verificables. Sobre esa matriz,
 NutriApp se presenta como una opción de arquitectura para el consultorio
 de práctica privada. Es una plataforma en la nube con región primaria en
@@ -380,7 +380,7 @@ México, en la que el nutriólogo conserva el papel de responsable y la
 plataforma actúa como su encargado. Así, las decisiones y las
 obligaciones del tratamiento siguen siendo del nutriólogo, y la
 plataforma le da los medios para atenderlas y dejar constancia de ello.
-El diseño integra el consentimiento del paciente con folio, cifrado AES-256 (Advanced Encryption Standard) y TLS 1.3 (Transport Layer Security), autenticación multifactor para el nutriólogo, un
+El diseño integra el consentimiento del paciente con folio, cifrado AES-256 (Advanced Encryption Standard) y TLS~1.3 (Transport Layer Security), autenticación multifactor para el nutriólogo, un
 registro de auditoría en tres capas y un módulo ARCO con bloqueo y con
 una supresión que solo se ejecuta cuando el profesional la confirma.
  
@@ -2412,7 +2412,7 @@ El análisis normativo del capítulo anterior establece qué exige la ley.
 Este capítulo busca establecer qué ocurre en la práctica: cómo manejan
 sus datos los nutriólogos en México, qué herramientas usan, qué
 obligaciones faltan en su práctica y qué necesitarían para cumplirlas.
-Para responder esas preguntas, el caso reunió a nueve nutriólogos con
+Para responder esas preguntas reuní a nueve nutriólogos con
 práctica clínica en una sesión de grupo focal, de los que el análisis
 considera a ocho (sección~4.3). El capítulo presenta el contexto del
 sector, el diseño del diagnóstico y sus resultados. La valoración que
@@ -2601,14 +2601,14 @@ que la explican. Esa lista es la línea base contra la que el capítulo~7 valora
  
 \subsection{Resultados del diagnóstico}
  
-La línea base se integró con el cuestionario previo, que los ocho
+Integré la línea base con el cuestionario previo, que los ocho
 participantes analizados respondieron el 23 de octubre de 2026 antes de
 la sesión, y con los cuatro primeros bloques de la discusión. Los
 conteos completos, pregunta por pregunta, están en el
 Anexo~\ref{anexo:previo-resultados}; aquí se leen contra las
 obligaciones de las Tablas~\ref{tab:trazabilidad-1}
-y~\ref{tab:trazabilidad-2}. De las nueve personas que asistieron, una
-se excluyó del análisis (sección~4.3.4).
+y~\ref{tab:trazabilidad-2}. De las nueve personas que asistieron, excluí a una
+del análisis (sección~4.3.4).
  
 \paragraph{Perfil de los participantes}
 Cuatro ejercen principalmente en consulta privada, dos principalmente
@@ -2716,9 +2716,8 @@ de las condiciones del proveedor (XI). Una participante cambió de
 herramienta precisamente por desconfianza en el acceso del personal del
 proveedor a los datos.
 
-La obligación~X no se midió en campo, porque la pregunta prevista no se
-incluyó en el formulario aplicado (Anexo~\ref{anexo:cuestionario}), y se
-evalúa solo con el análisis documental. Los obstáculos que los
+No medí en campo la obligación~X, porque la pregunta prevista no se
+incluyó en el formulario aplicado (Anexo~\ref{anexo:cuestionario}), y la evalúo solo con el análisis documental. Los obstáculos que los
 participantes reportan son de desconocimiento y de herramienta, y no de
 rechazo a la obligación. Esta lista es la línea base contra la que el
 capítulo~7 valora el diseño.
@@ -2757,8 +2756,7 @@ effectively and efficiently accomplished''} (p.~76).
  
 El proceso sigue las seis actividades que Peffers et al. (2007) proponen
 para este tipo de investigación. La identificación del problema y la
-definición de objetivos ocupan los capítulos~1 a~3, con una entrada
-centrada en el problema que plantea el marco normativo. El diagnóstico
+definición de objetivos ocupan los capítulos~1 a~3. El punto de partida es el problema que plantea el marco normativo, lo que Peffers et al. llaman una entrada centrada en el problema. El diagnóstico
 empírico del capítulo~3 se recoge en la misma sesión que la evaluación y
 sirve de línea base (sección~3.2), pero no de insumo del diseño. Los
 capítulos~2 (secciones~2.4 y~2.5), 5 y~6 desarrollan el artefacto. La
@@ -2809,18 +2807,18 @@ ni se probó.
  
 \subsubsection{Criterios de selección del marco legal}
  
-El marco normativo del capítulo~2 se construyó con fuentes primarias
+Construí el marco normativo del capítulo~2 con fuentes primarias
 (la LFPDPPP de 2025, el Reglamento de 2011, la Ley General de Salud,
 la NOM-004-SSA3-2012 y la NOM-024-SSA3-2012) y con fuentes secundarias:
 literatura académica y documentación técnica de los estándares
-internacionales. Las jurisdicciones comparadas se seleccionaron con
+internacionales. Seleccioné las jurisdicciones comparadas con
 cuatro criterios: relevancia regional, madurez normativa, contraste
 metodológico y disponibilidad de la documentación oficial en español,
 inglés o portugués.
  
-Por relevancia regional se priorizaron jurisdicciones de América
+Por relevancia regional prioricé jurisdicciones de América
 Latina, que comparten tradición jurídica con México y sirven de
-referencia para la propuesta. Por madurez normativa se incluyeron el
+referencia para la propuesta. Por madurez normativa incluí el
 GDPR aplicado en Alemania y la HIPAA estadounidense, ordenamientos
 consolidados y con experiencia documentada. El contraste metodológico
 llevó a regímenes con enfoques distintos al mexicano, para que las
@@ -2834,7 +2832,7 @@ jurisdicciones y forman las filas de la Tabla~\ref{tab:comparativo-normativo}
 el tratamiento de los datos de salud como sensibles, el consentimiento
 expreso por escrito, la notificación de vulneraciones, la portabilidad de
 datos, las sanciones máximas, la alineación con el GDPR y el marco
-técnico para software de salud. Los criterios se eligieron por su relación con las decisiones de
+técnico para software de salud. Elegí los criterios por su relación con las decisiones de
 diseño de NutriApp.
  
 \subsubsection{Verificación de fuentes y fecha de corte}
@@ -2870,8 +2868,8 @@ fecha de redacción; los de la competencia, el 18 de octubre de 2026.
  
 \subsubsection{Diseño del estudio de campo y población}
  
-La investigación de campo usa un grupo focal con expertos. La decisión
-se tomó con el asesor por el tipo de evidencia que el caso necesita. El
+La investigación de campo usa un grupo focal con expertos. Tomé la decisión
+con el asesor por el tipo de evidencia que el caso necesita. El
 objeto del estudio de campo es la forma en que los nutriólogos manejan
 los datos de sus pacientes y lo que entienden por cumplir con la ley. La
 discusión entre profesionales que atienden pacientes recoge esa
@@ -2887,9 +2885,9 @@ sesión, participar y que la sesión se transcriba de forma automática. Se
 excluyen quienes no atienden pacientes, porque las preguntas se refieren
 a su experiencia clínica.
  
-Se formó un solo grupo. La invitación se envió por mensaje directo en
-Doctoralia a diez nutriólogos con consulta activa, para asegurar al
-menos seis participantes; asistieron nueve. La sesión se realizó el
+Formé un solo grupo. Invité a diez nutriólogos con consulta activa, para asegurar al
+menos seis participantes; asistieron nueve. El primer contacto con algunos fue por
+mensaje directo en Doctoralia; otros fueron referidos. La sesión se realizó el
 viernes 23 de octubre de 2026, a las 14:00~h (hora de la Ciudad de
 México), en línea por Google Meet, con su función de transcripción
 automática, y duró una hora. El diseño preveía la conducción por un
@@ -2903,8 +2901,7 @@ y~8.3).
 
 El diseño de los instrumentos se fundamenta en la metodología de grupos
 focales y de construcción de instrumentos de la investigación en
-ciencias sociales (Hernández-Sampieri et al., 2014). Antes de su
-aplicación se sometió a la revisión de un colaborador externo con
+ciencias sociales (Hernández-Sampieri et al., 2014). Antes de aplicarlo lo sometí a la revisión de un colaborador externo con
 experiencia en trabajo de campo, ajeno al grupo focal. El procesamiento
 de los datos y la interpretación de los resultados en relación con el
 marco normativo están a mi cargo. Asistí a la sesión para
@@ -2922,14 +2919,14 @@ participante prevé en su práctica. Los cuatro se reproducen en el
 Anexo~\ref{anexo:grupo-focal}: los tres primeros como instrumentos
 (Anexos~\ref{anexo:consentimiento} a~\ref{anexo:guia}) y la encuesta de
 salida, pregunta por pregunta y con sus resultados, en el
-Anexo~\ref{anexo:salida-resultados}. El \textit{consentimiento
-informado} se recabó antes de la sesión; con su aceptación, cada
+Anexo~\ref{anexo:salida-resultados}. Recabé el \textit{consentimiento
+informado} antes de la sesión; con su aceptación, cada
 participante autorizó su intervención y la transcripción automática de
 la sesión.
  
 El \textit{cuestionario previo} es breve y se contesta antes de la
 sesión en Google Forms, sin inicio de sesión ni registro del correo. En
-la aplicación se envió junto con el consentimiento informado, en un solo
+la aplicación lo envié junto con el consentimiento informado, en un solo
 formulario (sección~4.5). Recoge el perfil del participante (ámbito de
 ejercicio, años de práctica con pacientes, tipo de consulta y número
 aproximado de pacientes al mes). Recoge también su práctica actual con
@@ -2989,13 +2986,11 @@ actual.
 \end{enumerate}
  
 La información de la sesión se maneja de forma confidencial, y la
-transcripción automática sigue el procedimiento de la sección~4.5. El
-anexo del estudio de campo es la minuta de la sesión, que elaboré
-a partir de la transcripción anonimizada ante el cambio de
-moderador (Anexo~\ref{anexo:minuta}). El quinto bloque no llegó a
+transcripción automática sigue el procedimiento de la sección~4.5. El anexo del estudio de campo es la minuta de la sesión (Anexo~\ref{anexo:minuta}). La elaboré a
+partir de la transcripción anonimizada, porque el facilitador externo no condujo la
+sesión. El quinto bloque no llegó a
 desarrollarse como discusión, porque tras la presentación de las
-maquetas no hubo intervenciones; las opiniones sobre las funciones se
-recogieron con la encuesta de salida (sección~7.1).
+maquetas no hubo intervenciones; recogí las opiniones sobre las funciones con la encuesta de salida (sección~7.1).
  
 \subsubsection{Muestra}
  
@@ -3122,7 +3117,7 @@ empresa (sección~3.3). Sus respuestas no se separan, porque el análisis
 se hace en el nivel del grupo (sección~4.5), por lo que los conteos
 describen al grupo completo. El diseño, en cambio, se plantea solo para
 la consulta privada. Quienes aceptan participar en un estudio
-sobre protección de datos, reclutados en un directorio en línea, pueden
+sobre protección de datos, reclutados en un directorio en línea o por referencia, pueden
 tener más interés en el tema y mayor uso de herramientas digitales que
 el promedio de sus colegas. La perspectiva del paciente, titular de los
 datos, no está representada en el estudio de campo.
@@ -3136,15 +3131,15 @@ humanos. La participación es voluntaria y puede abandonarse en cualquier
 momento sin consecuencia. Cada participante acepta, en el consentimiento
 informado previo a la sesión, participar y que la sesión se transcriba
 de forma automática, y declara ser mayor de edad. El cuestionario previo
-se contesta en Google Forms, sin inicio de sesión. En la aplicación, el
-aviso de participación y el cuestionario se enviaron en un solo
+se contesta en Google Forms, sin inicio de sesión. En la aplicación envié el
+aviso de participación y el cuestionario en un solo
 formulario, que registró el nombre de cada participante junto con sus
 respuestas para coordinar la sesión y el pago; no pidió cédula
 profesional ni correo. Antes del análisis separé los nombres
 de las respuestas, asigné a cada participante un código y conservé los
 nombres solo en el registro de pagos. Así, ni el análisis ni los
 resultados identifican a nadie. La encuesta de salida pidió también el
-nombre y se trató de la misma forma. Cada participante recibe \$350
+nombre y la traté de la misma forma. Cada participante recibe \$350
 pesos como pago por su tiempo y su experiencia; el monto no depende de
 sus respuestas.
 
@@ -4879,10 +4874,10 @@ operación. La sesión sigue el procedimiento de la
 sección~4.3.3; los casos de prueba se ejecutan aparte, como recorrido
 sobre las maquetas (sección~4.4.2).
  
-En la sesión, las maquetas se presentaron brevemente en pantalla con
+En la sesión presenté brevemente las maquetas en pantalla con
 perfiles de pacientes ficticios; las opiniones de los participantes
 sobre ellas, previstas para el quinto bloque de la guía de discusión,
-se recogieron con la encuesta de salida (secciones~4.3.3 y~7.1).
+las recogí con la encuesta de salida (secciones~4.3.3 y~7.1).
  
 Los \textbf{casos de prueba de aceptación} siguen el formato de la
 sección~4.4.2; la Tabla~\ref{tab:casos-prueba} los concreta para los
@@ -4909,7 +4904,7 @@ parcialmente o no refleja el diseño.
 \subsection{Justificación del alcance del MVP}
 % ─────────────────────────────────────────────────────────────────────────
  
-El alcance del MVP se definió con tres criterios. Por
+Definí el alcance del MVP con tres criterios. Por
 \textit{completitud normativa}, deben estar presentes los módulos que
 atienden las obligaciones de las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}: consentimiento, aviso de privacidad, ARCO, registro de
@@ -4971,7 +4966,7 @@ CP-01 \textbf{refleja} el diseño. El expediente nace en estado
 \textit{pendiente de consentimiento}, y ese estado lo ven tanto el
 paciente como el nutriólogo en su lista de pacientes. El aviso se
 presenta con las dos casillas sin marcar, y la aceptación se registra
-con la casilla opcional sin aceptar. La declaración, visible para ambos,
+aunque el paciente deje sin marcar la casilla opcional. La declaración, visible para ambos,
 muestra el titular, el mecanismo de autenticación, la versión del aviso,
 la fecha y hora y el folio \texttt{DEC-}.
 
@@ -4982,8 +4977,7 @@ adjunto. El plan se asigna (\texttt{AssignDiet}) y el paciente ve su
 plan del día en su pantalla de inicio. El resultado es parcial por dos
 razones. La maqueta navegable no incluye la pantalla del registro de
 accesos que el paciente puede ver, aunque el diseño sí la prevé
-(Figura~\ref{fig:maq-expediente}). Tampoco es posible observar el
-rechazo a un tercero sin relación, porque eso requiere un sistema en
+(Figura~\ref{fig:maq-expediente}). Tampoco es posible observar cómo se rechaza a un tercero sin relación con el paciente que intenta abrir el expediente, porque eso requiere un sistema en
 ejecución.
 
 CP-03 \textbf{refleja} el diseño. La solicitud de cancelación se
@@ -5013,11 +5007,11 @@ Los ocho ven el código de verificación al iniciar sesión y el folio de
 cada consentimiento o solicitud como una protección, y no como un
 trámite extra. Ante la petición de borrar toda la información, siete
 aceptarían que la plataforma bloquee el expediente clínico en lugar de
-borrarlo; uno respondió «tal vez». Con ese bloqueo, el diseño atiende el
-hallazgo del diagnóstico (sección~3.3), y además indica al nutriólogo
+borrarlo; uno respondió «tal vez». Con ese bloqueo, el diseño atiende lo que encontró el
+diagnóstico, que ante esa petición los participantes borrarían el expediente (sección~3.3), y además indica al nutriólogo
 qué contestar y en qué plazo.
 
-Las dos funciones que no se mostraron se preguntaron a partir de su
+Las dos funciones que no mostré las pregunté a partir de su
 descripción. Los ocho creen que la cuenta de práctica ayudaría a que los
 estudiantes aprendan lo que pide la ley, y los ocho aparecerían en el
 catálogo con reserva de cita.
@@ -5048,7 +5042,7 @@ del diagnóstico: entregar un aviso de privacidad por escrito (siete),
 pedir el consentimiento para datos de salud aparte del clínico (seis) y
 definir la conservación de cinco años (cuatro).
 
-Estas respuestas se toman como evidencia exploratoria de la revisión por
+Tomo estas respuestas como evidencia exploratoria de la revisión por
 expertos y no como prueba de uso, por tres motivos. Los participantes
 evaluaron una demostración y no operaron las maquetas. Trataron
 directamente conmigo, recibieron un pago y el formulario registró su nombre,
@@ -5082,8 +5076,7 @@ componente técnico correspondiente en el diseño de los capítulos~5 y~6.
 Esa correspondencia se sintetiza por capa (Tabla~\ref{tab:stack}), y la
 lista siguiente la completa obligación por obligación. El criterio de
 validez es la completitud respecto de las obligaciones de esas dos
-tablas, con las exclusiones sanitarias que declara la sección~6.1. No se
-afirma completitud sobre la totalidad de la LFPDPPP~2025, su
+tablas, con las exclusiones sanitarias que declara la sección~6.1. No afirmo completitud sobre la totalidad de la LFPDPPP~2025, su
 Reglamento, la NOM-004-SSA3-2012 o la NOM-024-SSA3-2012.
  
 El análisis de trazabilidad recorre las once obligaciones de las
@@ -5182,7 +5175,7 @@ al mes. En la hora hábil media son 3.5 por segundo, y en la hora pico
 (tres veces la media), 10.5 por segundo. Con funciones de 200
 milisegundos, eso equivale a dos ejecuciones simultáneas de Lambda.
 
-La ruta crítica eleva las consultas a 1.5 veces, las llamadas por
+La ruta crítica, que es el escenario de mayor carga, eleva las consultas a 1.5 veces, las llamadas por
 consulta a cuarenta y las sesiones del paciente al doble, con un pico de
 cinco veces la media. Aun así se mantiene en 36 solicitudes por segundo
 y once ejecuciones simultáneas. Los límites de referencia son de otro
@@ -5225,7 +5218,7 @@ crece con la carga. Los que cobran por hora (instancia de base de datos,
 NAT Gateway, punto de enlace) cuestan lo mismo con dos o con once
 ejecuciones simultáneas. Los que cobran por solicitud o por mensaje (API
 Gateway, CloudTrail, WhatsApp, SMS) son los que
-forman la ruta crítica. Los precios son de lista, consultados en
+encarecen la ruta crítica. Los precios son de lista, consultados en
 septiembre de 2026 (AWS, s.f.-e; Mercado Pago, s.f.-b; Meta, 2025;
 Twilio, 2026). Las tarifas de mx-central-1, publicadas en los archivos
 de la Price List de AWS (AWS, s.f.-g), se aproximan con las de us-east-1
@@ -5245,7 +5238,7 @@ zonas, NAT y punto de enlace redundantes) es una decisión de servicio,
 independiente de la carga, y por eso se muestra aparte: \$67 dólares al
 mes con el factor regional.
  
-\begin{table}[!htbp]
+\begin{table}[!ht]
   \centering
   \caption{Estimación de costos operativos en dos escenarios (500 nutriólogos
   activos, 5,000 pacientes; USD por mes).}
@@ -5564,10 +5557,9 @@ no sobre el uso: el quinto bloque no produjo discusión, y la revisión
 por expertos se apoya en una encuesta de salida respondida dos y tres
 días después, con una sola valoración para la lista de funciones.
 
-El aviso de participación y el cuestionario previo se aplicaron en un
-solo formulario (sección~4.5). El conocimiento de la ley no se midió
-después de la sesión, por lo que el efecto del cierre queda como
-intención declarada. La obligación~X no tiene dato de campo. Por todo
+Apliqué el aviso de participación y el cuestionario previo en un
+solo formulario (sección~4.5). No medí el conocimiento de la ley después de la sesión, por lo que el efecto del cierre queda como
+intención declarada. La obligación~X de la matriz (autenticación, perfiles de acceso y trazabilidad en sistema de expediente clínico electrónico) no tiene dato de campo. Por todo
 ello, los resultados del capítulo~7 se presentan como evidencia
 exploratoria del grupo estudiado y no como validación con usuarios.
  
@@ -5584,7 +5576,7 @@ Application Security Project (OWASP) antes de cualquier despliegue
 sanitario de una operación real (sección~4.4.3). El quinto, la
 portabilidad o exportación estructurada del expediente, prevista en la
 NOM-024 (numeral~6.6.6) y reconocida en Brasil y Alemania (sección~2.2.1
-y Tabla~\ref{tab:comparativo-normativo}), que este trabajo dejó fuera
+y Tabla~\ref{tab:comparativo-normativo}), que dejé fuera
 del MVP. El sexto, la adaptación de los flujos
 a la consulta pediátrica, con la indicación de que el consentimiento lo
 otorgó el padre, la madre o quien ejerce la tutela, recogida de la
@@ -5600,7 +5592,7 @@ líneas de trabajo posterior, con un horizonte orientativo de doce a
 dieciocho meses, para quien decida llevar el diseño al mercado. Se
 documentan aquí, y no como resultado, porque ninguna de estas cifras se
 ha observado. Son la propuesta de precios, canales y economía con la que
-el diseño podría sostenerse. Se construyó sobre los costos de operación
+el diseño podría sostenerse. La construí sobre los costos de operación
 de la sección~\ref{sec:costos} y sobre los precios publicados de los
 productos con los que competiría.
  
@@ -5628,7 +5620,7 @@ que ninguno de los competidores consultados ofrece: expediente y
 consentimiento diseñados sobre la LFPDPPP~2025, con la
 trazabilidad y los plazos de los derechos ARCO controlados en el sistema.
  
-\begin{table}[!htbp]
+\begin{table}[!ht]
   \centering
   \caption{Precios de la competencia y de NutriApp (planes base; consultados
   el 18 de octubre de 2026).}
@@ -5785,36 +5777,7 @@ desarrollo ya está en curso: la maqueta navegable lo prototipa como una
 siguiente iteración, todavía sin pasar por los métodos de evaluación de
 este caso.
 
-\textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
-cierra el cálculo con los ingresos de los planes del MVP y los impuestos
-que se les aplican. Con 500 nutriólogos pagantes, 40\% en plan Pro y la
-mitad con pago anual, a los precios de la Tabla~\ref{tab:competencia},
-el ingreso por suscripciones es de \$118,700 pesos al mes, \$6,595
-dólares al tipo de cambio de referencia. El Destacado añade \$550
-dólares más, para \$7,145 dólares en total. Como los precios incluyen
-IVA, \$986 dólares son impuesto trasladado (Ley del Impuesto al Valor
-Agregado, 1978/2021, art.~1) y el ingreso neto es de \$6,159 dólares. De
-ahí salen la comisión de Mercado Pago (3.49\% más \$4 pesos por cobro,
-más IVA acreditable; Mercado Pago, s.f.-b), que equivale a cerca del 4\%
-del ingreso bruto, y la infraestructura de la Tabla~\ref{tab:costos}.
-
-El impuesto sobre la renta depende del régimen. Una persona moral paga
-30\% sobre la utilidad fiscal (Ley del Impuesto sobre la Renta,
-2013/2024, art.~9). Una persona física en el Régimen Simplificado de
-Confianza (RESICO) paga entre 1.0 y 2.5\% sobre el ingreso cobrado, sin
-deducciones, mientras no exceda de \$3.5 millones de pesos al año (Ley
-del Impuesto sobre la Renta, 2013/2024, art.~113-E). Con el ingreso neto
-del MVP, unos \$111,000 pesos al mes, la tasa aplicable es 2.0\%. La
-tabla muestra los dos regímenes en los dos escenarios: RESICO en la base
-y persona moral con alta disponibilidad en la ruta crítica. El IVA que
-AWS factura desde 2026 a través de su entidad
-mexicana (AWS, s.f.-q) y el de Mercado Pago son acreditables contra el
-IVA trasladado. No hay participación de utilidades porque el MVP no
-tiene empleados. Estos cálculos son una estimación para dimensionar el
-caso y no asesoría fiscal. Los supuestos están en la hoja de cálculo y
-se revisan con un contador antes de operar.
- 
-\begin{table}[!htbp]
+\begin{table}[!ht]
   \centering
   \caption{Ingresos, impuestos y utilidad mensual del MVP (500 nutriólogos
   pagantes; USD por mes).}
@@ -5849,6 +5812,35 @@ se revisan con un contador antes de operar.
   \end{flushleft}
 \end{table}
 
+\textbf{Ingresos, impuestos y utilidad.} La Tabla~\ref{tab:ingresos}
+cierra el cálculo con los ingresos de los planes del MVP y los impuestos
+que se les aplican. Con 500 nutriólogos pagantes, 40\% en plan Pro y la
+mitad con pago anual, a los precios de la Tabla~\ref{tab:competencia},
+el ingreso por suscripciones es de \$118,700 pesos al mes, \$6,595
+dólares al tipo de cambio de referencia. El Destacado añade \$550
+dólares más, para \$7,145 dólares en total. Como los precios incluyen
+IVA, \$986 dólares son impuesto trasladado (Ley del Impuesto al Valor
+Agregado, 1978/2021, art.~1) y el ingreso neto es de \$6,159 dólares. De
+ahí salen la comisión de Mercado Pago (3.49\% más \$4 pesos por cobro,
+más IVA acreditable; Mercado Pago, s.f.-b), que equivale a cerca del 4\%
+del ingreso bruto, y la infraestructura de la Tabla~\ref{tab:costos}.
+
+El impuesto sobre la renta depende del régimen. Una persona moral paga
+30\% sobre la utilidad fiscal (Ley del Impuesto sobre la Renta,
+2013/2024, art.~9). Una persona física en el Régimen Simplificado de
+Confianza (RESICO) paga entre 1.0 y 2.5\% sobre el ingreso cobrado, sin
+deducciones, mientras no exceda de \$3.5 millones de pesos al año (Ley
+del Impuesto sobre la Renta, 2013/2024, art.~113-E). Con el ingreso neto
+del MVP, unos \$111,000 pesos al mes, la tasa aplicable es 2.0\%. La
+tabla muestra los dos regímenes en los dos escenarios: RESICO en la base
+y persona moral con alta disponibilidad en la ruta crítica. El IVA que
+AWS factura desde 2026 a través de su entidad
+mexicana (AWS, s.f.-q) y el de Mercado Pago son acreditables contra el
+IVA trasladado. No hay participación de utilidades porque el MVP no
+tiene empleados. Estos cálculos son una estimación para dimensionar el
+caso y no asesoría fiscal. Los supuestos están en la hoja de cálculo y
+se revisan con un contador antes de operar.
+ 
 \subsection{El caso frente al perfil de egreso de la maestría}
 El perfil de egreso de la Maestría en Informática Aplicada describe a un
 profesional capaz de dirigir o gestionar los procesos de negocio de una
@@ -7774,8 +7766,7 @@ El texto del documento, el análisis normativo, el diseño de NutriApp,
 las decisiones metodológicas y la interpretación de los resultados son
 míos. Usé las herramientas en cinco funciones. Primera, como
 apoyo de redacción sobre párrafos que ya había escrito: sugerencias
-de claridad, concisión y registro que acepté, modifiqué o
-descarté. Segunda, como fuente de ideas y de alternativas para discutir
+de claridad, concisión. Segunda, como fuente de ideas y de alternativas para discutir
 una decisión antes de tomarla. Tercera, para confirmar referencias,
 cotejando cada cita contra la fuente oficial (la ley, el reglamento, la
 norma o el comunicado citados). Cuarta, para vigilar que la idea central
@@ -7858,54 +7849,8 @@ son ejemplos; se transcriben con ajustes mínimos de ortografía.
   \item Contradicciones: «Pásame un resumen para Grok, para que corra
     otra auditoría, contando lo que hayas desestimado de su revisión y
     por qué».
-  \item Instrumentos: «Necesito tres encuestas acordes con lo
+  \item Instrumentos: «Necesito tres ejemplos de encuestas acorde con lo
     documentado en el caso: una previa, otra durante y otra de salida.
     En la de inicio debe aparecer la casilla de que va a ser anónima».
 \end{enumerate}
- 
-El registro completo de instrucciones y respuestas se conserva en
-mi archivo de trabajo, disponible a solicitud.
- 
-\subsubsection*{Síntesis del apoyo recibido}
- 
-El apoyo se concentró en cuatro resultados. Primero, redacción: mis
-párrafos se revisaron en busca de frases hechas, oraciones
-con más de una idea y términos usados con más de un sentido; acepté
-las sugerencias solo cuando no cambiaban el contenido técnico,
-las citas ni las referencias. Segundo, referencias: cada cita normativa
-se cotejó contra el texto oficial, lo que permitió corregir artículos
-mal atribuidos (la trazabilidad, que el texto atribuía al artículo~18
-de la ley y que el Reglamento prevé en su artículo~48, fracción~X,
-entre las medidas del principio de responsabilidad), fechas de
-publicación, y el orden y los sufijos de la lista de referencias
-conforme a APA. Tercero, idea principal: en cada ronda se buscó toda
-oración en la que NutriApp pareciera asumir una obligación del
-nutriólogo, «cumplir» o «garantizar» la ley, o estar ya implementada,
-y la reformulé. Cuarto, contradicciones: se señalaron cifras,
-artículos y remisiones a tablas, figuras y secciones que no coincidían
-entre el resumen, los capítulos y las tablas (por ejemplo, una cifra
-del INAI presentada como monto de multas cuando el comunicado reporta
-inconformidades, o un término corregido en una tabla que conservaba el
-sentido anterior en dos oraciones del capítulo~2), y resolví
-cada una consultando la fuente. Las herramientas no produjeron el
-análisis normativo, el diseño del artefacto, los casos de prueba ni la
-interpretación de los resultados, y ninguna de sus observaciones entró
-al documento sin mi decisión expresa.
- 
-\subsubsection*{Dirección humana y evidencia}
- 
-El flujo de trabajo fue el mismo durante todo el proyecto. Publico
-una versión del manuscrito en el repositorio del proyecto; la
-herramienta lee esa versión y devuelve observaciones con línea y
-fuente; decido cuáles atender, integro los cambios y verifico
-que la versión publicada coincida con la que revisé; antes de compartir
-un capítulo con el asesor, lo leo completo y ajusto lo que no
-corresponde a mi criterio o a la dirección del trabajo. Ningún cambio
-llegó al documento sin pasar por esa lectura. El historial del
-repositorio conserva cada versión integrada; los dictámenes de cada
-ronda de observaciones (qué entró, qué se desestimó y por qué) se
-conservan con el registro de instrucciones en mi archivo de trabajo;
-y las observaciones del asesor se atienden en un control de
-cambios propio.
-
 \end{document}
