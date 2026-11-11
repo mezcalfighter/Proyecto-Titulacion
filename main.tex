@@ -33,6 +33,32 @@
 
 \usepackage{lscape}             % páginas apaisadas para las subfiguras anchas
 \usepackage{afterpage}          % coloca cada figura apaisada después de la página en curso, sin cortarla
+\usepackage{wrapfig}            % pantallas pequeñas incrustadas junto al texto que las explica
+% Pantalla incrustada a la derecha del párrafo que sigue.
+% #1 archivo, #2 página, #3 fracción del ancho, #4 renglones que necesita.
+% Estrategia para que nunca se salga del margen ni deje un hueco grande:
+%   - si en la hoja caben esos renglones, se incrusta ahí;
+%   - si quedan menos de 8 renglones, el párrafo y su pantalla empiezan la hoja siguiente;
+%   - si no, la pantalla pasa centrada al inicio de la hoja siguiente y el texto sigue de corrido.
+\newif\ifpantallaflota
+\newskip\pantallasep
+\newcommand{\pantallaincrustada}[4]{\par\pantallaflotafalse
+  \ifdim\pagegoal<\maxdimen
+    \ifdim\dimexpr\pagegoal-\pagetotal\relax<#4\baselineskip
+      \ifdim\dimexpr\pagegoal-\pagetotal\relax<8\baselineskip \newpage \else \pantallaflotatrue \fi
+    \fi
+  \fi
+  \ifpantallaflota
+    \begin{figure}[!tbp]\centering
+      \includegraphics[page=#2,width=#3\textwidth]{#1}
+    \end{figure}%
+  \else
+    \pantallasep=\intextsep \intextsep=4pt
+    \begin{wrapfigure}{r}{#3\textwidth}\centering
+      \includegraphics[page=#2,width=\linewidth]{#1}
+    \end{wrapfigure}%
+    \intextsep=\pantallasep
+  \fi}
 
 % Inicio de cada sección principal (capítulos, Referencias y anexos):
 % empieza en hoja nueva, salvo que la hoja en curso lleve menos de la mitad ocupada,
@@ -3566,8 +3592,7 @@ tardar hasta 12 horas en estar disponibles y AWS no la recomienda como
 archivo continuo, para lo cual sugiere suscripciones (AWS, s.f.-l). Esto
 se registra como limitación del diseño.
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \begin{subfigure}{\linewidth}
     \centering
@@ -3581,7 +3606,7 @@ se registra como limitación del diseño.
   \label{fig:aws}
 \end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3594,7 +3619,7 @@ se registra como limitación del diseño.
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3607,7 +3632,7 @@ se registra como limitación del diseño.
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3619,7 +3644,6 @@ se registra como limitación del diseño.
   \end{subfigure}
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
-}% fin de \afterpage
 
 \subsubsection{Diagramas UML: casos de uso y secuencia}
 
@@ -3662,23 +3686,27 @@ inducción por el docente, y el aviso de vencimiento de la cuenta
 Students por el Sistema. La exportación del expediente no aparece porque
 no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
  
-\afterpage{%
-\begin{landscape}
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
-  \begin{subfigure}{\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a.pdf}
-    \caption{Gestión clínica y derechos del titular.}
+    \includegraphics[width=0.9225\linewidth]{uml-cu-a-clinica.pdf}
+    \caption{Gestión clínica y derechos del titular. Parte 1 de 2.}
     \label{fig:uml-cu-a}
+  \end{subfigure}
+  \par\vspace{10pt}
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[width=\linewidth]{uml-cu-a-arco.pdf}
+    \caption{Parte 2 de 2.}
   \end{subfigure}
   \caption{Casos de uso de NutriApp: (a) clínica y ARCO; (b) catálogo y
   citas; (c) comunidad, administración y cuentas de práctica.}
   \label{fig:uml-cu}
 \end{figure}
-\end{landscape}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3691,7 +3719,7 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \caption{Casos de uso de NutriApp (continuación).}
 \end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3703,7 +3731,6 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \end{subfigure}
   \caption{Casos de uso de NutriApp (continuación).}
 \end{figure}
-}% fin de \afterpage
  
 
 El diagrama se lee por actor. El paciente otorga su consentimiento y
@@ -3798,14 +3825,12 @@ PostgreSQL sobre Amazon RDS, conforme a la capa de datos de la
 sección~5.1.
 \end{sloppypar}
  
-\afterpage{%
-\begin{landscape}
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
-  \begin{subfigure}{\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-a.pdf}
-    \caption{Bloque clínico.}
+    \includegraphics[scale=0.5]{er-a-exp.pdf}
+    \caption{Bloque clínico. Parte 1 de 2.}
     \label{fig:er-a}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp: (a) clínico; (b) derechos
@@ -3813,24 +3838,41 @@ sección~5.1.
   (d) comunidad y administración.}
   \label{fig:er}
 \end{figure}
-\end{landscape}
- 
-\begin{landscape}
-\begin{figure}[H]
+
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \begin{subfigure}{\linewidth}
+  \begin{subfigure}[b]{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b.pdf}
-    \caption{Derechos del titular y trazabilidad.}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[scale=0.5]{er-a-citas.pdf}
+    \caption{Parte 2 de 2.}
+  \end{subfigure}
+  \par\vspace{10pt}
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \includegraphics[width=0.8791\linewidth]{er-b-der.pdf}
+    \caption{Derechos del titular y trazabilidad. Parte 1 de 2.}
     \label{fig:er-b}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
-\end{landscape}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}[b]{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[width=\linewidth]{er-b-traz.pdf}
+    \caption{Parte 2 de 2.}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3843,7 +3885,7 @@ sección~5.1.
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
  
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
@@ -3855,7 +3897,6 @@ sección~5.1.
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
-}% fin de \afterpage
  
 En el bloque clínico, cada \texttt{paciente} tiene un
 \texttt{expediente} por cada nutriólogo que lo atiende, y ese nutriólogo
@@ -3936,14 +3977,12 @@ borrado criptográfico ocurre solo si él confirma la supresión. Si no la
 confirma, el expediente se conserva. Los estados que el expediente
 recorre en ese trayecto se detallan en la Figura~\ref{fig:uml-estados}.
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{flujo-datos.pdf}
   \caption{Recorrido del dato de salud en NutriApp, del consentimiento a la supresión confirmada por el nutriólogo.}
   \label{fig:flujo-datos}
 \end{figure}
-}% fin de \afterpage
 
 \subsubsection{Diagrama de estados del expediente}
  
@@ -4083,8 +4122,16 @@ institución que expidió su título. Ahí firma una declaración bajo
 protesta, que el \texttt{DeclarationLog} conserva. También inscribe el
 segundo factor en la pantalla \texttt{MFASetup}, que muestra el código
 QR para la aplicación de autenticación y comprueba un primer código
-TOTP. Debe hacerlo antes de poder entrar a cualquier expediente
-(sección~5.1).
+TOTP (Figura~\ref{fig:maq-mfa}). Debe hacerlo antes de poder entrar a
+cualquier expediente (sección~5.1).
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=0.71\textwidth]{maqueta-mfa-setup.pdf}
+  \caption{Maqueta de la inscripción del segundo factor
+  (\texttt{MFASetup}): código QR y comprobación del primer código TOTP.}
+  \label{fig:maq-mfa}
+\end{figure}
 
 La veracidad de la cédula y del título es responsabilidad del
 nutriólogo, que la asume en esa declaración. NutriApp no los verifica.
@@ -4113,6 +4160,8 @@ En la maqueta, por tanto, es el paciente quien consiente: en su propia
 sesión autenticada desde su dispositivo o, en el consultorio, sobre el
 dispositivo del nutriólogo, autenticándose él mismo.
 
+\emergencystretch=2em % columna angosta junto a las pantallas incrustadas
+\pantallaincrustada{maqueta-consentimiento.pdf}{1}{0.45}{18}
 La cuenta del paciente la crea la plataforma cuando el nutriólogo lo da
 de alta. \texttt{AddPatient} captura solo nombre y correo, una Lambda
 crea el usuario en Cognito como administrador y Cognito envía por SES la
@@ -4125,6 +4174,7 @@ queda pendiente en su panel hasta que consiente. En el consultorio, el
 consentimiento abre una sesión aislada del paciente en el dispositivo
 del nutriólogo, que se cierra al confirmar o a los cinco minutos.
  
+\pantallaincrustada{maqueta-consentimiento.pdf}{2}{0.34}{18}
 La pantalla de consentimiento muestra el aviso de privacidad completo,
 con opción de descarga en PDF, y dos casillas sin marcar. Una es la
 obligatoria para el tratamiento de datos de salud. La otra es opcional,
@@ -4142,15 +4192,15 @@ en su lista de pacientes (\texttt{PatientList}) y recibe un aviso
 emergente cuando el paciente completa el trámite
 (Figura~\ref{fig:maq-consentimiento}).
  
-\afterpage{%
-\begin{figure}[H]
+\emergencystretch=0pt
+\begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-consentimiento.pdf}
+  \includegraphics[page=3,width=0.41\textwidth]{maqueta-consentimiento.pdf}\hspace{0.04\textwidth}%
+  \includegraphics[page=4,width=0.41\textwidth]{maqueta-consentimiento.pdf}
   \caption{Maqueta del flujo de consentimiento del paciente: aviso de
   privacidad, casillas sin marcar, folio y estado del expediente.}
   \label{fig:maq-consentimiento}
 \end{figure}
-}% fin de \afterpage
  
 \subsubsection{Alta de paciente y expediente}
  
@@ -4174,23 +4224,21 @@ dieta actual (\texttt{CurrentDiet}) y en el seguimiento de avances
 (\texttt{ProgressTracking}). Estas pantallas forman el recorrido del
 expediente (Figura~\ref{fig:maq-expediente}).
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htb]
   \centering
-  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-expediente.pdf}
+  \includegraphics[width=0.75\linewidth]{maqueta-expediente.pdf}
   \caption{Maqueta del alta de paciente y del expediente con registro
   de accesos.}
   \label{fig:maq-expediente}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-expediente.pdf}
+  \includegraphics[page=2,width=0.75\linewidth]{maqueta-expediente.pdf}
   \caption{Maqueta del alta de paciente y del expediente (continuación).}
 \end{figure}
-}% fin de \afterpage
  
 \subsubsection{Derechos ARCO y cancelación}
  
@@ -4245,31 +4293,29 @@ el correo cuando quedan cinco días o menos del plazo del artículo~31. La
 alarma de CloudWatch sobre la misma métrica alerta a la operación de
 NutriApp (Figura~\ref{fig:maq-arco}).
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htb]
   \centering
-  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
+  \includegraphics[width=0.75\linewidth]{maqueta-arco.pdf}
   \caption{Maqueta del módulo ARCO: solicitud del paciente, diálogo de
    cancelación con bloqueo y plazo, y bandeja del nutriólogo.}
   \label{fig:maq-arco}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
+  \includegraphics[page=2,width=0.75\linewidth]{maqueta-arco.pdf}
   \caption{Maqueta del módulo ARCO (continuación).}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \includegraphics[page=3,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-arco.pdf}
+  \includegraphics[page=3,width=0.75\linewidth]{maqueta-arco.pdf}
   \caption{Maqueta del módulo ARCO (continuación).}
 \end{figure}
-}% fin de \afterpage
  
 \subsubsection{Catálogo y reserva de cita}
  
@@ -4301,23 +4347,21 @@ recibe la solicitud en su gestor de citas
 responde, el sistema sugiere alternativas. Las citas se notifican
 únicamente dentro de la aplicación (Figura~\ref{fig:maq-catalogo}).
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htb]
   \centering
-  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
+  \includegraphics[width=0.80\linewidth]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo con resultados patrocinados
   etiquetados, cédula declarada por el profesional y reserva de cita.}
   \label{fig:maq-catalogo}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htb]
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
+  \includegraphics[page=2,width=0.80\linewidth]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo (continuación).}
 \end{figure}
-}% fin de \afterpage
  
 \subsubsection{Cuentas de práctica: institución, códigos de activación y Students}
  
@@ -4368,16 +4412,15 @@ los pacientes ficticios: alta de datos, nota y adjunto, plan, y
 solicitud y resolución ARCO simuladas, con una fila por paso completado
 en \texttt{induccion\_paso}.
  
-\afterpage{%
-\begin{figure}[H]
+\begin{figure}[!htb]
   \centering
-  \includegraphics[width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-students.pdf}
+  \includegraphics[width=0.83\linewidth]{maqueta-students.pdf}
   \caption{Maqueta de la activación Students en tres pasos y de los
   pacientes ficticios.}
   \label{fig:maq-students}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\textwidth]{maqueta-docente-induccion.png}\\[4pt]
   \includegraphics[width=\textwidth]{maqueta-docente-reporte.png}
@@ -4386,7 +4429,6 @@ en \texttt{induccion\_paso}.
   reporte semestral con el aviso de vencimiento.}
   \label{fig:maq-students-docente}
 \end{figure}
-}% fin de \afterpage
  
 \subsubsection{Comunidad y moderación}
  
@@ -7184,19 +7226,32 @@ de prueba.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{cp01-a.png}
+  \includegraphics[width=0.70\textwidth]{cp01-a.png}\\[6pt]
+  \begin{minipage}[t]{0.44\textwidth}\vspace{0pt}\centering
+    \includegraphics[page=1,width=\linewidth]{cp01-a.pdf}
+  \end{minipage}\hspace{0.04\textwidth}%
+  \begin{minipage}[t]{0.44\textwidth}\vspace{0pt}\centering
+    \includegraphics[page=2,width=\linewidth]{cp01-a.pdf}
+  \end{minipage}
   \caption{CP-01: aviso de privacidad desplegado en la sesión del paciente, con las dos casillas sin marcar y el expediente \textit{pendiente de consentimiento}.}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{cp01-b.png}
+  \includegraphics[width=0.70\textwidth]{cp01-b.png}\\[6pt]
+  \begin{minipage}[t]{0.44\textwidth}\vspace{0pt}\centering
+    \includegraphics[page=1,width=\linewidth]{cp01-b.pdf}
+  \end{minipage}\hspace{0.04\textwidth}%
+  \begin{minipage}[t]{0.44\textwidth}\vspace{0pt}\centering
+    \includegraphics[page=2,width=\linewidth]{cp01-b.pdf}
+  \end{minipage}
   \caption{CP-01: aceptación con la casilla obligatoria marcada; la casilla opcional de notificaciones permanece sin marcar.}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{cp01-c.png}
+  \includegraphics[width=0.85\textwidth]{cp01-c.png}\\[6pt]
+  \includegraphics[width=0.50\textwidth]{cp01-c-detalle.png}
   \caption{CP-01: declaración registrada con titular, mecanismo de autenticación, versión del aviso, fecha y hora y folio \texttt{DEC-}; notificaciones adicionales no aceptadas.}
 \end{figure}
 
@@ -7242,7 +7297,8 @@ de prueba.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{cp03-b.png}
+  \includegraphics[width=\textwidth]{cp03-b.png}\\[6pt]
+  \includegraphics[width=0.40\textwidth]{cp03-b-detalle.png}
   \caption{CP-03: confirmación de la solicitud con folio \texttt{ARCO-} y plazo de respuesta.}
 \end{figure}
 
