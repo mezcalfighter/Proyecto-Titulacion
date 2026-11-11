@@ -3596,7 +3596,7 @@ se registra como limitación del diseño.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.90\textheight,keepaspectratio]{aws-a.pdf}
+    \includegraphics[page=1,width=\linewidth,height=0.90\textheight,keepaspectratio]{aws-a.pdf}
     \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico.}
     \label{fig:aws-a}
   \end{subfigure}
@@ -3612,7 +3612,33 @@ se registra como limitación del diseño.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-a.pdf}
+    \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-a.pdf}
+    \caption{Borde global, región \texttt{mx-central-1} y entrada de tráfico (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
     \caption{Red privada, cómputo, salida a internet y subcontrataciones.}
     \label{fig:aws-b}
   \end{subfigure}
@@ -3625,7 +3651,33 @@ se registra como limitación del diseño.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
+    \caption{Red privada, cómputo, salida a internet y subcontrataciones (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-b.pdf}
+    \caption{Red privada, cómputo, salida a internet y subcontrataciones (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
     \caption{Almacenamiento, retención y llaves.}
     \label{fig:aws-c}
   \end{subfigure}
@@ -3638,9 +3690,48 @@ se registra como limitación del diseño.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-d.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
+    \caption{Almacenamiento, retención y llaves (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-c.pdf}
+    \caption{Almacenamiento, retención y llaves (continuación).}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-d.pdf}
     \caption{Operación, métricas y trazabilidad.}
     \label{fig:aws-d}
+  \end{subfigure}
+  \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{aws-d.pdf}
+    \caption{Operación, métricas y trazabilidad (continuación).}
   \end{subfigure}
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
@@ -3690,16 +3781,9 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \centering
   \begin{subfigure}[b]{\linewidth}
     \centering
-    \includegraphics[width=0.9225\linewidth]{uml-cu-a-clinica.pdf}
-    \caption{Gestión clínica y derechos del titular. Parte 1 de 2.}
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a-clinica.pdf}
+    \caption{Gestión clínica y derechos del titular. Parte 1 de 5.}
     \label{fig:uml-cu-a}
-  \end{subfigure}
-  \par\vspace{10pt}
-  \begin{subfigure}[b]{\linewidth}
-    \centering
-    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
-    \includegraphics[width=\linewidth]{uml-cu-a-arco.pdf}
-    \caption{Parte 2 de 2.}
   \end{subfigure}
   \caption{Casos de uso de NutriApp: (a) clínica y ARCO; (b) catálogo y
   citas; (c) comunidad, administración y cuentas de práctica.}
@@ -3712,7 +3796,59 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-b.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a-clinica.pdf}
+    \caption{Parte 2 de 5.}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a-arco.pdf}
+    \caption{Parte 3 de 5.}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a-arco.pdf}
+    \caption{Parte 4 de 5.}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-a-arco.pdf}
+    \caption{Parte 5 de 5.}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-b.pdf}
     \caption{Catálogo y citas.}
     \label{fig:uml-cu-b}
   \end{subfigure}
@@ -3725,9 +3861,48 @@ no forma parte del producto mínimo viable (MVP); véase la sección~8.3.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-c.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-b.pdf}
+    \caption{Catálogo y citas (continuación).}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-c.pdf}
     \caption{Comunidad, administración y cuentas de práctica.}
     \label{fig:uml-cu-c}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-c.pdf}
+    \caption{Comunidad, administración y cuentas de práctica (continuación).}
+  \end{subfigure}
+  \caption{Casos de uso de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{uml-cu-c.pdf}
+    \caption{Comunidad, administración y cuentas de práctica (continuación).}
   \end{subfigure}
   \caption{Casos de uso de NutriApp (continuación).}
 \end{figure}
@@ -3775,10 +3950,18 @@ sistema sugiere al paciente nutriólogos alternativos.
 
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\textwidth]{uml-seq.pdf}
+  \includegraphics[page=1,width=\textwidth,height=0.84\textheight,keepaspectratio]{uml-seq.pdf}
   \caption{Diagrama de secuencia: flujo de reserva de cita y confirmación del
   nutriólogo.}
   \label{fig:uml-seq}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\textwidth,height=0.84\textheight,keepaspectratio]{uml-seq.pdf}
+  \caption{Diagrama de secuencia (continuación).}
 \end{figure}
 
 La secuencia muestra dos decisiones de diseño. La primera es que el
@@ -3829,8 +4012,8 @@ sección~5.1.
   \centering
   \begin{subfigure}[b]{\linewidth}
     \centering
-    \includegraphics[scale=0.5]{er-a-exp.pdf}
-    \caption{Bloque clínico. Parte 1 de 2.}
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-a-exp.pdf}
+    \caption{Bloque clínico. Parte 1 de 3.}
     \label{fig:er-a}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp: (a) clínico; (b) derechos
@@ -3843,18 +4026,24 @@ sección~5.1.
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \begin{subfigure}[b]{\linewidth}
+  \begin{subfigure}{\linewidth}
     \centering
     \addtocounter{subfigure}{-1}% misma letra que la parte anterior
-    \includegraphics[scale=0.5]{er-a-citas.pdf}
-    \caption{Parte 2 de 2.}
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-a-exp.pdf}
+    \caption{Parte 2 de 3.}
   \end{subfigure}
-  \par\vspace{10pt}
-  \begin{subfigure}[b]{\linewidth}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=0.8791\linewidth]{er-b-der.pdf}
-    \caption{Derechos del titular y trazabilidad. Parte 1 de 2.}
-    \label{fig:er-b}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-a-citas.pdf}
+    \caption{Parte 3 de 3.}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
@@ -3865,9 +4054,61 @@ sección~5.1.
   \centering
   \begin{subfigure}[b]{\linewidth}
     \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b-der.pdf}
+    \caption{Derechos del titular y trazabilidad. Parte 1 de 5.}
+    \label{fig:er-b}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
     \addtocounter{subfigure}{-1}% misma letra que la parte anterior
-    \includegraphics[width=\linewidth]{er-b-traz.pdf}
-    \caption{Parte 2 de 2.}
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b-der.pdf}
+    \caption{Parte 2 de 5.}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b-traz.pdf}
+    \caption{Parte 3 de 5.}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b-traz.pdf}
+    \caption{Parte 4 de 5.}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-b-traz.pdf}
+    \caption{Parte 5 de 5.}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
@@ -3878,7 +4119,7 @@ sección~5.1.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-c.pdf}
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-c.pdf}
     \caption{Cuentas de práctica, catálogo y suscripción.}
     \label{fig:er-c}
   \end{subfigure}
@@ -3891,9 +4132,48 @@ sección~5.1.
   \centering
   \begin{subfigure}{\linewidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.84\textheight,keepaspectratio]{er-d.pdf}
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-c.pdf}
+    \caption{Cuentas de práctica, catálogo y suscripción (continuación).}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=3,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-c.pdf}
+    \caption{Cuentas de práctica, catálogo y suscripción (continuación).}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-d.pdf}
     \caption{Comunidad y administración.}
     \label{fig:er-d}
+  \end{subfigure}
+  \caption{Modelo entidad-relación de NutriApp (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \begin{subfigure}{\linewidth}
+    \centering
+    \addtocounter{subfigure}{-1}% misma letra que la parte anterior
+    \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{er-d.pdf}
+    \caption{Comunidad y administración (continuación).}
   \end{subfigure}
   \caption{Modelo entidad-relación de NutriApp (continuación).}
 \end{figure}
@@ -4007,9 +4287,41 @@ ejecuta con su confirmación (sección~2.5.5).
  
 \begin{figure}[!htbp]
   \centering
-  \includegraphics[width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \includegraphics[page=1,width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
   \caption{Diagrama de estados del expediente clínico.}
   \label{fig:uml-estados}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \caption{Diagrama de estados del expediente clínico (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=3,width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \caption{Diagrama de estados del expediente clínico (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=4,width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \caption{Diagrama de estados del expediente clínico (continuación).}
+\end{figure}
+ 
+\begin{figure}[!htbp]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=5,width=\linewidth,height=0.80\textheight,keepaspectratio]{uml-estados-expediente.pdf}
+  \caption{Diagrama de estados del expediente clínico (continuación).}
 \end{figure}
 
 % ═══════════════════════════════════════════════════════════════════════════
@@ -4349,7 +4661,7 @@ responde, el sistema sugiere alternativas. Las citas se notifican
  
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.80\linewidth]{maqueta-catalogo.pdf}
+  \includegraphics[page=1,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo con resultados patrocinados
   etiquetados, cédula declarada por el profesional y reserva de cita.}
   \label{fig:maq-catalogo}
@@ -4359,7 +4671,15 @@ responde, el sistema sugiere alternativas. Las citas se notifican
   \ContinuedFloat
   \captionsetup{list=no}
   \centering
-  \includegraphics[page=2,width=0.80\linewidth]{maqueta-catalogo.pdf}
+  \includegraphics[page=2,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
+  \caption{Maqueta del catálogo (continuación).}
+\end{figure}
+
+\begin{figure}[!htb]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=3,width=\linewidth,height=0.88\textheight,keepaspectratio]{maqueta-catalogo.pdf}
   \caption{Maqueta del catálogo (continuación).}
 \end{figure}
  
@@ -4414,10 +4734,18 @@ en \texttt{induccion\_paso}.
  
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=0.83\linewidth]{maqueta-students.pdf}
+  \includegraphics[page=1,width=\linewidth,height=0.84\textheight,keepaspectratio]{maqueta-students.pdf}
   \caption{Maqueta de la activación Students en tres pasos y de los
   pacientes ficticios.}
   \label{fig:maq-students}
+\end{figure}
+
+\begin{figure}[!htb]
+  \ContinuedFloat
+  \captionsetup{list=no}
+  \centering
+  \includegraphics[page=2,width=\linewidth,height=0.84\textheight,keepaspectratio]{maqueta-students.pdf}
+  \caption{Maqueta de la activación Students (continuación).}
 \end{figure}
 
 \begin{figure}[!htbp]
