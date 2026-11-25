@@ -284,22 +284,17 @@ El paquete de diseño reúne el marco normativo y técnico, la matriz de
 trazabilidad, la arquitectura de servicios, los diagramas de ingeniería,
 el modelo de datos, los requerimientos del producto mínimo viable, tres
 casos de prueba de aceptación y las maquetas navegables de la interfaz.
-Se comprueba en tres niveles. Primero, cada una de las once obligaciones
+Se comprueba en dos niveles. Primero, cada una de las once obligaciones
 tiene un componente que la atiende. Segundo, los casos de prueba se
-ejecutan sobre las maquetas. Tercero, un grupo focal de nutriólogos con
-práctica clínica aporta el diagnóstico de la práctica actual y la
-revisión del diseño por expertos. Operar el diseño para 500 nutriólogos
-y 5,000 pacientes costaría entre \$141 y \$299 dólares al mes, una
-fracción mínima de las sanciones que la ley prevé para los datos de
-salud. El producto mínimo viable no incluye la firma electrónica
+ejecutan sobre las maquetas. Un grupo focal de nutriólogos con
+práctica clínica aporta el diagnóstico de la práctica actual y su opinión sobre el diseño. Operar el diseño para 500 nutriólogos
+y 5,000 pacientes costaría entre \$141 y \$299 dólares al mes. El producto mínimo viable no incluye la firma electrónica
 avanzada, la exportación estructurada del expediente ni la estructura
 completa de la historia clínica.
  
-En el grupo focal, ninguno de los ocho nutriólogos analizados recaba un
-consentimiento específico para los datos de salud, y solo uno entrega el
+En el grupo focal, seis de los ocho nutriólogos analizados no piden una autorización firmada para los datos de salud, y solo uno entrega el
 aviso de privacidad por escrito. Ninguno conoce el plazo legal de
-respuesta ni a la autoridad vigente, y la conservación de cinco años se
-conoce más de lo que se aplica. En la evaluación, los ocho usarían las
+respuesta ni a la autoridad vigente, y nadie ha depurado sus expedientes. En la encuesta de salida, los ocho dicen que usarían las
 funciones mostradas, consideran razonable la carga de trabajo que piden
 y perciben el folio y el código de verificación como una protección.
  
@@ -458,7 +453,7 @@ obligaciones que la ley asigna al profesional como responsable.
     NutriApp, y demostrar el producto mínimo viable (MVP) con maquetas
     navegables.
   \item Evaluar el diseño con casos de prueba de aceptación, la
-    revisión por expertos de los participantes del grupo focal y la
+    opinión de los participantes del grupo focal y la
     observación en el caso, y verificar que cada obligación de la
     matriz tenga un componente que la atienda.
   \item Estimar el costo de operar el diseño y comparar el precio de la suscripción que lo sostendría con las
@@ -502,10 +497,10 @@ Datos Personales en Posesión de Sujetos Obligados (LGPDPPSO, 2025). El
 tercero es la práctica en instituciones privadas, como clínicas,
 hospitales o empresas, donde el responsable es la institución y no el
 nutriólogo. El cuarto es la perspectiva del paciente, titular de los
-datos, que no participa en el estudio de campo. El caso cierra con el paquete de
-diseño comprobado en tres niveles: la trazabilidad entre obligaciones y
-requerimientos, los casos de prueba sobre las maquetas y la revisión de
-expertos del grupo focal. El paquete se documenta con el detalle
+datos, que no participa en el estudio de campo. El grupo focal sí incluyó nutriólogos con práctica institucional, pública o privada (sección~4.4.3). El caso cierra con el paquete de
+diseño comprobado en dos niveles, la trazabilidad entre obligaciones y
+requerimientos y los casos de prueba sobre las maquetas, y con la opinión de
+los participantes del grupo focal. El paquete se documenta con el detalle
 necesario para que una fase de desarrollo lo tome como punto de partida,
 a mi cargo o al de un tercero al que se transfiera (sección~4.5).
 
@@ -1533,10 +1528,8 @@ protegidos.
   encargado, y el proveedor de nube es una subcontratación de ese
   encargado. Ambas relaciones se formalizan en contratos sin contenido
   mínimo definido por la ley (LFPDPPP, 2025, arts.~2 y~13; RLFPDPPP, 2011,
-  arts.~51 y~54). Si el desarrollador omite el cifrado, la autenticación o
-  los registros de acceso, la sanción recae en el nutriólogo, que responde
-  por controles que no maneja. El desarrollador, en cambio, no tiene un
-  incentivo legal directo para invertir en seguridad.
+  arts.~51 y~54). Cada uno tiene obligaciones según su papel, que la sección~2.5.1 distribuye entre el nutriólogo, NutriApp y el proveedor de nube (Tabla~\ref{tab:responsabilidad}). Lo que México no tiene es un
+  mecanismo específico para el software de salud, como el contrato del \textit{business associate} o la atestación C5.
  
   \item El GDPR obliga a designar un delegado de protección de datos
   a quien trate datos de salud a gran escala (GDPR, 2016, art.~37).
@@ -2406,7 +2399,7 @@ y~\ref{tab:trazabilidad-2}.
 \paragraph{Perfil de los participantes}
 Cuatro ejercen principalmente en consulta privada, dos principalmente
 en una institución y dos en ambos ámbitos. En la sesión, dos describieron práctica en un hospital
-público y una en salud ocupacional de empresa. Cuatro llevan menos de
+público y una en salud ocupacional de empresa. Los conteos describen a ese grupo mixto. En la práctica institucional, el aviso, el consentimiento y la conservación los define la institución, y en un hospital público rige la LGPDPPSO, no la LFPDPPP. Cuatro llevan menos de
 dos años atendiendo pacientes y cuatro, entre dos y cinco. Tres
 consultan sobre todo en persona, uno en línea y cuatro de forma mixta.
 Tres atienden menos de veinte pacientes al mes, uno entre veinte y
@@ -2450,9 +2443,8 @@ no lo incluye y uno a falta de tiempo. Dos declaran que ya lo hacen
 (Anexo~\ref{anexo:salida-resultados}).
  
 \paragraph{Consentimiento por escrito para datos de salud}
-Ninguno recaba un consentimiento específico para los datos de salud:
-dos lo integran al consentimiento del tratamiento clínico y seis no
-piden ninguna autorización firmada. La distinción entre el
+Seis no piden una autorización firmada para los datos de salud. Dos la incluyen en el consentimiento del tratamiento clínico. No revisé ese documento, por lo que no
+puedo afirmar si en esos dos casos el consentimiento para los datos es expreso. La distinción entre el
 consentimiento clínico y el de datos (sección~3.2) no apareció en la
 discusión ni en los mecanismos descritos.
  
@@ -2470,12 +2462,9 @@ Federal para la Protección contra Riesgos Sanitarios (COFEPRIS). Nadie
 conoce el orden de magnitud de las multas, aunque cuatro saben que
 existen.
 
-La conservación muestra la brecha más clara entre lo que se sabe y lo
-que se hace. Seis saben que el expediente clínico se conserva cinco
-años, pero solo uno declara conservarlo cinco años o más. Cuatro
-declaran de uno a cuatro años, uno menos de un año y dos lo conservan
-indefinidamente o sin regla definida. En la discusión, en cambio, nadie ha depurado
-un expediente, «por si el paciente regresa» o hasta que falte espacio.
+Seis saben que el expediente clínico se conserva cinco
+años. A la pregunta de cuánto tiempo conservan el expediente de un paciente que dejó de atenderse, uno respondió cinco años o más, cuatro de uno a cuatro años, uno menos de un año, uno indefinidamente y uno que no lo ha definido. La pregunta no distingue cuánto tiempo tienen los expedientes, cuánto planean guardarlos y si han borrado alguno. Como ninguno rebasa los cinco años de práctica, una respuesta de menos de cinco años puede describir la antigüedad de los expedientes y no un plazo. En la discusión, nadie ha depurado
+un expediente, «por si el paciente regresa» o hasta que falte espacio. Con estos datos no se comprueba que se borren expedientes antes del plazo. Lo que se observa es que no hay una regla de depuración definida.
 
 Ante la pérdida de un equipo o un acceso no autorizado, ninguno tiene un
 procedimiento. Las respuestas se orientan a recuperar la información
@@ -2491,25 +2480,20 @@ punto de aplicarla en su consulta.
 Leída contra las Tablas~\ref{tab:trazabilidad-1}
 y~\ref{tab:trazabilidad-2}, la práctica reportada presenta de forma
 parcial dos obligaciones: las medidas de seguridad básicas
-(obligación~III: contraseñas y respaldo, sin cifrado) y el conocimiento
+(obligación~III: contraseñas y respaldo) y el conocimiento
 del propio inventario (VI). El acceso de hecho es individual en cinco de
-los ocho casos y en dos alcanza a colegas (IV), pero
-sin usuarios propios ni registro de quién consulta qué expediente (V,
-ausente en todas las herramientas descritas).
+los ocho casos y en dos alcanza a colegas (IV). Nadie reportó cifrado, usuarios propios ni registro de quién consulta qué expediente (V). Como no revisé las herramientas, que pueden tenerlos aunque su usuario no lo sepa, son controles no reportados ni verificados.
 
-Están ausentes el aviso de privacidad sistemático (II), el
-consentimiento específico para datos de salud (I), el procedimiento ante
-vulneraciones con aviso al titular (VIII), la gestión de solicitudes con
-plazo y registro (VII) y la regla de conservación aplicada (IX). El uso
+No aparecen en la práctica reportada el aviso de privacidad sistemático (II), el procedimiento ante
+vulneraciones con aviso al titular (VIII) ni la gestión de solicitudes con
+plazo y registro (VII). El consentimiento para datos de salud (I) no se reporta en seis casos y en dos no se pudo verificar, y la regla de conservación (IX) no se pudo comprobar con la pregunta aplicada. El uso
 de nube y de software de terceros es general, sin verificación declarada
 de las condiciones del proveedor (XI). Una participante cambió de
 herramienta precisamente por desconfianza en el acceso del personal del
 proveedor a los datos.
 
 No medí en campo la obligación~X, porque la pregunta prevista no se
-incluyó en el formulario aplicado (Anexo~\ref{anexo:cuestionario}), y la evalúo solo con el análisis documental. Los obstáculos que los
-participantes reportan son de desconocimiento y de herramienta, y no de
-rechazo a la obligación.
+incluyó en el formulario aplicado (Anexo~\ref{anexo:cuestionario}), y la evalúo solo con el análisis documental.
  
 % ============================================================
 % CAPÍTULO 4 — METODOLOGÍA (grupo focal con expertos)
@@ -2550,10 +2534,10 @@ capítulos~2 (secciones~2.4 y~2.5), 5 y~6 desarrollan el artefacto. La
 demostración, que en Peffers et al. consiste en mostrar que el artefacto
 resuelve una instancia del problema, se hace en el capítulo~6 con
 maquetas navegables de la interfaz y una prueba piloto con el grupo
-focal. El capítulo~7 evalúa con los tres métodos de la sección~4.4.2:
+focal. El capítulo~7 evalúa el diseño (sección~4.4.2) con
 casos de prueba de aceptación que se ejecutan sobre las maquetas,
-revisión por expertos de los participantes del grupo focal y observación
-de lo que los participantes dicen y hacen frente a ellas. Verifica
+la opinión de los participantes del grupo focal y la observación
+de lo que dicen y hacen frente a ellas. Verifica
 además la trazabilidad de las once obligaciones (sección~7.2) y estima
 el costo de operar el diseño (sección~7.3). Este documento constituye la
 comunicación. El
@@ -2638,12 +2622,12 @@ costo de operar el diseño se estima con las tarifas vigentes a la
 fecha de redacción; los de la competencia, el 18 de octubre de 2026.
  
 % ------------------------------------------------------------
-\subsection{Investigación de campo: grupo focal con expertos}
+\subsection{Investigación de campo: grupo focal}
 % ------------------------------------------------------------
  
 \subsubsection{Diseño del estudio de campo y población}
  
-La investigación de campo usa un grupo focal con expertos. Tomé la decisión
+La investigación de campo usa un grupo focal. Tomé la decisión
 con el asesor por el tipo de evidencia que el caso necesita. El
 objeto del estudio de campo es la forma en que los nutriólogos manejan
 los datos de sus pacientes y lo que entienden por cumplir con la ley. La
@@ -2683,7 +2667,7 @@ discusión.
  
 Los materiales del estudio de campo son cuatro y se aplican en este
 orden: el consentimiento informado, el cuestionario previo, la guía de
-discusión y una encuesta de salida anónima. Esta última registra,
+discusión y una encuesta de salida. Esta última registra,
 después de la sesión, la valoración de las funciones mostradas, la
 percepción de la carga de trabajo que pedirían y los cambios que cada
 participante prevé en su práctica. Los cuatro se reproducen en el
@@ -2700,8 +2684,7 @@ sesión en Google Forms, sin inicio de sesión ni registro del correo. En
 la aplicación lo envié junto con el consentimiento informado, en un solo
 formulario (sección~4.5). Recoge el perfil del participante, su práctica actual con
 datos de pacientes y, en nueve preguntas cerradas, lo que
-sabe de la ley (sección~3.2). El formulario aclara que no es un examen y que
-nadie ve las respuestas individuales. Sus respuestas forman la línea
+sabe de la ley (sección~3.2). El formulario aclara que no es un examen. Sus respuestas forman la línea
 base del capítulo~3, de práctica y de conocimiento. Se recogen antes de
 que el participante conozca NutriApp y se manejan de forma confidencial.
  
@@ -2818,9 +2801,8 @@ capítulo~5.
 Las maquetas navegables, construidas en Figma Make a partir de los
 requerimientos del capítulo~6, demuestran el artefacto junto con la
 prueba piloto en la sesión del grupo focal. La evaluación
-combina tres métodos: pruebas y observación, afines a dos de los
-métodos que Hevner et al. (2004) reconocen para artefactos de diseño, y
-revisión por expertos.
+combina pruebas y observación, afines a dos de los
+métodos que Hevner et al. (2004) reconocen para artefactos de diseño, con la opinión de los participantes.
  
 Para las \textit{pruebas} se derivan casos de aceptación de los
 requerimientos. Cada caso indica la obligación que lo origina, la
@@ -2834,10 +2816,8 @@ capítulo~7 reporta su resultado. Un resultado de «no refleja» se
 reporta como hallazgo y señala la distancia entre la maqueta y el
 diseño.
  
-Los nutriólogos del grupo focal hacen la \textit{revisión por
-expertos} con sus opiniones sobre las funciones de las maquetas,
-previstas para el quinto bloque de la guía de discusión y recogidas, en
-la aplicación, con la encuesta de salida (sección~7.1). La
+Los nutriólogos del grupo focal opinan sobre las funciones de las maquetas. Esa opinión estaba prevista para el quinto bloque de la guía de discusión y, en
+la aplicación, la recogí con la encuesta de salida (sección~7.1). Es una opinión inicial sobre la utilidad y la intención de uso, basada en su experiencia de consulta, y no una evaluación informática ni jurídica del diseño. La
 \textit{observación en el caso} recoge lo que dicen y hacen frente a
 las maquetas durante la sesión.
  
@@ -2861,8 +2841,7 @@ analizados), reunidos en una sola sesión y seleccionados de forma
 dirigida. Los
 resultados describen a ese grupo y constituyen evidencia exploratoria,
 sin inferencia sobre el gremio. El grupo no se limita a la consulta
-privada (sección~3.3). Sus respuestas no se separan, porque el análisis
-se hace en el nivel del grupo (sección~4.5). El diseño, en cambio, se plantea solo para
+privada (sección~3.3). Analicé las respuestas en el nivel del grupo, sin vincular el cuestionario con la transcripción, y no las separé por ámbito, porque con dos participantes solo institucionales separarlas los haría identificables. El diseño, en cambio, se plantea solo para
 la consulta privada. Quienes aceptan participar en un estudio
 sobre protección de datos, reclutados en un directorio en línea o por referencia, pueden
 tener más interés en el tema y mayor uso de herramientas digitales que
@@ -2874,15 +2853,13 @@ el promedio de sus colegas.
  
 El estudio de campo sigue los principios de la investigación con seres
 humanos. La participación es voluntaria y puede abandonarse en cualquier
-momento sin consecuencia. En la aplicación envié el
-aviso de participación y el cuestionario en un solo
+momento sin consecuencia. El aviso de participación anunciaba que el cuestionario previo y la encuesta de salida no pedirían el nombre (Anexo~\ref{anexo:consentimiento}). En la aplicación envié el
+aviso y el cuestionario en un solo
 formulario, que registró el nombre de cada participante junto con sus
 respuestas para coordinar la sesión y el pago; no pidió cédula
-profesional ni correo. Antes del análisis separé los nombres
-de las respuestas, asigné a cada participante un código y conservé los
+profesional ni correo. La encuesta de salida pidió también el nombre. Antes del análisis anonimicé las respuestas de los dos formularios. Separé los nombres, asigné a cada participante un código y conservé los
 nombres solo en el registro de pagos. Ni el análisis ni los
-resultados identifican a nadie. La encuesta de salida pidió también el
-nombre y la traté de la misma forma. Cada participante recibe \$350
+resultados identifican a nadie. Cada participante recibe \$350
 pesos como pago por su tiempo y su experiencia; el monto no depende de
 sus respuestas.
 
@@ -3368,14 +3345,6 @@ fiscales cinco (sección~5.1). El cuarto guarda el contenido social, sin
 Object Lock. Lambda alcanza S3 por un punto de enlace de gateway y KMS
 por uno de interfaz, sin salir de la VPC (\textit{virtual private cloud}).
 
-La parte~(d) es la operación y la trazabilidad: EventBridge, CloudWatch,
-CloudTrail y la exportación de los registros al depósito de auditoría.
-La de pgAudit sale de Amazon CloudWatch Logs con una exportación
-periódica (\texttt{CreateExportTask}). Esa exportación es por tareas:
-los datos pueden tardar hasta 12 horas en estar disponibles y AWS no la
-recomienda como archivo continuo, para lo cual sugiere suscripciones
-(AWS, s.f.-l). Esto se registra como limitación del diseño.
- 
 \begin{figure}[!htbp]
   \centering
   \begin{subfigure}{\linewidth}
@@ -3519,6 +3488,14 @@ recomienda como archivo continuo, para lo cual sugiere suscripciones
   \end{subfigure}
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
+
+La parte~(d) es la operación y la trazabilidad: EventBridge, CloudWatch,
+CloudTrail y la exportación de los registros al depósito de auditoría.
+La de pgAudit sale de Amazon CloudWatch Logs con una exportación
+periódica (\texttt{CreateExportTask}). Esa exportación es por tareas:
+los datos pueden tardar hasta 12 horas en estar disponibles y AWS no la
+recomienda como archivo continuo, para lo cual sugiere suscripciones
+(AWS, s.f.-l). Esto se registra como limitación del diseño.
 
 \subsubsection{Diagramas UML: casos de uso y secuencia}
 
@@ -4022,7 +3999,7 @@ El recorrido de un dato de salud, del consentimiento del paciente a su
 supresión, reparte las acciones entre el paciente, NutriApp y el
 nutriólogo (Figura~\ref{fig:flujo-datos}). Al vencer la conservación
 mínima o el periodo de bloqueo, NutriApp avisa al nutriólogo, y el
-borrado criptográfico ocurre solo si él confirma la supresión. Los estados que el expediente
+borrado criptográfico ocurre solo si él confirma la supresión. Si no la confirma, el expediente se conserva. Los estados que el expediente
 recorre en ese trayecto se detallan en la Figura~\ref{fig:uml-estados}.
  
 \begin{figure}[!htbp]
@@ -4615,17 +4592,17 @@ sección~8.3.
 % ═══════════════════════════════════════════════════════════════════════════
 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Evaluación del diseño: casos de prueba, revisión por expertos y observación}
+\subsection{Evaluación del diseño: casos de prueba, opinión de los participantes y observación}
 % ─────────────────────────────────────────────────────────────────────────
 % NOTA: se completa después de la sesión del 23-oct-2026.
  
-La evaluación usa los tres métodos descritos en la sección~4.4.2. Sus
+La evaluación sigue la sección~4.4.2. Sus
 resultados se comparan con la línea base del capítulo~3, porque lo que
 el diagnóstico encontró ausente en la práctica que reportaron los
 participantes es lo que el diseño debe resolver. Durante la sesión, el
 quinto bloque de la guía no llegó a desarrollarse: después de la
 demostración de las maquetas y después del cierre no hubo preguntas ni
-comentarios. Por esa razón, la revisión por expertos se apoya en la
+comentarios. Por esa razón, la opinión de los participantes se recoge de la
 encuesta de salida. Los ocho participantes analizados la respondieron el
 25 y el 26 de octubre de 2026, dos y tres días después de la sesión
 (Anexo~\ref{anexo:salida-resultados}).
@@ -4669,7 +4646,7 @@ datos ilustrativos propios (Anexo~\ref{anexo:capturas}). Los
 casos comprueban pantallas y estados, pero no la operación
 (sección~8.3).
 
-\paragraph{Revisión por expertos: la encuesta de salida}
+\paragraph{Opinión de los participantes: la encuesta de salida}
 Los ocho usarían las funciones mostradas, y los ocho consideran
 razonable el trabajo que la plataforma les pediría. Esta valoración se
 respondió una sola vez para la lista completa de funciones. Solo dos dicen que lo mostrado se parece a su forma actual
@@ -4714,8 +4691,7 @@ del diagnóstico: entregar un aviso de privacidad por escrito (siete),
 pedir el consentimiento para datos de salud aparte del clínico (seis) y
 definir la conservación de cinco años (cuatro).
 
-Tomo estas respuestas como evidencia exploratoria de la revisión por
-expertos y no como prueba de uso, por las limitaciones de la sección~8.3.
+Estas respuestas no son prueba de uso, por las limitaciones de la sección~8.3.
 
 \paragraph{Observación en el caso}
 La hoja de observación prevista para el quinto bloque no tuvo qué
@@ -4753,11 +4729,11 @@ quedan fuera del MVP (sección~6.1).
 
 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Costo de operar el diseño y relación costo-beneficio}
+\subsection{Costo de operar el diseño y comparación con las sanciones}
 \label{sec:costos}
 % ─────────────────────────────────────────────────────────────────────────
  
-El análisis costo-beneficio compara el costo anual que pagaría el nutriólogo por el
+Además del costo de operar el diseño, comparo el costo anual que pagaría el nutriólogo por el
 plan Pro, según la propuesta de precios de la sección~8.3.1, con la magnitud de las sanciones que enfrenta un
 nutriólogo de consulta privada por incumplir la LFPDPPP~2025.
  
@@ -4970,14 +4946,12 @@ La comparación (Tabla~\ref{tab:costo-beneficio}) muestra el orden de
 magnitud. La multa promedio que impuso el INAI en 2023 equivale a 181
 veces el costo del plan Pro anual de NutriApp (\$3,490 pesos). El techo
 de multa que puede alcanzarse con el incremento por datos sensibles
-equivale a 20,748 veces. Por tanto, el nutriólogo de consulta privada elige
-entre un costo cierto y pequeño y un riesgo poco frecuente según las
-cifras del INAI (INAI, 2024), pero desproporcionado. La suscripción no
+equivale a 20,748 veces. Es una referencia de cantidades. No demuestra que la suscripción evite una multa ni cuánto ahorraría el nutriólogo. Estimarlo requiere la probabilidad de sanción y cuánto la reduce la herramienta, que este caso no mide. La suscripción no
 sustituye el cumplimiento, que sigue siendo del nutriólogo.
  
 \begin{table}[H]
   \centering
-  \caption{Análisis costo-beneficio: NutriApp Pro frente a las sanciones de la LFPDPPP~2025.}
+  \caption{Comparación de magnitudes: NutriApp Pro frente a las sanciones de la LFPDPPP~2025.}
   \label{tab:costo-beneficio}
   \begin{tabularx}{\textwidth}{X r r}
     \toprule
@@ -5019,14 +4993,11 @@ solo alcanza a quien adopta un sistema electrónico.
 La segunda preguntaba qué obligaciones están presentes y cuáles ausentes
 en la práctica reportada, y por qué. En el grupo estudiado están
 parcialmente presentes las medidas básicas de seguridad y el
-conocimiento del propio inventario. Están ausentes el aviso de
-privacidad sistemático, el consentimiento específico para datos de
-salud, la trazabilidad de accesos, el procedimiento ante vulneraciones,
-la gestión de solicitudes con plazo y registro, y la regla de
-conservación aplicada, que se conoce más de lo que se practica. Las
-razones reportadas son el desconocimiento operativo de la ley y
-herramientas que no incorporan esas funciones, y no el rechazo a la
-obligación (sección~3.3).
+conocimiento del propio inventario. No aparecen en la práctica reportada el aviso de
+privacidad sistemático, el procedimiento ante vulneraciones ni
+la gestión de solicitudes con plazo y registro. Seis no piden una autorización firmada para los datos de salud y en dos no se pudo verificar. Nadie reportó registro de accesos, y la regla de
+conservación no se pudo comprobar. Ante el aviso y el consentimiento, los participantes atribuyen sus dificultades al desconocimiento de la norma, a que su herramienta no los incluye o a la
+falta de tiempo, sin que eso descarte otras causas (sección~3.3).
 
 La tercera preguntaba si un diseño de software puede convertir esas
 obligaciones en funciones verificables sin asumir las decisiones que la
@@ -5045,9 +5016,9 @@ participantes analizados usarían las funciones mostradas, consideran
 razonable la carga de trabajo y perciben el folio y el código de verificación
 como protección. Siete aceptarían el bloqueo en lugar del borrado ante
 una solicitud de cancelación. Solo dos dicen que el diseño se parece a
-cómo trabajan hoy, lo que confirma la distancia entre la práctica y la
-norma que el diseño busca cerrar. La evidencia es exploratoria, en los
-términos de las secciones~7.1 y~8.3.
+cómo trabajan hoy. Son opiniones iniciales sobre la utilidad y la
+intención de uso, en los
+términos de las secciones~4.4.2 y~8.3.
 
 La quinta preguntaba cuánto costaría operar el diseño y cómo se compara
 la suscripción con las sanciones. Operar el MVP para
@@ -5055,27 +5026,20 @@ la suscripción con las sanciones. Operar el MVP para
 al mes según el escenario, de \$0.28 a \$0.60 dólares por nutriólogo. La
 multa promedio que impuso el INAI en 2023 equivale a 181 suscripciones
 anuales del plan Pro, y la sanción máxima con datos de salud, a 20,748.
-La comparación muestra el costo como una fracción menor del riesgo, sin
-presentar la suscripción como sustituto del cumplimiento, que sigue
+La comparación es una referencia de cantidades que no mide un ahorro ni una reducción del riesgo, y la suscripción no sustituye el cumplimiento, que sigue
 siendo del nutriólogo (sección~7.3).
 
 \subsection{Lecciones aprendidas y recomendaciones}
-La lección central del caso es que la brecha de cumplimiento en la
-consulta de nutrición es operativa y no de actitud. Los participantes
-protegen la disponibilidad de su información (contraseñas, respaldos,
-nube) porque sus herramientas lo facilitan. En cambio, no entregan aviso
-de privacidad, no separan el consentimiento de datos del clínico y no
-registran accesos ni plazos, porque nadie se los enseñó y porque sus
-herramientas no lo traen. Quien quiera cerrar la brecha tiene que
-atender el desconocimiento y la herramienta a la vez.
+La lección central del caso es que, en el grupo estudiado, la práctica reportada protege la disponibilidad de la información (contraseñas, respaldos,
+nube), pero casi no incluye el aviso
+de privacidad, la autorización firmada para los datos de salud ni el registro de solicitudes con plazo. Según los motivos que dieron los participantes, cerrar esa distancia pide atender a la vez el conocimiento de la norma y la herramienta. Otros factores, como los hábitos, el costo o las prioridades de cada consulta, no se estudiaron.
 
 Del diagnóstico se desprenden seis prácticas que no requieren software y
 que el gremio puede adoptar de inmediato. La primera es entregar un
 aviso de privacidad por escrito con los elementos del artículo~15 de la
 ley. La segunda, recabar el consentimiento para los datos de salud por
 separado del consentimiento clínico y conservar la constancia. La
-tercera, fijar la regla de conservación de cinco años con una depuración
-programada, que alcance también a los respaldos. La cuarta, anotar con
+tercera, conservar el expediente al menos cinco años y revisar, al vencer ese plazo, si cada uno se conserva, se bloquea o se suprime, incluidos los respaldos. La cuarta, anotar con
 fechas toda solicitud de un paciente sobre sus datos. La quinta, tener
 por escrito tres pasos ante un incidente: contener, documentar y avisar
 al titular sin dilación. La sexta, revisar dónde guarda los datos el
@@ -5087,19 +5051,16 @@ normativo.
 Para las instituciones que forman nutriólogos, el caso aporta dos datos.
 Ninguna norma de educación superior exige la protección de datos como
 contenido específico de la carrera (sección~3.1), y cuatro de los ocho
-participantes marcaron no haber recibido formación alguna en la materia. A la vez,
-el cierre de la sesión mostró que una exposición breve y situada en el
-consultorio basta para que el profesional identifique qué le falta.
+participantes marcaron no haber recibido formación alguna en la materia.
 Incorporar el manejo legal del expediente a los planes de estudio no
 requiere una asignatura nueva: cabe en las materias de ética, de
 tecnología o de práctica profesional ya existentes. La cuenta de
 práctica para estudiantes del diseño (sección~6.2.5) y el Plan
 Universidad (sección~8.3.1) se proponen como una vía.
 
-Para quienes desarrollan software para el sector, el hallazgo es que
-usar una herramienta especializada hoy no se traduce en cumplimiento. En
-el grupo, las obligaciones ausentes lo están por igual entre quienes
-usan software comercial y quienes usan archivos de uso general, y «mi
+Para quienes desarrollan software para el sector, el dato es que
+seis de los ocho participantes
+usan algún software especializado y aun así «mi
 herramienta no lo trae» apareció como obstáculo declarado. Incorporar el
 aviso, el consentimiento con constancia, los plazos y el registro de
 accesos es una oportunidad de diferenciación además de una necesidad
@@ -5137,8 +5098,7 @@ se limitó a la consulta privada (sección~4.4.3). Los
 participantes trataron directamente conmigo, recibieron un pago y los formularios
 registraron su nombre, condiciones que favorecen respuestas
 complacientes. La evaluación del diseño se hizo sobre una demostración y
-no sobre el uso: el quinto bloque no produjo discusión, y la revisión
-por expertos se apoya en una encuesta de salida respondida dos y tres
+no sobre el uso: el quinto bloque no produjo discusión, y la opinión de los participantes se apoya en una encuesta de salida respondida dos y tres
 días después, con una sola valoración para la lista de funciones.
 
 Apliqué el aviso de participación y el cuestionario previo en un
@@ -6759,7 +6719,7 @@ Recuperado el 30 de septiembre de 2026, de \url{https://www.cucs.udg.mx/sites/de
 \subsection{Consentimiento informado}
 \label{anexo:consentimiento}
  
-Aviso de participación y aceptación enviado a cada participante antes de la sesión. En la aplicación fue la primera sección de un único formulario de Google Forms, seguido del cuestionario previo (Anexo~\ref{anexo:cuestionario}); el único campo de datos fue el nombre completo, y la desviación respecto del texto, que anunciaba formularios separados, se registra en la sección~4.5.
+Aviso de participación y aceptación enviado a cada participante antes de la sesión. En la aplicación fue la primera sección de un único formulario de Google Forms, seguido del cuestionario previo (Anexo~\ref{anexo:cuestionario}); el único campo de datos fue el nombre completo, y la desviación respecto del texto, que anunciaba formularios separados y sin nombre, se registra en la sección~4.5.
  
 Estudio: «Privacidad por diseño en la práctica nutriológica: análisis normativo y arquitectura para el cumplimiento de la LFPDPPP», caso de estudio de la Maestría en Informática Aplicada (ITESO). Responsable del estudio: Ing. Cristian Emanuel Ortega Camarena, emanuel.ortega@iteso.mx.
  
@@ -6902,7 +6862,7 @@ Minuta que elaboré a partir de la transcripción automática anonimizada. No re
 \paragraph{Desarrollo}
 \begin{enumerate}[leftmargin=*,itemsep=1pt]
   \item Mi presentación, la del proyecto y la del asesor. Se aclaró que en la sesión no se vendería nada.
-  \item Encuadre del moderador: dinámica de participación, uso de la transcripción automática solo para no perder ideas, participaciones anónimas y ausencia de respuestas correctas o incorrectas.
+  \item Encuadre del moderador: dinámica de participación, uso de la transcripción automática solo para no perder ideas, anonimización de las participaciones y ausencia de respuestas correctas o incorrectas.
   \item Ronda de presentación: ámbito de práctica, años de experiencia y modalidad de consulta.
   \item Discusión sobre la práctica actual: registro y resguardo del expediente, acceso de terceros, conservación, aviso de privacidad y consentimiento, compartición de información, incidentes y solicitudes de los pacientes sobre sus datos.
   \item Demostración de las maquetas de NutriApp, presentadas como versión de producto mínimo viable con datos ficticios.
@@ -6927,7 +6887,7 @@ La demostración recorrió el módulo social, las plantillas de planes de alimen
 
 \paragraph{Compromisos}
 \begin{itemize}[leftmargin=*,itemsep=1pt]
-  \item Enviar a los participantes la encuesta de salida, anónima.
+  \item Enviar a los participantes la encuesta de salida.
   \item Entregar a los participantes un documento de referencia con buenas prácticas de protección de datos para el consultorio, como retribución por su participación (Anexo~\ref{anexo:referencia}).
   \item Coordinar con cada participante el pago por su tiempo.
 \end{itemize}
