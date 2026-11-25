@@ -811,7 +811,7 @@ alcanza también a quien desarrolla
 o comercializa el sistema (numeral~1.2), las obligaciones de esa norma que el diseño de NutriApp no cubre se listan como siguientes
 pasos en la sección~8.3.
  
-\subsubsection{Sanciones y mecanismos de denuncia: de la teoría a la
+\subsubsection{Sanciones, denuncias y criterios del INAI: de la teoría a la
 realidad institucional}
  
 \begin{enumerate}[label=\Roman*.]
@@ -1917,12 +1917,10 @@ capítulo~5. Por legibilidad, la tabla se presenta en dos partes.
 % ------------------------------------------------------------
  
 La parte técnica de esas obligaciones se atiende con controles que
-tienen nombre, fuente y límites conocidos; todos son propuestas de
-diseño y ninguno se ha probado en operación (sección~4.4.3).
-Los que usa NutriApp son el reparto de responsabilidades con el
+tienen nombre, fuente y límites conocidos: el reparto de responsabilidades con el
 proveedor de nube, la gestión de identidad, el cifrado y las
 llaves, la auditoría, el ciclo de vida del dato y los estándares
-que sirven de referencia.
+de referencia. De cada uno se exponen aquí la norma y el estándar técnico; la sección~5.1 describe cómo los aplica NutriApp.
  
 \subsubsection{Responsabilidad compartida en la nube}
  
@@ -2031,62 +2029,32 @@ tres actores para los controles que usa NutriApp.
 \end{table}
 \subsubsection{Identidad y acceso}
  
-NutriApp requiere del nutriólogo autenticación multifactor (MFA), con
-dos factores de categorías distintas: algo que sabe, algo que tiene o
-algo que es. El National Institute of Standards and Technology (NIST) de
+La autenticación multifactor (MFA) combina
+dos factores de categorías distintas: algo que se sabe, algo que se tiene o
+algo que se es. El National Institute of Standards and Technology (NIST) de
 Estados Unidos define el nivel de aseguramiento AAL2
 (\textit{Authenticator Assurance Level}~2) como el que da confianza alta
 en que quien inicia sesión controla los autenticadores ligados a su
 cuenta, y lo condiciona a la posesión y el control de dos factores
-distintos (NIST, 2025a). NutriApp adopta AAL2 como nivel objetivo para
-el nutriólogo. Es una decisión de diseño que va más allá de la norma. La
+distintos. Lo alcanza una contraseña combinada con un autenticador físico de un solo factor, y NIST restringe el uso de la red telefónica para la verificación fuera de banda (NIST, 2025a). Un autenticador de ese tipo es
+el código de un solo uso basado en tiempo (TOTP, por \textit{time-based one-time password}; M'Raihi et al., 2011), que genera una aplicación de autenticación en el teléfono.
+
+La
 ley obliga a adoptar medidas de seguridad administrativas, técnicas y
 físicas contra el acceso no autorizado (LFPDPPP, 2025, art.~18). La
 NOM-024 establece credenciales propias por usuario y permisos según su
 perfil (NOM-024-SSA3-2012, 2012, numerales~6.6.3 y~6.6.4). Ninguna de
 las dos exige un segundo factor.
-
-El segundo factor es un código de un solo uso basado en tiempo (TOTP,
-por \textit{time-based one-time password}; M'Raihi et al., 2011). Lo
-genera una aplicación de autenticación en el teléfono del profesional, y
-Amazon Cognito lo gestiona como MFA por \textit{software token} (AWS,
-s.f.-a). La contraseña más ese autenticador alcanza AAL2, que exige
-combinar una contraseña con un autenticador físico de un solo factor
-(NIST, 2025a). No se usan códigos por mensaje de texto (SMS) como segundo factor, por dos razones:
-NIST restringe el uso de la red telefónica para la verificación fuera de
-banda (NIST, 2025a), y el SMS tendría un costo por envío ajeno al modelo
-de la sección~7.3. Las \textit{passkeys} sobre los estándares WebAuthn y
-FIDO2 (FIDO, por Fast IDentity Online), que Cognito admite (AWS, 2024a), se dejan como autenticador
-adicional opcional.
-
-La misma regla aplica al docente y al administrador, cuentas que operan
-sobre datos de terceros. Para el paciente, que solo accede a su propio
-expediente, el segundo factor es opcional. Las identidades se gestionan
-con Amazon Cognito, con OAuth~2.0, y el control de acceso por rol limita
-lo que cada cuenta ve: el nutriólogo, solo a sus pacientes; el paciente,
-solo su expediente; el docente, solo los expedientes ficticios de sus
-estudiantes, en modo de lectura (sección~6.2.5); el administrador,
-ningún contenido clínico.
  
 \subsubsection{Cifrado y gestión de llaves}
  
-NutriApp cifra la información en tránsito y en reposo para que resulte
-ilegible sin la llave correspondiente (Stallings, 2020). En tránsito se
-usa TLS~1.3 (Transport Layer Security; Rescorla, 2018) con certificados gestionados en AWS
-Certificate Manager (ACM). El protocolo reduce el riesgo de intercepción y
+El cifrado vuelve ilegible la información sin la llave correspondiente (Stallings, 2020). En tránsito, el protocolo TLS~1.3 (Transport Layer Security; Rescorla, 2018) reduce el riesgo de intercepción y
 alteración cuando los certificados y la configuración son correctos,
-aunque no lo elimina. En reposo, los expedientes, planes, adjuntos y
-registros de auditoría se cifran con AES-256 (Advanced Encryption Standard), el estándar del FIPS~197 (Federal Information Processing Standards),
+aunque no lo elimina. En reposo, el estándar de referencia es AES-256 (Advanced Encryption Standard), el del FIPS~197 (Federal Information Processing Standards),
 publicado en 2001 y actualizado en 2023 (NIST, 2023).
- 
-Las llaves siguen un esquema de cifrado por envolvente (AWS,
-s.f.-c): una llave maestra en AWS Key Management Service (KMS) por
-entorno, cuyas políticas definen quién puede usarla, y una llave de
-datos por expediente, cifrada bajo la maestra. El registro de
-auditoría conserva cada uso de la llave maestra. Una llave maestra no se borra en el
-acto: su eliminación se programa con una espera de siete a treinta días
-(AWS, s.f.-i). Por eso destruir un expediente significa destruir su
-llave de datos y no la llave del entorno. Estas medidas atienden el
+
+En el cifrado por envolvente, una llave de datos cifra la información y una llave maestra cifra a su vez la llave de datos (AWS, s.f.-c). En AWS Key Management Service (KMS), las políticas de la llave maestra definen quién puede usarla, y su eliminación no es inmediata: se programa con una espera de siete a treinta días
+(AWS, s.f.-i). El cifrado atiende el
 deber de proteger los datos
 contra acceso o tratamiento no autorizado (LFPDPPP, 2025,
 art.~18), exigible en cualquier sistema de tratamiento (RLFPDPPP,
@@ -2098,29 +2066,17 @@ El Reglamento prevé medidas que permitan rastrear los datos
 personales durante su tratamiento (RLFPDPPP, 2011, art.~48,
 fracc.~X) y la NOM-024 exige trazabilidad dentro del sistema de
 gestión de seguridad (NOM-024-SSA3-2012, 2012, numeral~6.6.1). En
-NutriApp esa trazabilidad se compone de tres capas. AWS CloudTrail
+una plataforma sobre AWS, esa trazabilidad se compone de tres capas. AWS CloudTrail
 registra por defecto los eventos de administración de la cuenta. Los
 eventos de datos, como las lecturas y escrituras de objetos en S3 (Amazon Simple Storage Service) y las
 invocaciones de funciones, no se registran por defecto; la
 configuración los activa (AWS, s.f.-p). La
 actividad SQL (Structured Query Language) de la base de datos, que CloudTrail no registra, se
 audita con la extensión pgAudit de RDS (Amazon Relational Database Service) para PostgreSQL, cuyos registros se publican en Amazon CloudWatch Logs (AWS, s.f.-s).
-En la capa de aplicación, el registro \texttt{DeclarationLog}
-conserva cada consentimiento, solicitud ARCO y declaración
-profesional con folio, fecha y una copia de los datos declarados, y
-el registro de accesos (\texttt{audit\_log}) asienta quién consultó,
-modificó o descargó cada expediente, con los intentos fallidos.
- 
-Los tres registros se exportan a S3 con Object Lock en modo de
-cumplimiento, que impide borrarlos o sobrescribirlos durante la
-retención, incluso con privilegios administrativos (AWS, s.f.-o),
-y se conservan los cinco años que la NOM-004 fija para el
-expediente (NOM-004-SSA3-2012, 2012, numeral~5.4). Solo un rol de
-auditoría accede a los registros completos: un rol de IAM (AWS Identity and Access Management) de solo
-lectura de la operación del encargado, no un usuario de la aplicación
-(sección~5.1). El nutriólogo consulta
-el historial de sus expedientes sin poder alterarlo, y el paciente
-ve una vista derivada con los accesos a su propio expediente.
+La tercera capa es
+el registro de la propia aplicación. S3 Object Lock en modo de
+cumplimiento impide borrar o sobrescribir esos registros durante su
+retención, incluso con privilegios administrativos (AWS, s.f.-o).
  
 \subsubsection{Retención, bloqueo y eliminación}
  
@@ -2141,33 +2097,12 @@ tratamiento, hasta el plazo de prescripción legal o contractual de esas
 responsabilidades, y después procede la supresión (LFPDPPP, 2025,
 art.~24; RLFPDPPP, 2011, arts.~107, fracc.~I, y~108).
  
-En NutriApp, una solicitud de cancelación llega al nutriólogo, que
-la resuelve como responsable en un plazo de veinte días y la hace
-efectiva en los quince siguientes (LFPDPPP, 2025, art.~31). Si
-niega la cancelación del expediente por la conservación mínima, la
-respuesta lo indica con su fundamento y el expediente sigue en
-operación hasta que vence ese plazo. Si la cancelación procede, el
-expediente pasa a estado de bloqueo: deja de ser accesible en la
-operación diaria, sigue cifrado en RDS sin operación de borrado
-disponible y sus adjuntos siguen bajo la retención inmutable de
-Object Lock. El fin del bloqueo (\texttt{bloqueo\_hasta}) lo fija el
-nutriólogo conforme al plazo de prescripción aplicable. La respuesta
-al titular llega con folio e incluye ese periodo y la fecha prevista
-de supresión. Una vez enviada, se suprimen los datos que no forman parte
-del expediente clínico, como la cuenta, los datos de contacto y las
-preferencias de notificación, salvo que el titular tenga otro expediente
-activo en la plataforma. En ese caso solo se le desvincula del
-nutriólogo que resolvió.
- 
-Al vencer la conservación mínima o el periodo de bloqueo, una
-función programada avisa al nutriólogo, que como responsable
-confirma la supresión. Con su confirmación, la plataforma ejecuta
-la supresión por borrado criptográfico: destruye la llave de datos
-del expediente, lo que hace irrecuperable el contenido cifrado
-(NIST, 2025b), y después borra los objetos. El borrado
+El borrado criptográfico suprime la información al destruir la llave con que se cifró, lo que hace irrecuperable el contenido cifrado
+(NIST, 2025b). El borrado
 convencional, en cambio, marca el espacio como disponible y deja
-los datos recuperables (Garfinkel y Shelat, 2003). Cada paso
-genera un evento con folio en el registro de auditoría.
+los datos recuperables (Garfinkel y Shelat, 2003).
+
+Otros documentos tienen plazos propios. El consentimiento se conserva mientras dura el tratamiento y, después, durante el plazo de conservación del expediente, porque la carga de probar que se obtuvo recae en el responsable (RLFPDPPP, 2011, art.~20). Los contratos y comprobantes de una operación mercantil se conservan al menos diez años (Código de Comercio, 1889/2025, arts.~38 y~49) y los comprobantes fiscales cinco (Código Fiscal de la Federación, 1981/2025, art.~30). La NOM-151-SCFI-2016 no fija un plazo de conservación propio, pero da a la constancia de conservación una vigencia de por lo menos diez años desde su emisión (numeral~A.8.4.1) y establece los requisitos para conservar los mensajes de datos en los términos de los artículos~33, 38 y~49 del Código de Comercio. La constancia de conservación la emite un prestador de servicios de certificación (Norma Oficial Mexicana NOM-151-SCFI-2016, 2017, numerales~1 y~6.2; sección~7.3).
  
 
  
@@ -2184,13 +2119,7 @@ alcanza.
 ISO/IEC~27001:2022 define los requisitos de un sistema de gestión
 de seguridad de la información y, en su Anexo~A, 93 controles en
 cuatro temas: organizacionales, de personas, físicos y
-tecnológicos (ISO, 2022). Los que más pesan en NutriApp son la
-gestión de llaves criptográficas (control~8.24), el registro de
-eventos (8.15), la transferencia de información (5.14) y el borrado
-de información (8.10). NutriApp no busca la certificación en la
-etapa de MVP; el Anexo~A de ISO/IEC~27001:2022 se usa como lista
-de verificación. AWS mantiene esa certificación auditada por
-terceros (AWS, 2023a).
+tecnológicos (ISO, 2022).
  
 ISO/IEC~27018:2025 adapta esos controles a la protección de datos
 personales en nubes públicas que actúan como encargados, con
@@ -2199,7 +2128,7 @@ transparentar las subcontrataciones y notificar incidentes (ISO,
 2025b). Sustituye a la edición de 2019. ISO/IEC~27701:2025
 especifica un sistema de gestión de información de privacidad que
 distingue las obligaciones del responsable y del encargado (ISO,
-2025c). Sirve de referencia para repartir controles entre NutriApp
+2025c). Sirve de referencia para repartir controles entre el encargado
 y el proveedor. ISO~27799:2025 adapta los controles
 de ISO/IEC~27002 a la información de salud (ISO, 2025a) y es el
 estándar sectorial más cercano al expediente nutricional.
@@ -2448,7 +2377,7 @@ puedo afirmar si en esos dos casos el consentimiento para los datos es expreso. 
 consentimiento clínico y el de datos (sección~3.2) no apareció en la
 discusión ni en los mecanismos descritos.
  
-\paragraph{Derechos ARCO y medidas de seguridad}
+\paragraph{Derechos ARCO y conocimiento de la ley}
 En el cuestionario, nadie reporta haber recibido solicitudes para ver,
 corregir o borrar datos. En la discusión, una participante relató dos
 solicitudes de acceso atendidas con firma de por medio. Ante la petición hipotética de borrar
@@ -2462,11 +2391,11 @@ Federal para la Protección contra Riesgos Sanitarios (COFEPRIS). Nadie
 conoce el orden de magnitud de las multas, aunque cuatro saben que
 existen.
 
-Seis saben que el expediente clínico se conserva cinco
+\paragraph{Conservación del expediente} Seis saben que el expediente clínico se conserva cinco
 años. A la pregunta de cuánto tiempo conservan el expediente de un paciente que dejó de atenderse, uno respondió cinco años o más, cuatro de uno a cuatro años, uno menos de un año, uno indefinidamente y uno que no lo ha definido. La pregunta no distingue cuánto tiempo tienen los expedientes, cuánto planean guardarlos y si han borrado alguno. Como ninguno rebasa los cinco años de práctica, una respuesta de menos de cinco años puede describir la antigüedad de los expedientes y no un plazo. En la discusión, nadie ha depurado
 un expediente, «por si el paciente regresa» o hasta que falte espacio. Con estos datos no se comprueba que se borren expedientes antes del plazo. Lo que se observa es que no hay una regla de depuración definida.
 
-Ante la pérdida de un equipo o un acceso no autorizado, ninguno tiene un
+\paragraph{Vulneraciones y formación} Ante la pérdida de un equipo o un acceso no autorizado, ninguno tiene un
 procedimiento. Las respuestas se orientan a recuperar la información
 desde la nube o el respaldo. Solo una describe contención (cerrar
 sesiones y cambiar contraseñas) y solo una, al preguntarlo, avisaría a
@@ -2625,7 +2554,7 @@ fecha de redacción; los de la competencia, el 18 de octubre de 2026.
 \subsection{Investigación de campo: grupo focal}
 % ------------------------------------------------------------
  
-\subsubsection{Diseño del estudio de campo y población}
+\subsubsection{Diseño del estudio de campo, población y convocatoria}
  
 La investigación de campo usa un grupo focal. Tomé la decisión
 con el asesor por el tipo de evidencia que el caso necesita. El
@@ -2924,7 +2853,7 @@ decisiones de arquitectura de este capítulo.
 La región primaria es \texttt{mx-central-1} por decisión de diseño; la
 ley no exige localización. Cognito, el cómputo y los datos residen en
 esa región. El borde que muestra la Figura~\ref{fig:aws-a} (Route 53,
-CloudFront, la ACL [\textit{access control list}] web global de WAF [\textit{web application firewall}], Shield y el certificado de ACM) es
+CloudFront, la ACL [\textit{access control list}] web global de WAF [\textit{web application firewall}], Shield y el certificado de AWS Certificate Manager [ACM]) es
 global y opera fuera de ella. La ACL web regional de WAF, que protege a
 API Gateway (\textit{application programming interface}), sí está en \texttt{mx-central-1}. Amazon SES (Simple Email Service) no está
 disponible en \texttt{mx-central-1}, por lo que los avisos por correo,
@@ -2958,16 +2887,15 @@ límites de concurrencia que acotan las ejecuciones simultáneas. La API
 recibe y devuelve solo los campos que cada pantalla necesita, en
 atención al principio de proporcionalidad (LFPDPPP, 2025, arts.~5 y~12).
 
-\textbf{Identidad y acceso.} Amazon Cognito gestiona el registro, la
+\textbf{Identidad y acceso.} Amazon Cognito gestiona, con OAuth~2.0, el registro, la
 confirmación del correo, la MFA, la emisión
-de tokens y el bloqueo tras intentos fallidos consecutivos, con el nivel
-de aseguramiento AAL2 como
-nivel objetivo (sección~2.5.2). El segundo factor es un código TOTP
+de tokens y el bloqueo tras intentos fallidos consecutivos. NutriApp exige la MFA al nutriólogo, al docente y al administrador, cuentas que operan sobre datos de terceros, con AAL2 como
+nivel objetivo (sección~2.5.2). Es una decisión de diseño que va más allá de la norma. Para el paciente, que solo accede a su propio expediente, es opcional. El segundo factor es un código TOTP
 generado por una aplicación de
 autenticación. Cognito lo ofrece como MFA por \textit{software token}, y
 el profesional lo inscribe con un código QR (\textit{quick response}) en la pantalla
-\texttt{MFASetup} (AWS, s.f.-a). La MFA por SMS permanece desactivada y
-la \textit{passkey} se admite como autenticador adicional (AWS, 2024a).
+\texttt{MFASetup} (AWS, s.f.-a). La MFA por mensaje de texto (SMS) permanece desactivada, por la restricción de NIST a la red telefónica y
+porque cada mensaje tendría un costo ajeno al modelo de la sección~7.3. La \textit{passkey}, sobre los estándares WebAuthn y FIDO2 (FIDO, por Fast IDentity Online), se admite como autenticador adicional (AWS, 2024a).
 
 El grupo de usuarios se configura con MFA opcional, y la obligatoriedad
 para nutriólogo, docente y administrador la impone la aplicación.
@@ -2990,13 +2918,11 @@ siguiente hasta unos quince minutos (AWS, s.f.-r). Los inicios de sesión
 exitosos y fallidos se registran en CloudTrail y, mediante un disparador
 posterior a la autenticación, en el \texttt{audit\_log}.
 
-Los permisos se asignan por rol (nutriólogo, paciente, docente y
-administrador). Cada función Lambda autoriza la solicitud a partir del
+Los permisos se asignan por rol y limitan lo que cada cuenta ve: el nutriólogo, solo a sus pacientes; el paciente, solo su expediente; el docente, solo los expedientes ficticios de sus estudiantes, en modo de lectura; el administrador, ningún contenido clínico. Cada función Lambda autoriza la solicitud a partir del
 grupo de Cognito que trae el token y del nutriólogo responsable del
 registro solicitado. Las tablas clínicas de PostgreSQL añaden seguridad
 por filas para que ninguna consulta cruce expedientes de distintos
-responsables. El rol de auditoría de la sección~2.5.4 tiene MFA y acceso a los depósitos de registros, sin acceso a
-RDS. Su uso se registra en CloudTrail. La cuenta Students es un
+responsables. La cuenta Students es un
 nutriólogo con permisos acotados a pacientes ficticios (sección~6.2.5).
 
 \textbf{Datos y llaves.} Amazon RDS para PostgreSQL almacena
@@ -3006,7 +2932,7 @@ PDF (Portable Document Format) e imágenes de progreso, con versionado y Object 
 plazo de conservación de la NOM-004-SSA3-2012 (sección~2.5.5); las
 reglas de ciclo de vida actúan después de ese plazo. AWS KMS
 custodia las llaves con el esquema por envolvente de la
-sección~2.5.3.
+sección~2.5.3: una llave maestra por entorno, cuyo uso queda en el registro de auditoría, y una llave de datos por expediente. En reposo, los expedientes, planes, adjuntos y registros de auditoría se cifran con AES-256.
 
 La llave de datos de cada expediente se genera bajo la llave maestra del
 entorno y solo se conserva cifrada, en la columna
@@ -3018,7 +2944,7 @@ clínicas de \texttt{expediente}, \texttt{nota}, \texttt{medicion} y
 \texttt{plan\_alimentacion} y cada adjunto antes de subirlo a S3. Ese
 cifrado se suma al del lado del servidor de RDS y de S3 bajo la llave
 maestra. Destruir la llave de datos vuelve ilegible el expediente
-completo, adjuntos incluidos (sección~2.5.5).
+completo, adjuntos incluidos (sección~2.5.5). La llave maestra del entorno no se toca, porque su eliminación no es inmediata (sección~2.5.3).
 
 Los adjuntos admiten PDF, JPEG (Joint Photographic Experts Group) y PNG (Portable Network Graphics) hasta 5~MB por archivo, validados
 por su firma binaria y no solo por la extensión. La carga y la descarga
@@ -3039,21 +2965,7 @@ modo de cumplimiento permite alargar la retención y no acortarla (AWS,
 s.f.-o), y cada extensión se asienta en el \texttt{audit\_log}.
 
 Los consentimientos y los contratos de suscripción se conservan como
-mensajes de datos íntegros e inalterables, con plazos distintos. El
-consentimiento se conserva mientras dura el tratamiento y, después,
-durante el plazo de conservación del expediente, porque la carga de
-probar que se obtuvo recae en el responsable (RLFPDPPP, 2011, art.~20).
-Los contratos y comprobantes de la operación mercantil se conservan al
-menos diez años (Código de Comercio, 1889/2025, arts.~38 y~49) y los
-comprobantes fiscales cinco (Código Fiscal de la Federación, 1981/2025,
-art.~30). La NOM-151-SCFI-2016 no fija un plazo de conservación propio,
-pero da a la constancia de conservación una vigencia de por lo menos
-diez años desde su emisión (numeral~A.8.4.1) y establece los requisitos
-para conservar los mensajes de datos en los términos de los
-artículos~33, 38 y~49 del Código de Comercio. La constancia de
-conservación la emite un prestador de servicios de certificación (Norma
-Oficial Mexicana NOM-151-SCFI-2016, 2017, numerales~1 y~6.2;
-sección~7.3).
+mensajes de datos íntegros e inalterables, con los plazos y la constancia de conservación de la sección~2.5.5.
 
 La constancia se solicita al prestador, por su interfaz de programación,
 en dos momentos. Para cada contrato de suscripción se pide en el acto de
@@ -3066,10 +2978,12 @@ guardan en el depósito de contratos y comprobantes, y su referencia se
 guarda en \texttt{contrato\_suscripcion} y en la tabla
 \texttt{constancia\_lote}.
 
-\textbf{Auditoría.} Las tres capas de
-registro y su retención son las de la sección~2.5.4. La extensión pgAudit de RDS para PostgreSQL audita las lecturas,
+\textbf{Auditoría.} NutriApp usa las tres capas de
+la sección~2.5.4. En CloudTrail activa los eventos de datos. La extensión pgAudit audita las lecturas,
 las escrituras y los cambios de esquema sin registrar los parámetros de
-las sentencias (AWS, s.f.-s).
+las sentencias (AWS, s.f.-s). En la capa de aplicación, el registro \texttt{DeclarationLog} conserva cada consentimiento, solicitud ARCO y declaración profesional con folio, fecha y una copia de los datos declarados, y el registro de accesos (\texttt{audit\_log}) asienta quién consultó, modificó o descargó cada expediente, con los intentos fallidos. Los tres registros se exportan a S3 con Object Lock en modo de cumplimiento y se conservan los cinco años que la NOM-004 fija para el expediente (NOM-004-SSA3-2012, 2012, numeral~5.4).
+
+Solo un rol de auditoría accede a los registros completos: un rol de IAM (AWS Identity and Access Management) de solo lectura de la operación del encargado, no un usuario de la aplicación. Tiene MFA y acceso a los depósitos de registros, sin acceso a RDS, y su uso se registra en CloudTrail. El nutriólogo consulta el historial de sus expedientes sin poder alterarlo, y el paciente ve una vista derivada con los accesos a su propio expediente.
 
 Dentro de RDS, el rol de base de datos de la aplicación solo puede
 insertar y leer en \texttt{audit\_log} y \texttt{declaration\_log},
@@ -3148,7 +3062,7 @@ solicitudes de cita sin respuesta en 48 horas. El aviso de vencimiento
 llega al nutriólogo en la aplicación y en su correo confirmado, y se
 repite cada treinta días mientras no decida. En \texttt{PatientDetail},
 el expediente vencido ofrece dos acciones del responsable: «Confirmar
-supresión», que ejecuta el borrado criptográfico, y «Conservar», con
+supresión», que ejecuta el borrado criptográfico (destruye la llave de datos del expediente y después borra los objetos), y «Conservar», con
 motivo y nueva fecha de revisión. Ambas se asientan con folio en el
 \texttt{DeclarationLog}.
 
@@ -3239,8 +3153,8 @@ de 2,000 solicitudes por dirección IP en cinco minutos, muy por encima
 de las cuarenta llamadas por consulta del modelo de carga. La
 concurrencia reservada de Lambda se fija en cien ejecuciones para el
 conjunto de funciones de la API, cerca de diez veces el pico de la ruta
-crítica (sección~7.3). NutriApp, como encargado, revisa sus controles
-cada seis meses contra el Anexo~A de ISO/IEC~27001:2022 (sección~2.5.6)
+crítica (sección~7.3). NutriApp no busca la certificación ISO/IEC~27001 en la etapa de MVP. Como encargado, revisa sus controles
+cada seis meses contra el Anexo~A de ISO/IEC~27001:2022 (sección~2.5.6), con más peso en la gestión de llaves criptográficas (control~8.24), el registro de eventos (8.15), la transferencia de información (5.14) y el borrado de información (8.10),
 y conserva el acta en el depósito de registros de auditoría, junto con
 el inventario de datos.
  
@@ -3321,29 +3235,6 @@ dominio, CloudFront, AWS WAF y AWS Shield Standard fuera de
 \texttt{mx-central-1}, y dentro de la región Amazon Cognito, el sitio
 estático en S3 y Amazon API Gateway. Todo el tráfico va por HTTPS
 (Hypertext Transfer Protocol Secure) con TLS~1.3.
-
-La parte~(b) es la red privada. Las funciones Lambda se conectan a
-subredes privadas de al menos dos zonas de disponibilidad. RDS para
-PostgreSQL opera en una zona, con Multi-AZ como opción. La salida a
-internet pasa por un NAT Gateway (\textit{network address translation}).
-Por ahí salen los avisos con folio, que usan Amazon SES, el canal por
-defecto, desde \texttt{us-east-1}. También salen los avisos opcionales
-por Twilio y las consultas a la API de Mercado Pago, cuyas
-notificaciones de cobro firmadas entran por API Gateway (parte~a). La
-figura distingue a Twilio como subcontratación del encargado y a Mercado
-Pago como responsable independiente, e indica que NutriApp opera la
-plataforma como encargado del nutriólogo.
-
-La parte~(c) es el almacenamiento y las llaves. Cuatro depósitos de S3
-separan lo que se conserva con reglas distintas. El primero guarda los
-adjuntos clínicos, con versionado y Object Lock durante la conservación
-de la NOM-004 contada desde \texttt{fecha\_ultimo\_acto}. El segundo
-guarda los registros de auditoría (de CloudTrail, de pgAudit y de la capa
-de aplicación), con Object Lock cinco años. El tercero guarda los
-contratos y comprobantes, con Object Lock diez años y los comprobantes
-fiscales cinco (sección~5.1). El cuarto guarda el contenido social, sin
-Object Lock. Lambda alcanza S3 por un punto de enlace de gateway y KMS
-por uno de interfaz, sin salir de la VPC (\textit{virtual private cloud}).
 
 \begin{figure}[!htbp]
   \centering
@@ -3488,6 +3379,29 @@ por uno de interfaz, sin salir de la VPC (\textit{virtual private cloud}).
   \end{subfigure}
   \caption{Arquitectura de servicios de NutriApp en AWS (continuación).}
 \end{figure}
+
+La parte~(b) es la red privada. Las funciones Lambda se conectan a
+subredes privadas de al menos dos zonas de disponibilidad. RDS para
+PostgreSQL opera en una zona, con Multi-AZ como opción. La salida a
+internet pasa por un NAT Gateway (\textit{network address translation}).
+Por ahí salen los avisos con folio, que usan Amazon SES, el canal por
+defecto, desde \texttt{us-east-1}. También salen los avisos opcionales
+por Twilio y las consultas a la API de Mercado Pago, cuyas
+notificaciones de cobro firmadas entran por API Gateway (parte~a). La
+figura distingue a Twilio como subcontratación del encargado y a Mercado
+Pago como responsable independiente, e indica que NutriApp opera la
+plataforma como encargado del nutriólogo.
+
+La parte~(c) es el almacenamiento y las llaves. Cuatro depósitos de S3
+separan lo que se conserva con reglas distintas. El primero guarda los
+adjuntos clínicos, con versionado y Object Lock durante la conservación
+de la NOM-004 contada desde \texttt{fecha\_ultimo\_acto}. El segundo
+guarda los registros de auditoría (de CloudTrail, de pgAudit y de la capa
+de aplicación), con Object Lock cinco años. El tercero guarda los
+contratos y comprobantes, con Object Lock diez años y los comprobantes
+fiscales cinco (sección~5.1). El cuarto guarda el contenido social, sin
+Object Lock. Lambda alcanza S3 por un punto de enlace de gateway y KMS
+por uno de interfaz, sin salir de la VPC (\textit{virtual private cloud}).
 
 La parte~(d) es la operación y la trazabilidad: EventBridge, CloudWatch,
 CloudTrail y la exportación de los registros al depósito de auditoría.
@@ -3673,7 +3587,7 @@ al correo confirmado, el aviso previo al vencimiento de la cuenta
 Students y la sugerencia de alternativas cuando una cita vence sin
 respuesta. La supresión no es autónoma: el sistema avisa el vencimiento,
 el nutriólogo confirma la supresión y solo entonces se ejecuta el
-borrado criptográfico (sección~2.5.5). El bloqueo resulta de una
+borrado criptográfico (sección~5.1). El bloqueo resulta de una
 cancelación que el nutriólogo resuelve procedente; ninguna función
 programada lo inicia.
 
@@ -3690,7 +3604,7 @@ expedientes en modo de lectura y revisa el avance de inducción y el
 reporte semestral. El administrador modera contenido y da de alta
 instituciones y códigos, pero ninguno de sus casos de uso toca un
 expediente clínico, en congruencia con el control de acceso por rol de
-la sección~2.5.2.
+la sección~5.1.
 
 El flujo de reserva de cita es el que más componentes recorre, y se
 sigue en la Figura~\ref{fig:uml-seq}. El paciente elige una franja
@@ -3722,7 +3636,7 @@ catálogo se consulta sin iniciar sesión: el paciente puede buscar y
 comparar fichas sin crear cuenta, y el inicio de sesión solo se pide
 cuando elige una franja y va a reservar (con segundo factor si el
 paciente lo tiene activado; para el nutriólogo es obligatorio,
-sección~2.5.2). En el MVP, por tanto, reserva quien ya tiene cuenta,
+sección~5.1). En el MVP, por tanto, reserva quien ya tiene cuenta,
 porque la cuenta del paciente la crea la plataforma cuando un
 nutriólogo lo da de alta (sección~6.2.1). El registro por cuenta
 propia desde el catálogo es trabajo posterior (sección~8.3.1). La
@@ -3731,7 +3645,7 @@ dentro de la aplicación y no por mensajería, conforme a la regla R3 de
 la sección~7.3 (Tabla~\ref{tab:costos-reglas}); el nutriólogo la atiende
 en \texttt{AppointmentsManager}.
 
-\subsubsection{Diagrama entidad-relación}
+\subsubsection{Diagrama entidad-relación y recorrido del dato}
 
 \begin{sloppypar}
 El modelo de datos se muestra en la Figura~\ref{fig:er}, en cuatro
@@ -3928,7 +3842,7 @@ sección~5.1.
 En el bloque clínico, cada \texttt{paciente} tiene un
 \texttt{expediente} por cada nutriólogo que lo atiende, y ese nutriólogo
 es el responsable de sus datos. El expediente guarda los datos clínicos
-cifrados con su propia llave de datos (sección~2.5.3) y un estado
+cifrados con su propia llave de datos (sección~5.1) y un estado
 (\textit{pendiente}, \textit{activo}, \textit{revocado} o
 \textit{bloqueado}). El campo \texttt{fecha\_ultimo\_acto} marca el
 inicio de los cinco años de conservación de la NOM-004, y
@@ -4028,7 +3942,7 @@ conservación mínima de un expediente activo o revocado, al vencer el
 periodo de bloqueo, o al terminar la suscripción una vez entregada la
 copia de los expedientes (sección~5.1). En los dos primeros, un aviso
 programado llega al nutriólogo y el borrado criptográfico solo se
-ejecuta con su confirmación (sección~2.5.5).
+ejecuta con su confirmación (sección~5.1).
  
 \begin{figure}[!htbp]
   \centering
@@ -4087,7 +4001,7 @@ que la ley exige. El grupo focal de nutriólogos con práctica clínica la
 revisa como caso en la prueba piloto.
  
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Requerimientos mínimos del sistema}
+\subsection{Requerimientos mínimos y exclusiones del MVP}
 % ─────────────────────────────────────────────────────────────────────────
  
 Los requerimientos del MVP se organizan en tres grupos.
@@ -4317,7 +4231,7 @@ plataforma. En ese caso solo se desvincula al nutriólogo que resolvió.
 Un registro posterior del titular genera una cuenta nueva. El aviso al
 nutriólogo al vencer la conservación o el bloqueo y el borrado
 criptográfico con su confirmación siguen la secuencia de la
-sección~2.5.5.
+sección~5.1.
  
 El nutriólogo resuelve desde \texttt{PatientDetail} con un texto de
 respuesta y, cuando niega, el fundamento, que \texttt{arco\_request}
@@ -4700,7 +4614,7 @@ bloques de práctica: el interés en que la herramienta avise cuándo
 depurar expedientes («yo creo que me serviría», ante la pregunta del
 moderador) y el caso de la participante que cambió de herramienta por desconfianza en el acceso del proveedor (sección~3.3). Ambos respaldan decisiones ya
 tomadas en el diseño: los avisos de vencimiento de la conservación con
-confirmación del responsable (sección~2.5.5) y la transparencia de las
+confirmación del responsable (sección~5.1) y la transparencia de las
 subcontrataciones ante el nutriólogo (sección~5.1).
  
 
@@ -4729,7 +4643,7 @@ quedan fuera del MVP (sección~6.1).
 
 
 % ─────────────────────────────────────────────────────────────────────────
-\subsection{Costo de operar el diseño y comparación con las sanciones}
+\subsection{Costos, inversión inicial y comparación con las sanciones}
 \label{sec:costos}
 % ─────────────────────────────────────────────────────────────────────────
  
